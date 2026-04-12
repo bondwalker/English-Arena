@@ -56,6 +56,7 @@ async function generateQuestions(topic, gameType, count) {
     rearrange:       "only rearrange",
     story_builder:   "only story_builder",
     fill_idiom:      "only fill_idiom",
+    type_answer:     "only type_answer",
     word_match:      "only word_match",
     odd_one_out:     "only odd_one_out",
   };
@@ -79,7 +80,11 @@ Rules: story_builder correctOrder and answer are 0-based indices. word_match alw
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
+    },
     body: JSON.stringify({
       model: "claude-sonnet-4-20250514",
       max_tokens: 3500,
@@ -224,6 +229,7 @@ const GAME_MODES = [
   {v:"multiple_choice",label:"📋 Multiple Choice", desc:"4 options"},
   {v:"true_false",    label:"✅ True / False",      desc:"Grammar judge"},
   {v:"error_spotter", label:"🔍 Error Spotter",     desc:"Find the mistake"},
+  {v:"type_answer",   label:"✏️ Type Answer",       desc:"Short text response"},
   {v:"rearrange",     label:"🔀 Word Order",        desc:"Build sentences"},
   {v:"story_builder", label:"📖 Story Builder",     desc:"Arrange a story"},
   {v:"fill_idiom",    label:"🎭 Idioms",            desc:"Complete expressions"},
@@ -332,7 +338,7 @@ function HostView({ onBack }) {
       Object.entries(prev.answers).forEach(([name, ans]) => {
         if (!players[name]) players[name] = { score:0, streak:0 };
         const correct = checkAnswer(ans, q);
-        const bonus = correct && (players[name].streak||0) >= 2 ? 250 : 0;
+        const bonus = correct && (players[name].streak||0) >= 1 ? 250 : 0;
         players[name] = {
           ...players[name],
           score: (players[name].score||0) + (correct ? 1000+bonus : 0),
@@ -342,8 +348,13 @@ function HostView({ onBack }) {
       });
       const nextIdx = prev.qIndex + 1;
       if (nextIdx >= prev.questions.length) return { ...prev, players, phase:"end", answers:{} };
-      return { ...prev, players, phase:"question", qIndex:nextIdx, currentQ:prev.questions[nextIdx], timeLeft:25, answers:{} };
+      // Go to intermediate leaderboard; pre-load next question so goNextQuestion just flips phase
+      return { ...prev, players, phase:"leaderboard", qIndex:nextIdx, currentQ:prev.questions[nextIdx], answers:{} };
     });
+  };
+
+  const goNextQuestion = () => {
+    upd(prev => ({ ...prev, phase:"question", timeLeft:25 }));
   };
 
   const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setTopic(""); setGameType("mixed"); };
@@ -489,15 +500,22 @@ function HostView({ onBack }) {
         <div className="mt-3">
           <HostReveal q={room.currentQ} answers={room.answers} players={room.players} />
           <button className="btn btn-gold mt-3" onClick={advance}>
-            {room.qIndex+1>=room.questions.length?"🏆 Final Results":"Next Question →"}
+            {room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
           </button>
         </div>
       )}
 
       {/* ── LEADERBOARD / END ── */}
       {(room.phase==="leaderboard"||room.phase==="end") && (
-        <Leaderboard sorted={sorted} mode={room.mode} teams={activeTeams}
-          teamScores={teamScores} isEnd={room.phase==="end"} />
+        <>
+          <Leaderboard sorted={sorted} mode={room.mode} teams={activeTeams}
+            teamScores={teamScores} isEnd={room.phase==="end"} />
+          {room.phase==="leaderboard" && (
+            <button className="btn btn-gold mt-3" onClick={goNextQuestion}>
+              Next Question →
+            </button>
+          )}
+        </>
       )}
     </div>
   );
@@ -508,7 +526,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
   const pCount = Object.keys(players).length;
   return (
     <div className="mt-3">
-      <div className="prog"><div className="prog-fill" style={{width:`${(qIndex/total)*100}%`}}/></div>
+      <div className="prog"><div className="prog-fill" style={{width:`${((qIndex+1)/total)*100}%`}}/></div>
       <div className="flex justify-between items-center mb-2">
         <span className="badge">{q.type.replace(/_/g," ")}</span>
         <span className="op50" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.68rem"}}>Q{qIndex+1}/{total}</span>
@@ -715,7 +733,7 @@ function StudentView({ onBack }) {
   const myData = room?.players?.[name] || {};
   const myScore = myData.score || 0;
   const myTeam = myData.team ? TEAMS.find(t=>t.id===myData.team) : null;
-  const wasCorrect = myData.correct;
+  const wasCorrect = q && myAnswer !== null ? checkAnswer(myAnswer, q) : false;
   const teamScores = getTeamScores(room||{});
 
   return (
