@@ -479,7 +479,7 @@ const css = `
   h1,h2,h3{font-family:'Unbounded',sans-serif;font-weight:700}
 
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden}
-  .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(232,184,75,0.04) 40px,rgba(232,184,75,0.041) 41px)}
+  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(232,184,75,0.04) 40px,rgba(232,184,75,0.041) 41px)}
   .hero-title{font-family:'Unbounded',sans-serif;font-size:clamp(2.8rem,9vw,6.5rem);font-weight:900;letter-spacing:-0.03em;text-align:center;line-height:0.95;position:relative}
   .hero-title span{color:var(--gold)}
   .hero-sub{margin-top:1.2rem;font-size:1rem;opacity:0.5;text-align:center;max-width:400px;line-height:1.7}
