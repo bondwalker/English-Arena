@@ -27,7 +27,11 @@ const write = (v) => {
 };
 const fetchRoom = async (code) => {
   if (!db) return null;
-  try { const s = await get(ref(db, `rooms/${code}`)); return s.exists() ? s.val() : null; } catch { return null; }
+  try {
+    const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 8000));
+    const s = await Promise.race([get(ref(db, `rooms/${code}`)), timeout]);
+    return s.exists() ? s.val() : null;
+  } catch { return null; }
 };
 const listenRoom = (code, cb) => {
   if (!db) return () => {};
@@ -1085,7 +1089,7 @@ function StudentView({ onBack, initialCode = "" }) {
     try {
       let s = read();
       if (!s || s.code !== trimCode) s = await fetchRoom(trimCode);
-      if (!s) { setError("Room not found. Check the code."); return; }
+      if (!s) { setError(db ? "Room not found — make sure your teacher has the game open." : "Room not found. Check the code."); return; }
       if (s.code !== trimCode) { setError("Wrong code — ask your teacher!"); return; }
       const updated = { ...s, players: { ...s.players, [name]: { score:0, streak:0, team:s.players[name]?.team||null } } };
       write(updated);
