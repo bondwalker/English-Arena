@@ -1,9 +1,38 @@
 import { useState, useEffect, useRef } from "react";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, get, onValue, update } from "firebase/database";
+
+// ─── Firebase ─────────────────────────────────────────────────────────────────
+// Add your Firebase config to Vercel env vars (or a local .env file):
+//   VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN,
+//   VITE_FIREBASE_DATABASE_URL, VITE_FIREBASE_PROJECT_ID
+// Get them from: https://console.firebase.google.com → Project Settings → Your apps
+let db = null;
+try {
+  const cfg = {
+    apiKey:      import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain:  import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+    projectId:   import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  };
+  if (cfg.apiKey && cfg.databaseURL) db = getDatabase(initializeApp(cfg));
+} catch {}
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
 const STORE_KEY = "englishgame_v2";
 const read = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch { return null; } };
-const write = (v) => localStorage.setItem(STORE_KEY, JSON.stringify(v));
+const write = (v) => {
+  localStorage.setItem(STORE_KEY, JSON.stringify(v));
+  if (db && v?.code) set(ref(db, `rooms/${v.code}`), v).catch(() => {});
+};
+const fetchRoom = async (code) => {
+  if (!db) return null;
+  try { const s = await get(ref(db, `rooms/${code}`)); return s.exists() ? s.val() : null; } catch { return null; }
+};
+const listenRoom = (code, cb) => {
+  if (!db) return () => {};
+  return onValue(ref(db, `rooms/${code}`), (s) => { if (s.exists()) cb(s.val()); });
+};
 
 // ─── Teams ────────────────────────────────────────────────────────────────────
 const TEAMS = [
@@ -612,13 +641,14 @@ const GAME_MODES = [
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [view, setView] = useState("home");
+  const joinCode = typeof window !== "undefined" ? (new URLSearchParams(window.location.search).get("join") || "") : "";
+  const [view, setView] = useState(joinCode ? "student" : "home");
   return (
     <>
       <style>{css}</style>
       {view==="home"    && <Home    onHost={()=>setView("host")} onJoin={()=>setView("student")} />}
       {view==="host"    && <HostView    onBack={()=>setView("home")} />}
-      {view==="student" && <StudentView onBack={()=>setView("home")} />}
+      {view==="student" && <StudentView onBack={()=>setView("home")} initialCode={joinCode} />}
     </>
   );
 }
@@ -655,8 +685,13 @@ function HostView({ onBack }) {
     write(next); return next;
   });
 
-  // Sync players & answers from storage (students write there)
+  // Sync players & answers (Firebase real-time or localStorage fallback)
   useEffect(() => {
+    if (db) {
+      return listenRoom(room.code, (s) => {
+        if (s.code === room.code) setRoom(prev => ({ ...prev, players: s.players, answers: s.answers }));
+      });
+    }
     const id = setInterval(() => {
       const s = read();
       if (s?.code === room.code) setRoom(prev => ({ ...prev, players: s.players, answers: s.answers }));
@@ -730,7 +765,7 @@ function HostView({ onBack }) {
     upd(prev => ({ ...prev, phase:"question", timeLeft:25 }));
   };
 
-  const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setTopic(""); setGameType("mixed"); };
+  const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setSelectedTopic(""); setGameType("mixed"); };
 
   const players = Object.entries(room.players);
   const sorted = [...players].sort((a,b)=>(b[1].score||0)-(a[1].score||0));
@@ -754,8 +789,8 @@ function HostView({ onBack }) {
         <span className="label">Room Code</span>
         <div className="code-badge">{room.code}</div>
         <p className="op50 mt-1" style={{fontSize:"0.8rem"}}>{players.length} player{players.length!==1?"s":""} in lobby</p>
-        <QRDisplay url={typeof window!=="undefined"?window.location.href:"https://claude.ai"} />
-        <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan → tap "I'm a Student" → enter <strong style={{color:"var(--gold)"}}>{room.code}</strong></p>
+        <QRDisplay url={typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app"} />
+        <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan QR → enter name → Join!</p>
       </div>
 
       {/* Players */}
@@ -1016,9 +1051,9 @@ function Leaderboard({ sorted, mode, teams, teamScores, isEnd }) {
 }
 
 // ─── STUDENT VIEW ─────────────────────────────────────────────────────────────
-function StudentView({ onBack }) {
+function StudentView({ onBack, initialCode = "" }) {
   const [step, setStep] = useState("join");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(initialCode);
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [room, setRoom] = useState(null);
@@ -1033,11 +1068,14 @@ function StudentView({ onBack }) {
   const lastQRef = useRef(-1);
   const lastPhaseRef = useRef("");
 
-  const join = () => {
-    const s = read();
-    if (!s) { setError("Room not found. Check the code."); return; }
-    if (s.code !== code.trim().toUpperCase()) { setError("Wrong code — ask your teacher!"); return; }
+  const join = async () => {
     if (!name.trim()) { setError("Enter your nickname!"); return; }
+    const trimCode = code.trim().toUpperCase();
+    if (!trimCode) { setError("Enter the room code!"); return; }
+    let s = read();
+    if (!s || s.code !== trimCode) s = await fetchRoom(trimCode);
+    if (!s) { setError("Room not found. Check the code."); return; }
+    if (s.code !== trimCode) { setError("Wrong code — ask your teacher!"); return; }
     const updated = { ...s, players: { ...s.players, [name]: { score:0, streak:0, team:s.players[name]?.team||null } } };
     write(updated);
     setRoom(updated);
@@ -1045,34 +1083,37 @@ function StudentView({ onBack }) {
   };
 
   useEffect(() => {
-    if (step==="join") return;
-    const id = setInterval(() => {
-      const s = read();
+    if (step === "join" || !room?.code) return;
+    const handleUpdate = (s) => {
       if (!s) return;
-      if (s.phase==="question" && s.qIndex!==lastQRef.current) {
+      if (s.phase === "question" && s.qIndex !== lastQRef.current) {
         lastQRef.current = s.qIndex;
         setMyAnswer(null); setShowResult(false);
         setRearranged([]); setUsedIdx([]); setTypeVal("");
-        setStoryOrder([]); setMatchState({sel:null,matched:{}});
+        setStoryOrder([]); setMatchState({sel:null, matched:{}});
       }
-      if (s.phase==="reveal" && lastPhaseRef.current!=="reveal") {
+      if (s.phase === "reveal" && lastPhaseRef.current !== "reveal") {
         setShowResult(true);
-        setTimeout(()=>setShowResult(false), 2800);
+        setTimeout(() => setShowResult(false), 2800);
       }
       lastPhaseRef.current = s.phase;
       setRoom(s);
       if (["question","reveal","leaderboard","end"].includes(s.phase)) setStep("playing");
-      else if (s.phase==="lobby") setStep("waiting");
-    }, 600);
+      else if (s.phase === "lobby") setStep("waiting");
+    };
+    if (db) return listenRoom(room.code, handleUpdate);
+    const id = setInterval(() => handleUpdate(read()), 600);
     return () => clearInterval(id);
-  }, [step]);
+  }, [step, room?.code]);
 
   const submitAnswer = (ans) => {
     if (myAnswer !== null) return;
     setMyAnswer(ans);
+    if (db && room?.code) {
+      set(ref(db, `rooms/${room.code}/answers/${name}`), ans).catch(() => {});
+    }
     const s = read();
-    if (!s) return;
-    write({ ...s, answers: { ...s.answers, [name]: ans } });
+    if (s) write({ ...s, answers: { ...s.answers, [name]: ans } });
   };
 
   if (step==="join") return (
