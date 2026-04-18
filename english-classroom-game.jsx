@@ -696,12 +696,12 @@ function HostView({ onBack }) {
   useEffect(() => {
     if (db) {
       return listenRoom(room.code, (s) => {
-        if (s.code === room.code) setRoom(prev => ({ ...prev, players: s.players, answers: s.answers }));
+        if (s.code === room.code) setRoom(prev => ({ ...prev, players: s.players||{}, answers: s.answers||{} }));
       });
     }
     const id = setInterval(() => {
       const s = read();
-      if (s?.code === room.code) setRoom(prev => ({ ...prev, players: s.players, answers: s.answers }));
+      if (s?.code === room.code) setRoom(prev => ({ ...prev, players: s.players||{}, answers: s.answers||{} }));
     }, 700);
     return () => clearInterval(id);
   }, [room.code]);
@@ -732,7 +732,7 @@ function HostView({ onBack }) {
   };
 
   const autoAssign = () => {
-    const names = Object.keys(room.players);
+    const names = Object.keys(room.players||{});
     if (!names.length) return;
     upd(prev => {
       const updated = { ...prev, players: { ...prev.players }, teamsLocked:true };
@@ -749,8 +749,8 @@ function HostView({ onBack }) {
   const advance = () => {
     upd(prev => {
       const q = prev.currentQ;
-      const players = { ...prev.players };
-      Object.entries(prev.answers).forEach(([name, ans]) => {
+      const players = { ...(prev.players||{}) };
+      Object.entries(prev.answers||{}).forEach(([name, ans]) => {
         if (!players[name]) players[name] = { score:0, streak:0 };
         const correct = checkAnswer(ans, q);
         const bonus = correct && (players[name].streak||0) >= 1 ? 250 : 0;
@@ -774,7 +774,7 @@ function HostView({ onBack }) {
 
   const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setSelectedTopic(""); setGameType("mixed"); };
 
-  const players = Object.entries(room.players);
+  const players = Object.entries(room.players||{});
   const sorted = [...players].sort((a,b)=>(b[1].score||0)-(a[1].score||0));
   const teamScores = getTeamScores(room);
   const activeTeams = TEAMS.slice(0, room.teamCount);
@@ -1088,7 +1088,7 @@ function StudentView({ onBack, initialCode = "" }) {
       if (!s || s.code !== trimCode) s = await fetchRoom(trimCode);
       if (!s) { setError(db ? "Room not found — make sure your teacher has the game open." : "Room not found. Check the code."); return; }
       if (s.code !== trimCode) { setError("Wrong code — ask your teacher!"); return; }
-      const updated = { ...s, players: { ...s.players, [name]: { score:0, streak:0, team:s.players[name]?.team||null } } };
+      const updated = { ...s, players: { ...(s.players||{}), [name]: { score:0, streak:0, team:(s.players||{})[name]?.team||null } } };
       write(updated);
       setRoom(updated);
       setStep("waiting");
@@ -1130,7 +1130,7 @@ function StudentView({ onBack, initialCode = "" }) {
       set(ref(db, `rooms/${room.code}/answers/${name}`), ans).catch(() => {});
     }
     const s = read();
-    if (s) write({ ...s, answers: { ...s.answers, [name]: ans } });
+    if (s) write({ ...s, answers: { ...(s.answers||{}), [name]: ans } });
   };
 
   if (step==="join") return (
