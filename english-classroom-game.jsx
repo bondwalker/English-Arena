@@ -556,8 +556,8 @@ const css = `
   .team-card-count{font-size:0.75rem;opacity:0.55;margin-top:0.15rem}
   .team-members{font-size:0.72rem;margin-top:0.4rem;opacity:0.6;line-height:1.7}
 
-  .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-top:0.9rem}
-  .opt-btn{padding:0.9rem 0.8rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;border:2px solid transparent;cursor:pointer;transition:all 0.13s;text-align:left;display:flex;align-items:flex-start;gap:0.55rem;min-height:66px;line-height:1.4;color:var(--ink)}
+  .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:0.9rem}
+  .opt-btn{padding:1.1rem 1rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;border:2px solid transparent;cursor:pointer;transition:all 0.13s;text-align:left;display:flex;align-items:flex-start;gap:0.55rem;min-height:76px;line-height:1.45;color:var(--ink)}
   .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px)}
   .opt-btn:disabled{cursor:not-allowed}
   .opt-0{background:#fde8e8;border-color:#e83a3a}
@@ -621,9 +621,9 @@ const css = `
   .text-center{text-align:center}.text-gold{color:var(--gold)}.text-teal{color:var(--teal)}.text-green{color:var(--green)}.text-coral{color:var(--coral)}
   .op50{opacity:0.5}.op30{opacity:0.3}.w100{width:100%}
 
-  @media(max-width:500px){
+  @media(max-width:600px){
     .opt-grid{grid-template-columns:1fr}
-    .opt-btn{min-height:52px}
+    .opt-btn{min-height:72px;font-size:1.05rem;padding:1.1rem 1.1rem}
     .hero-btns{flex-direction:column;align-items:stretch}
   }
 `;
@@ -908,15 +908,15 @@ function HostView({ onBack }) {
 
       {/* ── QUESTION PHASE ── */}
       {room.phase==="question" && room.currentQ && (
-        <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers}
-          players={room.players} qIndex={room.qIndex} total={room.questions.length}
+        <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
+          players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
           mode={room.mode} teams={activeTeams} teamScores={teamScores} />
       )}
 
       {/* ── REVEAL ── */}
       {room.phase==="reveal" && room.currentQ && (
         <div className="mt-3">
-          <HostReveal q={room.currentQ} answers={room.answers} players={room.players} />
+          <HostReveal q={room.currentQ} answers={room.answers||{}} players={room.players||{}} />
           <button className="btn btn-gold mt-3" onClick={advance}>
             {room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
           </button>
@@ -988,7 +988,14 @@ function HostReveal({ q, answers, players }) {
     <div>
       <span className="label">Correct Answer</span>
       <div className="card card-gold">
-        <div style={{fontSize:"1.1rem",fontWeight:700}}>{q.answer}</div>
+        {q.type==="word_match" ? (
+          <div>{q.pairs?.slice(0,3).map((p,i)=>(
+            <div key={i} style={{display:"flex",gap:"0.5rem",marginBottom:"0.25rem",fontSize:"0.9rem"}}>
+              <strong>{p.word}</strong><span className="op50">→</span><span>{p.meaning}</span>
+            </div>))}</div>
+        ) : (
+          <div style={{fontSize:"1.1rem",fontWeight:700}}>{q.answer}</div>
+        )}
         {q.explanation&&<p className="op50 mt-1" style={{fontSize:"0.82rem"}}>{q.explanation}</p>}
       </div>
       <div className="flex gap-2 wrap mt-2">
@@ -1128,6 +1135,7 @@ function StudentView({ onBack, initialCode = "" }) {
     setMyAnswer(ans);
     if (db && room?.code) {
       set(ref(db, `rooms/${room.code}/answers/${name}`), ans).catch(() => {});
+      return; // don't do a full room write — it would overwrite teacher's state
     }
     const s = read();
     if (s) write({ ...s, answers: { ...(s.answers||{}), [name]: ans } });
@@ -1214,7 +1222,19 @@ function StudentView({ onBack, initialCode = "" }) {
         <div className="text-center mt-4">
           <div style={{fontSize:"2.5rem",marginBottom:"0.8rem"}}>{myAnswer!==null?(wasCorrect?"✅":"❌"):"⏱️"}</div>
           <p className="op50">{myAnswer!==null?"Waiting for next question…":"Time's up!"}</p>
-          {q&&<div className="card mt-3"><span className="label">Correct Answer</span><div style={{fontWeight:700,fontSize:"1rem"}}>{q.answer}</div></div>}
+          {q&&<div className="card mt-3">
+            <span className="label">Correct Answer</span>
+            {q.type==="word_match" ? (
+              q.pairs?.slice(0,3).map((p,i)=>(
+                <div key={i} style={{display:"flex",gap:"0.5rem",marginTop:"0.28rem",fontSize:"0.88rem"}}>
+                  <strong style={{color:"var(--gold)"}}>{p.word}</strong>
+                  <span className="op50">→</span><span>{p.meaning}</span>
+                </div>
+              ))
+            ) : (
+              <div style={{fontWeight:700,fontSize:"1rem"}}>{q.answer}</div>
+            )}
+          </div>}
         </div>
       ) : null}
     </div>
@@ -1225,13 +1245,12 @@ function StudentView({ onBack, initialCode = "" }) {
 function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedIdx, setUsedIdx, typeVal, setTypeVal, storyOrder, setStoryOrder, matchState, setMatchState, room }) {
   const answered = myAnswer !== null;
 
-  // Shuffle meanings once per question
-  const shuffledMeanings = useRef([]);
+  // Stable shuffled meanings — only reshuffle when the actual words change
+  const pairsKey = q.type==="word_match" ? (q.pairs||[]).slice(0,3).map(p=>p.word).join("|") : "";
+  const [shuffledMeanings, setShuffledMeanings] = useState([]);
   useEffect(() => {
-    if (q.type==="word_match"&&q.pairs) {
-      shuffledMeanings.current = [...q.pairs].sort(()=>Math.random()-0.5);
-    }
-  }, [q]);
+    if (q.type==="word_match" && q.pairs) setShuffledMeanings([...q.pairs.slice(0,3)].sort(()=>Math.random()-0.5));
+  }, [pairsKey]);
 
   const submitTyped = () => { if (typeVal.trim()) onAnswer(typeVal.trim()); };
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
@@ -1259,14 +1278,19 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
         <span className="badge">{q.type.replace(/_/g," ")}</span>
         <span className="op50" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.72rem"}}>Q{(room?.qIndex||0)+1}/{room?.questions?.length||0}</span>
       </div>
-      <h2 style={{fontSize:"1.05rem",lineHeight:1.5,marginBottom:"0.9rem"}}>{q.question}</h2>
+      <h2 style={{fontSize:"1.18rem",lineHeight:1.5,marginBottom:"0.9rem"}}>{q.question}</h2>
 
       {/* Multiple choice / Odd one out */}
       {(q.type==="multiple_choice"||q.type==="odd_one_out")&&q.options&&(
         <div className="opt-grid">
           {q.options.map((opt,i)=>(
             <button key={i} disabled={answered}
-              className={`opt-btn opt-${i} ${myAnswer===opt?"opt-selected":""}`}
+              className={`opt-btn opt-${i}`}
+              style={{
+                opacity: answered && myAnswer!==opt ? 0.28 : 1,
+                outline: answered && myAnswer===opt ? "4px solid rgba(0,0,0,0.45)" : "none",
+                transition:"opacity 0.18s"
+              }}
               onClick={()=>onAnswer(opt)}>
               <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
             </button>
@@ -1279,8 +1303,13 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
         <div className="flex gap-2 mt-2">
           {["True","False"].map(v=>(
             <button key={v} disabled={answered}
-              className={`btn ${v==="True"?"btn-green":"btn-coral"} btn-full ${myAnswer===v?"op50":""}`}
-              style={{fontSize:"1.05rem",padding:"1.1rem"}}
+              className={`btn ${v==="True"?"btn-green":"btn-coral"} btn-full`}
+              style={{
+                fontSize:"1.15rem", padding:"1.2rem", flex:1,
+                opacity: answered && myAnswer!==v ? 0.28 : 1,
+                outline: answered && myAnswer===v ? "4px solid rgba(255,255,255,0.7)" : "none",
+                transition:"opacity 0.18s"
+              }}
               onClick={()=>onAnswer(v)}>
               {v==="True"?"✅ True":"❌ False"}
             </button>
@@ -1390,14 +1419,15 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       {/* Word match */}
       {q.type==="word_match"&&q.pairs&&(
         <div>
-          <p className="op50 mb-2" style={{fontSize:"0.8rem"}}>Tap a word → tap its meaning to match them.</p>
+          <p className="op50 mb-2" style={{fontSize:"0.82rem"}}>Tap a word, then tap its meaning.</p>
           <div className="flex gap-2">
             <div style={{flex:1}}>
               <span className="label">Words</span>
-              {q.pairs.map((p,i)=>{
+              {q.pairs.slice(0,3).map((p,i)=>{
                 const m = matchState.matched[p.word];
                 return (
                   <div key={i} className={`match-word ${matchState.sel===p.word?"selected":""} ${m?(m.correct?"matched-correct":"matched-wrong"):""}`}
+                    style={{minHeight:52,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.95rem",fontWeight:600}}
                     onClick={()=>!m&&!answered&&handleMatch("word",p.word)}>
                     {p.word}
                   </div>
@@ -1406,11 +1436,12 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
             </div>
             <div style={{flex:1}}>
               <span className="label">Meanings</span>
-              {shuffledMeanings.current.map((p,i)=>{
+              {shuffledMeanings.map((p,i)=>{
                 const isMatched = Object.values(matchState.matched).some(m=>m.meaning===p.meaning);
                 const entry = Object.entries(matchState.matched).find(([,m])=>m.meaning===p.meaning);
                 return (
-                  <div key={i} className={`match-word ${isMatched?(entry?.[1]?.correct?"matched-correct":"matched-wrong"):""}`}
+                  <div key={p.meaning} className={`match-word ${isMatched?(entry?.[1]?.correct?"matched-correct":"matched-wrong"):""}`}
+                    style={{minHeight:52,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.82rem"}}
                     onClick={()=>!isMatched&&!answered&&handleMatch("meaning",p.meaning)}>
                     {p.meaning}
                   </div>
