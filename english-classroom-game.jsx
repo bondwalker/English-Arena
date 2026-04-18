@@ -677,13 +677,7 @@ function Home({ onHost, onJoin }) {
 
 // ─── HOST VIEW ────────────────────────────────────────────────────────────────
 function HostView({ onBack }) {
-  const [room, setRoom] = useState(() => {
-    const existing = read();
-    if (existing) return existing;
-    const fresh = defaultRoom();
-    write(fresh); // save immediately so students can find the room before questions are loaded
-    return fresh;
-  });
+  const [room, setRoom] = useState(() => read() || defaultRoom());
   const [selectedTopic, setSelectedTopic] = useState("");
   const [gameType, setGameType] = useState("mixed");
   const [qCount, setQCount] = useState(6);
@@ -694,6 +688,9 @@ function HostView({ onBack }) {
     const next = typeof fn === "function" ? fn(prev) : { ...prev, ...fn };
     write(next); return next;
   });
+
+  // Persist room on mount so students can find it before teacher loads questions
+  useEffect(() => { try { write(room); } catch {} }, []);
 
   // Sync players & answers (Firebase real-time or localStorage fallback)
   useEffect(() => {
