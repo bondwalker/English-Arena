@@ -1074,18 +1074,28 @@ function StudentView({ onBack, initialCode = "" }) {
   const lastQRef = useRef(-1);
   const lastPhaseRef = useRef("");
 
+  const [joining, setJoining] = useState(false);
+
   const join = async () => {
     if (!name.trim()) { setError("Enter your nickname!"); return; }
     const trimCode = code.trim().toUpperCase();
     if (!trimCode) { setError("Enter the room code!"); return; }
-    let s = read();
-    if (!s || s.code !== trimCode) s = await fetchRoom(trimCode);
-    if (!s) { setError("Room not found. Check the code."); return; }
-    if (s.code !== trimCode) { setError("Wrong code — ask your teacher!"); return; }
-    const updated = { ...s, players: { ...s.players, [name]: { score:0, streak:0, team:s.players[name]?.team||null } } };
-    write(updated);
-    setRoom(updated);
-    setStep("waiting");
+    setJoining(true);
+    setError("");
+    try {
+      let s = read();
+      if (!s || s.code !== trimCode) s = await fetchRoom(trimCode);
+      if (!s) { setError("Room not found. Check the code."); return; }
+      if (s.code !== trimCode) { setError("Wrong code — ask your teacher!"); return; }
+      const updated = { ...s, players: { ...s.players, [name]: { score:0, streak:0, team:s.players[name]?.team||null } } };
+      write(updated);
+      setRoom(updated);
+      setStep("waiting");
+    } catch (e) {
+      setError("Something went wrong — try again.");
+    } finally {
+      setJoining(false);
+    }
   };
 
   useEffect(() => {
@@ -1133,7 +1143,9 @@ function StudentView({ onBack, initialCode = "" }) {
       <input className="input" placeholder="e.g. Maria, Carlos, Ana…" value={name}
         onChange={e=>setName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&join()} />
       {error&&<p className="text-coral mt-1" style={{fontSize:"0.85rem"}}>{error}</p>}
-      <button className="btn btn-gold btn-full mt-3" onClick={join}>Join →</button>
+      <button className="btn btn-gold btn-full mt-3" onClick={join} disabled={joining}>
+        {joining ? "Joining…" : "Join →"}
+      </button>
     </div>
   );
 
