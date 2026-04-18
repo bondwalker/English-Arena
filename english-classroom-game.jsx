@@ -673,7 +673,13 @@ function Home({ onHost, onJoin }) {
 
 // ─── HOST VIEW ────────────────────────────────────────────────────────────────
 function HostView({ onBack }) {
-  const [room, setRoom] = useState(() => read() || defaultRoom());
+  const [room, setRoom] = useState(() => {
+    const existing = read();
+    if (existing) return existing;
+    const fresh = defaultRoom();
+    write(fresh); // save immediately so students can find the room before questions are loaded
+    return fresh;
+  });
   const [selectedTopic, setSelectedTopic] = useState("");
   const [gameType, setGameType] = useState("mixed");
   const [qCount, setQCount] = useState(6);
