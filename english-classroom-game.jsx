@@ -501,6 +501,98 @@ const QUESTION_BANK = {
     {type:"word_match",question:"Match memory words with their meanings:",pairs:[{word:"nostalgia",meaning:"a sentimental longing for the past"},{word:"memoir",meaning:"a written account of personal memories"},{word:"decade",meaning:"a period of ten years"},{word:"heirloom",meaning:"an object passed down through generations"}],answer:"match_all",explanation:"Key vocabulary for talking about the past and memories."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She kept all her old letters in a box under the bed.","He remembered the day his daughter was born as if it were yesterday.","They has been sharing stories about the old days all evening.","The photographs brought back many happy memories."],answer:"They has been sharing stories about the old days all evening.",explanation:"'They' takes 'have': 'They have been sharing stories about the old days.'"},
   ]},
+  "stress_battle": { label: "⚡ Stress Battle", questions: [
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"APPLE",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TABLE",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PENCIL",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GARDEN",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"WINTER",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUMMER",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DOCTOR",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TEACHER",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HAPPY",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SIMPLE",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PURPLE",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CIRCLE",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LESSON",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CASTLE",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MUSIC",syllables:2,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CITY",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BODY",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BASIC",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TENNIS",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MARKET",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUNNY",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LUCKY",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EARLY",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RIVER",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SISTER",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BROTHER",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FATHER",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MOTHER",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"OPEN",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"UPPER",syllables:2,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HOTEL",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POLICE",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TODAY",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ALONE",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BEHIND",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BECOME",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RETURN",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INVITE",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CORRECT",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BELOW",syllables:2,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REPEAT",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DEGREE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ADVICE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REMOVE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ARRIVE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DECIDE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FORGET",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INCLUDE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MISTAKE",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INSTEAD",syllables:2,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HOSPITAL",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BEAUTIFUL",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXCELLENT",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PERSONAL",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"NATURAL",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POPULAR",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POSSIBLE",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIFFICULT",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HISTORY",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MEMORY",syllables:3,stressed:1,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ANIMAL",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DANGEROUS",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIFFERENT",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ENERGY",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SIMILAR",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TYPICAL",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"NATIONAL",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PHYSICAL",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GENERAL",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CENTURY",syllables:3,stressed:1,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TOMORROW",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TOGETHER",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMPUTER",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REMEMBER",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FANTASTIC",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"APARTMENT",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"UMBRELLA",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DISCOVER",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXAMPLE",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXPENSIVE",syllables:3,stressed:2,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXCITING",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MUSEUM",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POTATO",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DISASTER",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CONSIDER",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CONTINUE",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LOCATION",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DECEMBER",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"NOVEMBER",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"IMPORTANT",syllables:3,stressed:2,answer:"B"},
+  ]},
 };
 
 // ─── CSS ──────────────────────────────────────────────────────────────────────
@@ -720,10 +812,14 @@ function HostView({ onBack }) {
     return () => clearInterval(timerRef.current);
   }, [room.phase, room.qIndex]);
 
+  useEffect(() => {
+    if (selectedTopic === "stress_battle") setQCount(15);
+  }, [selectedTopic]);
+
   const loadQuestions = () => {
     if (!selectedTopic) { setError("Select a topic first!"); return; }
     const bank = QUESTION_BANK[selectedTopic].questions;
-    let pool = gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
+    let pool = (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => q.type === gameType);
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const qs = shuffled.slice(0, Math.min(qCount, shuffled.length));
@@ -743,7 +839,7 @@ function HostView({ onBack }) {
 
   const startGame = () => {
     if (!room.questions.length) return;
-    upd(prev => ({ ...prev, phase:"question", qIndex:0, currentQ:prev.questions[0], timeLeft:25, answers:{} }));
+    upd(prev => ({ ...prev, phase:"question", qIndex:0, currentQ:prev.questions[0], timeLeft:prev.questions[0]?.type==="stress_battle"?15:25, answers:{} }));
   };
 
   const advance = () => {
@@ -769,7 +865,7 @@ function HostView({ onBack }) {
   };
 
   const goNextQuestion = () => {
-    upd(prev => ({ ...prev, phase:"question", timeLeft:25 }));
+    upd(prev => ({ ...prev, phase:"question", timeLeft:prev.currentQ?.type==="stress_battle"?15:25 }));
   };
 
   const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setSelectedTopic(""); setGameType("mixed"); };
@@ -873,7 +969,7 @@ function HostView({ onBack }) {
             <div style={{flex:1,minWidth:110}}>
               <span className="label">Questions</span>
               <select className="select" value={qCount} onChange={e=>setQCount(+e.target.value)}>
-                {[3,5,6,8,10].map(n=><option key={n} value={n}>{n}</option>)}
+                {[3,5,6,8,10,15].map(n=><option key={n} value={n}>{n}</option>)}
               </select>
             </div>
           </div>
@@ -939,6 +1035,29 @@ function HostView({ onBack }) {
   );
 }
 
+function StressDots({ syllables, stressAt, size = "md" }) {
+  const big = size === "lg" ? 32 : 24;
+  const small = size === "lg" ? 20 : 15;
+  return (
+    <div style={{ display:"flex", gap: size==="lg"?"0.7rem":"0.5rem", justifyContent:"center", alignItems:"center" }}>
+      {Array.from({ length: syllables }, (_, i) => {
+        const isStressed = i + 1 === stressAt;
+        return (
+          <div key={i} style={{
+            width: isStressed ? big : small,
+            height: isStressed ? big : small,
+            borderRadius: "50%",
+            background: isStressed ? "#fff" : "transparent",
+            border: `2.5px solid ${isStressed ? "#fff" : "rgba(255,255,255,0.55)"}`,
+            transition: "all 0.15s",
+            flexShrink: 0,
+          }} />
+        );
+      })}
+    </div>
+  );
+}
+
 function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
@@ -970,6 +1089,23 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           <div style={{flex:1}}><span className="label">Meanings</span>{q.pairs.map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.meaning}</div>)}</div>
         </div>
       )}
+      {q.type==="stress_battle"&&(
+        <div style={{textAlign:"center",marginTop:"0.5rem"}}>
+          <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"clamp(2rem,6vw,3rem)",fontWeight:900,letterSpacing:"0.1em",color:"var(--gold)",marginBottom:"1.5rem"}}>{q.word}</div>
+          <div style={{display:"flex",gap:"3rem",justifyContent:"center"}}>
+            {["A","B"].map(label=>{
+              const wrongStress = q.stressed===1?2:1;
+              const stressAt = label===q.answer ? q.stressed : wrongStress;
+              return (
+                <div key={label} style={{textAlign:"center"}}>
+                  <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.6rem",opacity:0.6}}>{label}</div>
+                  <StressDots syllables={q.syllables} stressAt={stressAt} size="md" />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
       <div className="text-center mt-3">
         <span className="label">Answers received</span>
         <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"2rem",color:"var(--gold)"}}>{ansCount}<span className="op50" style={{fontSize:"1.1rem"}}>/{pCount}</span></div>
@@ -993,6 +1129,23 @@ function HostReveal({ q, answers, players }) {
             <div key={i} style={{display:"flex",gap:"0.5rem",marginBottom:"0.25rem",fontSize:"0.9rem"}}>
               <strong>{p.word}</strong><span className="op50">→</span><span>{p.meaning}</span>
             </div>))}</div>
+        ) : q.type==="stress_battle" ? (
+          <div style={{textAlign:"center"}}>
+            <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.5rem",fontWeight:900,letterSpacing:"0.1em",marginBottom:"1rem"}}>{q.word}</div>
+            <div style={{display:"flex",gap:"2.5rem",justifyContent:"center"}}>
+              {["A","B"].map(label=>{
+                const isCorrect = label===q.answer;
+                const wrongStress = q.stressed===1?2:1;
+                const stressAt = isCorrect?q.stressed:wrongStress;
+                return (
+                  <div key={label} style={{textAlign:"center",padding:"0.8rem 1.4rem",border:`2px solid ${isCorrect?"var(--gold)":"rgba(255,255,255,0.12)"}`,background:isCorrect?"rgba(232,184,75,0.1)":"transparent"}}>
+                    <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",marginBottom:"0.5rem",color:isCorrect?"var(--gold)":"rgba(255,255,255,0.4)"}}>{label}{isCorrect?" ✓":""}</div>
+                    <StressDots syllables={q.syllables} stressAt={stressAt} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         ) : (
           <div style={{fontSize:"1.1rem",fontWeight:700}}>{q.answer}</div>
         )}
@@ -1190,7 +1343,7 @@ function StudentView({ onBack, initialCode = "" }) {
             <div style={{fontSize:"1.35rem",fontWeight:700,color:wasCorrect?"var(--green)":"var(--coral)"}}>
               {wasCorrect?"Correct! +1000":"Not quite…"}
             </div>
-            {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>Answer: <strong style={{color:"#fff"}}>{q.answer}</strong></div>}
+            {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:`Answer: `}{q.type!=="stress_battle"&&<strong style={{color:"#fff"}}>{q.answer}</strong>}</div>}
             {q?.explanation&&<div className="op30 mt-1" style={{fontSize:"0.78rem",fontStyle:"italic"}}>{q.explanation}</div>}
           </div>
         </div>
@@ -1231,6 +1384,23 @@ function StudentView({ onBack, initialCode = "" }) {
                   <span className="op50">→</span><span>{p.meaning}</span>
                 </div>
               ))
+            ) : q.type==="stress_battle" ? (
+              <div style={{textAlign:"center",marginTop:"0.5rem"}}>
+                <div style={{fontFamily:"'Unbounded',sans-serif",fontWeight:900,fontSize:"1.3rem",letterSpacing:"0.08em",marginBottom:"0.8rem"}}>{q.word}</div>
+                <div style={{display:"flex",gap:"1.5rem",justifyContent:"center"}}>
+                  {["A","B"].map(label=>{
+                    const isCorrect = label===q.answer;
+                    const wrongStress = q.stressed===1?2:1;
+                    const stressAt = isCorrect?q.stressed:wrongStress;
+                    return (
+                      <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--gold)":"rgba(255,255,255,0.1)"}`,background:isCorrect?"rgba(232,184,75,0.1)":"transparent"}}>
+                        <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.85rem",color:isCorrect?"var(--gold)":"rgba(255,255,255,0.35)",marginBottom:"0.4rem"}}>{label}{isCorrect?" ✓":""}</div>
+                        <StressDots syllables={q.syllables} stressAt={stressAt} />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             ) : (
               <div style={{fontWeight:700,fontSize:"1rem"}}>{q.answer}</div>
             )}
@@ -1468,6 +1638,35 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                 );
               })}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stress battle */}
+      {q.type==="stress_battle"&&(
+        <div>
+          <div style={{textAlign:"center",fontFamily:"'Unbounded',sans-serif",fontSize:"clamp(2rem,10vw,3.5rem)",fontWeight:900,letterSpacing:"0.1em",color:"var(--gold)",marginBottom:"2rem"}}>{q.word}</div>
+          <div style={{display:"flex",gap:"1rem"}}>
+            {["A","B"].map(label=>{
+              const wrongStress = q.stressed===1?2:1;
+              const stressAt = label===q.answer?q.stressed:wrongStress;
+              return (
+                <button key={label} disabled={answered}
+                  style={{
+                    flex:1, padding:"1.5rem 1rem",
+                    border:`3px solid ${myAnswer===label?"var(--gold)":"rgba(255,255,255,0.2)"}`,
+                    background:myAnswer===label?"rgba(232,184,75,0.15)":"rgba(255,255,255,0.04)",
+                    color:"#fff", cursor:answered?"default":"pointer",
+                    opacity:answered&&myAnswer!==label?0.28:1,
+                    transition:"all 0.15s",
+                    display:"flex", flexDirection:"column", alignItems:"center", gap:"0.9rem"
+                  }}
+                  onClick={()=>onAnswer(label)}>
+                  <span style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.5rem",fontWeight:700}}>{label}</span>
+                  <StressDots syllables={q.syllables} stressAt={stressAt} size="lg" />
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
