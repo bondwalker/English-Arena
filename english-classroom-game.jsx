@@ -774,7 +774,7 @@ function Home({ onHost, onJoin }) {
   return (
     <div className="hero">
       <h1 className="hero-title">ENGLISH<br/><span>ARENA</span></h1>
-      <p className="hero-sub">Live classroom games for your English students. No app needed.</p>
+      <p className="hero-sub">Live classroom games for English students. No app needed.</p>
       <div className="hero-btns">
         <button className="btn btn-gold" onClick={onHost}>🎓 I'm the Teacher</button>
         <button className="btn btn-ghost" onClick={onJoin}>📱 I'm a Student</button>
