@@ -592,6 +592,26 @@ const QUESTION_BANK = {
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"DECEMBER",syllables:3,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"NOVEMBER",syllables:3,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"IMPORTANT",syllables:3,stressed:2,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"VOLUNTEER",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"UNDERSTAND",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"AFTERNOON",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ENTERTAIN",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GUARANTEE",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ENGINEER",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RECOMMEND",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REPRESENT",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTERRUPT",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTRODUCE",syllables:3,stressed:3,answer:"A"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SEVENTEEN",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MAGAZINE",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CIGARETTE",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"KANGAROO",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"OVERCOME",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTERFERE",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DISAGREE",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"JAPANESE",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EMPLOYEE",syllables:3,stressed:3,answer:"B"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REFUGEE",syllables:3,stressed:3,answer:"B"},
   ]},
 };
 
@@ -754,14 +774,14 @@ function Home({ onHost, onJoin }) {
   return (
     <div className="hero">
       <h1 className="hero-title">ENGLISH<br/><span>ARENA</span></h1>
-      <p className="hero-sub">AI-powered live games for your English classroom. No app needed.</p>
+      <p className="hero-sub">Live classroom games for your English students. No app needed.</p>
       <div className="hero-btns">
         <button className="btn btn-gold" onClick={onHost}>🎓 I'm the Teacher</button>
         <button className="btn btn-ghost" onClick={onJoin}>📱 I'm a Student</button>
       </div>
       <p className="op30 text-center mt-4" style={{fontSize:"0.72rem",maxWidth:440,lineHeight:1.8}}>
-        Multiple Choice · True/False · Error Spotter · Word Order · Story Builder · Idioms · Word Match · Odd One Out
-        <br/>Solo mode · Teams mode · Live leaderboard · AI question generation
+        Multiple Choice · True/False · Error Spotter · Word Order · Story Builder · Idioms · Word Match · Odd One Out · Stress Battle
+        <br/>Solo mode · Teams mode · Live leaderboard · 30 curated topic banks
       </p>
     </div>
   );
@@ -1094,7 +1114,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"clamp(2rem,6vw,3rem)",fontWeight:900,letterSpacing:"0.1em",color:"var(--gold)",marginBottom:"1.5rem"}}>{q.word}</div>
           <div style={{display:"flex",gap:"3rem",justifyContent:"center"}}>
             {["A","B"].map(label=>{
-              const wrongStress = q.stressed===1?2:1;
+              const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
               const stressAt = label===q.answer ? q.stressed : wrongStress;
               return (
                 <div key={label} style={{textAlign:"center"}}>
@@ -1135,7 +1155,7 @@ function HostReveal({ q, answers, players }) {
             <div style={{display:"flex",gap:"2.5rem",justifyContent:"center"}}>
               {["A","B"].map(label=>{
                 const isCorrect = label===q.answer;
-                const wrongStress = q.stressed===1?2:1;
+                const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
                 const stressAt = isCorrect?q.stressed:wrongStress;
                 return (
                   <div key={label} style={{textAlign:"center",padding:"0.8rem 1.4rem",border:`2px solid ${isCorrect?"var(--gold)":"rgba(255,255,255,0.12)"}`,background:isCorrect?"rgba(232,184,75,0.1)":"transparent"}}>
@@ -1390,7 +1410,7 @@ function StudentView({ onBack, initialCode = "" }) {
                 <div style={{display:"flex",gap:"1.5rem",justifyContent:"center"}}>
                   {["A","B"].map(label=>{
                     const isCorrect = label===q.answer;
-                    const wrongStress = q.stressed===1?2:1;
+                    const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
                     const stressAt = isCorrect?q.stressed:wrongStress;
                     return (
                       <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--gold)":"rgba(255,255,255,0.1)"}`,background:isCorrect?"rgba(232,184,75,0.1)":"transparent"}}>
@@ -1648,7 +1668,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           <div style={{textAlign:"center",fontFamily:"'Unbounded',sans-serif",fontSize:"clamp(2rem,10vw,3.5rem)",fontWeight:900,letterSpacing:"0.1em",color:"var(--gold)",marginBottom:"2rem"}}>{q.word}</div>
           <div style={{display:"flex",gap:"1rem"}}>
             {["A","B"].map(label=>{
-              const wrongStress = q.stressed===1?2:1;
+              const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
               const stressAt = label===q.answer?q.stressed:wrongStress;
               return (
                 <button key={label} disabled={answered}
