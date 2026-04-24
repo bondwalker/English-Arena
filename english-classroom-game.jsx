@@ -67,7 +67,21 @@ function checkAnswer(given, q) {
   if (given === null || given === undefined) return false;
   const n = s => String(s).toLowerCase().trim().replace(/[.,!?'"]/g,"");
   if (q.type === "word_match") return given === "match_all_correct";
+  if (q.type === "story_builder") {
+    const count = Math.min((q.sentences||[]).length, 3);
+    const correct3 = (q.correctOrder||[]).filter(i => i < count).join(",");
+    return n(given) === correct3;
+  }
   return n(given) === n(q.answer);
+}
+
+function getTimeLimit(q) {
+  if (!q) return 25;
+  if (q.type === "stress_battle") return 15;
+  if (q.type === "story_builder") return 50;
+  if (q.type === "rearrange") return 40;
+  if (q.type === "odd_one_out") return 35;
+  return 25;
 }
 
 function getTeamScores(room) {
@@ -792,7 +806,7 @@ function HostView({ onBack }) {
   const [room, setRoom] = useState(() => read() || defaultRoom());
   const [selectedTopic, setSelectedTopic] = useState("");
   const [gameType, setGameType] = useState("mixed");
-  const [qCount, setQCount] = useState(6);
+  const [qCount, setQCount] = useState(8);
   const [error, setError] = useState("");
   const timerRef = useRef(null);
 
@@ -859,7 +873,7 @@ function HostView({ onBack }) {
 
   const startGame = () => {
     if (!room.questions.length) return;
-    upd(prev => ({ ...prev, phase:"question", qIndex:0, currentQ:prev.questions[0], timeLeft:prev.questions[0]?.type==="stress_battle"?15:25, answers:{} }));
+    upd(prev => ({ ...prev, phase:"question", qIndex:0, currentQ:prev.questions[0], timeLeft:getTimeLimit(prev.questions[0]), answers:{} }));
   };
 
   const advance = () => {
@@ -885,7 +899,7 @@ function HostView({ onBack }) {
   };
 
   const goNextQuestion = () => {
-    upd(prev => ({ ...prev, phase:"question", timeLeft:prev.currentQ?.type==="stress_battle"?15:25 }));
+    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ) }));
   };
 
   const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setSelectedTopic(""); setGameType("mixed"); };
@@ -908,13 +922,29 @@ function HostView({ onBack }) {
       </div>
 
       {/* Code + QR */}
-      <div className="text-center mt-2">
-        <span className="label">Room Code</span>
-        <div className="code-badge">{room.code}</div>
-        <p className="op50 mt-1" style={{fontSize:"0.8rem"}}>{players.length} player{players.length!==1?"s":""} in lobby</p>
-        <QRDisplay url={typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app"} />
-        <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan QR → enter name → Join!</p>
-      </div>
+      {(() => {
+        const qrUrl = typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app";
+        return (
+          <>
+            <div className="text-center mt-2">
+              <span className="label">Room Code</span>
+              <div className="code-badge">{room.code}</div>
+              <p className="op50 mt-1" style={{fontSize:"0.8rem"}}>{players.length} player{players.length!==1?"s":""} in lobby</p>
+              {room.phase==="lobby" && (
+                <>
+                  <QRDisplay url={qrUrl} />
+                  <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan QR → enter name → Join!</p>
+                </>
+              )}
+            </div>
+            {(room.phase==="question"||room.phase==="reveal") && (
+              <div style={{position:"fixed",bottom:"1rem",right:"1rem",zIndex:50,background:"#fff",padding:"0.35rem",lineHeight:0,boxShadow:"0 2px 12px rgba(0,0,0,0.4)"}}>
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(qrUrl)}&bgcolor=ffffff&color=0d0d0d&margin=2&format=png`} alt="Join QR" width={80} height={80} />
+              </div>
+            )}
+          </>
+        );
+      })()}
 
       {/* Players */}
       {players.length > 0 && (
@@ -989,7 +1019,7 @@ function HostView({ onBack }) {
             <div style={{flex:1,minWidth:110}}>
               <span className="label">Questions</span>
               <select className="select" value={qCount} onChange={e=>setQCount(+e.target.value)}>
-                {[3,5,6,8,10,15].map(n=><option key={n} value={n}>{n}</option>)}
+                {[8,10,12,15].map(n=><option key={n} value={n}>{n}</option>)}
               </select>
             </div>
           </div>
@@ -1096,13 +1126,18 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       <div className="text-center mb-2">
         <div className={`timer-num ${timeLeft<=5?"urgent":""}`}>{timeLeft}</div>
       </div>
-      <h2 style={{fontSize:"clamp(1.05rem,2.4vw,1.5rem)",lineHeight:1.4,textAlign:"center",marginBottom:"1rem"}}>{q.question}</h2>
+      <h2 style={{fontSize:"clamp(1.1rem,2.6vw,1.6rem)",lineHeight:1.4,textAlign:"center",marginBottom:"1.2rem",maxWidth:680,margin:"0 auto 1.2rem"}}>{q.question}</h2>
       {q.type==="rearrange"&&<div className="tiles" style={{justifyContent:"center"}}>{q.words?.map((w,i)=><span key={i} className="tile">{w}</span>)}</div>}
-      {(q.type==="multiple_choice"||q.type==="odd_one_out")&&q.options&&(
+      {q.type==="multiple_choice"&&q.options&&(
         <div className="opt-grid">{q.options.map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>
       )}
+      {q.type==="odd_one_out"&&q.options&&(()=>{
+        const wrong = q.answer;
+        const right = q.options.find(o=>o!==wrong);
+        return <div className="opt-grid">{[wrong,right].map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>;
+      })()}
       {q.type==="true_false"&&<div className="flex gap-2 mt-2"><div className="opt-btn opt-2" style={{justifyContent:"center",flex:1}}>✅ True</div><div className="opt-btn opt-0" style={{justifyContent:"center",flex:1}}>❌ False</div></div>}
-      {q.type==="story_builder"&&q.sentences&&<div className="mt-2">{q.sentences.map((s,i)=><div key={i} className="story-card" style={{cursor:"default"}}><span className="story-num">{i+1}</span>{s}</div>)}</div>}
+      {q.type==="story_builder"&&q.sentences&&<div className="mt-2">{q.sentences.slice(0,3).map((s,i)=><div key={i} className="story-card" style={{cursor:"default"}}><span className="story-num">{i+1}</span>{s}</div>)}</div>}
       {q.type==="word_match"&&q.pairs&&(
         <div className="flex gap-2 mt-2">
           <div style={{flex:1}}><span className="label">Words</span>{q.pairs.map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.word}</div>)}</div>
@@ -1166,6 +1201,12 @@ function HostReveal({ q, answers, players }) {
               })}
             </div>
           </div>
+        ) : q.type==="story_builder" ? (
+          <div>{(q.correctOrder||[]).filter(i=>i<3).map((idx,pos)=>(
+            <div key={idx} style={{fontSize:"0.88rem",marginBottom:"0.3rem"}}>
+              <span style={{color:"var(--gold)",fontWeight:700,marginRight:"0.4rem"}}>{pos+1}.</span>{q.sentences[idx]}
+            </div>
+          ))}</div>
         ) : (
           <div style={{fontSize:"1.1rem",fontWeight:700}}>{q.answer}</div>
         )}
@@ -1421,6 +1462,12 @@ function StudentView({ onBack, initialCode = "" }) {
                   })}
                 </div>
               </div>
+            ) : q.type==="story_builder" ? (
+              <div>{(q.correctOrder||[]).filter(i=>i<3).map((idx,pos)=>(
+                <div key={idx} style={{fontSize:"0.82rem",marginTop:"0.25rem"}}>
+                  <span style={{color:"var(--gold)",fontWeight:700,marginRight:"0.35rem"}}>{pos+1}.</span>{q.sentences[idx]}
+                </div>
+              ))}</div>
             ) : (
               <div style={{fontWeight:700,fontSize:"1rem"}}>{q.answer}</div>
             )}
@@ -1442,9 +1489,23 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
     if (q.type==="word_match" && q.pairs) setShuffledMeanings([...q.pairs.slice(0,3)].sort(()=>Math.random()-0.5));
   }, [pairsKey]);
 
+  const [shuffledWords, setShuffledWords] = useState([]);
+  useEffect(() => {
+    if (q.type==="rearrange" && q.words) setShuffledWords([...q.words].sort(()=>Math.random()-0.5));
+  }, [q.words?.join("|")]);
+
+  const [twoOptions, setTwoOptions] = useState([]);
+  useEffect(() => {
+    if (q.type==="odd_one_out" && q.options) {
+      const wrong = q.answer;
+      const right = q.options.find(o=>o!==wrong);
+      setTwoOptions([wrong, right].sort(()=>Math.random()-0.5));
+    }
+  }, [q.question]);
+
   const submitTyped = () => { if (typeVal.trim()) onAnswer(typeVal.trim()); };
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
-  const submitStory = () => { if (storyOrder.length===q.sentences?.length) onAnswer(storyOrder.join(",")); };
+  const submitStory = () => { if (storyOrder.length===3) onAnswer(storyOrder.join(",")); };
 
   const handleMatch = (type, val) => {
     if (answered) return;
@@ -1470,17 +1531,27 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       </div>
       <h2 style={{fontSize:"1.18rem",lineHeight:1.5,marginBottom:"0.9rem"}}>{q.question}</h2>
 
-      {/* Multiple choice / Odd one out */}
-      {(q.type==="multiple_choice"||q.type==="odd_one_out")&&q.options&&(
+      {/* Multiple choice */}
+      {q.type==="multiple_choice"&&q.options&&(
         <div className="opt-grid">
           {q.options.map((opt,i)=>(
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{
-                opacity: answered && myAnswer!==opt ? 0.28 : 1,
-                outline: answered && myAnswer===opt ? "4px solid rgba(0,0,0,0.45)" : "none",
-                transition:"opacity 0.18s"
-              }}
+              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s"}}
+              onClick={()=>onAnswer(opt)}>
+              <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Odd one out — 2 options */}
+      {q.type==="odd_one_out"&&twoOptions.length===2&&(
+        <div className="opt-grid">
+          {twoOptions.map((opt,i)=>(
+            <button key={i} disabled={answered}
+              className={`opt-btn opt-${i}`}
+              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s"}}
               onClick={()=>onAnswer(opt)}>
               <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
             </button>
@@ -1575,7 +1646,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           </div>
           <span className="label mt-2">Word bank (tap to use):</span>
           <div className="tiles">
-            {q.words?.map((w,i)=>(
+            {(shuffledWords.length?shuffledWords:q.words||[]).map((w,i)=>(
               <span key={i} className={`tile ${usedIdx.includes(i)?"used":""}`}
                 onClick={()=>{ if (answered||usedIdx.includes(i)) return; setRearranged(p=>[...p,w]); setUsedIdx(p=>[...p,i]); }}>
                 {w}
@@ -1607,7 +1678,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
             </>
           )}
           <span className="label">Tap sentences in the correct order:</span>
-          {q.sentences.map((s,i)=>(
+          {q.sentences.slice(0,3).map((s,i)=>(
             <div key={i} className={`story-card ${storyOrder.includes(i)?"placed":""}`}
               onClick={()=>{
                 if (answered) return;
@@ -1619,7 +1690,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           ))}
           <div className="flex gap-2 mt-2">
             <button className="btn btn-sm btn-ghost" disabled={answered} onClick={()=>setStoryOrder([])}>Clear</button>
-            <button className="btn btn-teal" disabled={answered||storyOrder.length!==q.sentences.length} onClick={submitStory}>
+            <button className="btn btn-teal" disabled={answered||storyOrder.length!==3} onClick={submitStory}>
               {answered?"✓ Submitted":"Submit Order →"}
             </button>
           </div>
