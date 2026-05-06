@@ -1205,7 +1205,7 @@ function HostReveal({ q, answers, players }) {
       <span className="label">Correct Answer</span>
       <div className="card card-gold">
         {q.type==="word_match" ? (
-          <div>{q.pairs?.slice(0,3).map((p,i)=>(
+          <div>{q.pairs?.slice(0,2).map((p,i)=>(
             <div key={i} style={{display:"flex",gap:"0.5rem",marginBottom:"0.25rem",fontSize:"0.9rem"}}>
               <strong>{p.word}</strong><span className="op50">→</span><span>{p.meaning}</span>
             </div>))}</div>
@@ -1520,7 +1520,7 @@ function StudentView({ onBack, initialCode = "" }) {
           {q&&<div className="card mt-3">
             <span className="label">Correct Answer</span>
             {q.type==="word_match" ? (
-              q.pairs?.slice(0,3).map((p,i)=>(
+              q.pairs?.slice(0,2).map((p,i)=>(
                 <div key={i} style={{display:"flex",gap:"0.5rem",marginTop:"0.28rem",fontSize:"0.88rem"}}>
                   <strong style={{color:"var(--gold)"}}>{p.word}</strong>
                   <span className="op50">→</span><span>{p.meaning}</span>
@@ -1564,10 +1564,10 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
   const answered = myAnswer !== null;
 
   // Stable shuffled meanings — only reshuffle when the actual words change
-  const pairsKey = q.type==="word_match" ? (q.pairs||[]).slice(0,3).map(p=>p.word).join("|") : "";
+  const pairsKey = q.type==="word_match" ? (q.pairs||[]).slice(0,2).map(p=>p.word).join("|") : "";
   const [shuffledMeanings, setShuffledMeanings] = useState([]);
   useEffect(() => {
-    if (q.type==="word_match" && q.pairs) setShuffledMeanings([...q.pairs.slice(0,3)].sort(()=>Math.random()-0.5));
+    if (q.type==="word_match" && q.pairs) setShuffledMeanings([...q.pairs.slice(0,2)].sort(()=>Math.random()-0.5));
   }, [pairsKey]);
 
   const [shuffledWords, setShuffledWords] = useState([]);
@@ -1598,7 +1598,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       const isCorrect = q.pairs?.find(p=>p.word===sel)?.meaning===val;
       const nm = { ...matched, [sel]:{meaning:val,correct:isCorrect} };
       setMatchState({sel:null,matched:nm});
-      if (Object.keys(nm).length===q.pairs?.length) {
+      if (Object.keys(nm).length===2) {
         onAnswer(Object.values(nm).every(m=>m.correct)?"match_all_correct":"match_wrong");
       }
     }
@@ -1787,7 +1787,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           <div className="flex gap-2">
             <div style={{flex:1}}>
               <span className="label">Words</span>
-              {q.pairs.slice(0,3).map((p,i)=>{
+              {q.pairs.slice(0,2).map((p,i)=>{
                 const m = matchState.matched[p.word];
                 return (
                   <div key={i} className={`match-word ${matchState.sel===p.word?"selected":""} ${m?(m.correct?"matched-correct":"matched-wrong"):""}`}
