@@ -906,6 +906,20 @@ function HostView({ onBack }) {
     upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ) }));
   };
 
+  const endEarly = () => {
+    clearInterval(timerRef.current);
+    upd(prev => prev.phase==="question" ? { ...prev, phase:"reveal", timeLeft:0 } : prev);
+  };
+
+  // Auto-advance to reveal when every player has submitted
+  const ansCount = Object.keys(room.answers||{}).length;
+  const pCount = Object.keys(room.players||{}).length;
+  useEffect(() => {
+    if (room.phase !== "question" || pCount === 0 || ansCount < pCount) return;
+    const t = setTimeout(endEarly, 700);
+    return () => clearTimeout(t);
+  }, [ansCount, pCount, room.phase]);
+
   const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setSelectedTopic(""); setGameType("mixed"); };
 
   const players = Object.entries(room.players||{});
@@ -1058,9 +1072,16 @@ function HostView({ onBack }) {
 
       {/* ── QUESTION PHASE ── */}
       {room.phase==="question" && room.currentQ && (
-        <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
-          players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
-          mode={room.mode} teams={activeTeams} teamScores={teamScores} />
+        <>
+          <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
+            players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
+            mode={room.mode} teams={activeTeams} teamScores={teamScores} />
+          {ansCount > 0 && (
+            <div className="text-center mt-2">
+              <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>
+            </div>
+          )}
+        </>
       )}
 
       {/* ── REVEAL ── */}
