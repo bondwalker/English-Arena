@@ -710,8 +710,12 @@ const css = `
   .match-word.matched-wrong{border-color:var(--red);background:rgba(232,58,58,0.12);cursor:default}
 
   .timer-num{font-family:'Unbounded',sans-serif;font-size:3rem;font-weight:900;color:var(--gold);line-height:1}
-  .timer-num.urgent{color:var(--coral);animation:pulse 0.5s ease infinite alternate}
+  .timer-num.urgent{color:var(--red);animation:timerPulse 0.5s ease-in-out infinite;text-shadow:0 0 20px rgba(232,58,58,0.7)}
+  @keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
   @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.1)}}
+  @keyframes lockIn{0%{transform:scale(1)}35%{transform:scale(1.09);filter:brightness(1.35)}70%{transform:scale(0.97)}100%{transform:scale(1);filter:brightness(1)}}
+  @keyframes streakPop{0%{transform:scale(0.4) translateY(16px);opacity:0}60%{transform:scale(1.18) translateY(-4px);opacity:1}100%{transform:scale(1) translateY(0);opacity:1}}
+  @keyframes podiumDrop{0%{transform:translateY(-30px) scale(0.9);opacity:0}70%{transform:translateY(4px) scale(1.02)}100%{transform:translateY(0) scale(1);opacity:1}}
 
   .lb-row{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0.9rem;margin-bottom:0.35rem;border-left:4px solid transparent;animation:slideIn 0.35s ease forwards;opacity:0}
   @keyframes slideIn{from{transform:translateX(-22px);opacity:0}to{transform:translateX(0);opacity:1}}
@@ -1228,16 +1232,66 @@ function HostReveal({ q, answers, players }) {
   );
 }
 
+function Confetti() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener("resize", resize);
+    const colors = ["#e8b84b","#e85d3a","#2a9d8f","#a855f7","#4db8e8","#3ab87a","#fff","#f5f0e8"];
+    const particles = Array.from({length:130}, () => ({
+      x: Math.random()*window.innerWidth, y: Math.random()*-window.innerHeight*0.5,
+      w: Math.random()*11+5, h: Math.random()*5+3,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*Math.PI*2, vx:(Math.random()-0.5)*3.5,
+      vy: Math.random()*3+1.5, vr:(Math.random()-0.5)*0.14,
+    }));
+    let raf; let t0 = null;
+    const draw = (ts) => {
+      if (!t0) t0 = ts;
+      const elapsed = ts - t0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vy += 0.055;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, 1 - elapsed/3600);
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      if (elapsed < 3600) raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
+  }, []);
+  return <canvas ref={ref} style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:100}} />;
+}
+
 function Leaderboard({ sorted, mode, teams, teamScores, isEnd }) {
   const title = isEnd ? "🏆 FINAL RESULTS" : "📊 LEADERBOARD";
+  // Podium delay: for isEnd, reveal 3rd→2nd→1st (most dramatic last)
+  const rowDelay = (i) => isEnd ? [`1.8s`,`1.0s`,`0.2s`][i] ?? `2.4s` : `${i*0.07}s`;
+  const podiumStyle = (i) => isEnd && i < 3 ? {
+    animation:`podiumDrop 0.55s cubic-bezier(0.175,0.885,0.32,1.275) forwards`,
+    animationDelay: rowDelay(i),
+    padding: i===0 ? "1rem 0.9rem" : undefined,
+    borderLeftWidth: i===0 ? 6 : 4,
+    background: i===0 ? "rgba(232,184,75,0.08)" : undefined,
+    marginBottom: i===0 ? "0.5rem" : undefined,
+  } : {};
+
   if (mode === "teams") {
     const tSorted = [...teams].sort((a,b)=>(teamScores[b.id]||0)-(teamScores[a.id]||0));
     return (
       <div className="mt-3">
+        {isEnd && <Confetti />}
         <h2 className="text-center text-gold mb-3" style={{fontSize:"1.35rem"}}>{title}</h2>
         <span className="label">Team standings</span>
         {tSorted.map((t,i)=>(
-          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:`${i*0.08}s`}}>
+          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:rowDelay(i),...podiumStyle(i)}}>
             <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
             <span style={{fontSize:"1.3rem"}}>{t.emoji}</span>
             <span className="lb-name" style={{color:t.color,fontWeight:700}}>{t.name}</span>
@@ -1262,11 +1316,12 @@ function Leaderboard({ sorted, mode, teams, teamScores, isEnd }) {
   }
   return (
     <div className="mt-3">
+      {isEnd && <Confetti />}
       <h2 className="text-center text-gold mb-3" style={{fontSize:"1.35rem"}}>{title}</h2>
       {sorted.map(([name,p],i)=>(
         <div key={name} className="lb-row" style={{
           borderLeftColor:i===0?"var(--gold)":i===1?"#c0c0c0":i===2?"#cd7f32":"rgba(255,255,255,0.08)",
-          animationDelay:`${i*0.07}s`
+          animationDelay: rowDelay(i), ...podiumStyle(i),
         }}>
           <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
           <span className="lb-name">{name}</span>
@@ -1404,6 +1459,11 @@ function StudentView({ onBack, initialCode = "" }) {
             <div style={{fontSize:"1.35rem",fontWeight:700,color:wasCorrect?"var(--green)":"var(--coral)"}}>
               {wasCorrect?"Correct! +1000":"Not quite…"}
             </div>
+            {wasCorrect&&(myData.streak||0)>=1&&(
+              <div style={{marginTop:"0.8rem",fontFamily:"'Unbounded',sans-serif",fontSize:"1.3rem",fontWeight:900,color:"var(--gold)",animation:"streakPop 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards"}}>
+                🔥 On fire! ×{(myData.streak||0)+1}
+              </div>
+            )}
             {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:`Answer: `}{q.type!=="stress_battle"&&<strong style={{color:"#fff"}}>{q.answer}</strong>}</div>}
             {q?.explanation&&<div className="op30 mt-1" style={{fontSize:"0.78rem",fontStyle:"italic"}}>{q.explanation}</div>}
           </div>
@@ -1537,7 +1597,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           {q.options.map((opt,i)=>(
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s"}}
+              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s",animation:answered&&myAnswer===opt?"lockIn 0.38s ease":"none"}}
               onClick={()=>onAnswer(opt)}>
               <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
             </button>
@@ -1551,7 +1611,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           {twoOptions.map((opt,i)=>(
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s"}}
+              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s",animation:answered&&myAnswer===opt?"lockIn 0.38s ease":"none"}}
               onClick={()=>onAnswer(opt)}>
               <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
             </button>
@@ -1569,6 +1629,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                 fontSize:"1.15rem", padding:"1.2rem", flex:1,
                 opacity: answered && myAnswer!==v ? 0.28 : 1,
                 outline: answered && myAnswer===v ? "4px solid rgba(255,255,255,0.7)" : "none",
+                animation: answered && myAnswer===v ? "lockIn 0.38s ease" : "none",
                 transition:"opacity 0.18s"
               }}
               onClick={()=>onAnswer(v)}>
@@ -1609,6 +1670,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                 style={{
                   opacity: answered && myAnswer!==opt ? 0.28 : 1,
                   outline: answered && myAnswer===opt ? "4px solid rgba(0,0,0,0.45)" : "none",
+                  animation: answered && myAnswer===opt ? "lockIn 0.38s ease" : "none",
                   transition:"opacity 0.18s"
                 }}
                 onClick={()=>onAnswer(opt)}>
@@ -1749,6 +1811,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                     background:myAnswer===label?"rgba(232,184,75,0.15)":"rgba(255,255,255,0.04)",
                     color:"#fff", cursor:answered?"default":"pointer",
                     opacity:answered&&myAnswer!==label?0.28:1,
+                    animation:answered&&myAnswer===label?"lockIn 0.38s ease":"none",
                     transition:"all 0.15s",
                     display:"flex", flexDirection:"column", alignItems:"center", gap:"0.9rem"
                   }}
