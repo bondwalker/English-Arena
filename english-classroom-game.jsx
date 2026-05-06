@@ -698,12 +698,12 @@ const css = `
   .tile.used{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.22);cursor:default;transform:none}
   .tile.placed{background:var(--teal);color:#fff}
 
-  .story-card{padding:0.8rem 1rem;border:1px solid rgba(255,255,255,0.14);margin-bottom:0.4rem;cursor:pointer;transition:all 0.13s;display:flex;align-items:flex-start;gap:0.65rem;font-size:0.88rem;line-height:1.5}
+  .story-card{padding:0.8rem 1rem;border:1px solid rgba(255,255,255,0.14);margin-bottom:0.4rem;cursor:pointer;transition:all 0.13s;display:flex;align-items:flex-start;gap:0.65rem;font-size:1.05rem;line-height:1.55}
   .story-card:hover:not(.placed){border-color:var(--gold);background:rgba(232,184,75,0.07)}
   .story-card.placed{border-color:var(--teal);background:rgba(42,157,143,0.1)}
   .story-num{font-family:'Unbounded',sans-serif;font-size:0.65rem;font-weight:700;color:var(--teal);width:1.4rem;flex-shrink:0;margin-top:0.1rem}
 
-  .match-word{padding:0.55rem 0.9rem;border:1px solid rgba(255,255,255,0.18);font-size:0.88rem;font-weight:500;cursor:pointer;transition:all 0.13s;text-align:center;margin-bottom:0.4rem}
+  .match-word{padding:0.65rem 0.9rem;border:1px solid rgba(255,255,255,0.18);font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.13s;text-align:center;margin-bottom:0.4rem}
   .match-word:hover{border-color:var(--gold)}
   .match-word.selected{border-color:var(--gold);background:rgba(232,184,75,0.12)}
   .match-word.matched-correct{border-color:var(--green);background:rgba(58,184,122,0.12);cursor:default}
