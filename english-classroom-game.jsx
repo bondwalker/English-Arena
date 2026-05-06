@@ -939,21 +939,43 @@ function HostView({ onBack }) {
         </div>
       </div>
 
-      {/* Code + QR */}
-      {(() => {
+      {/* Code + QR + Players — lobby only (top) */}
+      {room.phase==="lobby" && (() => {
+        const qrUrl = typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app";
+        return (
+          <div className="text-center mt-2">
+            <span className="label">Room Code</span>
+            <div className="code-badge">{room.code}</div>
+            <p className="op50 mt-1" style={{fontSize:"0.8rem"}}>{players.length} player{players.length!==1?"s":""} in lobby</p>
+            <QRDisplay url={qrUrl} />
+            <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan QR → enter name → Join!</p>
+            {players.length > 0 && (
+              <div className="card mt-2" style={{textAlign:"left"}}>
+                <span className="label">Players joined</span>
+                <div className="flex wrap gap-1 mt-1">
+                  {players.map(([name, p]) => {
+                    const team = room.mode==="teams" ? TEAMS.find(t=>t.id===p.team) : null;
+                    return (
+                      <span key={name} className="chip" style={{background:team?team.color:"rgba(255,255,255,0.1)",color:team?"#fff":"var(--ink)"}}>
+                        {team&&team.emoji} {name}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* Code (bottom-left) + QR (bottom-right) — game only */}
+      {room.phase!=="lobby" && (() => {
         const qrUrl = typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app";
         return (
           <>
-            <div className="text-center mt-2">
-              <span className="label">Room Code</span>
-              <div className="code-badge">{room.code}</div>
-              <p className="op50 mt-1" style={{fontSize:"0.8rem"}}>{players.length} player{players.length!==1?"s":""} in lobby</p>
-              {room.phase==="lobby" && (
-                <>
-                  <QRDisplay url={qrUrl} />
-                  <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan QR → enter name → Join!</p>
-                </>
-              )}
+            <div style={{position:"fixed",bottom:"1rem",left:"1rem",zIndex:50,background:"rgba(13,13,13,0.92)",border:"1px solid rgba(255,255,255,0.15)",padding:"0.35rem 0.6rem",backdropFilter:"blur(6px)"}}>
+              <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.6rem",opacity:0.45,letterSpacing:"0.1em",marginBottom:"0.15rem"}}>CODE</div>
+              <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",fontWeight:700,color:"var(--gold)",letterSpacing:"0.08em"}}>{room.code}</div>
             </div>
             {(room.phase==="question"||room.phase==="reveal") && (
               <div style={{position:"fixed",bottom:"1rem",right:"1rem",zIndex:50,background:"#fff",padding:"0.35rem",lineHeight:0,boxShadow:"0 2px 12px rgba(0,0,0,0.4)"}}>
@@ -963,23 +985,6 @@ function HostView({ onBack }) {
           </>
         );
       })()}
-
-      {/* Players */}
-      {players.length > 0 && (
-        <div className="card mt-2">
-          <span className="label">Players joined</span>
-          <div className="flex wrap gap-1 mt-1">
-            {players.map(([name, p]) => {
-              const team = room.mode==="teams" ? TEAMS.find(t=>t.id===p.team) : null;
-              return (
-                <span key={name} className="chip" style={{background:team?team.color:(p.score>0?"var(--gold)":"rgba(255,255,255,0.1)"),color:team?"#fff":"var(--ink)"}}>
-                  {team && team.emoji} {name}{p.score>0?` · ${p.score}`:""}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       {/* ── LOBBY SETUP ── */}
       {room.phase === "lobby" && (
@@ -1081,6 +1086,7 @@ function HostView({ onBack }) {
               <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>
             </div>
           )}
+          <PlayersFooter players={players} mode={room.mode} />
         </>
       )}
 
@@ -1091,6 +1097,7 @@ function HostView({ onBack }) {
           <button className="btn btn-gold mt-3" onClick={advance}>
             {room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
           </button>
+          <PlayersFooter players={players} mode={room.mode} />
         </div>
       )}
 
@@ -1106,6 +1113,25 @@ function HostView({ onBack }) {
           )}
         </>
       )}
+    </div>
+  );
+}
+
+function PlayersFooter({ players, mode }) {
+  if (!players.length) return null;
+  return (
+    <div style={{marginTop:"2rem",paddingTop:"0.75rem",borderTop:"1px solid rgba(255,255,255,0.08)"}}>
+      <span className="label">Players</span>
+      <div className="flex wrap gap-1 mt-1">
+        {players.map(([name, p]) => {
+          const team = mode==="teams" ? TEAMS.find(t=>t.id===p.team) : null;
+          return (
+            <span key={name} className="chip" style={{background:team?team.color:"rgba(255,255,255,0.1)",color:team?"#fff":"var(--ink)"}}>
+              {team&&team.emoji} {name}{p.score>0?` · ${p.score.toLocaleString()}`:""}{p.correct===true?"✓":p.correct===false?"✗":""}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 }
