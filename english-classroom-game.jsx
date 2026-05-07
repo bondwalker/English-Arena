@@ -818,8 +818,6 @@ function SoloView({ onBack }) {
   const [qIndex, setQIndex]         = useState(0);
   const [myAnswer, setMyAnswer]     = useState(null);
   const [results, setResults]       = useState([]);        // {correct, q} per question
-  const [timeLeft, setTimeLeft]     = useState(0);
-  const timerRef = useRef(null);
 
   // answer-type state (mirrors StudentView)
   const [rearranged, setRearranged]   = useState([]);
@@ -835,26 +833,10 @@ function SoloView({ onBack }) {
     if (phase !== "question" || !q) return;
     setMyAnswer(null);
     setRearranged([]); setUsedIdx([]); setTypeVal(""); setStoryOrder([]); setMatchState({sel:null,matched:{}});
-    const limit = getTimeLimit(q);
-    setTimeLeft(limit);
-    clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev <= 1) { clearInterval(timerRef.current); handleTimeUp(); return 0; }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timerRef.current);
   }, [qIndex, phase]);
-
-  const handleTimeUp = () => {
-    setMyAnswer(prev => prev !== null ? prev : "__timeout__");
-    setPhase("reveal");
-  };
 
   const handleAnswer = (ans) => {
     if (myAnswer !== null) return;
-    clearInterval(timerRef.current);
     setMyAnswer(ans);
     setPhase("reveal");
   };
@@ -957,10 +939,7 @@ function SoloView({ onBack }) {
 
   // ── QUESTION / REVEAL SCREEN ───────────────────────────────────────────────
   if (!q) return null;
-  const limit   = getTimeLimit(q);
-  const urgent  = timeLeft <= 5 && phase === "question";
-  const isCorrect = phase === "reveal" && myAnswer !== "__timeout__" && checkAnswer(myAnswer, q);
-  const timedOut  = phase === "reveal" && myAnswer === "__timeout__";
+  const isCorrect = phase === "reveal" && checkAnswer(myAnswer, q);
 
   // Fake minimal room object for StudentAnswer
   const fakeRoom = { qIndex, questions, phase: phase === "question" ? "question" : "reveal" };
@@ -976,21 +955,14 @@ function SoloView({ onBack }) {
         <span style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.72rem",opacity:0.5}}>{qIndex+1}/{questions.length}</span>
       </div>
 
-      {/* Timer */}
-      {phase === "question" && (
-        <div style={{textAlign:"center",marginBottom:"0.8rem"}}>
-          <span className={`timer-num${urgent?" urgent":""}`}>{timeLeft}</span>
-        </div>
-      )}
-
       {/* Result flash */}
       {phase === "reveal" && (
-        <div style={{textAlign:"center",padding:"0.7rem",marginBottom:"0.9rem",borderRadius:8,background:timedOut?"rgba(255,255,255,0.06)":isCorrect?"rgba(46,204,113,0.12)":"rgba(232,58,58,0.12)",border:`1px solid ${timedOut?"rgba(255,255,255,0.1)":isCorrect?"var(--green)":"var(--coral)"}`}}>
-          <span style={{fontSize:"1.5rem"}}>{timedOut?"⏱️":isCorrect?"✅":"❌"}</span>
-          <div style={{fontWeight:700,marginTop:"0.2rem",color:timedOut?"rgba(255,255,255,0.6)":isCorrect?"var(--green)":"var(--coral)"}}>{timedOut?"Time's up!":isCorrect?"Correct!":"Not quite."}</div>
-          {!isCorrect&&!timedOut&&q.type==="error_spotter"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Error: <strong>{q.errorWord}</strong> → <strong>{q.answer}</strong></div>}
-          {!isCorrect&&!timedOut&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
-          {!isCorrect&&!timedOut&&q.type==="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Order: <strong>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
+        <div style={{textAlign:"center",padding:"0.7rem",marginBottom:"0.9rem",borderRadius:8,background:isCorrect?"rgba(46,204,113,0.12)":"rgba(232,58,58,0.12)",border:`1px solid ${isCorrect?"var(--green)":"var(--coral)"}`}}>
+          <span style={{fontSize:"1.5rem"}}>{isCorrect?"✅":"❌"}</span>
+          <div style={{fontWeight:700,marginTop:"0.2rem",color:isCorrect?"var(--green)":"var(--coral)"}}>{isCorrect?"Correct!":"Not quite."}</div>
+          {!isCorrect&&q.type==="error_spotter"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Error: <strong>{q.errorWord}</strong> → <strong>{q.answer}</strong></div>}
+          {!isCorrect&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
+          {!isCorrect&&q.type==="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Order: <strong>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
           {q.explanation&&<div className="op50" style={{fontSize:"0.78rem",marginTop:"0.3rem",lineHeight:1.4}}>{q.explanation}</div>}
         </div>
       )}
