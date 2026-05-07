@@ -1056,7 +1056,7 @@ function HostView({ onBack }) {
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const qs = shuffled.slice(0, Math.min(qCount, shuffled.length));
     setError("");
-    upd(prev => ({ ...prev, questions: qs, topic: QUESTION_BANK[selectedTopic].label, gameType, phase: "lobby" }));
+    upd(prev => ({ ...prev, questions: qs, topic: QUESTION_BANK[selectedTopic].label, gameType, phase: "question", qIndex: 0, currentQ: qs[0], timeLeft: getTimeLimit(qs[0]), answers: {} }));
   };
 
   const autoAssign = () => {
@@ -1242,30 +1242,9 @@ function HostView({ onBack }) {
           </div>
 
           {error && <p className="text-coral mb-1" style={{fontSize:"0.85rem"}}>{error}</p>}
-          <div className="flex gap-2 wrap">
-            <button className="btn btn-gold" onClick={loadQuestions} disabled={!selectedTopic}>
-              Load Questions
-            </button>
-            {room.questions.length>0 && <button className="btn btn-green" onClick={startGame}>▶ Start — {room.questions.length} Qs</button>}
-          </div>
-
-          {room.questions.length>0 && (
-            <div className="mt-3">
-              <span className="label">Preview</span>
-              {room.questions.map((q,i)=>(
-                <div key={i} className="card mt-1">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="badge">{q.type.replace(/_/g," ")}</span>
-                    <span className="op30" style={{fontSize:"0.72rem"}}>Q{i+1}</span>
-                  </div>
-                  <p style={{fontSize:"0.88rem"}}>{q.question}</p>
-                  {q.type==="rearrange"&&<p className="op30 mt-1" style={{fontSize:"0.76rem"}}>{q.words?.length} words</p>}
-                  {q.type==="story_builder"&&<p className="op30 mt-1" style={{fontSize:"0.76rem"}}>{q.sentences?.length} sentences</p>}
-                  {q.type==="word_match"&&<p className="op30 mt-1" style={{fontSize:"0.76rem"}}>{q.pairs?.map(p=>p.word).join(" · ")}</p>}
-                </div>
-              ))}
-            </div>
-          )}
+          <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic}>
+            ▶ Start Game
+          </button>
         </div>
       )}
 
