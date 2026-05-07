@@ -902,11 +902,20 @@ function SoloView({ onBack }) {
         </div>
 
         <span className="label">Number of questions</span>
-        <div className="flex gap-1 mb-4">
+        <div className="flex gap-1 mb-1">
           {[5,8,10,12,15].map(n=>(
             <button key={n} className={`btn btn-sm ${qCount===n?"btn-gold":"btn-ghost"}`} onClick={()=>setQCount(n)}>{n}</button>
           ))}
         </div>
+        {selectedTopic && (() => {
+          const bank = QUESTION_BANK[selectedTopic].questions;
+          const available = gameType === "mixed" ? bank.length : bank.filter(q => q.type === gameType).length;
+          const actual = Math.min(qCount, available);
+          return available < qCount
+            ? <p style={{fontSize:"0.78rem",color:"var(--gold)",marginBottom:"1rem",marginTop:"0.3rem"}}>⚠ Only {available} {gameType==="mixed"?"":"\""+gameType.replace(/_/g," ")+"\" "}question{available!==1?"s":""} available for this topic — you'll get {actual}.</p>
+            : <p style={{fontSize:"0.75rem",opacity:0.4,marginBottom:"1rem",marginTop:"0.3rem"}}>{actual} questions ready</p>;
+        })()}
+        {!selectedTopic && <div style={{marginBottom:"1rem"}}/>}
 
         <button className="btn btn-teal btn-full" disabled={!selectedTopic} onClick={loadQuestions}>Start Practising →</button>
       </div>
