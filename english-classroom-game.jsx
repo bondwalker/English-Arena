@@ -781,27 +781,235 @@ export default function App() {
   return (
     <>
       <style>{css}</style>
-      {view==="home"    && <Home    onHost={()=>setView("host")} onJoin={()=>setView("student")} />}
+      {view==="home"    && <Home    onHost={()=>setView("host")} onJoin={()=>setView("student")} onSolo={()=>setView("solo")} />}
       {view==="host"    && <HostView    onBack={()=>setView("home")} />}
       {view==="student" && <StudentView onBack={()=>setView("home")} initialCode={joinCode} />}
+      {view==="solo"    && <SoloView    onBack={()=>setView("home")} />}
     </>
   );
 }
 
 // ─── HOME ─────────────────────────────────────────────────────────────────────
-function Home({ onHost, onJoin }) {
+function Home({ onHost, onJoin, onSolo }) {
   return (
     <div className="hero">
       <h1 className="hero-title">ENGLISH<br/><span>ARENA</span></h1>
       <p className="hero-sub">Live classroom games to improve your English. No app needed.</p>
       <div className="hero-btns">
         <button className="btn btn-gold" onClick={onHost}>🎓 I'm the Teacher</button>
-        <button className="btn btn-ghost" onClick={onJoin}>📱 I'm a Student</button>
+        <button className="btn btn-ghost" onClick={onJoin}>📱 Join a Class Game</button>
+        <button className="btn btn-teal" onClick={onSolo} style={{marginTop:"0.5rem"}}>🎮 Practice on My Own</button>
       </div>
       <p className="op30 text-center mt-4" style={{fontSize:"0.72rem",maxWidth:440,lineHeight:1.8}}>
         Multiple Choice · True/False · Error Spotter · Word Order · Story Builder · Idioms · Word Match · Odd One Out · Stress Battle
-        <br/>Solo mode · Teams mode · Live leaderboard · 30 curated topic banks
+        <br/>Solo practice · Teams mode · Live leaderboard · 30 curated topic banks
       </p>
+    </div>
+  );
+}
+
+// ─── SOLO VIEW ────────────────────────────────────────────────────────────────
+function SoloView({ onBack }) {
+  const [phase, setPhase]           = useState("setup");   // setup | question | reveal | done
+  const [selectedTopic, setSelectedTopic] = useState("");
+  const [gameType, setGameType]     = useState("mixed");
+  const [qCount, setQCount]         = useState(10);
+  const [questions, setQuestions]   = useState([]);
+  const [qIndex, setQIndex]         = useState(0);
+  const [myAnswer, setMyAnswer]     = useState(null);
+  const [results, setResults]       = useState([]);        // {correct, q} per question
+  const [timeLeft, setTimeLeft]     = useState(0);
+  const timerRef = useRef(null);
+
+  // answer-type state (mirrors StudentView)
+  const [rearranged, setRearranged]   = useState([]);
+  const [usedIdx, setUsedIdx]         = useState([]);
+  const [typeVal, setTypeVal]         = useState("");
+  const [storyOrder, setStoryOrder]   = useState([]);
+  const [matchState, setMatchState]   = useState({ sel:null, matched:{} });
+
+  const q = questions[qIndex] || null;
+
+  // ── reset per-question answer state when question changes ──
+  useEffect(() => {
+    if (phase !== "question" || !q) return;
+    setMyAnswer(null);
+    setRearranged([]); setUsedIdx([]); setTypeVal(""); setStoryOrder([]); setMatchState({sel:null,matched:{}});
+    const limit = getTimeLimit(q);
+    setTimeLeft(limit);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) { clearInterval(timerRef.current); handleTimeUp(); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timerRef.current);
+  }, [qIndex, phase]);
+
+  const handleTimeUp = () => {
+    setMyAnswer(prev => prev !== null ? prev : "__timeout__");
+    setPhase("reveal");
+  };
+
+  const handleAnswer = (ans) => {
+    if (myAnswer !== null) return;
+    clearInterval(timerRef.current);
+    setMyAnswer(ans);
+    setPhase("reveal");
+  };
+
+  const handleNext = () => {
+    const correct = checkAnswer(myAnswer, q);
+    setResults(prev => [...prev, { correct, q }]);
+    if (qIndex + 1 >= questions.length) {
+      setPhase("done");
+    } else {
+      setQIndex(i => i + 1);
+      setPhase("question");
+    }
+  };
+
+  const loadQuestions = () => {
+    if (!selectedTopic) return;
+    const bank = QUESTION_BANK[selectedTopic].questions;
+    const pool = gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
+    if (!pool.length) return;
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
+    setQIndex(0);
+    setResults([]);
+    setPhase("question");
+  };
+
+  const restart = () => { setPhase("setup"); setQuestions([]); setQIndex(0); setResults([]); };
+
+  // ── SETUP SCREEN ───────────────────────────────────────────────────────────
+  if (phase === "setup") {
+    return (
+      <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.2rem"}}>
+        <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
+        <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.2rem"}}>Practice on Your Own</h2>
+        <p className="op50 mb-3" style={{fontSize:"0.82rem"}}>Pick a topic and start practising — no teacher needed.</p>
+
+        <span className="label">Topic</span>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid rgba(255,255,255,0.1)"}}>
+          {Object.entries(QUESTION_BANK).filter(([k])=>k!=="stress_battle").map(([key,{label}])=>(
+            <button key={key} onClick={()=>setSelectedTopic(key)} style={{padding:"0.5rem 0.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
+          ))}
+        </div>
+
+        <span className="label">Question type</span>
+        <div className="flex wrap gap-1 mb-3">
+          {[["mixed","🎲 Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Fill the Idiom"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"]].map(([v,l])=>(
+            <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={()=>setGameType(v)}>{l}</button>
+          ))}
+        </div>
+
+        <span className="label">Number of questions</span>
+        <div className="flex gap-1 mb-4">
+          {[5,8,10,12,15].map(n=>(
+            <button key={n} className={`btn btn-sm ${qCount===n?"btn-gold":"btn-ghost"}`} onClick={()=>setQCount(n)}>{n}</button>
+          ))}
+        </div>
+
+        <button className="btn btn-teal btn-full" disabled={!selectedTopic} onClick={loadQuestions}>Start Practising →</button>
+      </div>
+    );
+  }
+
+  // ── DONE SCREEN ────────────────────────────────────────────────────────────
+  if (phase === "done") {
+    const total   = results.length;
+    const correct = results.filter(r => r.correct).length;
+    const pct     = Math.round((correct / total) * 100);
+    const grade   = pct >= 90 ? "🏆 Outstanding!" : pct >= 70 ? "🌟 Well done!" : pct >= 50 ? "💪 Keep practising!" : "📚 Review and try again!";
+    return (
+      <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.5rem"}}>
+        <div className="card card-gold" style={{textAlign:"center",marginBottom:"1.2rem"}}>
+          <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"2.8rem",fontWeight:900,marginBottom:"0.3rem"}}>{pct}%</div>
+          <div style={{fontSize:"1.1rem",fontWeight:700,marginBottom:"0.2rem"}}>{grade}</div>
+          <div className="op50" style={{fontSize:"0.85rem"}}>{correct} / {total} correct · {QUESTION_BANK[selectedTopic]?.label}</div>
+        </div>
+
+        <div style={{marginBottom:"1.2rem"}}>
+          {results.map((r,i)=>(
+            <div key={i} style={{display:"flex",gap:"0.6rem",alignItems:"flex-start",padding:"0.5rem 0",borderBottom:"1px solid rgba(255,255,255,0.06)"}}>
+              <span style={{fontSize:"1rem",marginTop:"0.1rem"}}>{r.correct?"✅":"❌"}</span>
+              <div>
+                <div style={{fontSize:"0.83rem",opacity:0.8,lineHeight:1.4}}>{r.q.question}{r.q.sentence?" "+r.q.sentence:""}</div>
+                {!r.correct&&<div style={{fontSize:"0.78rem",color:"var(--gold)",marginTop:"0.2rem"}}>
+                  {r.q.type==="error_spotter"?`Error: ${r.q.errorWord} → ${r.q.answer}`:r.q.type==="story_builder"?`Order: ${(r.q.correctOrder||[]).filter(i=>i<3).join(",")}`:r.q.type==="word_match"?"Match all pairs correctly":`Answer: ${r.q.answer}`}
+                </div>}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-2">
+          <button className="btn btn-teal" style={{flex:1}} onClick={loadQuestions}>Try Again</button>
+          <button className="btn btn-ghost" style={{flex:1}} onClick={restart}>New Topic</button>
+        </div>
+        <button className="btn btn-ghost btn-full mt-2" onClick={onBack}>← Home</button>
+      </div>
+    );
+  }
+
+  // ── QUESTION / REVEAL SCREEN ───────────────────────────────────────────────
+  if (!q) return null;
+  const limit   = getTimeLimit(q);
+  const urgent  = timeLeft <= 5 && phase === "question";
+  const isCorrect = phase === "reveal" && myAnswer !== "__timeout__" && checkAnswer(myAnswer, q);
+  const timedOut  = phase === "reveal" && myAnswer === "__timeout__";
+
+  // Fake minimal room object for StudentAnswer
+  const fakeRoom = { qIndex, questions, phase: phase === "question" ? "question" : "reveal" };
+
+  return (
+    <div style={{minHeight:"100vh",maxWidth:460,margin:"0 auto",padding:"1.2rem"}}>
+      {/* Progress bar */}
+      <div style={{display:"flex",alignItems:"center",gap:"0.6rem",marginBottom:"1rem"}}>
+        <button className="btn btn-ghost btn-sm" onClick={onBack} style={{padding:"0.3rem 0.7rem",fontSize:"0.75rem"}}>✕</button>
+        <div style={{flex:1,height:6,background:"rgba(255,255,255,0.1)",borderRadius:3}}>
+          <div style={{height:"100%",borderRadius:3,background:"var(--teal)",width:`${((qIndex)/questions.length)*100}%`,transition:"width 0.4s"}}/>
+        </div>
+        <span style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.72rem",opacity:0.5}}>{qIndex+1}/{questions.length}</span>
+      </div>
+
+      {/* Timer */}
+      {phase === "question" && (
+        <div style={{textAlign:"center",marginBottom:"0.8rem"}}>
+          <span className={`timer-num${urgent?" urgent":""}`}>{timeLeft}</span>
+        </div>
+      )}
+
+      {/* Result flash */}
+      {phase === "reveal" && (
+        <div style={{textAlign:"center",padding:"0.7rem",marginBottom:"0.9rem",borderRadius:8,background:timedOut?"rgba(255,255,255,0.06)":isCorrect?"rgba(46,204,113,0.12)":"rgba(232,58,58,0.12)",border:`1px solid ${timedOut?"rgba(255,255,255,0.1)":isCorrect?"var(--green)":"var(--coral)"}`}}>
+          <span style={{fontSize:"1.5rem"}}>{timedOut?"⏱️":isCorrect?"✅":"❌"}</span>
+          <div style={{fontWeight:700,marginTop:"0.2rem",color:timedOut?"rgba(255,255,255,0.6)":isCorrect?"var(--green)":"var(--coral)"}}>{timedOut?"Time's up!":isCorrect?"Correct!":"Not quite."}</div>
+          {!isCorrect&&!timedOut&&q.type==="error_spotter"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Error: <strong>{q.errorWord}</strong> → <strong>{q.answer}</strong></div>}
+          {!isCorrect&&!timedOut&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
+          {!isCorrect&&!timedOut&&q.type==="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Order: <strong>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
+          {q.explanation&&<div className="op50" style={{fontSize:"0.78rem",marginTop:"0.3rem",lineHeight:1.4}}>{q.explanation}</div>}
+        </div>
+      )}
+
+      {/* Question */}
+      <StudentAnswer q={q} myAnswer={myAnswer} onAnswer={handleAnswer}
+        rearranged={rearranged} setRearranged={setRearranged}
+        usedIdx={usedIdx} setUsedIdx={setUsedIdx}
+        typeVal={typeVal} setTypeVal={setTypeVal}
+        storyOrder={storyOrder} setStoryOrder={setStoryOrder}
+        matchState={matchState} setMatchState={setMatchState}
+        room={fakeRoom} />
+
+      {/* Next button */}
+      {phase === "reveal" && (
+        <button className="btn btn-teal btn-full mt-3" onClick={handleNext}>
+          {qIndex + 1 >= questions.length ? "See Results →" : "Next →"}
+        </button>
+      )}
     </div>
   );
 }
