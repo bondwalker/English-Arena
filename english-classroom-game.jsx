@@ -1374,8 +1374,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       </div>
       <h2 style={{fontSize:"clamp(1.1rem,2.6vw,1.6rem)",lineHeight:1.4,textAlign:"center",marginBottom:"1.2rem",maxWidth:680,margin:"0 auto 1.2rem"}}>{q.question}</h2>
       {q.type==="rearrange"&&<div className="tiles" style={{justifyContent:"center"}}>{shuffledRearrange.map((w,i)=><span key={i} className="tile">{w}</span>)}</div>}
-      {q.type==="multiple_choice"&&(
-        <div className="text-center op30 mt-2" style={{fontSize:"0.85rem",letterSpacing:"0.04em"}}>Students are choosing their answer…</div>
+      {q.type==="multiple_choice"&&q.options&&(
+        <div className="opt-grid">{q.options.map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>
       )}
       {q.type==="odd_one_out"&&q.options&&(()=>{
         const wrong = q.answer;
