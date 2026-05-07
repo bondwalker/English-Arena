@@ -1065,7 +1065,7 @@ function HostView({ onBack }) {
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const qs = shuffled.slice(0, Math.min(qCount, shuffled.length));
     setError("");
-    upd(prev => ({ ...prev, questions: qs, topic: QUESTION_BANK[selectedTopic].label, gameType, phase: "question", qIndex: 0, currentQ: qs[0], timeLeft: getTimeLimit(qs[0]), answers: {} }));
+    upd(prev => ({ ...prev, questions: qs, topic: QUESTION_BANK[selectedTopic].label, gameType, phase: "lobby" }));
   };
 
   const autoAssign = () => {
@@ -1189,8 +1189,53 @@ function HostView({ onBack }) {
         );
       })()}
 
-      {/* ── LOBBY SETUP ── */}
-      {room.phase === "lobby" && (
+      {/* ── LOBBY: START (after questions loaded) ── */}
+      {room.phase === "lobby" && room.questions.length > 0 && (
+        <div className="mt-3">
+          <div className="card card-gold mb-2" style={{textAlign:"center"}}>
+            <p style={{fontSize:"0.82rem",opacity:0.7,marginBottom:"0.6rem"}}>
+              {room.questions.length} questions ready · Topic: <strong>{room.topic}</strong>
+            </p>
+            <button className="btn btn-green btn-full" style={{fontSize:"1rem"}} onClick={startGame}>▶ Start Game</button>
+          </div>
+          {/* Mode */}
+          <span className="label">Game Mode</span>
+          <div className="mode-toggle">
+            <button className={`mode-btn ${room.mode==="solo"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"solo"}))}>👤 Solo — Individual</button>
+            <button className={`mode-btn ${room.mode==="teams"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"teams"}))}>👥 Teams</button>
+          </div>
+          {room.mode==="teams" && (
+            <div className="card card-gold mb-2">
+              <span className="label">Team Setup</span>
+              <div className="flex items-center gap-2 mt-1 mb-2 wrap">
+                <span style={{fontSize:"0.85rem",opacity:0.7}}>Teams:</span>
+                {[2,3,4].map(n=>(
+                  <button key={n} className={`btn btn-sm ${room.teamCount===n?"btn-gold":"btn-ghost"}`} onClick={()=>upd(p=>({...p,teamCount:n}))}>{n}</button>
+                ))}
+              </div>
+              <div className="team-grid">
+                {activeTeams.map(t => {
+                  const members = players.filter(([,p])=>p.team===t.id).map(([n])=>n);
+                  return (
+                    <div key={t.id} className="team-card" style={{borderColor:t.color,color:t.color}}>
+                      <div style={{fontSize:"1.4rem"}}>{t.emoji}</div>
+                      <div className="team-card-name">{t.name}</div>
+                      <div className="team-card-count">{members.length} member{members.length!==1?"s":""}</div>
+                      {members.length>0&&<div className="team-members" style={{color:"rgba(255,255,255,0.55)"}}>{members.join(", ")}</div>}
+                    </div>
+                  );
+                })}
+              </div>
+              {players.length>0 && !room.teamsLocked && <button className="btn btn-teal btn-sm mt-2" onClick={autoAssign}>⚡ Auto-assign players</button>}
+              {room.teamsLocked && <p className="text-green mt-1" style={{fontSize:"0.8rem"}}>✓ Teams assigned!</p>}
+            </div>
+          )}
+          <button className="btn btn-ghost btn-sm" onClick={()=>upd(p=>({...p,questions:[],topic:"",phase:"lobby"}))}>← Change topic</button>
+        </div>
+      )}
+
+      {/* ── LOBBY: SETUP (no questions yet) ── */}
+      {room.phase === "lobby" && room.questions.length === 0 && (
         <div className="mt-3">
           {/* Mode */}
           <span className="label">Game Mode</span>
@@ -1252,8 +1297,9 @@ function HostView({ onBack }) {
 
           {error && <p className="text-coral mb-1" style={{fontSize:"0.85rem"}}>{error}</p>}
           <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic}>
-            ▶ Start Game
+            Load Questions →
           </button>
+          <p style={{fontSize:"0.75rem",opacity:0.4,marginTop:"0.4rem"}}>Students can join via the QR above while you set up</p>
         </div>
       )}
 
