@@ -72,6 +72,7 @@ function checkAnswer(given, q) {
     const correct3 = (q.correctOrder||[]).filter(i => i < count).join(",");
     return n(given) === correct3;
   }
+  if (q.type === "error_spotter") return n(given) === n(q.errorWord);
   return n(given) === n(q.answer);
 }
 
@@ -1258,6 +1259,19 @@ function HostReveal({ q, answers, players }) {
               <span style={{color:"var(--gold)",fontWeight:700,marginRight:"0.4rem"}}>{pos+1}.</span>{q.sentences[idx]}
             </div>
           ))}</div>
+        ) : q.type==="error_spotter" ? (
+          <div>
+            <div style={{fontSize:"0.88rem",marginBottom:"0.4rem"}}>{q.sentence?.split(" ").map((w,i)=>{
+              const clean = w.replace(/[.,!?;:]/g,"");
+              const isErr = clean.toLowerCase()===q.errorWord?.toLowerCase();
+              return <span key={i} style={{marginRight:"0.35rem",color:isErr?"var(--coral)":"#fff",textDecoration:isErr?"line-through":"none",fontWeight:isErr?700:400}}>{w}</span>;
+            })}</div>
+            <div style={{fontSize:"1rem",fontWeight:700}}>
+              <span style={{color:"var(--coral)"}}>{q.errorWord}</span>
+              <span className="op50" style={{margin:"0 0.4rem"}}>→</span>
+              <span style={{color:"var(--gold)"}}>{q.answer}</span>
+            </div>
+          </div>
         ) : (
           <div style={{fontSize:"1.1rem",fontWeight:700}}>{q.answer}</div>
         )}
@@ -1511,7 +1525,7 @@ function StudentView({ onBack, initialCode = "" }) {
                 🔥 On fire! ×{(myData.streak||0)+1}
               </div>
             )}
-            {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:`Answer: `}{q.type!=="stress_battle"&&<strong style={{color:"#fff"}}>{q.answer}</strong>}</div>}
+            {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:q.type==="error_spotter"?<span>Error: <strong style={{color:"var(--coral)"}}>{q.errorWord}</strong> → <strong style={{color:"#fff"}}>{q.answer}</strong></span>:<span>Answer: <strong style={{color:"#fff"}}>{q.type==="story_builder"?q.correctOrder?.filter(i=>i<3).join(","):q.answer}</strong></span>}</div>}
             {q?.explanation&&<div className="op30 mt-1" style={{fontSize:"0.78rem",fontStyle:"italic"}}>{q.explanation}</div>}
           </div>
         </div>
