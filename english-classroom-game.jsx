@@ -763,7 +763,7 @@ const MEDAL = ["🥇","🥈","🥉"];
 const OPT_ICONS = ["🔴","🔵","🟢","🟣"];
 const GAME_MODES = [
   {v:"mixed",         label:"🎲 Mixed",            desc:"All types"},
-  {v:"multiple_choice",label:"📋 Multiple Choice", desc:"4 options"},
+  {v:"multiple_choice",label:"📋 Multiple Choice", desc:"Choose the answer"},
   {v:"true_false",    label:"✅ True / False",      desc:"Grammar judge"},
   {v:"error_spotter", label:"🔍 Error Spotter",     desc:"Find the mistake"},
   {v:"type_answer",   label:"✏️ Type Answer",       desc:"Short text response"},
@@ -808,8 +808,8 @@ function Home({ onHost, onJoin, onSolo }) {
         </div>
 
         <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-          <button className="btn btn-ghost btn-full" onClick={onSolo}>🎮 Practice on My Own</button>
-          <button className="btn btn-ghost btn-full" onClick={onJoin} style={{opacity:0.7,fontSize:"0.88rem"}}>📱 Join a Teacher's Game</button>
+          <button className="btn btn-ghost btn-full" onClick={onJoin}>📱 Join a Teacher's Game</button>
+          <button className="btn btn-ghost btn-full" onClick={onSolo} style={{opacity:0.7,fontSize:"0.88rem"}}>🎮 Practise on My Own</button>
         </div>
       </div>
 
@@ -884,7 +884,7 @@ function SoloView({ onBack }) {
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.2rem"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
-        <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.2rem"}}>Practice on Your Own</h2>
+        <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.2rem"}}>Practise on Your Own</h2>
         <p className="op50 mb-3" style={{fontSize:"0.82rem"}}>Pick a topic and start practising — no teacher needed.</p>
 
         <span className="label">Topic</span>
@@ -1374,8 +1374,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       </div>
       <h2 style={{fontSize:"clamp(1.1rem,2.6vw,1.6rem)",lineHeight:1.4,textAlign:"center",marginBottom:"1.2rem",maxWidth:680,margin:"0 auto 1.2rem"}}>{q.question}</h2>
       {q.type==="rearrange"&&<div className="tiles" style={{justifyContent:"center"}}>{shuffledRearrange.map((w,i)=><span key={i} className="tile">{w}</span>)}</div>}
-      {q.type==="multiple_choice"&&q.options&&(
-        <div className="opt-grid">{q.options.map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>
+      {q.type==="multiple_choice"&&(
+        <div className="text-center op30 mt-2" style={{fontSize:"0.85rem",letterSpacing:"0.04em"}}>Students are choosing their answer…</div>
       )}
       {q.type==="odd_one_out"&&q.options&&(()=>{
         const wrong = q.answer;
