@@ -795,11 +795,24 @@ function Home({ onHost, onJoin, onSolo }) {
     <div className="hero">
       <h1 className="hero-title">ENGLISH<br/><span>ARENA</span></h1>
       <p className="hero-sub">Live classroom games to improve your English. No app needed.</p>
-      <div className="hero-btns">
-        <button className="btn btn-gold" onClick={onHost}>🎓 I'm the Teacher</button>
-        <button className="btn btn-ghost" onClick={onJoin}>📱 Join a Class Game</button>
-        <button className="btn btn-teal" onClick={onSolo} style={{marginTop:"0.5rem"}}>🎮 Practice on My Own</button>
+
+      <div style={{width:"100%",maxWidth:340,margin:"0 auto"}}>
+        {/* Teacher */}
+        <button className="btn btn-gold btn-full" onClick={onHost} style={{marginBottom:"1.4rem"}}>🎓 I'm the Teacher</button>
+
+        {/* Student divider */}
+        <div style={{display:"flex",alignItems:"center",gap:"0.7rem",marginBottom:"1rem",opacity:0.4}}>
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,0.3)"}}/>
+          <span style={{fontSize:"0.72rem",letterSpacing:"0.08em",textTransform:"uppercase"}}>I'm a Student</span>
+          <div style={{flex:1,height:1,background:"rgba(255,255,255,0.3)"}}/>
+        </div>
+
+        <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+          <button className="btn btn-ghost btn-full" onClick={onSolo}>🎮 Practice on My Own</button>
+          <button className="btn btn-ghost btn-full" onClick={onJoin} style={{opacity:0.7,fontSize:"0.88rem"}}>📱 Join a Teacher's Game</button>
+        </div>
       </div>
+
       <p className="op30 text-center mt-4" style={{fontSize:"0.72rem",maxWidth:440,lineHeight:1.8}}>
         Multiple Choice · True/False · Error Spotter · Word Order · Story Builder · Idioms · Word Match · Odd One Out · Stress Battle
         <br/>Solo practice · Teams mode · Live leaderboard · 30 curated topic banks
