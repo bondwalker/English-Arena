@@ -516,7 +516,54 @@ const QUESTION_BANK = {
     {type:"word_match",question:"Match memory words with their meanings:",pairs:[{word:"nostalgia",meaning:"a sentimental longing for the past"},{word:"memoir",meaning:"a written account of personal memories"},{word:"decade",meaning:"a period of ten years"},{word:"heirloom",meaning:"an object passed down through generations"}],answer:"match_all",explanation:"Key vocabulary for talking about the past and memories."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She kept all her old letters in a box under the bed.","He remembered the day his daughter was born as if it were yesterday.","They has been sharing stories about the old days all evening.","The photographs brought back many happy memories."],answer:"They has been sharing stories about the old days all evening.",explanation:"'They' takes 'have': 'They have been sharing stories about the old days.'"},
   ]},
-  "verb_tenses": { label: "Verb Tenses & Habits", questions: [
+  "verb_tenses": {
+    label: "Verb Tenses & Habits",
+    intro: {
+      sections: [
+        {
+          heading: "Simple Present",
+          form: "verb (+ -s/-es for he/she/it)",
+          examples: [
+            "She goes to the gym every morning.",
+            "They don't work on Sundays.",
+            "Does he speak French?"
+          ],
+          use: "For habits, routines, and facts. Key words: always, usually, often, never, every day."
+        },
+        {
+          heading: "Simple Past",
+          form: "verb + -ed  (or irregular form)",
+          examples: [
+            "I visited Rome last summer.",
+            "He didn't go to school yesterday.",
+            "Where did you grow up?"
+          ],
+          use: "For completed actions in the past. Key words: yesterday, last week, in 2010, ago."
+        },
+        {
+          heading: "Used to / Didn't use to",
+          form: "used to + bare infinitive",
+          examples: [
+            "He used to smoke a lot — he stopped last year.",
+            "She didn't use to like spicy food.",
+            "Did you use to play football as a child?"
+          ],
+          use: "For past habits or states that no longer exist. Cannot be used for single past events."
+        },
+        {
+          heading: "Getting used to",
+          form: "get/be used to + noun or verb-ing",
+          examples: [
+            "She is getting used to driving on the left.",
+            "I'm not used to waking up so early.",
+            "He got used to the noise after a few weeks."
+          ],
+          use: "For becoming (or being) accustomed to something new or different. Always followed by -ing or a noun — NOT the bare infinitive."
+        }
+      ],
+      tip: "'Used to smoke' = past habit, no longer true.  'Getting used to smoking' = becoming accustomed to it (different meaning!)."
+    },
+    questions: [
     {type:"multiple_choice",question:"Choose the correct sentence about a daily habit.",options:["She go to the gym every morning.","She goes to the gym every morning.","She gone to the gym every morning."],answer:"She goes to the gym every morning.",explanation:"Present simple: add -s/-es for third person singular (he/she/it)."},
     {type:"multiple_choice",question:"Choose the correct sentence about a past habit.",options:["He used to smoking a lot.","He used to smoke a lot.","He uses to smoke a lot."],answer:"He used to smoke a lot.",explanation:"'Used to + bare infinitive' describes a past habit or state that no longer exists."},
     {type:"multiple_choice",question:"Choose the correct sentence about adjusting to something new.",options:["She is getting used to drive to work.","She is getting used to driving to work.","She is getting used to drove to work."],answer:"She is getting used to driving to work.",explanation:"'Get used to' is followed by a noun or -ing form, not the bare infinitive."},
