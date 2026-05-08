@@ -530,6 +530,48 @@ const QUESTION_BANK = {
     {type:"word_match",question:"Match each phrase to its meaning:",pairs:[{word:"used to",meaning:"past habit that no longer continues"},{word:"be used to",meaning:"be accustomed to something"},{word:"get used to",meaning:"become accustomed to something"},{word:"didn't use to",meaning:"something that was not done in the past"}],answer:"match_all",explanation:"These three phrases look similar but describe different relationships with habit and familiarity."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She didn't eat dinner last night.","They used to going to the beach every summer.","He is getting used to the new schedule.","I usually drink coffee in the morning."],answer:"They used to going to the beach every summer.",explanation:"'Used to' takes the bare infinitive: 'used to go'. Only 'get/be used to' takes the -ing form."},
   ]},
+  "present_perfect": {
+    label: "Present Perfect & Continuous",
+    intro: {
+      sections: [
+        {
+          heading: "Present Perfect",
+          form: "have / has + past participle",
+          examples: [
+            "I have never seen that film.",
+            "She has lived here for ten years.",
+            "Have you ever tried sushi?"
+          ],
+          use: "For past experiences, actions with a present result, and with: ever, never, just, already, yet, for, since."
+        },
+        {
+          heading: "Present Perfect Continuous",
+          form: "have / has + been + verb-ing",
+          examples: [
+            "I have been waiting for two hours.",
+            "She has been studying all day.",
+            "How long have you been learning English?"
+          ],
+          use: "For actions that started in the past and are still continuing. Emphasises duration — often with: for, since, how long, all day."
+        }
+      ],
+      tip: "'I have read the book' = it is finished (result). 'I have been reading' = focus on the activity or how long it took."
+    },
+    questions: [
+      {type:"multiple_choice",question:"Choose the correct sentence about a past experience.",options:["I have never seen that film.","I never saw that film yet.","I did never see that film."],answer:"I have never seen that film.",explanation:"Use present perfect + 'never' for life experiences: have/has + never + past participle."},
+      {type:"multiple_choice",question:"Choose the correct sentence about an ongoing activity.",options:["She is studying for five hours.","She has been studying for five hours.","She has studied for five hours."],answer:"She has been studying for five hours.",explanation:"Present perfect continuous (has been + -ing) emphasises the duration of a still-ongoing activity."},
+      {type:"multiple_choice",question:"Which sentence uses the correct tense?",options:["I have visited Paris in 2018.","I visited Paris in 2018.","I am visiting Paris in 2018."],answer:"I visited Paris in 2018.",explanation:"With a specific finished time ('in 2018'), use past simple. Present perfect cannot be used with a specific past date."},
+      {type:"true_false",question:"'She has gone to the supermarket' means she is at the supermarket now or on her way.",answer:"True",explanation:"'Has gone to' = she went and is still there. 'Has been to' = she visited and came back."},
+      {type:"error_spotter",question:"Find the mistake:",sentence:"She has went to the shop to get some milk.",errorWord:"went",answer:"gone",explanation:"Present perfect uses the past participle: 'has gone'. 'Went' is the past simple form, not the past participle."},
+      {type:"type_answer",question:"Complete: How long ___ you been learning English?",answer:"have",explanation:"'How long have you been + -ing?' uses present perfect continuous for an action still in progress."},
+      {type:"type_answer",question:"Complete: He has ___ (live) in this city for over ten years.",answer:"lived",explanation:"Present perfect: have/has + past participle. 'Live' is a regular verb — past participle is 'lived'."},
+      {type:"rearrange",question:"Rearrange into a correct sentence:",words:["she","has","never","tried","sushi"],answer:"she has never tried sushi",explanation:"Present perfect with 'never': subject + have/has + never + past participle."},
+      {type:"story_builder",question:"Order these sentences to tell a story:",sentences:["Then, he has been rehearsing every evening since.","First, he has just been offered a role in a local play.","Finally, he has already learnt all his lines and feels ready."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Get offered role → rehearse → learn lines and feel ready."},
+      {type:"fill_idiom",question:"Complete: She has really hit her ___ — every performance gets better.",answer:"stride",options:["stride","peak","best","mark"],hint:"performing at your best and most confident",explanation:"'Hit your stride' means to reach the point where you are performing at your best and most confidently."},
+      {type:"word_match",question:"Match each time expression to the tense it goes with:",pairs:[{word:"ever / never",meaning:"present perfect"},{word:"in 2010 / last year",meaning:"past simple"},{word:"for / since",meaning:"present perfect or continuous"},{word:"how long",meaning:"present perfect continuous"}],answer:"match_all",explanation:"Time expressions are a key signal for choosing between past simple and present perfect."},
+      {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["I have already finished my homework.","She has been waiting since two hours.","He has never tried sushi.","They have just arrived."],answer:"She has been waiting since two hours.",explanation:"Use 'for' with a period of time: 'for two hours'. Use 'since' with a point in time: 'since 2 o'clock'."},
+    ]
+  },
   "stress_battle": { label: "⚡ Stress Battle", questions: [
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"APPLE",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"TABLE",syllables:2,stressed:1,answer:"A"},
@@ -888,7 +930,7 @@ function SoloView({ onBack }) {
     setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
     setQIndex(0);
     setResults([]);
-    setPhase("question");
+    setPhase(QUESTION_BANK[selectedTopic].intro ? "intro" : "question");
   };
 
   const restart = () => { setPhase("setup"); setQuestions([]); setQIndex(0); setResults([]); };
@@ -932,6 +974,39 @@ function SoloView({ onBack }) {
         {!selectedTopic && <div style={{marginBottom:"1rem"}}/>}
 
         <button className="btn btn-teal btn-full" disabled={!selectedTopic} onClick={loadQuestions}>Start Practising →</button>
+      </div>
+    );
+  }
+
+  // ── INTRO SCREEN ───────────────────────────────────────────────────────────
+  if (phase === "intro") {
+    const intro = QUESTION_BANK[selectedTopic]?.intro;
+    return (
+      <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.5rem"}}>
+        <button className="btn btn-ghost btn-sm mb-3" onClick={()=>setPhase("setup")}>← Back</button>
+        <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",marginBottom:"0.15rem"}}>Before You Start</h2>
+        <p className="op50 mb-3" style={{fontSize:"0.82rem"}}>A quick grammar reminder for this topic.</p>
+        {intro?.sections?.map((s, i) => (
+          <div key={i} className="card mb-3">
+            <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.74rem",color:"var(--gold)",marginBottom:"0.45rem",letterSpacing:"0.04em"}}>{s.heading}</div>
+            <div style={{fontFamily:"'DM Mono',monospace",fontSize:"0.87rem",color:"var(--teal)",padding:"0.35rem 0.6rem",background:"rgba(64,192,170,0.08)",borderRadius:4,marginBottom:"0.6rem"}}>{s.form}</div>
+            <div style={{marginBottom:"0.5rem"}}>
+              {s.examples.map((ex, j) => (
+                <p key={j} style={{fontSize:"0.85rem",marginBottom:"0.15rem",opacity:0.82,fontStyle:"italic"}}>"{ex}"</p>
+              ))}
+            </div>
+            <p style={{fontSize:"0.79rem",opacity:0.55,lineHeight:1.55,marginTop:"0.3rem"}}>{s.use}</p>
+          </div>
+        ))}
+        {intro?.tip && (
+          <div className="card mb-4" style={{border:"1px solid rgba(232,184,75,0.4)",background:"rgba(232,184,75,0.06)"}}>
+            <span style={{fontSize:"0.74rem",fontWeight:700,color:"var(--gold)"}}>💡 Key difference</span>
+            <p style={{fontSize:"0.83rem",marginTop:"0.3rem",lineHeight:1.55,opacity:0.85}}>{intro.tip}</p>
+          </div>
+        )}
+        <button className="btn btn-teal btn-full" onClick={()=>setPhase("question")}>
+          Start Practising →
+        </button>
       </div>
     );
   }
