@@ -544,7 +544,7 @@ const QUESTION_BANK = {
           heading: "Used to / Didn't use to",
           form: "used to + bare infinitive",
           examples: [
-            "He used to smoke a lot — he stopped last year.",
+            "He used to swim every morning before work.",
             "She didn't use to like spicy food.",
             "Did you use to play football as a child?"
           ],
@@ -561,7 +561,7 @@ const QUESTION_BANK = {
           use: "For becoming (or being) accustomed to something new or different. Always followed by -ing or a noun — NOT the bare infinitive."
         }
       ],
-      tip: "'Used to smoke' = past habit, no longer true.  'Getting used to smoking' = becoming accustomed to it (different meaning!)."
+      tip: "'Used to swim' = past habit, no longer true.  'Getting used to swimming' = becoming accustomed to it (different meaning!)."
     },
     questions: [
     {type:"multiple_choice",question:"Choose the correct sentence about a daily habit.",options:["She go to the gym every morning.","She goes to the gym every morning.","She gone to the gym every morning."],answer:"She goes to the gym every morning.",explanation:"Present simple: add -s/-es for third person singular (he/she/it)."},
