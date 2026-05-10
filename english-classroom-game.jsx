@@ -1216,7 +1216,12 @@ function HostView({ onBack }) {
 
   const startGame = () => {
     if (!room.questions.length) return;
-    upd(prev => ({ ...prev, phase:"question", qIndex:0, currentQ:prev.questions[0], timeLeft:getTimeLimit(prev.questions[0]), answers:{} }));
+    window.scrollTo(0, 0);
+    upd(prev => {
+      const q = prev.questions[0];
+      if (!q) return prev;
+      return { ...prev, phase:"question", qIndex:0, currentQ:q, timeLeft:getTimeLimit(q), answers:{} };
+    });
   };
 
   const advance = () => {
@@ -1246,6 +1251,7 @@ function HostView({ onBack }) {
   };
 
   const goNextQuestion = () => {
+    window.scrollTo(0, 0);
     upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ) }));
   };
 
