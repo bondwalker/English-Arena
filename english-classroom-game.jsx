@@ -1223,7 +1223,8 @@ function HostView({ onBack }) {
     upd(prev => {
       const q = prev.currentQ;
       const players = { ...(prev.players||{}) };
-      Object.entries(prev.answers||{}).forEach(([name, ans]) => {
+      const answered = prev.answers || {};
+      Object.entries(answered).forEach(([name, ans]) => {
         if (!players[name]) players[name] = { score:0, streak:0 };
         const correct = checkAnswer(ans, q);
         const bonus = correct && (players[name].streak||0) >= 1 ? 250 : 0;
@@ -1233,6 +1234,10 @@ function HostView({ onBack }) {
           streak: correct ? (players[name].streak||0)+1 : 0,
           correct, lastAnswer: ans,
         };
+      });
+      // Reset streak for players who didn't answer (timed out)
+      Object.keys(players).forEach(name => {
+        if (!answered[name]) players[name] = { ...players[name], streak: 0, correct: false };
       });
       const nextIdx = prev.qIndex + 1;
       if (nextIdx >= prev.questions.length) return { ...prev, players, phase:"end", answers:{} };
@@ -1556,8 +1561,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type==="story_builder"&&q.sentences&&<div className="mt-2">{q.sentences.slice(0,3).map((s,i)=><div key={i} className="story-card" style={{cursor:"default"}}><span className="story-num">{i+1}</span>{s}</div>)}</div>}
       {q.type==="word_match"&&q.pairs&&(
         <div className="flex gap-2 mt-2">
-          <div style={{flex:1}}><span className="label">Words</span>{q.pairs.map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.word}</div>)}</div>
-          <div style={{flex:1}}><span className="label">Meanings</span>{q.pairs.map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.meaning}</div>)}</div>
+          <div style={{flex:1}}><span className="label">Words</span>{q.pairs.slice(0,2).map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.word}</div>)}</div>
+          <div style={{flex:1}}><span className="label">Meanings</span>{q.pairs.slice(0,2).map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.meaning}</div>)}</div>
         </div>
       )}
       {q.type==="stress_battle"&&(
@@ -1593,7 +1598,7 @@ function HostReveal({ q, answers, players }) {
   const wrong = Object.entries(answers).filter(([,a])=>!checkAnswer(a,q));
   return (
     <div>
-      <span className="label">Correct Answer</span>
+      <span className="label">{q.type==="odd_one_out" ? "The sentence with the error" : "Correct Answer"}</span>
       <div className="card card-gold">
         {q.type==="word_match" ? (
           <div>{q.pairs?.slice(0,2).map((p,i)=>(
@@ -1882,11 +1887,11 @@ function StudentView({ onBack, initialCode = "" }) {
           <div className="result-box">
             <span className="result-emoji">{wasCorrect?"✅":"❌"}</span>
             <div style={{fontSize:"1.35rem",fontWeight:700,color:wasCorrect?"var(--green)":"var(--coral)"}}>
-              {wasCorrect?"Correct! +1000":"Not quite…"}
+              {wasCorrect ? ((myData.streak||0)>=2 ? "Correct! +1250" : "Correct! +1000") : "Not quite…"}
             </div>
-            {wasCorrect&&(myData.streak||0)>=1&&(
+            {wasCorrect&&(myData.streak||0)>=2&&(
               <div style={{marginTop:"0.8rem",fontFamily:"'Unbounded',sans-serif",fontSize:"1.3rem",fontWeight:900,color:"var(--gold)",animation:"streakPop 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards"}}>
-                🔥 On fire! ×{(myData.streak||0)+1}
+                🔥 On fire! ×{myData.streak||0}
               </div>
             )}
             {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:q.type==="error_spotter"?<span>Error: <strong style={{color:"var(--coral)"}}>{q.errorWord}</strong> → <strong style={{color:"#fff"}}>{q.answer}</strong></span>:<span>Answer: <strong style={{color:"#fff"}}>{q.type==="story_builder"?q.correctOrder?.filter(i=>i<3).join(","):q.answer}</strong></span>}</div>}
