@@ -1153,13 +1153,12 @@ function HostView({ onBack }) {
   const [error, setError] = useState("");
   const timerRef = useRef(null);
 
-  const upd = (fn) => setRoom(prev => {
-    const next = typeof fn === "function" ? fn(prev) : { ...prev, ...fn };
-    write(next); return next;
-  });
+  const upd = (fn) => setRoom(prev =>
+    typeof fn === "function" ? fn(prev) : { ...prev, ...fn }
+  );
 
-  // Persist room on mount so students can find it before teacher loads questions
-  useEffect(() => { try { write(room); } catch {} }, []);
+  // Write room state to storage after every change
+  useEffect(() => { try { write(room); } catch {} }, [room]);
 
   // Sync players & answers (Firebase real-time or localStorage fallback)
   useEffect(() => {
