@@ -1146,7 +1146,7 @@ function SoloView({ onBack }) {
 
 // ─── HOST VIEW ────────────────────────────────────────────────────────────────
 function HostView({ onBack }) {
-  const [room, setRoom] = useState(() => read() || defaultRoom());
+  const [room, setRoom] = useState(() => defaultRoom());
   const [selectedTopic, setSelectedTopic] = useState("");
   const [gameType, setGameType] = useState("mixed");
   const [qCount, setQCount] = useState(8);
