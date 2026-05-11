@@ -114,7 +114,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence correctly describes an ongoing project?",options:["I work on this report since Monday.","I am working on this report since Monday.","I have been working on this report since Monday."],answer:"I have been working on this report since Monday.",explanation:"Present perfect continuous + 'since' for ongoing actions that started in the past."},
     {type:"multiple_choice",question:"Your colleague asks: 'Can you cover ___ me on Friday?'",options:["to","for","with"],answer:"for",explanation:"'Cover for someone' means to do their work while they are absent."},
     {type:"multiple_choice",question:"Which is the most appropriate opening for a formal email?",options:["Hey, got your message!","Dear Ms Brown, I am writing to enquire about…","Yo, what's the update?"],answer:"Dear Ms Brown, I am writing to enquire about…",explanation:"Formal emails begin with a salutation and a clear statement of purpose."},
-    {type:"true_false",question:"'Let's touch base later' is a formal farewell phrase used in business meetings.",answer:"False",explanation:"'Touch base' means to briefly check in. It is informal business jargon, not a farewell."},
+    {type:"true_false",question:"'Let's touch base later' is an informal phrase used in business to suggest catching up.",answer:"True",explanation:"'Touch base' is a common informal business idiom meaning to make brief contact or check in with someone."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The manager told us to sending the report by Friday.",errorWord:"sending",answer:"send",explanation:"After 'tell someone to', use the bare infinitive."},
     {type:"type_answer",question:"Complete: She was promoted ___ senior manager after only two years.",answer:"to",explanation:"'Promoted to' is the correct collocation."},
     {type:"type_answer",question:"Complete: Could you please ___ (send) me the agenda before the meeting?",answer:"send",explanation:"'Could you please + bare infinitive' is a polite request."},
@@ -184,7 +184,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence correctly talks about a past score?",options:["The team wins 3-1 yesterday.","The team won 3-1 yesterday.","The team has won 3-1 yesterday."],answer:"The team won 3-1 yesterday.",explanation:"'Yesterday' is a finished time reference, so use past simple."},
     {type:"multiple_choice",question:"Which sentence uses 'enough' correctly?",options:["She isn't strong enough to lift that weight.","She isn't enough strong to lift that weight.","She isn't strong to enough lift that weight."],answer:"She isn't strong enough to lift that weight.",explanation:"'Enough' always comes after the adjective: 'strong enough', not 'enough strong'."},
     {type:"multiple_choice",question:"Choose the correct sentence about training:",options:["She's been training for the marathon since six months.","She's been training for the marathon for six months.","She trains for the marathon since six months."],answer:"She's been training for the marathon for six months.",explanation:"Present perfect continuous + 'for' + duration for an ongoing activity."},
-    {type:"true_false",question:"'She has been going to the gym' describes a completed action in the past.",answer:"False",explanation:"Present perfect continuous describes an ongoing action that started in the past and may still be continuing."},
+    {type:"true_false",question:"'She has been going to the gym' describes an action that started in the past and is still continuing.",answer:"True",explanation:"Present perfect continuous (has been + -ing) describes an ongoing action — she started going and still goes."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"He trains hardly every morning before work.",errorWord:"hardly",answer:"hard",explanation:"'Hard' is the correct adverb meaning 'with great effort'. 'Hardly' means 'almost not at all'."},
     {type:"type_answer",question:"Complete: The athlete ___ (break) the world record by two seconds.",answer:"broke",explanation:"Past simple for a completed past action."},
     {type:"type_answer",question:"Complete: She ___ (play) tennis since childhood.",answer:"has played",explanation:"Present perfect + 'since' for an activity that started in the past and continues."},
@@ -212,7 +212,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses 'by' correctly?",options:["You need to submit the essay until Friday.","You need to submit the essay by Friday.","You need to submit the essay before to Friday."],answer:"You need to submit the essay by Friday.",explanation:"'By' means no later than. 'Until' means up to a point in time and then it stops."},
     {type:"multiple_choice",question:"What does 'take notes' mean?",options:["To write down key points while listening or reading.","To copy an entire textbook chapter.","To send a message to a classmate."],answer:"To write down key points while listening or reading.",explanation:"'Take notes' means to record key information during a lesson or from a text."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["She's studying hard for her exam that will be next week.","She's studying hard for her exam next week.","She studies hard for her exam that it is next week."],answer:"She's studying hard for her exam next week.",explanation:"'Next week' acts as a time adverbial without needing 'that will be'."},
-    {type:"true_false",question:"A 'thesis' is the same as a short weekly homework assignment.",answer:"False",explanation:"A thesis is a long academic research document submitted for a university degree, not a short homework task."},
+    {type:"true_false",question:"A 'semester' is one half of a school or university year.",answer:"True",explanation:"Most universities divide the year into two semesters. A semester typically lasts around four to five months."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The students were made to copied the text three times.",errorWord:"copied",answer:"copy",explanation:"After 'be made to', use the bare infinitive: 'were made to copy'."},
     {type:"type_answer",question:"Complete: If I had studied harder, I ___ (pass) the exam.",answer:"would have passed",explanation:"Third conditional: 'if + past perfect, would have + past participle'."},
     {type:"type_answer",question:"Complete: The lecture will be ___ (record) so you can watch it later online.",answer:"recorded",explanation:"Passive voice: 'will be + past participle'."},
@@ -226,7 +226,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses 'afford' correctly?",options:["We can't afford buying a new car right now.","We can't afford to buy a new car right now.","We can't afford buy a new car right now."],answer:"We can't afford to buy a new car right now.",explanation:"'Afford' is followed by 'to + infinitive'."},
     {type:"multiple_choice",question:"What does 'go into debt' mean?",options:["To save a large amount of money.","To invest money wisely.","To owe more money than you have."],answer:"To owe more money than you have.",explanation:"'Go into debt' means to owe money, often to a bank or lender."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["I've been saving money since three months to go on holiday.","I've been saving money for three months to go on holiday.","I save money since three months to go on holiday."],answer:"I've been saving money for three months to go on holiday.",explanation:"Present perfect continuous + 'for' + duration for an ongoing action."},
-    {type:"true_false",question:"An 'overdraft' means your bank account has more money than you expected.",answer:"False",explanation:"An overdraft means your balance has gone below zero — you owe money to the bank."},
+    {type:"true_false",question:"An 'overdraft' means spending more money than is currently in your bank account.",answer:"True",explanation:"An overdraft occurs when your account balance goes below zero — you are spending borrowed money."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"She borrowed her friend some money to pay the rent.",errorWord:"borrowed",answer:"lent",explanation:"'Borrow' means to take; 'lend' means to give. She gave money, so 'lent' is correct."},
     {type:"type_answer",question:"Complete: You should always ___ (compare) prices before making a big purchase.",answer:"compare",explanation:"After 'should', use the bare infinitive."},
     {type:"type_answer",question:"Complete: The mortgage ___ (pay) off in 25 years if we keep up the monthly payments.",answer:"will be paid",explanation:"Passive future: 'will be + past participle'."},
@@ -254,7 +254,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses the past perfect correctly?",options:["By the time the concert started, we had already found our seats.","By the time the concert started, we already found our seats.","By the time the concert started, we have already found our seats."],answer:"By the time the concert started, we had already found our seats.",explanation:"Past perfect shows an action completed before another past action."},
     {type:"multiple_choice",question:"What does 'go platinum' mean?",options:["To win a prize at a music award ceremony.","To sell a very large number of copies of an album or single.","To start playing classical music."],answer:"To sell a very large number of copies of an album or single.",explanation:"'Go platinum' means an album or song has reached a high sales milestone."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["She has been learning the piano since she was five.","She has been learning the piano for she was five.","She learns the piano since she was five."],answer:"She has been learning the piano since she was five.",explanation:"Present perfect continuous + 'since' + point in time for an ongoing activity."},
-    {type:"true_false",question:"A 'cover song' is a song written and performed for the first time by a new artist.",answer:"False",explanation:"A cover song is a new recording of a song originally performed by someone else."},
+    {type:"true_false",question:"A 'cover song' is a new recording of a song originally written and performed by a different artist.",answer:"True",explanation:"A cover is when one artist records another artist's song. The original version was released by someone else."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The band played very good last night — the crowd loved it.",errorWord:"good",answer:"well",explanation:"'Good' is an adjective. 'Well' is the adverb needed to modify the verb 'played'."},
     {type:"type_answer",question:"Complete: She ___ (sing) professionally for over ten years.",answer:"has been singing",explanation:"Present perfect continuous for an ongoing activity starting in the past."},
     {type:"type_answer",question:"Complete: The song was originally ___ (write) for a film soundtrack.",answer:"written",explanation:"Passive past simple: 'was + past participle'."},
@@ -282,7 +282,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses 'hope to' correctly?",options:["She hopes to becoming a doctor one day.","She hopes becoming a doctor one day.","She hopes to become a doctor one day."],answer:"She hopes to become a doctor one day.",explanation:"'Hope to' is followed by the bare infinitive."},
     {type:"multiple_choice",question:"What does 'set a goal' mean?",options:["To achieve something by luck.","To decide on something you want to accomplish and work towards it.","To give up on a plan."],answer:"To decide on something you want to accomplish and work towards it.",explanation:"'Set a goal' means to establish a specific target and pursue it."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["By 2030, she will have been working in the company for ten years.","By 2030, she will have work in the company for ten years.","By 2030, she will be working in the company since ten years."],answer:"By 2030, she will have been working in the company for ten years.",explanation:"Future perfect continuous: 'will have been + -ing' for an ongoing action up to a future point."},
-    {type:"true_false",question:"The word 'ambition' always has a negative meaning in English.",answer:"False",explanation:"'Ambition' is generally neutral or positive — it means a strong desire to achieve something."},
+    {type:"true_false",question:"The word 'ambition' is generally used in a positive way to describe someone with strong goals.",answer:"True",explanation:"'Ambition' is usually positive — it describes drive and determination. Only context can make it negative (e.g., 'ruthless ambition')."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"He is determine to pass his driving test on the second attempt.",errorWord:"determine",answer:"determined",explanation:"After 'is', use the adjective form: 'is determined'."},
     {type:"type_answer",question:"Complete: She is working hard because she ___ (want) to study abroad next year.",answer:"wants",explanation:"Third person singular present simple: 'wants'."},
     {type:"type_answer",question:"Complete: If you set clear goals, you are more likely ___ (achieve) them.",answer:"to achieve",explanation:"'More likely + to + infinitive' is the correct structure."},
@@ -310,7 +310,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses 'just' correctly in the present perfect?",options:["I just saw the new film — it was amazing!","I have just seen the new film — it was amazing!","I have just saw the new film — it was amazing!"],answer:"I have just seen the new film — it was amazing!",explanation:"Present perfect with 'just': 'have + just + past participle' for a very recent action."},
     {type:"multiple_choice",question:"What does 'binge-watch' mean?",options:["To watch a film at the cinema.","To watch many episodes of a TV series in one session.","To review a film online."],answer:"To watch many episodes of a TV series in one session.",explanation:"'Binge-watching' means watching multiple episodes back-to-back."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["The film, that won the Oscar, was directed by a Spanish director.","The film which won the Oscar was directed by a Spanish director.","The film who won the Oscar was directed by a Spanish director."],answer:"The film which won the Oscar was directed by a Spanish director.",explanation:"Use 'which' or 'that' for things. No commas needed for a defining relative clause."},
-    {type:"true_false",question:"A 'documentary' is a type of fictional film with invented characters and a made-up story.",answer:"False",explanation:"A documentary is a non-fiction film presenting facts about real events, people, or topics."},
+    {type:"true_false",question:"A 'documentary' is a non-fiction film that presents facts about real events or people.",answer:"True",explanation:"Documentaries use real footage, interviews, and evidence to inform audiences about real-world topics."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The sequel was even more better than the original film.",errorWord:"more",answer:"much",explanation:"'Better' is already the comparative form of 'good'. Use 'much better' to intensify."},
     {type:"type_answer",question:"Complete: The film ___ (direct) by a first-time director who had never made a feature film before.",answer:"was directed",explanation:"Passive past simple: 'was + past participle'."},
     {type:"type_answer",question:"Complete: Have you ever ___ (watch) a film in a foreign language without subtitles?",answer:"watched",explanation:"Present perfect uses the past participle."},
@@ -394,7 +394,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses 'get on with' correctly?",options:["She gets on with her colleagues very well at work.","She gets on with very well her colleagues at work.","She gets well on with her colleagues at work."],answer:"She gets on with her colleagues very well at work.",explanation:"'Get on with someone' means to have a good relationship. Adverbs come after the object."},
     {type:"multiple_choice",question:"What does 'fall out with someone' mean?",options:["To become close friends with someone.","To have an argument and damage the friendship.","To meet someone unexpectedly."],answer:"To have an argument and damage the friendship.",explanation:"'Fall out with someone' means to have a serious disagreement that affects the relationship."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["We've known each other since we was at school.","We've known each other since we were at school.","We know each other since we were at school."],answer:"We've known each other since we were at school.",explanation:"Present perfect + 'since' + past simple clause for a situation starting in the past."},
-    {type:"true_false",question:"A 'fair-weather friend' is someone who is always there for you in good times and bad.",answer:"False",explanation:"A 'fair-weather friend' only stays close during good times and disappears when things get difficult."},
+    {type:"true_false",question:"A 'loyal' friend is someone who supports you in both good times and bad.",answer:"True",explanation:"'Loyal' means faithful and reliable. Other common adjectives for a good friend: honest, supportive, trustworthy, caring."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"We haven't spoke since we had that argument last year.",errorWord:"spoke",answer:"spoken",explanation:"Present perfect requires the past participle: 'haven't spoken'."},
     {type:"type_answer",question:"Complete: She ___ (know) her best friend since they started primary school together.",answer:"has known",explanation:"Present perfect for a state that started in the past and continues now."},
     {type:"type_answer",question:"Complete: Good friends are people who ___ (support) each other through difficult times.",answer:"support",explanation:"Present simple for a general truth."},
@@ -408,7 +408,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence is correct?",options:["They are throwing a surprise party for her last Saturday.","They threw a surprise party for her last Saturday.","They have thrown a surprise party for her last Saturday."],answer:"They threw a surprise party for her last Saturday.",explanation:"'Last Saturday' is a finished time reference, so use past simple."},
     {type:"multiple_choice",question:"What does 'raise a toast' mean at a celebration?",options:["To burn the bread accidentally.","To raise glasses and drink in honour of someone.","To serve food to guests."],answer:"To raise glasses and drink in honour of someone.",explanation:"'Raise a toast' at a party means raising your glass to celebrate or honour someone."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["The party will be take place at the town hall on Saturday.","The party will take place at the town hall on Saturday.","The party will taking place at the town hall on Saturday."],answer:"The party will take place at the town hall on Saturday.",explanation:"'Will + bare infinitive' for future plans. 'Take place' is intransitive — not passive."},
-    {type:"true_false",question:"'RSVP' on an invitation comes from a Latin phrase.",answer:"False",explanation:"'RSVP' comes from the French phrase 'Répondez s'il vous plaît', meaning 'Please reply'."},
+    {type:"true_false",question:"'RSVP' on an invitation comes from a French phrase.",answer:"True",explanation:"RSVP stands for 'Répondez s'il vous plaît' — French for 'Please reply'. It asks guests to confirm attendance."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"We've been planning this celebration since six months.",errorWord:"since",answer:"for",explanation:"Use 'for' with a period of time. Use 'since' with a specific point in time."},
     {type:"type_answer",question:"Complete: By the time the guests arrived, she ___ (already prepare) all the food.",answer:"had already prepared",explanation:"Past perfect: 'had + already + past participle'."},
     {type:"type_answer",question:"Complete: The venue ___ (decorate) with hundreds of flowers and fairy lights.",answer:"was decorated",explanation:"Passive past simple: 'was + past participle'."},
@@ -436,7 +436,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses reported speech correctly?",options:["She said that she is learning Spanish.","She said that she was learning Spanish.","She said that she were learning Spanish."],answer:"She said that she was learning Spanish.",explanation:"In reported speech, present continuous ('is learning') shifts back to past continuous ('was learning')."},
     {type:"multiple_choice",question:"What does 'body language' refer to?",options:["The specific vocabulary used in sport.","The way people communicate through physical movements and gestures.","A type of sign language."],answer:"The way people communicate through physical movements and gestures.",explanation:"Body language includes facial expressions, posture, gestures, and eye contact."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["He asked me where did I come from.","He asked me where I came from.","He asked me where I come from."],answer:"He asked me where I came from.",explanation:"In indirect questions, use statement word order (no inversion): 'where I came from'."},
-    {type:"true_false",question:"'Fluent' means being able to speak a language perfectly without making any mistakes.",answer:"False",explanation:"'Fluent' means speaking naturally, smoothly, and confidently. Even fluent speakers make occasional errors."},
+    {type:"true_false",question:"'Fluent' means being able to speak a language smoothly and naturally.",answer:"True",explanation:"Fluency means speaking with ease and flow, not necessarily perfect grammar. Native speakers make mistakes too."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"Could you speak more fastly? I can't quite hear you.",errorWord:"fastly",answer:"fast",explanation:"'Fast' is both an adjective and an adverb. 'Fastly' does not exist in English."},
     {type:"type_answer",question:"Complete: He ___ (ask) me if I had ever lived abroad.",answer:"asked",explanation:"Past simple for a completed past action."},
     {type:"type_answer",question:"Complete: The more you practise speaking, the more ___ (confident) you will become.",answer:"confident",explanation:"'The more... the more...' is a comparative structure using adjectives."},
@@ -464,7 +464,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses 'have been to' correctly?",options:["I have been to that pottery class before — it's great!","I have been at that pottery class before — it's great!","I have been in that pottery class before — it's great!"],answer:"I have been to that pottery class before — it's great!",explanation:"'Have been to' means you visited a place and came back."},
     {type:"multiple_choice",question:"What does 'take up a hobby' mean?",options:["To give up an activity you no longer enjoy.","To start doing a new activity for pleasure.","To become a professional in a sport."],answer:"To start doing a new activity for pleasure.",explanation:"'Take up a hobby' means to begin doing a new leisure activity."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["She's been painting watercolours since two years.","She's been painting watercolours for two years.","She paints watercolours since two years."],answer:"She's been painting watercolours for two years.",explanation:"Present perfect continuous + 'for' for duration of an ongoing activity."},
-    {type:"true_false",question:"'DIY' stands for 'Design It Yourself' and refers to professional building work.",answer:"False",explanation:"'DIY' stands for 'Do It Yourself' — making, building, or repairing things yourself."},
+    {type:"true_false",question:"'DIY' stands for 'Do It Yourself' and refers to making or repairing things without professional help.",answer:"True",explanation:"DIY means completing home repairs, crafts, or projects yourself rather than hiring a professional."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"He finds gardening very relax, especially at the weekends.",errorWord:"relax",answer:"relaxing",explanation:"After 'find something +', use the adjective: 'finds gardening very relaxing'."},
     {type:"type_answer",question:"Complete: Since retiring, she ___ (take up) painting and is now selling her work online.",answer:"has taken up",explanation:"Present perfect for a recent change with current relevance."},
     {type:"type_answer",question:"Complete: He ___ (spend) every Saturday morning at the local chess club for years.",answer:"has been spending",explanation:"Present perfect continuous for an ongoing habit."},
@@ -478,7 +478,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses the present perfect correctly?",options:["Many species of animals has become extinct in recent years.","Many species of animals have become extinct in recent years.","Many species of animals became extinct in recent years."],answer:"Many species of animals have become extinct in recent years.",explanation:"'Many species' is plural, so use 'have'. Present perfect with 'in recent years' for a current trend."},
     {type:"multiple_choice",question:"What is 'migration' in the animal world?",options:["The process by which animals change colour in winter.","The seasonal movement of animals from one region to another.","The way animals communicate with each other."],answer:"The seasonal movement of animals from one region to another.",explanation:"Migration is the regular seasonal travel between habitats in response to seasons."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["Wolves live in packs and are highly social animals.","Wolves lives in packs and are highly social animals.","Wolves living in packs and are highly social animals."],answer:"Wolves live in packs and are highly social animals.",explanation:"Present simple for general facts. 'Wolves' is plural — no 's' on the verb."},
-    {type:"true_false",question:"Dolphins are classified as fish because they live in the sea.",answer:"False",explanation:"Dolphins are mammals. They breathe air, give birth to live young, and feed them milk."},
+    {type:"true_false",question:"Dolphins are mammals, not fish, even though they live in the sea.",answer:"True",explanation:"Dolphins breathe air, are warm-blooded, give birth to live young, and nurse them with milk — all mammal traits."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The forest is home to a wide range of wildlife, include many rare birds.",errorWord:"include",answer:"including",explanation:"'Including' is a preposition used to introduce examples: 'including many rare birds'."},
     {type:"type_answer",question:"Complete: The whale ___ (spot) by researchers just three miles off the coast.",answer:"was spotted",explanation:"Passive past simple: 'was + past participle'."},
     {type:"type_answer",question:"Complete: If we ___ (not protect) natural habitats, many species will disappear.",answer:"don't protect",explanation:"First conditional: 'if + present simple negative, will + infinitive'."},
@@ -506,7 +506,7 @@ const QUESTION_BANK = {
     {type:"multiple_choice",question:"Which sentence uses the past perfect correctly?",options:["She had never seen the sea before she visited Brighton.","She never saw the sea before she had visited Brighton.","She has never seen the sea before she visited Brighton."],answer:"She had never seen the sea before she visited Brighton.",explanation:"Past perfect ('had seen') for an action before another past action ('visited')."},
     {type:"multiple_choice",question:"What does 'reminisce' mean?",options:["To make plans for the future.","To forget important past events.","To talk or think about pleasant memories from the past."],answer:"To talk or think about pleasant memories from the past.",explanation:"'Reminisce' means to remember and talk about pleasant past experiences."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["When I was a child, I would play in the street until dark.","When I was a child, I will play in the street until dark.","When I was a child, I used to playing in the street until dark."],answer:"When I was a child, I would play in the street until dark.",explanation:"'Would + bare infinitive' describes repeated past habits, similar to 'used to'."},
-    {type:"true_false",question:"'Once upon a time' is a typical phrase used to end a traditional story.",answer:"False",explanation:"'Once upon a time' is used to begin a story. Stories typically end with 'they lived happily ever after' or similar."},
+    {type:"true_false",question:"'Once upon a time' is a phrase used to begin a traditional story.",answer:"True",explanation:"Stories traditionally open with 'Once upon a time…' and close with 'they lived happily ever after'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"She remembered her first day at school very clear — it felt like yesterday.",errorWord:"clear",answer:"clearly",explanation:"An adverb is needed to modify the verb 'remembered': 'very clearly'."},
     {type:"type_answer",question:"Complete: By the time he retired, he ___ (work) for the same company for 35 years.",answer:"had worked",explanation:"Past perfect for an action completed before another past event."},
     {type:"type_answer",question:"Complete: We ___ (use to) spend every summer holiday at my grandmother's house.",answer:"used to",explanation:"'Used to + bare infinitive' for past habits that no longer happen."},
@@ -613,7 +613,7 @@ const QUESTION_BANK = {
       {type:"type_answer",question:"Complete: How long ___ you been learning English?",answer:"have",explanation:"'How long have you been + -ing?' uses present perfect continuous for an action still in progress."},
       {type:"type_answer",question:"Complete: He has ___ (live) in this city for over ten years.",answer:"lived",explanation:"Present perfect: have/has + past participle. 'Live' is a regular verb — past participle is 'lived'."},
       {type:"rearrange",question:"Rearrange into a correct sentence:",words:["she","has","never","tried","sushi"],answer:"she has never tried sushi",explanation:"Present perfect with 'never': subject + have/has + never + past participle."},
-      {type:"story_builder",question:"Order these sentences to tell a story:",sentences:["Then, he has been rehearsing every evening since.","First, he has just been offered a role in a local play.","Finally, he has already learnt all his lines and feels ready."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Get offered role → rehearse → learn lines and feel ready."},
+      {type:"story_builder",question:"Order these sentences to tell a story:",sentences:["Then, she has been studying English seriously for two years.","First, Maria has dreamed of living abroad since she was a teenager.","Finally, she has already saved enough money and booked her flight."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Dream of living abroad → study English → save money and book flight."},
       {type:"fill_idiom",question:"Complete: She has really hit her ___ — every performance gets better.",answer:"stride",options:["stride","peak","best","mark"],hint:"performing at your best and most confident",explanation:"'Hit your stride' means to reach the point where you are performing at your best and most confidently."},
       {type:"word_match",question:"Match each time expression to the tense it goes with:",pairs:[{word:"ever / never",meaning:"present perfect"},{word:"in 2010 / last year",meaning:"past simple"},{word:"for / since",meaning:"present perfect or continuous"},{word:"how long",meaning:"present perfect continuous"}],answer:"match_all_correct",explanation:"Time expressions are a key signal for choosing between past simple and present perfect."},
       {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["I have already finished my homework.","She has been waiting since two hours.","He has never tried sushi.","They have just arrived."],answer:"She has been waiting since two hours.",explanation:"Use 'for' with a period of time: 'for two hours'. Use 'since' with a point in time: 'since 2 o'clock'."},
@@ -1256,6 +1256,33 @@ function HostView({ onBack }) {
     upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ) }));
   };
 
+  const skipToNextQuestion = () => {
+    clearInterval(timerRef.current);
+    window.scrollTo(0, 0);
+    upd(prev => {
+      const q = prev.currentQ;
+      const players = { ...(prev.players || {}) };
+      const answered = prev.answers || {};
+      Object.entries(answered).forEach(([name, ans]) => {
+        if (!players[name]) players[name] = { score: 0, streak: 0 };
+        const correct = checkAnswer(ans, q);
+        const bonus = correct && (players[name].streak || 0) >= 1 ? 250 : 0;
+        players[name] = {
+          ...players[name],
+          score: (players[name].score || 0) + (correct ? 1000 + bonus : 0),
+          streak: correct ? (players[name].streak || 0) + 1 : 0,
+          correct, lastAnswer: ans,
+        };
+      });
+      Object.keys(players).forEach(name => {
+        if (!answered[name]) players[name] = { ...players[name], streak: 0, correct: false };
+      });
+      const nextIdx = prev.qIndex + 1;
+      if (nextIdx >= prev.questions.length) return { ...prev, players, phase: "end", answers: {} };
+      return { ...prev, players, qIndex: nextIdx, currentQ: prev.questions[nextIdx], answers: {}, phase: "question", timeLeft: getTimeLimit(prev.questions[nextIdx]) };
+    });
+  };
+
   const endEarly = () => {
     clearInterval(timerRef.current);
     upd(prev => prev.phase==="question" ? { ...prev, phase:"reveal", timeLeft:0 } : prev);
@@ -1456,11 +1483,12 @@ function HostView({ onBack }) {
           <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
             players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
             mode={room.mode} teams={activeTeams} teamScores={teamScores} />
-          {ansCount > 0 && (
-            <div className="text-center mt-2">
+          <div className="text-center mt-2 flex justify-center gap-2">
+            {ansCount > 0 && (
               <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>
-            </div>
-          )}
+            )}
+            <button className="btn btn-sm btn-secondary" onClick={skipToNextQuestion}>⏭ Next Question</button>
+          </div>
           <PlayersFooter players={players} mode={room.mode} />
         </>
       )}
