@@ -25,6 +25,10 @@ const write = (v) => {
   localStorage.setItem(STORE_KEY, JSON.stringify(v));
   if (db && v?.code) set(ref(db, `rooms/${v.code}`), v).catch(() => {});
 };
+
+const FAVES_KEY = "englishgame_faves";
+const readFaves  = () => { try { return JSON.parse(localStorage.getItem(FAVES_KEY) || "[]"); } catch { return []; } };
+const writeFaves = (v) => { try { localStorage.setItem(FAVES_KEY, JSON.stringify(v)); } catch {} };
 const fetchRoom = async (code) => {
   if (!db) return null;
   try {
@@ -432,7 +436,34 @@ const QUESTION_BANK = {
     {type:"word_match",question:"Match emotion words with their meanings:",pairs:[{word:"anxious",meaning:"feeling worried about something uncertain"},{word:"content",meaning:"feeling satisfied and at ease"},{word:"overwhelmed",meaning:"having too much to cope with"},{word:"relieved",meaning:"feeling glad that a worry or problem has ended"}],answer:"match_all",explanation:"Key vocabulary for describing emotions and feelings."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["He was delighted when he received the job offer.","She felt nervous about meeting her partner's family.","They was disappointed when the event was cancelled.","I felt a great sense of relief after finishing the project."],answer:"They was disappointed when the event was cancelled.",explanation:"'They' takes 'were': 'They were disappointed when the event was cancelled.'"},
   ]},
-  "language_communication": { label: "Language & Communication", questions: [
+  "language_communication": {
+    label: "Language & Communication",
+    intro: {
+      sections: [
+        {
+          heading: "Reported Speech",
+          form: "said (that) + past tense / asked + if/whether + statement order",
+          examples: [
+            "Direct: \"I am learning Spanish.\" → Reported: She said she was learning Spanish.",
+            "Direct: \"Do you speak French?\" → Reported: He asked if I spoke French.",
+            "Direct: \"Where do you live?\" → Reported: She asked where I lived."
+          ],
+          use: "When reporting what someone said, shift the verb tense back one step (present → past, past → past perfect). Never use question word order in reported questions."
+        },
+        {
+          heading: "Indirect Questions",
+          form: "ask/wonder/know + if/whether/wh-word + subject + verb",
+          examples: [
+            "Could you tell me where the station is? (NOT: where is the station?)",
+            "I'd like to know whether she is coming.",
+            "Do you know what time it starts?"
+          ],
+          use: "Use statement word order (no inversion) after question phrases like 'Can you tell me...', 'I wonder...', 'Do you know...'. Use 'if/whether' for yes/no questions."
+        }
+      ],
+      tip: "In indirect questions, the verb does NOT invert: 'Could you tell me where the bank is?' — NOT 'where is the bank?'"
+    },
+    questions: [
     {type:"multiple_choice",question:"Which sentence uses reported speech correctly?",options:["She said that she is learning Spanish.","She said that she was learning Spanish.","She said that she were learning Spanish."],answer:"She said that she was learning Spanish.",explanation:"In reported speech, present continuous ('is learning') shifts back to past continuous ('was learning')."},
     {type:"multiple_choice",question:"What does 'body language' refer to?",options:["The specific vocabulary used in sport.","The way people communicate through physical movements and gestures.","A type of sign language."],answer:"The way people communicate through physical movements and gestures.",explanation:"Body language includes facial expressions, posture, gestures, and eye contact."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["He asked me where did I come from.","He asked me where I came from.","He asked me where I come from."],answer:"He asked me where I came from.",explanation:"In indirect questions, use statement word order (no inversion): 'where I came from'."},
@@ -502,7 +533,34 @@ const QUESTION_BANK = {
     {type:"word_match",question:"Match workplace words with their meanings:",pairs:[{word:"probation",meaning:"a trial period in a new job"},{word:"redundant",meaning:"losing a job because the role is no longer needed"},{word:"referee",meaning:"a person who provides a job reference"},{word:"benefits",meaning:"non-salary perks given by an employer"}],answer:"match_all",explanation:"Key vocabulary for jobs and interviews."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She was offered the job after her second interview.","He has been working for the same company for twelve years.","They was impressed by her presentation skills.","The company provides excellent benefits and flexible working hours."],answer:"They was impressed by her presentation skills.",explanation:"'They' takes 'were': 'They were impressed by her presentation skills.'"},
   ]},
-  "past_memories": { label: "Past & Memories", questions: [
+  "past_memories": {
+    label: "Past & Memories",
+    intro: {
+      sections: [
+        {
+          heading: "Past Perfect",
+          form: "had + past participle",
+          examples: [
+            "She had never seen the sea before she visited Brighton.",
+            "By the time he retired, he had worked there for 35 years.",
+            "I recognised her because we had met once before."
+          ],
+          use: "For an action completed before another past action. Use it to show which event happened first. Key words: before, by the time, already, never, after."
+        },
+        {
+          heading: "Would — Past Habits",
+          form: "would + bare infinitive",
+          examples: [
+            "When I was young, I would play outside until dark.",
+            "Every summer, we would visit my grandmother in the countryside.",
+            "He would always bring flowers when he came to visit."
+          ],
+          use: "For repeated actions or habits in the past (not states). Similar to 'used to' but more formal and nostalgic. Cannot be used for past states: say 'I used to live there' — not 'I would live there'."
+        }
+      ],
+      tip: "'Would play' = repeated past action. 'Past perfect' = which event came first. They often appear together in storytelling."
+    },
+    questions: [
     {type:"multiple_choice",question:"Which sentence uses the past perfect correctly?",options:["She had never seen the sea before she visited Brighton.","She never saw the sea before she had visited Brighton.","She has never seen the sea before she visited Brighton."],answer:"She had never seen the sea before she visited Brighton.",explanation:"Past perfect ('had seen') for an action before another past action ('visited')."},
     {type:"multiple_choice",question:"What does 'reminisce' mean?",options:["To make plans for the future.","To forget important past events.","To talk or think about pleasant memories from the past."],answer:"To talk or think about pleasant memories from the past.",explanation:"'Reminisce' means to remember and talk about pleasant past experiences."},
     {type:"multiple_choice",question:"Choose the correct sentence:",options:["When I was a child, I would play in the street until dark.","When I was a child, I will play in the street until dark.","When I was a child, I used to playing in the street until dark."],answer:"When I was a child, I would play in the street until dark.",explanation:"'Would + bare infinitive' describes repeated past habits, similar to 'used to'."},
@@ -926,7 +984,7 @@ function Home({ onHost, onJoin, onSolo }) {
 
 // ─── SOLO VIEW ────────────────────────────────────────────────────────────────
 function SoloView({ onBack }) {
-  const [phase, setPhase]           = useState("setup");   // setup | question | reveal | done
+  const [phase, setPhase]           = useState("setup");   // setup | intro | question | reveal | done
   const [selectedTopic, setSelectedTopic] = useState("");
   const [gameType, setGameType]     = useState("mixed");
   const [qCount, setQCount]         = useState(10);
@@ -934,6 +992,10 @@ function SoloView({ onBack }) {
   const [qIndex, setQIndex]         = useState(0);
   const [myAnswer, setMyAnswer]     = useState(null);
   const [results, setResults]       = useState([]);        // {correct, q} per question
+  const [streak, setStreak]         = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
+  const [faves, setFaves]           = useState(() => readFaves());
+  const [topicFilter, setTopicFilter] = useState("all"); // "all" | "saved"
 
   // answer-type state (mirrors StudentView)
   const [rearranged, setRearranged]   = useState([]);
@@ -959,6 +1021,9 @@ function SoloView({ onBack }) {
 
   const handleNext = () => {
     const correct = checkAnswer(myAnswer, q);
+    const newStreak = correct ? streak + 1 : 0;
+    setStreak(newStreak);
+    setBestStreak(prev => Math.max(prev, newStreak));
     setResults(prev => [...prev, { correct, q }]);
     if (qIndex + 1 >= questions.length) {
       setPhase("done");
@@ -977,10 +1042,30 @@ function SoloView({ onBack }) {
     setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
     setQIndex(0);
     setResults([]);
+    setStreak(0);
+    setBestStreak(0);
     setPhase(QUESTION_BANK[selectedTopic].intro ? "intro" : "question");
   };
 
-  const restart = () => { setPhase("setup"); setQuestions([]); setQIndex(0); setResults([]); };
+  const retryMissed = () => {
+    const missed = results.filter(r => !r.correct).map(r => r.q);
+    if (!missed.length) return;
+    const shuffled = [...missed].sort(() => Math.random() - 0.5);
+    setQuestions(shuffled);
+    setQIndex(0);
+    setResults([]);
+    setStreak(0);
+    setBestStreak(0);
+    setPhase("question");
+  };
+
+  const toggleFave = (key) => {
+    const next = faves.includes(key) ? faves.filter(k => k !== key) : [...faves, key];
+    setFaves(next);
+    writeFaves(next);
+  };
+
+  const restart = () => { setPhase("setup"); setQuestions([]); setQIndex(0); setResults([]); setStreak(0); setBestStreak(0); };
 
   // ── SETUP SCREEN ───────────────────────────────────────────────────────────
   if (phase === "setup") {
@@ -990,10 +1075,22 @@ function SoloView({ onBack }) {
         <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.2rem"}}>Practise on Your Own</h2>
         <p className="op50 mb-3" style={{fontSize:"0.82rem"}}>Pick a topic and start practising — no teacher needed.</p>
 
-        <span className="label">Topic</span>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.35rem"}}>
+          <span className="label" style={{marginBottom:0}}>Topic</span>
+          <div className="flex gap-1">
+            <button className={`btn btn-sm ${topicFilter==="all"?"btn-teal":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={()=>setTopicFilter("all")}>All</button>
+            <button className={`btn btn-sm ${topicFilter==="saved"?"btn-gold":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={()=>setTopicFilter("saved")}>⭐ Saved{faves.length>0?` (${faves.length})`:""}</button>
+          </div>
+        </div>
+        {topicFilter==="saved"&&faves.length===0&&(
+          <p style={{fontSize:"0.78rem",opacity:0.45,marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
+        )}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid rgba(255,255,255,0.1)"}}>
-          {Object.entries(QUESTION_BANK).filter(([k])=>k!=="stress_battle").map(([key,{label}])=>(
-            <button key={key} onClick={()=>setSelectedTopic(key)} style={{padding:"0.5rem 0.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
+          {Object.entries(QUESTION_BANK).filter(([k])=>k!=="stress_battle"&&(topicFilter==="all"||faves.includes(k))).map(([key,{label}])=>(
+            <div key={key} style={{position:"relative",display:"flex"}}>
+              <button onClick={()=>setSelectedTopic(key)} style={{flex:1,padding:"0.5rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
+              <button onClick={(e)=>{e.stopPropagation();toggleFave(key);}} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--gold)":"rgba(255,255,255,0.25)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
+            </div>
           ))}
         </div>
 
@@ -1070,6 +1167,9 @@ function SoloView({ onBack }) {
           <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"2.8rem",fontWeight:900,marginBottom:"0.3rem"}}>{pct}%</div>
           <div style={{fontSize:"1.1rem",fontWeight:700,marginBottom:"0.2rem"}}>{grade}</div>
           <div className="op50" style={{fontSize:"0.85rem"}}>{correct} / {total} correct · {QUESTION_BANK[selectedTopic]?.label}</div>
+          {bestStreak >= 2 && (
+            <div style={{marginTop:"0.6rem",fontSize:"0.82rem",color:"var(--gold)"}}>Best streak: 🔥 {bestStreak} in a row!</div>
+          )}
         </div>
 
         <div style={{marginBottom:"1.2rem"}}>
@@ -1086,6 +1186,11 @@ function SoloView({ onBack }) {
           ))}
         </div>
 
+        {results.some(r => !r.correct) && (
+          <button className="btn btn-full mb-2" style={{background:"rgba(232,88,58,0.18)",border:"1px solid var(--coral)",color:"var(--coral)"}} onClick={retryMissed}>
+            🔁 Retry missed ({results.filter(r=>!r.correct).length})
+          </button>
+        )}
         <div className="flex gap-2">
           <button className="btn btn-teal" style={{flex:1}} onClick={loadQuestions}>Try Again</button>
           <button className="btn btn-ghost" style={{flex:1}} onClick={restart}>New Topic</button>
@@ -1098,6 +1203,7 @@ function SoloView({ onBack }) {
   // ── QUESTION / REVEAL SCREEN ───────────────────────────────────────────────
   if (!q) return null;
   const isCorrect = phase === "reveal" && checkAnswer(myAnswer, q);
+  const pendingStreak = isCorrect ? streak + 1 : 0;
 
   // Fake minimal room object for StudentAnswer
   const fakeRoom = { qIndex, questions, phase: phase === "question" ? "question" : "reveal" };
@@ -1118,6 +1224,9 @@ function SoloView({ onBack }) {
         <div style={{textAlign:"center",padding:"0.7rem",marginBottom:"0.9rem",borderRadius:8,background:isCorrect?"rgba(46,204,113,0.12)":"rgba(232,58,58,0.12)",border:`1px solid ${isCorrect?"var(--green)":"var(--coral)"}`}}>
           <span style={{fontSize:"1.5rem"}}>{isCorrect?"✅":"❌"}</span>
           <div style={{fontWeight:700,marginTop:"0.2rem",color:isCorrect?"var(--green)":"var(--coral)"}}>{isCorrect?"Correct!":"Not quite."}</div>
+          {pendingStreak >= 2 && (
+            <div style={{fontSize:"0.8rem",color:"var(--gold)",fontWeight:700,marginTop:"0.25rem"}}>🔥 {pendingStreak} in a row!</div>
+          )}
           {!isCorrect&&q.type==="error_spotter"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Error: <strong>{q.errorWord}</strong> → <strong>{q.answer}</strong></div>}
           {!isCorrect&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
           {!isCorrect&&q.type==="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Order: <strong>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
