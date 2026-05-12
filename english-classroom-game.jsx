@@ -29,6 +29,10 @@ const write = (v) => {
 const FAVES_KEY = "englishgame_faves";
 const readFaves  = () => { try { return JSON.parse(localStorage.getItem(FAVES_KEY) || "[]"); } catch { return []; } };
 const writeFaves = (v) => { try { localStorage.setItem(FAVES_KEY, JSON.stringify(v)); } catch {} };
+
+const FONT_KEY  = "englishgame_font";
+const readFont  = () => { try { return localStorage.getItem(FONT_KEY) === "large"; } catch { return false; } };
+const writeFont = (v) => { try { localStorage.setItem(FONT_KEY, v ? "large" : "normal"); } catch {} };
 const fetchRoom = async (code) => {
   if (!db) return null;
   try {
@@ -64,6 +68,9 @@ const defaultRoom = () => ({
   gameType: "mixed",
   teamCount: 2,
   teamsLocked: false,
+  warmup: true,
+  warmupCount: 0,
+  paused: false,
 });
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -1260,6 +1267,8 @@ function HostView({ onBack }) {
   const [gameType, setGameType] = useState("mixed");
   const [qCount, setQCount] = useState(8);
   const [error, setError] = useState("");
+  const [bigText, setBigText] = useState(() => readFont());
+  const [showReview, setShowReview] = useState(false);
   const timerRef = useRef(null);
 
   const upd = (fn) => setRoom(prev =>
@@ -1290,6 +1299,7 @@ function HostView({ onBack }) {
     timerRef.current = setInterval(() => {
       upd(prev => {
         if (prev.phase !== "question") { clearInterval(timerRef.current); return prev; }
+        if (prev.paused) return prev;
         if (prev.timeLeft <= 1) { clearInterval(timerRef.current); return { ...prev, phase:"reveal", timeLeft:0 }; }
         return { ...prev, timeLeft: prev.timeLeft - 1 };
       });
@@ -1326,41 +1336,61 @@ function HostView({ onBack }) {
     if (!room.questions.length) return;
     window.scrollTo(0, 0);
     upd(prev => {
-      const q = prev.questions[0];
+      let qs = prev.questions;
+      let warmupCount = 0;
+      if (prev.warmup && selectedTopic && QUESTION_BANK[selectedTopic]) {
+        const pool = QUESTION_BANK[selectedTopic].questions;
+        const warmupQs = [...pool].sort(() => Math.random()-0.5).slice(0, 3).map(q => ({ ...q, _warmup: true }));
+        qs = [...warmupQs, ...prev.questions];
+        warmupCount = 3;
+      }
+      const q = qs[0];
       if (!q) return prev;
-      return { ...prev, phase:"question", qIndex:0, currentQ:q, timeLeft:getTimeLimit(q), answers:{} };
+      return { ...prev, phase:"question", qIndex:0, currentQ:q, timeLeft:q._warmup?15:getTimeLimit(q), answers:{}, questions:qs, warmupCount, paused:false };
     });
   };
 
   const advance = () => {
     upd(prev => {
       const q = prev.currentQ;
+      const isWarmupQ = !!q?._warmup;
       const players = { ...(prev.players||{}) };
       const answered = prev.answers || {};
-      Object.entries(answered).forEach(([name, ans]) => {
-        if (!players[name]) players[name] = { score:0, streak:0 };
-        const correct = checkAnswer(ans, q);
-        const bonus = correct && (players[name].streak||0) >= 1 ? 250 : 0;
-        players[name] = {
-          ...players[name],
-          score: (players[name].score||0) + (correct ? 1000+bonus : 0),
-          streak: correct ? (players[name].streak||0)+1 : 0,
-          correct, lastAnswer: ans,
-        };
-      });
-      Object.keys(players).forEach(name => {
-        if (!answered[name]) players[name] = { ...players[name], streak: 0, correct: false };
-      });
+      if (!isWarmupQ) {
+        Object.entries(answered).forEach(([name, ans]) => {
+          if (!players[name]) players[name] = { score:0, streak:0 };
+          const correct = checkAnswer(ans, q);
+          const bonus = correct && (players[name].streak||0) >= 1 ? 250 : 0;
+          players[name] = {
+            ...players[name],
+            score: (players[name].score||0) + (correct ? 1000+bonus : 0),
+            streak: correct ? (players[name].streak||0)+1 : 0,
+            correct, lastAnswer: ans,
+          };
+        });
+        Object.keys(players).forEach(name => {
+          if (!answered[name]) players[name] = { ...players[name], streak: 0, correct: false };
+        });
+      }
       const nextIdx = prev.qIndex + 1;
       if (nextIdx >= prev.questions.length) return { ...prev, players, phase:"end", answers:{} };
+      const nextQ = prev.questions[nextIdx];
+      // After last warmup question, go to warmup_done instead of leaderboard
+      if (isWarmupQ && nextIdx === prev.warmupCount) {
+        return { ...prev, players, phase:"warmup_done", qIndex:nextIdx, currentQ:nextQ, answers:{} };
+      }
       // Go to intermediate leaderboard; pre-load next question so goNextQuestion just flips phase
-      return { ...prev, players, phase:"leaderboard", qIndex:nextIdx, currentQ:prev.questions[nextIdx], answers:{} };
+      return { ...prev, players, phase:"leaderboard", qIndex:nextIdx, currentQ:nextQ, answers:{} };
     });
   };
 
   const goNextQuestion = () => {
     window.scrollTo(0, 0);
-    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ) }));
+    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ), paused:false }));
+  };
+
+  const replayQuestion = () => {
+    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ), answers:{}, paused:false }));
   };
 
   const endEarly = () => {
@@ -1383,6 +1413,20 @@ function HostView({ onBack }) {
   const sorted = [...players].sort((a,b)=>(b[1].score||0)-(a[1].score||0));
   const teamScores = getTeamScores(room);
   const activeTeams = TEAMS.slice(0, room.teamCount);
+
+  const buildSummary = (questions, topic) => {
+    const lines = [`=== English Arena · ${topic} ===\n`];
+    questions.forEach((q, i) => {
+      lines.push(`Q${i+1}. ${q.question}${q.sentence ? " " + q.sentence : ""}`);
+      const ans = q.type==="error_spotter" ? `${q.errorWord} → ${q.answer}` :
+                  q.type==="story_builder" ? `Order: ${(q.correctOrder||[]).filter(x=>x<3).join(",")}` :
+                  q.type==="word_match" ? "Match all pairs correctly" : q.answer;
+      lines.push(`Answer: ${ans}`);
+      if (q.explanation) lines.push(`Note: ${q.explanation}`);
+      lines.push("");
+    });
+    return lines.join("\n");
+  };
 
   return (
     <div className="panel">
@@ -1450,6 +1494,12 @@ function HostView({ onBack }) {
             <p style={{fontSize:"0.82rem",opacity:0.7,marginBottom:"0.6rem"}}>
               {room.questions.length} questions ready · Topic: <strong>{room.topic}</strong>
             </p>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <label style={{fontSize:"0.79rem",opacity:0.75,cursor:"pointer",display:"flex",alignItems:"center",gap:"0.4rem"}}>
+                <input type="checkbox" checked={room.warmup} onChange={e=>upd(p=>({...p,warmup:e.target.checked}))} style={{accentColor:"var(--gold)",cursor:"pointer"}} />
+                Warm-up round (3 quick questions)
+              </label>
+            </div>
             <button className="btn btn-green btn-full" style={{fontSize:"1rem"}} onClick={startGame}>▶ Start Game</button>
           </div>
           {/* Mode */}
@@ -1560,14 +1610,20 @@ function HostView({ onBack }) {
       {/* ── QUESTION PHASE ── */}
       {room.phase==="question" && room.currentQ && (
         <>
-          <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
-            players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
-            mode={room.mode} teams={activeTeams} teamScores={teamScores} />
-          {ansCount > 0 && (
-            <div className="text-center mt-2">
-              <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>
-            </div>
-          )}
+          <div style={{fontSize: bigText ? "1.2em" : "1em"}}>
+            <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
+              players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
+              mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused} />
+          </div>
+          <div className="flex gap-1 justify-center mt-2 wrap">
+            <button className={`btn btn-sm ${room.paused?"btn-gold":"btn-ghost"}`} onClick={()=>upd(p=>({...p,paused:!p.paused}))}>
+              {room.paused ? "▶ Resume" : "⏸ Pause"}
+            </button>
+            {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>}
+            <button className="btn btn-sm btn-ghost" onClick={()=>{ const n=!bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
+              {bigText ? "A−" : "A+"}
+            </button>
+          </div>
           <PlayersFooter players={players} mode={room.mode} />
         </>
       )}
@@ -1576,10 +1632,23 @@ function HostView({ onBack }) {
       {room.phase==="reveal" && room.currentQ && (
         <div className="mt-3">
           <HostReveal q={room.currentQ} answers={room.answers||{}} players={room.players||{}} />
-          <button className="btn btn-gold mt-3" onClick={advance}>
-            {room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
-          </button>
+          <div className="flex gap-2 mt-3 wrap">
+            <button className="btn btn-gold" style={{flex:1}} onClick={advance}>
+              {room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
+            </button>
+            <button className="btn btn-ghost btn-sm" onClick={replayQuestion} title="Show this question again">🔁 Replay</button>
+          </div>
           <PlayersFooter players={players} mode={room.mode} />
+        </div>
+      )}
+
+      {/* ── WARM-UP DONE ── */}
+      {room.phase==="warmup_done" && (
+        <div className="card mt-4" style={{textAlign:"center",padding:"2rem 1.5rem"}}>
+          <div style={{fontSize:"2.5rem",marginBottom:"0.6rem"}}>✅</div>
+          <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",marginBottom:"0.4rem"}}>Warm-Up Complete!</h2>
+          <p className="op50" style={{fontSize:"0.85rem",marginBottom:"1.5rem"}}>Students are warmed up and ready. Main game starts now.</p>
+          <button className="btn btn-green btn-full" style={{fontSize:"1rem"}} onClick={goNextQuestion}>🚀 Start Main Game →</button>
         </div>
       )}
 
@@ -1592,6 +1661,30 @@ function HostView({ onBack }) {
             <button className="btn btn-gold mt-3" onClick={goNextQuestion}>
               Next Question →
             </button>
+          )}
+          {room.phase==="end" && (
+            <>
+              <button className="btn btn-ghost btn-full mt-3" onClick={()=>setShowReview(v=>!v)}>
+                📚 {showReview ? "Hide" : "Review"} Questions
+              </button>
+              {showReview && (() => {
+                const mainQs = room.questions.filter(q=>!q._warmup);
+                return (
+                  <div className="card mt-2" style={{maxHeight:"60vh",overflowY:"auto"}}>
+                    <button className="btn btn-ghost btn-sm mb-3" onClick={()=>navigator.clipboard.writeText(buildSummary(mainQs, room.topic))}>
+                      📋 Copy as text
+                    </button>
+                    {mainQs.map((q,i)=>(
+                      <div key={i} style={{borderBottom:"1px solid rgba(255,255,255,0.07)",paddingBottom:"0.7rem",marginBottom:"0.7rem"}}>
+                        <div style={{fontWeight:700,fontSize:"0.85rem",lineHeight:1.4}}>Q{i+1}. {q.question}{q.sentence?" "+q.sentence:""}</div>
+                        <div style={{color:"var(--teal)",fontSize:"0.8rem",marginTop:"0.2rem"}}>✔ {q.type==="error_spotter"?`${q.errorWord} → ${q.answer}`:q.type==="story_builder"?`Order: ${(q.correctOrder||[]).filter(x=>x<3).join(",")}`:q.type==="word_match"?"Match all pairs":q.answer}</div>
+                        {q.explanation&&<div className="op50" style={{fontSize:"0.76rem",marginTop:"0.15rem",lineHeight:1.4}}>{q.explanation}</div>}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </>
           )}
         </>
       )}
@@ -1641,7 +1734,7 @@ function StressDots({ syllables, stressAt, size = "md" }) {
   );
 }
 
-function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores }) {
+function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(()=> q.type==="rearrange" ? [...(q.words||[])].sort(()=>Math.random()-0.5) : [], [q.question]);
@@ -1649,8 +1742,14 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
     <div className="mt-3">
       <div className="prog"><div className="prog-fill" style={{width:`${((qIndex+1)/total)*100}%`}}/></div>
       <div className="flex justify-between items-center mb-2">
-        <span className="badge">{q.type.replace(/_/g," ")}</span>
-        <span className="op50" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.68rem"}}>Q{qIndex+1}/{total}</span>
+        <div className="flex gap-1 items-center">
+          {q._warmup && <span className="badge" style={{background:"rgba(232,184,75,0.2)",color:"var(--gold)",border:"1px solid rgba(232,184,75,0.4)"}}>WARM UP</span>}
+          <span className="badge">{q.type.replace(/_/g," ")}</span>
+        </div>
+        <div className="flex gap-1 items-center">
+          {paused && <span style={{fontSize:"0.68rem",color:"var(--coral)",fontWeight:700,letterSpacing:"0.05em"}}>⏸ PAUSED</span>}
+          <span className="op50" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.68rem"}}>Q{qIndex+1}/{total}</span>
+        </div>
       </div>
       {mode==="teams" && (
         <div className="flex gap-1 wrap mb-2">
@@ -1885,6 +1984,8 @@ function StudentView({ onBack, initialCode = "" }) {
   const [room, setRoom] = useState(null);
   const [myAnswer, setMyAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [bigText, setBigText] = useState(() => readFont());
+  const [showReview, setShowReview] = useState(false);
   // answer-type state
   const [rearranged, setRearranged] = useState([]);
   const [usedIdx, setUsedIdx] = useState([]);
@@ -2019,22 +2120,34 @@ function StudentView({ onBack, initialCode = "" }) {
           <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.78rem"}}>{name}</div>
           {myTeam&&<div style={{fontSize:"0.68rem",color:myTeam.color}}>{myTeam.emoji} {myTeam.name}</div>}
         </div>
-        <div style={{textAlign:"right"}}>
-          <div className="text-gold" style={{fontFamily:"'Unbounded',sans-serif",fontWeight:700,fontSize:"1.05rem"}}>{myScore.toLocaleString()} pts</div>
-          {myTeam&&<div style={{fontSize:"0.68rem",color:myTeam.color}}>Team: {(teamScores[myTeam.id]||0).toLocaleString()}</div>}
+        <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
+          <button onClick={()=>{const n=!bigText;setBigText(n);writeFont(n);}} style={{background:"none",border:"1px solid rgba(255,255,255,0.18)",borderRadius:4,color:"rgba(255,255,255,0.55)",fontSize:"0.7rem",padding:"0.18rem 0.45rem",cursor:"pointer",lineHeight:1}} title="Toggle text size">{bigText?"A−":"A+"}</button>
+          <div style={{textAlign:"right"}}>
+            <div className="text-gold" style={{fontFamily:"'Unbounded',sans-serif",fontWeight:700,fontSize:"1.05rem"}}>{myScore.toLocaleString()} pts</div>
+            {myTeam&&<div style={{fontSize:"0.68rem",color:myTeam.color}}>Team: {(teamScores[myTeam.id]||0).toLocaleString()}</div>}
+          </div>
         </div>
       </div>
 
       {phase==="leaderboard"||phase==="end" ? (
-        <StudentLeaderboard room={room} name={name} />
+        <StudentLeaderboard room={room} name={name} showReview={showReview} setShowReview={setShowReview} />
+      ) : phase==="warmup_done" ? (
+        <div style={{textAlign:"center",padding:"3rem 1rem"}}>
+          <div style={{fontSize:"3rem",marginBottom:"0.8rem"}}>⏳</div>
+          <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.95rem",marginBottom:"0.4rem"}}>Get ready!</h2>
+          <p className="op50">Main game starting soon…</p>
+          <div className="dots mt-3"><span/><span/><span/></div>
+        </div>
       ) : phase==="question"&&q ? (
-        <StudentAnswer q={q} myAnswer={myAnswer} onAnswer={submitAnswer}
-          rearranged={rearranged} setRearranged={setRearranged}
-          usedIdx={usedIdx} setUsedIdx={setUsedIdx}
-          typeVal={typeVal} setTypeVal={setTypeVal}
-          storyOrder={storyOrder} setStoryOrder={setStoryOrder}
-          matchState={matchState} setMatchState={setMatchState}
-          room={room} />
+        <div style={{fontSize: bigText ? "1.2em" : "1em"}}>
+          <StudentAnswer q={q} myAnswer={myAnswer} onAnswer={submitAnswer}
+            rearranged={rearranged} setRearranged={setRearranged}
+            usedIdx={usedIdx} setUsedIdx={setUsedIdx}
+            typeVal={typeVal} setTypeVal={setTypeVal}
+            storyOrder={storyOrder} setStoryOrder={setStoryOrder}
+            matchState={matchState} setMatchState={setMatchState}
+            room={room} />
+        </div>
       ) : phase==="reveal" ? (
         <div className="text-center mt-4">
           <div style={{fontSize:"2.5rem",marginBottom:"0.8rem"}}>{myAnswer!==null?(wasCorrect?"✅":"❌"):"⏱️"}</div>
@@ -2374,11 +2487,51 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
 }
 
 // ─── STUDENT LEADERBOARD ──────────────────────────────────────────────────────
-function StudentLeaderboard({ room, name }) {
+function StudentLeaderboard({ room, name, showReview, setShowReview }) {
   const sorted = Object.entries(room?.players||{}).sort((a,b)=>(b[1].score||0)-(a[1].score||0));
   const myPos = sorted.findIndex(([n])=>n===name);
   const teamScores = getTeamScores(room||{});
   const mode = room?.mode;
+  const isEnd = room?.phase === "end";
+
+  const buildSummary = (questions, topic) => {
+    const lines = [`=== English Arena · ${topic} ===\n`];
+    questions.forEach((q, i) => {
+      lines.push(`Q${i+1}. ${q.question}${q.sentence ? " " + q.sentence : ""}`);
+      const ans = q.type==="error_spotter" ? `${q.errorWord} → ${q.answer}` :
+                  q.type==="story_builder" ? `Order: ${(q.correctOrder||[]).filter(x=>x<3).join(",")}` :
+                  q.type==="word_match" ? "Match all pairs correctly" : q.answer;
+      lines.push(`Answer: ${ans}`);
+      if (q.explanation) lines.push(`Note: ${q.explanation}`);
+      lines.push("");
+    });
+    return lines.join("\n");
+  };
+
+  const reviewSection = isEnd && setShowReview ? (
+    <>
+      <button className="btn btn-ghost btn-full mt-3" onClick={()=>setShowReview(v=>!v)}>
+        📚 {showReview ? "Hide" : "Review"} Questions
+      </button>
+      {showReview && (() => {
+        const mainQs = (room.questions||[]).filter(q=>!q._warmup);
+        return (
+          <div className="card mt-2" style={{maxHeight:"55vh",overflowY:"auto"}}>
+            <button className="btn btn-ghost btn-sm mb-3" onClick={()=>navigator.clipboard.writeText(buildSummary(mainQs, room.topic||""))}>
+              📋 Copy as text
+            </button>
+            {mainQs.map((q,i)=>(
+              <div key={i} style={{borderBottom:"1px solid rgba(255,255,255,0.07)",paddingBottom:"0.7rem",marginBottom:"0.7rem"}}>
+                <div style={{fontWeight:700,fontSize:"0.83rem",lineHeight:1.4}}>Q{i+1}. {q.question}{q.sentence?" "+q.sentence:""}</div>
+                <div style={{color:"var(--teal)",fontSize:"0.78rem",marginTop:"0.2rem"}}>✔ {q.type==="error_spotter"?`${q.errorWord} → ${q.answer}`:q.type==="story_builder"?`Order: ${(q.correctOrder||[]).filter(x=>x<3).join(",")}`:q.type==="word_match"?"Match all pairs":q.answer}</div>
+                {q.explanation&&<div className="op50" style={{fontSize:"0.74rem",marginTop:"0.15rem",lineHeight:1.4}}>{q.explanation}</div>}
+              </div>
+            ))}
+          </div>
+        );
+      })()}
+    </>
+  ) : null;
 
   if (mode==="teams") {
     const usedTeams = TEAMS.filter(t=>Object.values(room.players||{}).some(p=>p.team===t.id));
@@ -2386,7 +2539,7 @@ function StudentLeaderboard({ room, name }) {
     const myTeam = room.players?.[name]?.team ? TEAMS.find(t=>t.id===room.players[name].team) : null;
     return (
       <div>
-        <h2 className="text-center text-gold mb-3" style={{fontSize:"1.2rem"}}>{room.phase==="end"?"🏆 Final":"📊 Scores"}</h2>
+        <h2 className="text-center text-gold mb-3" style={{fontSize:"1.2rem"}}>{isEnd?"🏆 Final":"📊 Scores"}</h2>
         <span className="label">Teams</span>
         {tSorted.map((t,i)=>(
           <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:`${i*0.08}s`}}>
@@ -2399,13 +2552,14 @@ function StudentLeaderboard({ room, name }) {
         <span className="label mt-3">You</span>
         {myTeam&&<p style={{color:myTeam.color,fontFamily:"'Unbounded',sans-serif",fontSize:"0.85rem"}}>{myTeam.emoji} {myTeam.name}</p>}
         <p className="op50 mt-1" style={{fontSize:"0.82rem"}}>Your score: <strong style={{color:"var(--gold)"}}>{(room.players?.[name]?.score||0).toLocaleString()}</strong> pts (#{myPos+1})</p>
+        {reviewSection}
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="text-center text-gold mb-3" style={{fontSize:"1.2rem"}}>{room.phase==="end"?"🏆 Final":"📊 Scores"}</h2>
+      <h2 className="text-center text-gold mb-3" style={{fontSize:"1.2rem"}}>{isEnd?"🏆 Final":"📊 Scores"}</h2>
       {sorted.map(([n,p],i)=>(
         <div key={n} className="lb-row" style={{
           borderLeftColor:n===name?"var(--gold)":i===0?"var(--gold)":i===1?"#c0c0c0":i===2?"#cd7f32":"rgba(255,255,255,0.08)",
@@ -2419,6 +2573,7 @@ function StudentLeaderboard({ room, name }) {
         </div>
       ))}
       {myPos>=0&&<p className="text-center op30 mt-2" style={{fontSize:"0.78rem"}}>#{myPos+1} of {sorted.length} players</p>}
+      {reviewSection}
     </div>
   );
 }
