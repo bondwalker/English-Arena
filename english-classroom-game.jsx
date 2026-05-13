@@ -1093,7 +1093,7 @@ function SoloView({ onBack }) {
           <p style={{fontSize:"0.78rem",opacity:0.45,marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid rgba(255,255,255,0.1)"}}>
-          {Object.entries(QUESTION_BANK).filter(([k])=>k!=="stress_battle"&&(topicFilter==="all"||faves.includes(k))).map(([key,{label}])=>(
+          {Object.entries(QUESTION_BANK).filter(([k])=>(topicFilter==="all"||faves.includes(k))).map(([key,{label}])=>(
             <div key={key} style={{position:"relative",display:"flex"}}>
               <button onClick={()=>setSelectedTopic(key)} style={{flex:1,padding:"0.5rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
               <button onClick={(e)=>{e.stopPropagation();toggleFave(key);}} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--gold)":"rgba(255,255,255,0.25)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
@@ -1235,7 +1235,8 @@ function SoloView({ onBack }) {
             <div style={{fontSize:"0.8rem",color:"var(--gold)",fontWeight:700,marginTop:"0.25rem"}}>🔥 {pendingStreak} in a row!</div>
           )}
           {!isCorrect&&q.type==="error_spotter"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Error: <strong>{q.errorWord}</strong> → <strong>{q.answer}</strong></div>}
-          {!isCorrect&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
+          {!isCorrect&&q.type==="stress_battle"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Correct pattern: <strong>{q.answer}</strong> — <strong>{q.word}</strong> is stressed on syllable {q.stressed}</div>}
+          {!isCorrect&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&q.type!=="stress_battle"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
           {!isCorrect&&q.type==="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Order: <strong>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
           {q.explanation&&<div className="op50" style={{fontSize:"0.78rem",marginTop:"0.3rem",lineHeight:1.4}}>{q.explanation}</div>}
         </div>
@@ -1375,8 +1376,12 @@ function HostView({ onBack }) {
       const nextIdx = prev.qIndex + 1;
       if (nextIdx >= prev.questions.length) return { ...prev, players, phase:"end", answers:{} };
       const nextQ = prev.questions[nextIdx];
-      // After last warmup question, go to warmup_done instead of leaderboard
-      if (isWarmupQ && nextIdx === prev.warmupCount) {
+      if (isWarmupQ) {
+        if (nextIdx < prev.warmupCount) {
+          // mid-warmup: skip leaderboard, go straight to next warmup question
+          return { ...prev, players, phase:"question", timeLeft:15, qIndex:nextIdx, currentQ:nextQ, answers:{}, paused:false };
+        }
+        // last warmup question done
         return { ...prev, players, phase:"warmup_done", qIndex:nextIdx, currentQ:nextQ, answers:{} };
       }
       // Go to intermediate leaderboard; pre-load next question so goNextQuestion just flips phase
@@ -1402,10 +1407,10 @@ function HostView({ onBack }) {
   const ansCount = Object.keys(room.answers||{}).length;
   const pCount = Object.keys(room.players||{}).length;
   useEffect(() => {
-    if (room.phase !== "question" || pCount === 0 || ansCount < pCount) return;
+    if (room.phase !== "question" || pCount === 0 || ansCount < pCount || room.paused) return;
     const t = setTimeout(endEarly, 700);
     return () => clearTimeout(t);
-  }, [ansCount, pCount, room.phase]);
+  }, [ansCount, pCount, room.phase, room.paused]);
 
   const reset = () => { const r = defaultRoom(); write(r); setRoom(r); setSelectedTopic(""); setGameType("mixed"); };
 
@@ -1634,7 +1639,7 @@ function HostView({ onBack }) {
           <HostReveal q={room.currentQ} answers={room.answers||{}} players={room.players||{}} />
           <div className="flex gap-2 mt-3 wrap">
             <button className="btn btn-gold" style={{flex:1}} onClick={advance}>
-              {room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
+              {room.currentQ?._warmup ? "Next →" : room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
             </button>
             <button className="btn btn-ghost btn-sm" onClick={replayQuestion} title="Show this question again">🔁 Replay</button>
           </div>
