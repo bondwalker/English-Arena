@@ -71,6 +71,7 @@ const defaultRoom = () => ({
   warmup: true,
   warmupCount: 0,
   paused: false,
+  firstCorrect: null,
 });
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -1416,45 +1417,55 @@ function HostView({ onBack }) {
       const isWarmupQ = !!q?._warmup;
       const players = { ...(prev.players||{}) };
       const answered = prev.answers || {};
+      let firstCorrect = null;
       if (!isWarmupQ) {
         Object.entries(answered).forEach(([name, ans]) => {
           if (!players[name]) players[name] = { score:0, streak:0 };
-          const correct = checkAnswer(ans, q);
+          const val = ans?.v ?? ans;
+          const correct = checkAnswer(val, q);
           const bonus = correct && (players[name].streak||0) >= 1 ? 250 : 0;
           players[name] = {
             ...players[name],
             score: (players[name].score||0) + (correct ? 1000+bonus : 0),
             streak: correct ? (players[name].streak||0)+1 : 0,
-            correct, lastAnswer: ans,
+            correct, lastAnswer: val,
           };
         });
         Object.keys(players).forEach(name => {
           if (!answered[name]) players[name] = { ...players[name], streak: 0, correct: false };
         });
+        const correctEntries = Object.entries(answered).filter(([,a]) => checkAnswer(a?.v ?? a, q));
+        if (correctEntries.length > 0) {
+          firstCorrect = correctEntries.sort(([,a],[,b]) => (a?.ts||0) - (b?.ts||0))[0][0];
+        }
       }
       const nextIdx = prev.qIndex + 1;
-      if (nextIdx >= prev.questions.length) return { ...prev, players, phase:"end", answers:{} };
+      if (nextIdx >= prev.questions.length) return { ...prev, players, phase:"end", answers:{}, firstCorrect:null };
       const nextQ = prev.questions[nextIdx];
       if (isWarmupQ) {
         if (nextIdx < prev.warmupCount) {
           // mid-warmup: skip leaderboard, go straight to next warmup question
-          return { ...prev, players, phase:"question", timeLeft:15, qIndex:nextIdx, currentQ:nextQ, answers:{}, paused:false };
+          return { ...prev, players, phase:"question", timeLeft:15, qIndex:nextIdx, currentQ:nextQ, answers:{}, paused:false, firstCorrect:null };
         }
         // last warmup question done
-        return { ...prev, players, phase:"warmup_done", qIndex:nextIdx, currentQ:nextQ, answers:{} };
+        return { ...prev, players, phase:"warmup_done", qIndex:nextIdx, currentQ:nextQ, answers:{}, firstCorrect:null };
       }
       // Go to intermediate leaderboard; pre-load next question so goNextQuestion just flips phase
-      return { ...prev, players, phase:"leaderboard", qIndex:nextIdx, currentQ:nextQ, answers:{} };
+      return { ...prev, players, phase:"leaderboard", qIndex:nextIdx, currentQ:nextQ, answers:{}, firstCorrect };
     });
   };
 
   const goNextQuestion = () => {
     window.scrollTo(0, 0);
-    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ), paused:false }));
+    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ), paused:false, firstCorrect:null }));
   };
 
   const replayQuestion = () => {
-    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ), answers:{}, paused:false }));
+    upd(prev => ({ ...prev, phase:"question", timeLeft:getTimeLimit(prev.currentQ), answers:{}, paused:false, firstCorrect:null }));
+  };
+
+  const skipQuestion = () => {
+    upd(prev => ({ ...prev, phase:"reveal", timeLeft:0, answers:{}, firstCorrect:null }));
   };
 
   const endEarly = () => {
@@ -1680,6 +1691,7 @@ function HostView({ onBack }) {
               {room.paused ? "▶ Resume" : "⏸ Pause"}
             </button>
             {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>}
+            <button className="btn btn-sm btn-ghost" onClick={skipQuestion} title="Skip — no one scores this question">⏭ Skip</button>
             <button className="btn btn-sm btn-ghost" onClick={()=>{ const n=!bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
               {bigText ? "A−" : "A+"}
             </button>
@@ -1878,8 +1890,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
 }
 
 function HostReveal({ q, answers, players }) {
-  const correct = Object.entries(answers).filter(([,a])=>checkAnswer(a,q));
-  const wrong = Object.entries(answers).filter(([,a])=>!checkAnswer(a,q));
+  const correct = Object.entries(answers).filter(([,a])=>checkAnswer(a?.v??a,q));
+  const wrong = Object.entries(answers).filter(([,a])=>!checkAnswer(a?.v??a,q));
   return (
     <div>
       <span className="label">{q.type==="odd_one_out"?"The sentence with the error":"Correct Answer"}</span>
@@ -2118,12 +2130,13 @@ function StudentView({ onBack, initialCode = "" }) {
   const submitAnswer = (ans) => {
     if (myAnswer !== null) return;
     setMyAnswer(ans);
+    const entry = { v: ans, ts: Date.now() };
     if (db && room?.code) {
-      set(ref(db, `rooms/${room.code}/answers/${name}`), ans).catch(() => {});
+      set(ref(db, `rooms/${room.code}/answers/${name}`), entry).catch(() => {});
       return; // don't do a full room write — it would overwrite teacher's state
     }
     const s = read();
-    if (s) write({ ...s, answers: { ...(s.answers||{}), [name]: ans } });
+    if (s) write({ ...s, answers: { ...(s.answers||{}), [name]: entry } });
   };
 
   if (step==="join") return (
@@ -2651,6 +2664,7 @@ function StudentLeaderboard({ room, name, showReview, setShowReview }) {
         }}>
           <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
           <span className="lb-name">{n}{n===name&&<span className="text-gold"> ← you</span>}</span>
+          {n===room?.firstCorrect&&<span title="First correct answer!" style={{fontSize:"0.8rem"}}>⚡</span>}
           {(p.streak||0)>1&&<span style={{fontSize:"0.82rem"}}>🔥</span>}
           <span className="lb-score">{(p.score||0).toLocaleString()}</span>
         </div>
