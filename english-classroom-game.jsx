@@ -48,11 +48,39 @@ const listenRoom = (code, cb) => {
 
 // ─── Teams ────────────────────────────────────────────────────────────────────
 const TEAMS = [
-  { id: "red",    name: "Red Wolves",    color: "#e83a3a", emoji: "🐺" },
-  { id: "blue",   name: "Blue Sharks",   color: "#4db8e8", emoji: "🦈" },
-  { id: "green",  name: "Green Tigers",  color: "#3ab87a", emoji: "🐯" },
-  { id: "purple", name: "Purple Eagles", color: "#a855f7", emoji: "🦅" },
+  { id: "red",    name: "Red Wolves",    color: "#e14d39", icon: "wolf" },
+  { id: "blue",   name: "Blue Sharks",   color: "#2e5bdb", icon: "shark" },
+  { id: "green",  name: "Green Tigers",  color: "#5b9b3d", icon: "tiger" },
+  { id: "purple", name: "Purple Eagles", color: "#7a4d9c", icon: "eagle" },
 ];
+
+function TeamIcon({ icon, color = "currentColor", size = 18 }) {
+  const icons = {
+    wolf:  <path d="M4 8 L7 4 L9 7 L15 7 L17 4 L20 8 L20 15 Q20 20 16 21 L8 21 Q4 20 4 15 Z" fill={color} />,
+    shark: <path d="M2 13 Q6 9 11 9 L18 6 L17 11 L21 12 L17 13 L18 17 L11 15 Q6 16 2 13 Z" fill={color} />,
+    tiger: <React.Fragment><path d="M5 7 L4 4 L8 6 L16 6 L20 4 L19 7 Q21 9 21 13 Q21 19 16 21 L8 21 Q3 19 3 13 Q3 9 5 7 Z" fill={color}/><path d="M9 9 L9.5 12 M15 9 L14.5 12" stroke="white" strokeWidth="1.2" fill="none"/></React.Fragment>,
+    eagle: <path d="M12 4 Q15 6 16 10 L20 8 L17 13 L21 14 L16 16 L18 21 L12 18 L6 21 L8 16 L3 14 L7 13 L4 8 L8 10 Q9 6 12 4 Z" fill={color} />,
+  };
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round"
+      style={{display:"inline-block",verticalAlign:"middle",flexShrink:0}}>
+      {icons[icon] || null}
+    </svg>
+  );
+}
+
+function FlameStreak({ count }) {
+  return (
+    <span style={{display:"inline-flex",alignItems:"center",gap:3,padding:"2px 8px",
+      background:"rgba(247,181,56,0.15)",border:"1.5px solid var(--gold)",borderRadius:999,
+      fontSize:"0.72rem",fontWeight:700,color:"var(--coral)"}}>
+      <svg width="9" height="11" viewBox="0 0 9 11" style={{display:"block"}}>
+        <path d="M4.5 10.5 Q0.5 8.5 0.5 5.5 Q0.5 3.5 2.5 1.5 Q2 4 4 4 Q4 1 5.5 0 Q5 3 7.5 3.5 Q8.5 4.5 8.5 6.5 Q8.5 8.5 4.5 10.5 Z" fill="var(--coral)" />
+      </svg>
+      ×{count}
+    </span>
+  );
+}
 
 const defaultRoom = () => ({
   code: Math.random().toString(36).slice(2,6).toUpperCase(),
@@ -1023,6 +1051,34 @@ const css = `
     .opt-btn{min-height:72px;font-size:1.05rem;padding:1.1rem 1.1rem}
     .hero-btns{flex-direction:column;align-items:stretch}
   }
+
+  .sa-pressable{transition:transform 0.12s,box-shadow 0.12s;cursor:pointer;user-select:none}
+  .sa-pressable:hover{transform:translate(-2px,-2px)}
+  .sa-pressable:active{transform:translate(2px,2px);transition-duration:0.06s}
+  .sa-anim-pop{animation:sa-pop-in 0.5s cubic-bezier(0.2,0.8,0.3,1.2) both}
+  .sa-anim-slide{animation:sa-slide-up 0.5s cubic-bezier(0.2,0.8,0.3,1) both}
+  .sa-anim-fade{animation:sa-fade-in 0.4s ease both}
+  .sa-anim-shake{animation:sa-shake 0.5s both}
+  .sa-anim-pulse{animation:sa-pulse 1.4s ease-in-out infinite}
+  .sa-anim-letter{animation:sa-letter-pop 0.7s cubic-bezier(0.2,0.8,0.3,1.3) both}
+  .sa-anim-warn{animation:sa-timer-warn 0.5s ease-in-out infinite}
+  .sa-stagger>*{animation-fill-mode:both}
+  .sa-stagger>*:nth-child(1){animation-delay:0.05s}
+  .sa-stagger>*:nth-child(2){animation-delay:0.15s}
+  .sa-stagger>*:nth-child(3){animation-delay:0.25s}
+  .sa-stagger>*:nth-child(4){animation-delay:0.35s}
+  .sa-stagger>*:nth-child(5){animation-delay:0.45s}
+  .sa-stagger>*:nth-child(6){animation-delay:0.55s}
+  .sa-card{transition:transform 0.15s cubic-bezier(0.2,0.8,0.3,1)}
+  .sa-card-interactive:hover{transform:translate(-2px,-2px) rotate(-0.4deg)}
+  .sa-card-interactive:active{transform:translate(1px,1px)}
+  @keyframes sa-fade-in{from{opacity:0}to{opacity:1}}
+  @keyframes sa-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  @keyframes sa-letter-pop{0%{transform:scale(0) rotate(-15deg);opacity:0}60%{transform:scale(1.15) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+  @keyframes sa-timer-warn{0%,100%{color:var(--coral);transform:scale(1)}50%{color:#ff6341;transform:scale(1.12)}}
+  @keyframes sa-score-pop{0%{transform:translate(-50%,20px) scale(0.4);opacity:0}20%{transform:translate(-50%,0) scale(1.15);opacity:1}100%{transform:translate(-50%,-70px) scale(1);opacity:0}}
+  @keyframes sa-spotlight-sweep{0%{transform:translateX(-100%) skewX(-20deg)}100%{transform:translateX(200%) skewX(-20deg)}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 `;
 
 const MEDAL = ["🥇","🥈","🥉"];
@@ -1059,7 +1115,15 @@ export default function App() {
 function Home({ onHost, onJoin, onSolo }) {
   return (
     <div className="hero">
-      <h1 className="hero-title">ENGLISH<br/><span>ARENA</span></h1>
+      <div style={{textAlign:"center",marginBottom:"0.6rem"}}>
+        <svg width="56" height="56" viewBox="0 0 32 32" style={{display:"inline-block"}}>
+          <path d="M5 6 H27 A4 4 0 0 1 31 10 V20 A4 4 0 0 1 27 24 H16.5 L10.5 30 V24 H5 A4 4 0 0 1 1 20 V10 A4 4 0 0 1 5 6 Z" fill="var(--coral)" />
+          <rect x="8" y="16" width="3.5" height="4" rx="0.5" fill="var(--cream)" />
+          <rect x="14" y="12" width="3.5" height="8" rx="0.5" fill="var(--cream)" />
+          <rect x="20" y="9" width="3.5" height="11" rx="0.5" fill="var(--cream)" />
+        </svg>
+      </div>
+      <h1 className="hero-title">English<br/><span>Arena</span></h1>
       <p className="hero-sub">Live classroom games to improve your English. No app needed.</p>
 
       <div style={{width:"100%",maxWidth:340,margin:"0 auto"}}>
@@ -1582,7 +1646,7 @@ function HostView({ onBack }) {
                     const team = room.mode==="teams" ? TEAMS.find(t=>t.id===p.team) : null;
                     return (
                       <span key={name} className="chip" style={{background:team?team.color:"rgba(255,255,255,0.1)",color:team?"#fff":"var(--ink)"}}>
-                        {team&&team.emoji} {name}
+                        {team&&<TeamIcon icon={team.icon} color="#fff" size={13}/>} {name}
                       </span>
                     );
                   })}
@@ -1598,9 +1662,9 @@ function HostView({ onBack }) {
         const qrUrl = typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app";
         return (
           <>
-            <div style={{position:"fixed",bottom:"1rem",left:"1rem",zIndex:50,background:"rgba(13,13,13,0.92)",border:"1px solid rgba(255,255,255,0.15)",padding:"0.35rem 0.6rem",backdropFilter:"blur(6px)"}}>
-              <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.6rem",opacity:0.45,letterSpacing:"0.1em",marginBottom:"0.15rem"}}>CODE</div>
-              <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",fontWeight:700,color:"var(--gold)",letterSpacing:"0.08em"}}>{room.code}</div>
+            <div style={{position:"fixed",bottom:"1rem",left:"1rem",zIndex:50,background:"var(--paper)",border:"2px solid var(--ink)",padding:"0.4rem 0.85rem",borderRadius:10,boxShadow:"3px 3px 0 var(--gold)"}}>
+              <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.5rem",opacity:0.5,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:"0.1rem"}}>Room</div>
+              <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.05rem",fontWeight:900,color:"var(--ink)",letterSpacing:"0.1em"}}>{room.code}</div>
             </div>
             {(room.phase==="question"||room.phase==="reveal") && <InGameQR url={qrUrl} />}
           </>
@@ -1819,7 +1883,7 @@ function InGameQR({ url }) {
   const [failed, setFailed] = useState(false);
   const src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(url)}&bgcolor=ffffff&color=0d0d0d&margin=2&format=png`;
   return (
-    <div style={{position:"fixed",bottom:"1rem",right:"1rem",zIndex:50,background:"#fff",padding:"0.35rem",boxShadow:"0 2px 12px rgba(0,0,0,0.4)",lineHeight:failed?1.3:0}}>
+    <div style={{position:"fixed",bottom:"1rem",right:"1rem",zIndex:50,background:"#fff",padding:"0.4rem",borderRadius:8,border:"2px solid var(--ink)",boxShadow:"3px 3px 0 var(--ink)",lineHeight:failed?1.3:0}}>
       {failed
         ? <div style={{fontSize:"0.55rem",color:"#000",maxWidth:80,wordBreak:"break-all",padding:"0.1rem"}}>{url}</div>
         : <img src={src} alt="Join QR" width={80} height={80} onError={()=>setFailed(true)} />}
@@ -1837,7 +1901,7 @@ function PlayersFooter({ players, mode }) {
           const team = mode==="teams" ? TEAMS.find(t=>t.id===p.team) : null;
           return (
             <span key={name} className="chip" style={{background:team?team.color:"rgba(255,255,255,0.1)",color:team?"#fff":"var(--ink)"}}>
-              {team&&team.emoji} {name}{p.score>0?` · ${p.score.toLocaleString()}`:""}{p.correct===true?"✓":p.correct===false?"✗":""}
+              {team&&<TeamIcon icon={team.icon} color="#fff" size={13}/>} {name}{p.score>0?` · ${p.score.toLocaleString()}`:""}{p.correct===true?"✓":p.correct===false?"✗":""}
             </span>
           );
         })}
@@ -1888,7 +1952,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       </div>
       {mode==="teams" && (
         <div className="flex gap-1 wrap mb-2">
-          {teams.map(t=><span key={t.id} style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.62rem",padding:"0.28rem 0.7rem",background:t.color,color:"#fff"}}>{t.emoji} {(teamScores[t.id]||0).toLocaleString()}</span>)}
+          {teams.map(t=><span key={t.id} style={{fontFamily:"'DM Sans',sans-serif",fontSize:"0.75rem",fontWeight:700,padding:"0.3rem 0.8rem",background:t.color,color:"#fff",borderRadius:999,display:"inline-flex",alignItems:"center",gap:"0.3rem"}}><TeamIcon icon={t.icon} color="#fff" size={14}/>{(teamScores[t.id]||0).toLocaleString()}</span>)}
         </div>
       )}
       <div className="text-center mb-2">
@@ -1904,7 +1968,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         const right = q.options.find(o=>o!==wrong);
         return <div className="opt-grid">{[wrong,right].map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>;
       })()}
-      {q.type==="true_false"&&<div className="flex gap-2 mt-2"><div className="opt-btn opt-2" style={{justifyContent:"center",flex:1}}>✅ True</div><div className="opt-btn opt-0" style={{justifyContent:"center",flex:1}}>❌ False</div></div>}
+      {q.type==="true_false"&&<div className="flex gap-2 mt-2"><div className="opt-btn opt-2" style={{justifyContent:"center",flex:1,fontWeight:700}}>✓ True</div><div className="opt-btn opt-0" style={{justifyContent:"center",flex:1,fontWeight:700}}>✕ False</div></div>}
       {q.type==="story_builder"&&q.sentences&&<div className="mt-2">{q.sentences.slice(0,3).map((s,i)=><div key={i} className="story-card" style={{cursor:"default"}}><span className="story-num">{i+1}</span>{s}</div>)}</div>}
       {q.type==="word_match"&&q.pairs&&(
         <div className="flex gap-2 mt-2">
@@ -2081,9 +2145,9 @@ function Leaderboard({ sorted, mode, teams, teamScores, isEnd }) {
           return (
             <div key={name} className="lb-row" style={{borderLeftColor:team?.color||"rgba(255,255,255,0.08)",animationDelay:`${i*0.05}s`}}>
               <span className="lb-rank" style={{fontSize:"0.85rem"}}>{MEDAL[i]||`#${i+1}`}</span>
-              {team&&<span style={{fontSize:"0.9rem"}}>{team.emoji}</span>}
+              {team&&<TeamIcon icon={team.icon} color={team.color} size={18}/>}
               <span className="lb-name">{name}</span>
-              {(p.streak||0)>1&&<span style={{fontSize:"0.85rem"}}>🔥×{p.streak}</span>}
+              {(p.streak||0)>1&&<FlameStreak count={p.streak}/>}
               <span className="lb-score">{(p.score||0).toLocaleString()}</span>
             </div>
           );
@@ -2240,8 +2304,11 @@ function StudentView({ onBack, initialCode = "" }) {
               {wasCorrect?((myData.streak||0)>=2?"Correct! +1250":"Correct! +1000"):"Not quite…"}
             </div>
             {wasCorrect&&(myData.streak||0)>=2&&(
-              <div style={{marginTop:"0.8rem",fontFamily:"'Unbounded',sans-serif",fontSize:"1.3rem",fontWeight:900,color:"var(--gold)",animation:"streakPop 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards"}}>
-                🔥 On fire! ×{myData.streak||0}
+              <div style={{marginTop:"0.8rem",fontFamily:"'Fraunces',Georgia,serif",fontSize:"1.3rem",fontWeight:900,color:"var(--gold)",animation:"streakPop 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards",display:"flex",alignItems:"center",justifyContent:"center",gap:"0.4rem"}}>
+                <svg width="22" height="26" viewBox="0 0 9 11" style={{display:"block"}}>
+                  <path d="M4.5 10.5 Q0.5 8.5 0.5 5.5 Q0.5 3.5 2.5 1.5 Q2 4 4 4 Q4 1 5.5 0 Q5 3 7.5 3.5 Q8.5 4.5 8.5 6.5 Q8.5 8.5 4.5 10.5 Z" fill="var(--gold)" />
+                </svg>
+                On fire! ×{myData.streak||0}
               </div>
             )}
             {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:q.type==="error_spotter"?<span>Error: <strong style={{color:"var(--coral)"}}>{q.errorWord}</strong> → <strong style={{color:"#fff"}}>{q.answer}</strong></span>:<span>Answer: <strong style={{color:"#fff"}}>{q.type==="story_builder"?q.correctOrder?.filter(i=>i<3).join(","):q.answer}</strong></span>}</div>}
