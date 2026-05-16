@@ -1262,7 +1262,7 @@ function SoloView({ onBack }) {
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid rgba(255,255,255,0.1)"}}>
           {Object.entries(QUESTION_BANK).filter(([k])=>(topicFilter==="all"||faves.includes(k))).map(([key,{label}])=>(
             <div key={key} style={{position:"relative",display:"flex"}}>
-              <button onClick={()=>setSelectedTopic(key)} style={{flex:1,padding:"0.5rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
+              <button onClick={()=>{ setSelectedTopic(key); if(key==="stress_battle") setGameType("stress_battle"); }} style={{flex:1,padding:"0.5rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
               <button onClick={(e)=>{e.stopPropagation();toggleFave(key);}} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--gold)":"rgba(255,255,255,0.25)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
             </div>
           ))}
@@ -1270,7 +1270,7 @@ function SoloView({ onBack }) {
 
         <span className="label">Question type</span>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","🎲 Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Fill the Idiom"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"]].map(([v,l])=>(
+          {[["mixed","🎲 Mixed"],["stress_battle","⚡ Stress Battle"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Fill the Idiom"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"]].map(([v,l])=>(
             <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={()=>setGameType(v)}>{l}</button>
           ))}
         </div>
@@ -1482,7 +1482,7 @@ function HostView({ onBack }) {
   const loadQuestions = () => {
     if (!selectedTopic) { setError("Select a topic first!"); return; }
     const bank = QUESTION_BANK[selectedTopic].questions;
-    let pool = (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => q.type === gameType);
+    let pool = gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const qs = shuffled.slice(0, Math.min(qCount, shuffled.length));
