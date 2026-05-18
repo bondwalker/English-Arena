@@ -1271,7 +1271,7 @@ function SoloView({ onBack }) {
         <span className="label">Question type</span>
         <div className="flex wrap gap-1 mb-3">
           {[["mixed","🎲 Mixed"],["stress_battle","⚡ Stress Battle"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Fill the Idiom"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"]].map(([v,l])=>(
-            <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={()=>setGameType(v)}>{l}</button>
+            <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={()=>{ setGameType(v); if(v==="stress_battle") setSelectedTopic("stress_battle"); }}>{l}</button>
           ))}
         </div>
 
