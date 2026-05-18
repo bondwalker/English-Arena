@@ -1351,10 +1351,25 @@ function SoloView({ onBack }) {
             <div key={i} style={{display:"flex",gap:"0.6rem",alignItems:"flex-start",padding:"0.5rem 0",borderBottom:"1px solid rgba(255,255,255,0.06)"}}>
               <span style={{fontSize:"1rem",marginTop:"0.1rem"}}>{r.correct?"✅":"❌"}</span>
               <div>
-                <div style={{fontSize:"0.83rem",opacity:0.8,lineHeight:1.4}}>{r.q.question}{r.q.sentence?" "+r.q.sentence:""}</div>
-                {!r.correct&&<div style={{fontSize:"0.78rem",color:"var(--gold)",marginTop:"0.2rem"}}>
-                  {r.q.type==="error_spotter"?`Error: ${r.q.errorWord} → ${r.q.answer}`:r.q.type==="story_builder"?`Order: ${(r.q.correctOrder||[]).filter(i=>i<3).join(",")}`:r.q.type==="word_match"?"Match all pairs correctly":`Answer: ${r.q.answer}`}
-                </div>}
+                <div style={{fontSize:"0.83rem",opacity:0.8,lineHeight:1.4}}>
+                  {r.q.type==="stress_battle" ? r.q.word : r.q.question}
+                  {r.q.sentence ? " " + r.q.sentence : ""}
+                </div>
+                <div style={{fontSize:"0.78rem",color:r.correct?"var(--teal)":"var(--gold)",opacity:r.correct?0.7:1,marginTop:"0.2rem"}}>
+                  {r.q.type==="stress_battle"
+                    ? `Stressed syllable ${r.q.stressed} of ${r.q.syllables} (${r.q.answer})`
+                    : r.q.type==="error_spotter"
+                    ? `${r.q.errorWord} → ${r.q.answer}`
+                    : r.q.type==="story_builder"
+                    ? `Order: ${(r.q.correctOrder||[]).filter(i=>i<3).join(",")}`
+                    : r.q.type==="word_match"
+                    ? "Match all pairs correctly"
+                    : r.q.type==="multiple_choice"||r.q.type==="odd_one_out"
+                    ? r.q.options?.[r.q.correctIdx]
+                    : r.q.type==="type_answer"
+                    ? (r.q.correct||r.q.answer)
+                    : r.q.answer}
+                </div>
               </div>
             </div>
           ))}
