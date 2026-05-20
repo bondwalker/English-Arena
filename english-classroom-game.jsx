@@ -156,14 +156,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: After the twelve-hour flight, he was completely out of ___.",answer:"steam",options:["steam","breath","energy","order"],hint:"having no energy or motivation left",explanation:"'Out of steam' means to have run out of energy or the drive to continue."},
     {type:"word_match",question:"Match travel words with their meanings:",pairs:[{word:"departure",meaning:"the act of leaving a place"},{word:"boarding pass",meaning:"a document allowing you to board a plane"},{word:"turbulence",meaning:"rough, uneven movement during a flight"},{word:"excess baggage",meaning:"luggage that weighs more than the allowed limit"}],answer:"match_all_correct",explanation:"Key vocabulary for air travel."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She packed her suitcase the night before departure.","He always books an aisle seat on long flights.","We have visited Thailand in 2018.","They checked in two hours before the flight."],answer:"We have visited Thailand in 2018.",explanation:"'In 2018' is a finished past time. Use past simple: 'We visited Thailand in 2018.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PASSPORT",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BROCHURE",syllables:2,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TOURIST",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LUGGAGE",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SOUVENIR",syllables:3,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ARRIVAL",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DEPARTURE",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SIGHTSEEING",syllables:3,stressed:1,answer:"B"},
   ]},
   "work_office": { label: "Work & the Office", questions: [
     {type:"multiple_choice",question:"Which sentence correctly describes an ongoing project?",options:["I work on this report since Monday.","I am working on this report since Monday.","I have been working on this report since Monday."],answer:"I have been working on this report since Monday.",explanation:"Present perfect continuous + 'since' for ongoing actions that started in the past."},
@@ -178,14 +170,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: I have a lot on my ___ this week — three deadlines!",answer:"plate",options:["plate","mind","hands","desk"],hint:"very busy with many tasks",explanation:"'Have a lot on your plate' means to have many responsibilities to deal with."},
     {type:"word_match",question:"Match workplace terms with their meanings:",pairs:[{word:"deadline",meaning:"the latest time to finish a task"},{word:"agenda",meaning:"a list of topics for a meeting"},{word:"appraisal",meaning:"a formal review of performance"},{word:"delegate",meaning:"to give tasks to others"}],answer:"match_all_correct",explanation:"Key office vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["We need to meet the deadline.","She has been promoted last month.","He works from home on Fridays.","They are reviewing the budget now."],answer:"She has been promoted last month.",explanation:"'Last month' is finished. Use past simple: 'She was promoted last month.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COLLEAGUE",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"AGENDA",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CONFERENCE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROMOTION",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MANAGER",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROPOSAL",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"OVERTIME",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMMITTEE",syllables:3,stressed:2,answer:"B"},
   ]},
   "cooking_recipes": { label: "Cooking & Recipes", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'used to' correctly?",options:["I used to eating meat, but now I'm vegetarian.","I used to eat meat, but now I'm vegetarian.","I use to eat meat, but now I'm vegetarian."],answer:"I used to eat meat, but now I'm vegetarian.",explanation:"'Used to + bare infinitive' describes a past habit that no longer happens."},
@@ -200,14 +184,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Too many ___ spoil the broth.",answer:"cooks",options:["cooks","chefs","people","hands"],hint:"too many people involved causes problems",explanation:"'Too many cooks spoil the broth' means too many people involved makes a task worse."},
     {type:"word_match",question:"Match cooking terms with their meanings:",pairs:[{word:"sauté",meaning:"fry quickly in a little oil"},{word:"marinate",meaning:"soak food in seasoned liquid"},{word:"blanch",meaning:"briefly boil then cool in cold water"},{word:"garnish",meaning:"decorate a dish before serving"}],answer:"match_all_correct",explanation:"Key cooking technique vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The cake was baked for 30 minutes.","She has cooked dinner every night this week.","We used fresh herbs from the garden.","He have never tried sushi before."],answer:"He have never tried sushi before.",explanation:"Third person singular: 'He has never tried sushi before.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"KITCHEN",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SAUCEPAN",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RECIPE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SEASONING",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DELICIOUS",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"APPETITE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MICROWAVE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INGREDIENT",syllables:4,stressed:2,answer:"B"},
   ]},
   "health_wellbeing": { label: "Health & Wellbeing", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'should' correctly?",options:["You should to exercise more regularly.","You should exercising more regularly.","You should exercise more regularly."],answer:"You should exercise more regularly.",explanation:"Modal verbs like 'should' are followed by the bare infinitive."},
@@ -222,14 +198,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: After the race, the runners were completely out of ___.",answer:"breath",options:["breath","time","steam","shape"],hint:"struggling to breathe after exertion",explanation:"'Out of breath' means breathing with difficulty after physical effort."},
     {type:"word_match",question:"Match health words with their meanings:",pairs:[{word:"immune",meaning:"protected against disease"},{word:"chronic",meaning:"lasting a long time or recurring"},{word:"sedentary",meaning:"spending a lot of time sitting"},{word:"remedy",meaning:"a treatment for an illness"}],answer:"match_all_correct",explanation:"Key health and wellbeing vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She has been going to the gym three times a week.","He feels better since he quit smoking.","They walk to work every morning.","She have lost five kilos this month."],answer:"She have lost five kilos this month.",explanation:"Third person singular: 'She has lost five kilos this month.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HEALTHY",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SYMPTOM",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"VITAMIN",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MEDICINE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ALLERGIC",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"NUTRITION",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RECOVERY",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIAGNOSIS",syllables:4,stressed:3,answer:"B"},
   ]},
   "technology_gadgets": { label: "Technology & Gadgets", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses the present perfect?",options:["Smartphones have become essential in the last decade.","Smartphones became essential in the last decade.","Smartphones are becoming essential in the last decade."],answer:"Smartphones have become essential in the last decade.",explanation:"Present perfect with 'in the last decade' for a recent ongoing trend."},
@@ -251,14 +219,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Learning to use all the new features felt like a steep learning ___.",answer:"curve",options:["curve","path","line","slope"],hint:"a process requiring a lot of new learning in a short time",explanation:"'A steep learning curve' describes a situation where a great deal must be learned quickly."},
     {type:"word_match",question:"Match technology words with their meanings:",pairs:[{word:"algorithm",meaning:"a set of rules followed by a computer to solve a problem"},{word:"malware",meaning:"software designed to damage or disrupt a device"},{word:"cloud",meaning:"remote servers used to store and access data online"},{word:"pixel",meaning:"the smallest unit of a digital image"}],answer:"match_all_correct",explanation:"Key vocabulary for technology and gadgets."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She backed up all her files before the update.","The new model has twice as much storage as the old one.","He replaced his broken screen at a local repair shop.","The app have not been updated in over a year."],answer:"The app have not been updated in over a year.",explanation:"'App' is singular: 'The app has not been updated in over a year.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"KEYBOARD",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"WIRELESS",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DEVICE",syllables:2,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTERNET",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIGITAL",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROCESSOR",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BATTERY",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TECHNOLOGY",syllables:4,stressed:2,answer:"B"},
   ]},
   "the_environment": { label: "The Environment", questions: [
     {type:"multiple_choice",question:"Which word correctly completes: 'Carbon dioxide is one of the main gases responsible ___ climate change.'?",options:["of","for","about"],answer:"for",explanation:"'Responsible for' is the correct collocation."},
@@ -273,14 +233,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: It is time to go ___ and reduce our impact on the planet.",answer:"green",options:["green","clean","slow","blue"],hint:"becoming more environmentally friendly",explanation:"'Go green' means to adopt environmentally friendly practices."},
     {type:"word_match",question:"Match environment words with their meanings:",pairs:[{word:"emission",meaning:"gases released into the atmosphere"},{word:"biodegradable",meaning:"able to break down naturally"},{word:"sustainable",meaning:"able to continue without harming the environment"},{word:"drought",meaning:"a long period with little or no rain"}],answer:"match_all_correct",explanation:"Key environmental vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["Pollution levels have fallen in the city centre.","Many animals are threatened by habitat loss.","The river have become much cleaner in recent years.","Scientists are studying the effects of climate change."],answer:"The river have become much cleaner in recent years.",explanation:"'River' is singular: 'The river has become much cleaner.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CARBON",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CLIMATE",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EROSION",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POLLUTION",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RECYCLING",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ECOSYSTEM",syllables:4,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RENEWABLE",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUSTAINABLE",syllables:4,stressed:2,answer:"B"},
   ]},
   "sports_fitness": { label: "Sports & Fitness", questions: [
     {type:"multiple_choice",question:"Which sentence correctly talks about a past score?",options:["The team wins 3-1 yesterday.","The team won 3-1 yesterday.","The team has won 3-1 yesterday."],answer:"The team won 3-1 yesterday.",explanation:"'Yesterday' is a finished time reference, so use past simple."},
@@ -295,14 +247,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: After the injury, he found it hard to get back on his ___.",answer:"feet",options:["feet","legs","track","game"],hint:"recovering and becoming active again",explanation:"'Get back on your feet' means to recover and return to normal after a setback."},
     {type:"word_match",question:"Match fitness words with their meanings:",pairs:[{word:"fitness",meaning:"the state of being physically healthy and strong"},{word:"routine",meaning:"a set of activities done regularly"},{word:"progress",meaning:"gradual improvement over time"},{word:"goal",meaning:"something you aim to achieve"}],answer:"match_all_correct",explanation:"Key fitness and exercise vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The coach gave the team some useful advice.","She won a silver medal at the championships.","They has been playing football together for years.","He improved his technique after several weeks of training."],answer:"They has been playing football together for years.",explanation:"'They' takes 'have': 'They have been playing together for years.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ATHLETE",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TROPHY",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"STADIUM",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHAMPION",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXERCISE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EQUIPMENT",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TOURNAMENT",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REFEREE",syllables:3,stressed:3,answer:"B"},
   ]},
   "family_life": { label: "Family Life", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'be used to' correctly?",options:["We are used to live in a smaller flat.","We are used to living in a smaller flat.","We used to living in a smaller flat."],answer:"We are used to living in a smaller flat.",explanation:"'Be used to + gerund (-ing)' means to be accustomed to something."},
@@ -324,14 +268,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: The children are the spitting ___ of their father — same eyes, same smile.",answer:"image",options:["image","copy","portrait","picture"],hint:"looks exactly like another person",explanation:"'The spitting image' means looking exactly like another person, especially a family member."},
     {type:"word_match",question:"Match family and upbringing words with their meanings:",pairs:[{word:"curfew",meaning:"a rule about what time someone must be home by"},{word:"breadwinner",meaning:"the family member who earns the main income"},{word:"only child",meaning:"a child with no brothers or sisters"},{word:"upbringing",meaning:"the way a child is raised and taught values"}],answer:"match_all_correct",explanation:"Key vocabulary related to family roles and raising children."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She calls her grandmother every Sunday without fail.","My brother and I share a flat in the city centre.","He have three children and lives in the countryside.","They moved back in with their parents to save money."],answer:"He have three children and lives in the countryside.",explanation:"Third person singular requires 'has': 'He has three children and lives in the countryside.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MARRIAGE",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HOUSEHOLD",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHILDHOOD",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RELATIVES",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GUARDIAN",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PREGNANCY",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ADOPTION",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DOMESTIC",syllables:3,stressed:2,answer:"B"},
   ]},
   "education_studying": { label: "Education & Studying", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'by' correctly?",options:["You need to submit the essay until Friday.","You need to submit the essay by Friday.","You need to submit the essay before to Friday."],answer:"You need to submit the essay by Friday.",explanation:"'By' means no later than. 'Until' means up to a point in time and then it stops."},
@@ -346,14 +282,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Learning a language from scratch is no ___ in the park.",answer:"walk",options:["walk","run","game","ride"],hint:"not easy at all",explanation:"'No walk in the park' means something that is not easy or straightforward."},
     {type:"word_match",question:"Match education words with their meanings:",pairs:[{word:"curriculum",meaning:"the subjects included in a course of study"},{word:"tutor",meaning:"a teacher who works with students individually"},{word:"plagiarism",meaning:"copying someone else's work without permission"},{word:"semester",meaning:"half of an academic year"}],answer:"match_all_correct",explanation:"Key academic vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She passed all her exams with distinction.","The students have been studying this topic since September.","He submitted his assignment two days before the deadline.","They has already learnt three programming languages."],answer:"They has already learnt three programming languages.",explanation:"'They' takes 'have': 'They have already learnt three programming languages.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TEXTBOOK",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LIBRARY",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SYLLABUS",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GRADUATE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ASSESSMENT",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SCHOLARSHIP",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CURRICULUM",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ACADEMIC",syllables:4,stressed:3,answer:"B"},
   ]},
   "money_banking": { label: "Money & Banking", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'afford' correctly?",options:["We can't afford buying a new car right now.","We can't afford to buy a new car right now.","We can't afford buy a new car right now."],answer:"We can't afford to buy a new car right now.",explanation:"'Afford' is followed by 'to + infinitive'."},
@@ -368,14 +296,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: That restaurant is expensive — it costs an arm and a ___.",answer:"leg",options:["leg","hand","finger","foot"],hint:"very expensive",explanation:"'Cost an arm and a leg' means to be extremely expensive."},
     {type:"word_match",question:"Match financial terms with their meanings:",pairs:[{word:"interest",meaning:"money charged for borrowing"},{word:"receipt",meaning:"a document confirming payment"},{word:"budget",meaning:"a plan for spending money"},{word:"invoice",meaning:"a bill sent by a business for services"}],answer:"match_all_correct",explanation:"Key financial vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["He transferred money to his sister's account.","They have been saving for a deposit for two years.","The bank have approved her loan application.","She withdrew cash from the ATM."],answer:"The bank have approved her loan application.",explanation:"'Bank' is singular: 'The bank has approved her loan application.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BUDGET",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MORTGAGE",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIVIDEND",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CURRENCY",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DEPOSIT",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INFLATION",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INVESTMENT",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ACCOUNTANT",syllables:3,stressed:2,answer:"B"},
   ]},
   "shopping_fashion": { label: "Shopping & Fashion", questions: [
     {type:"multiple_choice",question:"Which question would you ask in a shop if you need a different size?",options:["Do you have this on a smaller?","Do you have this in a smaller size?","Have you got this with a smaller?"],answer:"Do you have this in a smaller size?",explanation:"The correct preposition is 'in' when talking about size or colour options."},
@@ -390,14 +310,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Don't spend everything now — you should save for a ___ day.",answer:"rainy",options:["rainy","stormy","dark","bad"],hint:"an emergency or difficult time in the future",explanation:"'Save for a rainy day' means to keep money for a future time of need."},
     {type:"word_match",question:"Match shopping words with their meanings:",pairs:[{word:"bargain",meaning:"something bought at a lower price than usual"},{word:"receipt",meaning:"proof of purchase from a shop"},{word:"refund",meaning:"money returned after returning a product"},{word:"voucher",meaning:"a document exchangeable for goods or a discount"}],answer:"match_all_correct",explanation:"Key shopping vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The shop assistant helped her find the right size.","They have been offering discounts on winter coats.","She returned the jacket because it have a broken zip.","He paid by card at the checkout."],answer:"She returned the jacket because it have a broken zip.",explanation:"'It' is singular: 'it had a broken zip'."},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DISCOUNT",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHECKOUT",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BOUTIQUE",syllables:2,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CASHIER",syllables:2,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"WARDROBE",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DESIGNER",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COLLECTION",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ACCESSORY",syllables:4,stressed:2,answer:"B"},
   ]},
   "music": { label: "Music", questions: [
     {type:"multiple_choice",question:"Which sentence uses the past perfect correctly?",options:["By the time the concert started, we had already found our seats.","By the time the concert started, we already found our seats.","By the time the concert started, we have already found our seats."],answer:"By the time the concert started, we had already found our seats.",explanation:"Past perfect shows an action completed before another past action."},
@@ -412,14 +324,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: That new album is brilliant — the singer really knocked it out of the ___.",answer:"park",options:["park","stadium","box","field"],hint:"did something outstandingly well",explanation:"'Knock it out of the park' means to do something exceptionally well."},
     {type:"word_match",question:"Match music words with their meanings:",pairs:[{word:"lyrics",meaning:"the words of a song"},{word:"tempo",meaning:"the speed of a piece of music"},{word:"genre",meaning:"a category of music style"},{word:"acoustic",meaning:"music played without electric amplification"}],answer:"match_all_correct",explanation:"Key music vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The guitarist has been playing since she was twelve.","They released their third album last spring.","The drummer always keep perfect time during performances.","She writes all her own songs."],answer:"The drummer always keep perfect time during performances.",explanation:"Third person singular: 'The drummer always keeps perfect time.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RHYTHM",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MELODY",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ORCHESTRA",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INSTRUMENT",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MUSICIAN",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"REHEARSAL",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"AUDITION",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMPOSER",syllables:3,stressed:2,answer:"B"},
   ]},
   "social_media_internet": { label: "Social Media & the Internet", questions: [
     {type:"multiple_choice",question:"Which sentence is correct?",options:["She's been using social media for ten years.","She's using social media since ten years.","She uses social media since ten years."],answer:"She's been using social media for ten years.",explanation:"Present perfect continuous + 'for' for an ongoing activity."},
@@ -441,14 +345,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: The negative comments really got under her ___ — she couldn't stop thinking about them.",answer:"skin",options:["skin","head","nerves","feet"],hint:"to annoy or upset someone deeply",explanation:"'Get under your skin' means to irritate or upset someone in a way that is hard to ignore or forget."},
     {type:"word_match",question:"Match social media terms with their meanings:",pairs:[{word:"troll",meaning:"a person who posts deliberately offensive content to provoke others"},{word:"DM",meaning:"a private message sent directly to someone on a platform"},{word:"caption",meaning:"text that accompanies a photo or video post"},{word:"verified",meaning:"confirmed as authentic with an official badge on a profile"}],answer:"match_all_correct",explanation:"Key vocabulary for describing social media behaviour and features."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She updated her profile picture for the first time in years.","The company's latest post received a lot of negative feedback.","He spend hours watching videos instead of doing his homework.","They decided to take a break from social media for a week."],answer:"He spend hours watching videos instead of doing his homework.",explanation:"Third person singular present simple: 'He spends hours watching videos instead of doing his homework.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PLATFORM",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HASHTAG",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"STREAMING",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUBSCRIBE",syllables:2,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROFILE",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FOLLOWER",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ALGORITHM",syllables:4,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"NOTIFICATION",syllables:5,stressed:4,answer:"B"},
   ]},
   "ambitions_goals": { label: "Ambitions & Goals", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'hope to' correctly?",options:["She hopes to becoming a doctor one day.","She hopes becoming a doctor one day.","She hopes to become a doctor one day."],answer:"She hopes to become a doctor one day.",explanation:"'Hope to' is followed by the bare infinitive."},
@@ -463,14 +359,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Don't be afraid — just go for it and reach for the ___.",answer:"stars",options:["stars","top","sky","moon"],hint:"aim very high",explanation:"'Reach for the stars' means to aim very high and pursue great ambitions."},
     {type:"word_match",question:"Match ambition words with their meanings:",pairs:[{word:"perseverance",meaning:"continuing despite difficulties"},{word:"milestone",meaning:"an important event marking progress"},{word:"aspiration",meaning:"a hope or ambition to achieve something"},{word:"commitment",meaning:"dedication to a task or goal"}],answer:"match_all_correct",explanation:"Key vocabulary for talking about ambitions and goals."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She has already completed three of her five goals this year.","He is planning to apply for a promotion.","They works hard every day to improve their skills.","She enrolled in an evening course to develop new skills."],answer:"They works hard every day to improve their skills.",explanation:"'They' takes 'work' without 's': 'They work hard every day.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROGRESS",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ACHIEVE",syllables:2,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CAREER",syllables:2,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUCCESS",syllables:2,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"AMBITION",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMMITMENT",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MOTIVATION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ASPIRATION",syllables:4,stressed:3,answer:"B"},
   ]},
   "culture_traditions": { label: "Culture & Traditions", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'although' correctly?",options:["Although the food was unfamiliar, but she enjoyed it.","Although the food was unfamiliar, she enjoyed it.","Although the food was unfamiliar but she enjoyed it."],answer:"Although the food was unfamiliar, she enjoyed it.",explanation:"'Although' introduces a contrast without needing 'but'. Use one or the other, not both."},
@@ -485,14 +373,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: When visiting another country, it is best to do as the Romans ___.",answer:"do",options:["do","did","say","live"],hint:"follow local customs and behaviour",explanation:"'When in Rome, do as the Romans do' means to follow the customs of the place you are visiting."},
     {type:"word_match",question:"Match culture words with their meanings:",pairs:[{word:"ritual",meaning:"an action performed regularly as part of a ceremony"},{word:"heritage",meaning:"cultural traditions passed from earlier generations"},{word:"etiquette",meaning:"rules for polite behaviour in social situations"},{word:"dialect",meaning:"a regional variety of a language"}],answer:"match_all_correct",explanation:"Key vocabulary for culture and traditions."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She always removes her shoes before entering the house.","They celebrated the festival with traditional food and music.","He has been studying the local customs since he arrived.","The ceremony was organise by the town council."],answer:"The ceremony was organise by the town council.",explanation:"Passive voice needs the past participle: 'was organised'."},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COSTUME",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FESTIVAL",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CULTURAL",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HERITAGE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TRADITION",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CATHEDRAL",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CEREMONY",syllables:4,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MYTHOLOGY",syllables:4,stressed:2,answer:"B"},
   ]},
   "films_tv": { label: "Films & TV", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'just' correctly in the present perfect?",options:["I just saw the new film — it was amazing!","I have just seen the new film — it was amazing!","I have just saw the new film — it was amazing!"],answer:"I have just seen the new film — it was amazing!",explanation:"Present perfect with 'just': 'have + just + past participle' for a very recent action."},
@@ -507,14 +387,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Nobody saw the ending coming — it was completely out of the ___.",answer:"blue",options:["blue","dark","sky","air"],hint:"a complete surprise",explanation:"'Out of the blue' means unexpectedly, without any warning."},
     {type:"word_match",question:"Match film words with their meanings:",pairs:[{word:"screenplay",meaning:"the written script of a film"},{word:"sequel",meaning:"a film that continues the story of an earlier one"},{word:"protagonist",meaning:"the main character in a story"},{word:"soundtrack",meaning:"the music used in a film"}],answer:"match_all_correct",explanation:"Key film vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The film received excellent reviews from critics.","She has watched every episode of that series.","He saw the film three times on the cinema.","The cast gave outstanding performances throughout."],answer:"He saw the film three times on the cinema.",explanation:"The correct preposition is 'at the cinema', not 'on'."},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"THRILLER",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BROADCAST",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CINEMA",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMEDY",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EPISODE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUBTITLE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIRECTOR",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PRODUCER",syllables:3,stressed:2,answer:"B"},
   ]},
   "books_reading": { label: "Books & Reading", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses the passive voice?",options:["The novel was wrote by a first-time author.","The novel was written by a first-time author.","The novel written by a first-time author."],answer:"The novel was written by a first-time author.",explanation:"Passive past simple: 'was + past participle' (written, not wrote)."},
@@ -529,14 +401,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Don't judge a ___ by its cover — the story inside was wonderful.",answer:"book",options:["book","person","film","gift"],hint:"don't judge based on appearance",explanation:"'Don't judge a book by its cover' means don't judge something or someone by their appearance."},
     {type:"word_match",question:"Match literary words with their meanings:",pairs:[{word:"narrator",meaning:"the voice that tells a story"},{word:"genre",meaning:"the type or category of a book"},{word:"chapter",meaning:"a main division of a book"},{word:"metaphor",meaning:"a word or phrase used figuratively to describe something"}],answer:"match_all_correct",explanation:"Key literary vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She borrowed three books from the library last week.","The author has written twelve novels in twenty years.","He always underline key passages when he reads.","The book was shortlisted for a major literary prize."],answer:"He always underline key passages when he reads.",explanation:"Third person singular: 'He always underlines key passages.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"AUTHOR",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHAPTER",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FICTION",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PARAGRAPH",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"NARRATIVE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PUBLISHER",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BIOGRAPHY",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"VOCABULARY",syllables:5,stressed:2,answer:"B"},
   ]},
   "home_housing": { label: "Home & Housing", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'too' and 'enough' correctly?",options:["The flat is too small for us to living comfortably.","The flat is too small for us to live comfortably.","The flat is not big enough for us to living."],answer:"The flat is too small for us to live comfortably.",explanation:"'Too + adjective + for + object + to + infinitive' is the correct structure."},
@@ -551,14 +415,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Moving to a new city was hard at first, but she soon felt right ___ home.",answer:"at",options:["at","like","near","in"],hint:"comfortable and relaxed somewhere",explanation:"'Feel at home' means to feel comfortable and relaxed in a place."},
     {type:"word_match",question:"Match housing words with their meanings:",pairs:[{word:"tenant",meaning:"a person who rents a property"},{word:"deposit",meaning:"money paid in advance as security"},{word:"renovation",meaning:"the process of improving an old building"},{word:"utility",meaning:"a service such as electricity, gas, or water"}],answer:"match_all_correct",explanation:"Key housing and renting vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She has been looking for a flat for the past three months.","The landlord repaired the boiler within 24 hours.","They moved into their new home last spring.","He have been living in the same flat for ten years."],answer:"He have been living in the same flat for ten years.",explanation:"Third person singular: 'He has been living in the same flat for ten years.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LANDLORD",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHIMNEY",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BASEMENT",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FURNITURE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"APPLIANCE",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUBURBAN",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTERIOR",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RENOVATION",syllables:4,stressed:3,answer:"B"},
   ]},
   "food_restaurants": { label: "Food & Restaurants", questions: [
     {type:"multiple_choice",question:"Which question is correct to ask a waiter?",options:["Could I have the menu, please?","Can I having the menu, please?","I would like having the menu, please?"],answer:"Could I have the menu, please?",explanation:"'Could I have...?' is the correct polite structure for requesting something."},
@@ -580,14 +436,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Oysters are not everyone's cup of ___ — people either love them or hate them.",answer:"tea",options:["tea","soup","coffee","water"],hint:"not something everyone personally enjoys",explanation:"'Not everyone's cup of tea' means something that not everyone enjoys or finds appealing."},
     {type:"word_match",question:"Match food and cooking words with their meanings:",pairs:[{word:"mouthwatering",meaning:"making you want to eat something immediately"},{word:"bland",meaning:"lacking flavour or seasoning"},{word:"garnish",meaning:"a small decoration added to a dish before serving"},{word:"marinade",meaning:"a liquid in which food is soaked to add flavour before cooking"}],answer:"match_all_correct",explanation:"Useful vocabulary for describing food preparation and taste."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The menu changes every season to reflect fresh ingredients.","She has been a chef for over fifteen years.","He ordered a pasta dish and ask for extra cheese.","They sat outside on the terrace and enjoyed the view."],answer:"He ordered a pasta dish and ask for extra cheese.",explanation:"Parallel verb forms are required: 'He ordered a pasta dish and asked for extra cheese.'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FLAVOUR",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DESSERT",syllables:2,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CUISINE",syllables:2,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHOCOLATE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RESTAURANT",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"VEGETABLE",syllables:4,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"APPETIZER",syllables:4,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CAFETERIA",syllables:5,stressed:3,answer:"B"},
   ]},
   "cities_travel": { label: "Cities & Travel", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses 'used to'?",options:["This area used to be a factory district, but now it's full of restaurants.","This area use to be a factory district, but now it's full of restaurants.","This area was used to be a factory district."],answer:"This area used to be a factory district, but now it's full of restaurants.",explanation:"'Used to + bare infinitive' describes a past state no longer true."},
@@ -602,14 +450,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: Moving to a new city felt strange at first, but she soon found her ___ there.",answer:"feet",options:["feet","legs","track","game"],hint:"becoming comfortable and confident in a new place",explanation:"'Find your feet' means to become confident and familiar with a new place or situation."},
     {type:"word_match",question:"Match urban words with their meanings:",pairs:[{word:"commute",meaning:"the regular journey between home and work"},{word:"infrastructure",meaning:"the basic systems a city needs such as roads and water"},{word:"pedestrian",meaning:"a person travelling on foot"},{word:"district",meaning:"a defined area of a city with a particular character"}],answer:"match_all_correct",explanation:"Key urban and city vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The new metro line has reduced traffic significantly.","She cycles to work every day to avoid the rush hour.","They moved to the suburbs for a quieter life.","The new policy were announced during a press conference."],answer:"The new policy were announced during a press conference.",explanation:"'Policy' is singular: 'The new policy was announced...'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SUBURB",syllables:2,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TRANSPORT",syllables:2,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MONUMENT",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMMUTER",syllables:3,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CATHEDRAL",syllables:3,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PEDESTRIAN",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXHIBITION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INFRASTRUCTURE",syllables:4,stressed:3,answer:"B"},
   ]},
   "science_discovery": { label: "Science & Discovery", questions: [
     {type:"multiple_choice",question:"Which sentence uses the passive correctly?",options:["Penicillin was discover by Alexander Fleming in 1928.","Penicillin was discovered by Alexander Fleming in 1928.","Penicillin discovered by Alexander Fleming in 1928."],answer:"Penicillin was discovered by Alexander Fleming in 1928.",explanation:"Passive past simple: 'was + past participle'."},
@@ -624,14 +464,6 @@ const QUESTION_BANK = {
     {type:"fill_idiom",question:"Complete: The new theory turned the world of physics ___ down.",answer:"upside",options:["upside","inside","topsy","back"],hint:"completely changed everything",explanation:"'Turn something upside down' means to change something completely or cause great disruption."},
     {type:"word_match",question:"Match science words with their meanings:",pairs:[{word:"gravity",meaning:"the force that pulls objects towards each other"},{word:"molecule",meaning:"the smallest unit of a chemical compound"},{word:"evolution",meaning:"the process by which species change over time"},{word:"microscope",meaning:"an instrument for viewing very small objects"}],answer:"match_all_correct",explanation:"Key science vocabulary."},
     {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The scientists published their findings in a peer-reviewed journal.","She has been researching climate patterns for fifteen years.","The lab results confirmed what the team had suspected.","He make a major breakthrough during his third year of research."],answer:"He make a major breakthrough during his third year of research.",explanation:"Past tense needed: 'He made a major breakthrough...'"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TELESCOPE",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MOLECULE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PHYSICIST",syllables:3,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ATMOSPHERE",syllables:3,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DISCOVERY",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXPERIMENT",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"HYPOTHESIS",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RADIATION",syllables:4,stressed:3,answer:"B"},
   ]},
   "friendship": { label: "Friendship", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'get on with' correctly?",options:["She gets on with her colleagues very well at work.","She gets on with very well her colleagues at work.","She gets well on with her colleagues at work."],answer:"She gets on with her colleagues very well at work.",explanation:"'Get on with someone' means to have a good relationship. Adverbs come after the object."},
@@ -659,7 +491,8 @@ const QUESTION_BANK = {
     {type:"story_builder",question:"Order these sentences about planning a birthday party:",sentences:["Then, he booked a room and invited all her closest friends.","First, Carlos spent weeks secretly planning a surprise party.","Finally, her friends arrived and the surprise was unforgettable."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Plan in secret → book and invite → the big surprise."},
     {type:"fill_idiom",question:"Complete: After winning the award, she was on ___ nine for the rest of the week.",answer:"cloud",options:["cloud","level","floor","page"],hint:"extremely happy",explanation:"'On cloud nine' means to be extremely happy and excited."},
     {type:"word_match",question:"Match celebration words with their meanings:",pairs:[{word:"venue",meaning:"the place where an event is held"},{word:"host",meaning:"a person who organises and welcomes guests"},{word:"anniversary",meaning:"the yearly return of a significant date"},{word:"reception",meaning:"a formal party held after a wedding"}],answer:"match_all_correct",explanation:"Key celebration and event vocabulary."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She sent invitations to all her friends two weeks in advance.","The caterers prepared food for over 100 guests.","Everyone have a wonderful time at the wedding reception.","The speeches were funny and heartfelt."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BIRTHDAY",syllables:2,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She sent invitations to all her friends two weeks in advance.","The caterers prepared food for over 100 guests.","Everyone have a wonderful time at the wedding reception.","The speeches were funny and heartfelt."],answer:"Everyone have a wonderful time at the wedding reception.",explanation:"'Everyone' is singular: 'Everyone had a wonderful time.'"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BIRTHDAY",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHAMPAGNE",syllables:2,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"FIREWORKS",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"GATHERING",syllables:3,stressed:1,answer:"B"},
@@ -667,7 +500,6 @@ const QUESTION_BANK = {
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"CEREMONY",syllables:4,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"DECORATION",syllables:4,stressed:3,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"ANNIVERSARY",syllables:5,stressed:3,answer:"B"},
-answer:"Everyone have a wonderful time at the wedding reception.",explanation:"'Everyone' is singular: 'Everyone had a wonderful time.'"},
   ]},
   "emotions_feelings": { label: "Emotions & Feelings", questions: [
     {type:"multiple_choice",question:"Which sentence correctly describes an emotion?",options:["She was so boring at the party that she left early.","She was so bored at the party that she left early.","She was so bore at the party that she left early."],answer:"She was so bored at the party that she left early.",explanation:"'Bored' describes how a person feels; 'boring' describes the thing that causes the feeling."},
@@ -688,7 +520,8 @@ answer:"Everyone have a wonderful time at the wedding reception.",explanation:"'
     {type:"story_builder",question:"Order these sentences about dealing with disappointment:",sentences:["Then, he took some time to reflect and decided to try again.","First, James felt devastated when he was not given the promotion.","Finally, six months later, he was offered an even better position."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Feel devastated → reflect and regroup → achieve a better outcome."},
     {type:"fill_idiom",question:"Complete: After the stressful exam week, she really needed to let off ___.",answer:"steam",options:["steam","stress","energy","pressure"],hint:"release built-up frustration",explanation:"'Let off steam' means to release pent-up stress, energy, or anger in a harmless way."},
     {type:"word_match",question:"Match emotion words with their meanings:",pairs:[{word:"furious",meaning:"extremely angry"},{word:"melancholy",meaning:"a feeling of thoughtful, gentle sadness"},{word:"elated",meaning:"very happy and excited"},{word:"apprehensive",meaning:"slightly worried or nervous about something in the future"}],answer:"match_all_correct",explanation:"Vocabulary for describing a range of emotions with precision."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She was thrilled to hear that she had passed her exams.","He felt embarrassed when he spilt coffee on his shirt.","They were very exciting about the surprise party.","I was moved by the beautiful speech at the wedding."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"JEALOUSY",syllables:3,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She was thrilled to hear that she had passed her exams.","He felt embarrassed when he spilt coffee on his shirt.","They were very exciting about the surprise party.","I was moved by the beautiful speech at the wedding."],answer:"They were very exciting about the surprise party.",explanation:"Use the -ed adjective for how people feel: 'They were very excited about the surprise party.' 'Exciting' describes the thing that causes the feeling."},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"JEALOUSY",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"SYMPATHY",syllables:3,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"EMOTION",syllables:3,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"NOSTALGIA",syllables:3,stressed:2,answer:"B"},
@@ -696,7 +529,6 @@ answer:"Everyone have a wonderful time at the wedding reception.",explanation:"'
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"FRUSTRATION",syllables:3,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"LONELINESS",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"OPTIMISTIC",syllables:4,stressed:3,answer:"B"},
-answer:"They were very exciting about the surprise party.",explanation:"Use the -ed adjective for how people feel: 'They were very excited about the surprise party.' 'Exciting' describes the thing that causes the feeling."},
   ]},
   "language_communication": {
     label: "Language & Communication",
@@ -744,7 +576,8 @@ answer:"They were very exciting about the surprise party.",explanation:"Use the 
     {type:"story_builder",question:"Order these sentences about a communication mix-up:",sentences:["Then, he realised she had said 'sheet' not 'seat'.","First, Tom could not understand what his colleague meant at the meeting.","Finally, they both laughed about the misunderstanding for weeks afterwards."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Confusion → realisation → humorous resolution."},
     {type:"fill_idiom",question:"Complete: She knew exactly what to say, but the words were on the tip of her ___.",answer:"tongue",options:["tongue","lips","mind","teeth"],hint:"almost able to recall something but not quite",explanation:"'On the tip of your tongue' means a word or name you almost remember but cannot immediately say."},
     {type:"word_match",question:"Match communication words with their meanings:",pairs:[{word:"paraphrase",meaning:"to restate something in different words"},{word:"ambiguous",meaning:"having more than one possible meaning"},{word:"intonation",meaning:"the rise and fall of pitch when speaking"},{word:"fluent",meaning:"able to speak a language easily and accurately"}],answer:"match_all_correct",explanation:"Key vocabulary for language and communication."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She speaks three languages fluently.","He asked whether the library was open on Sundays.","We need to clarify a few things before we proceed.","They discussed about the new company strategy."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GRAMMAR",syllables:2,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She speaks three languages fluently.","He asked whether the library was open on Sundays.","We need to clarify a few things before we proceed.","They discussed about the new company strategy."],answer:"They discussed about the new company strategy.",explanation:"'Discuss' is a transitive verb and does not take 'about': 'They discussed the new company strategy.'"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GRAMMAR",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"ACCENT",syllables:2,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"FLUENCY",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"ELOQUENT",syllables:3,stressed:1,answer:"B"},
@@ -752,7 +585,6 @@ answer:"They were very exciting about the surprise party.",explanation:"Use the 
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTONATION",syllables:4,stressed:3,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"VOCABULARY",syllables:5,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"PRONUNCIATION",syllables:5,stressed:4,answer:"B"},
-answer:"They discussed about the new company strategy.",explanation:"'Discuss' is a transitive verb and does not take 'about': 'They discussed the new company strategy.'"},
   ]},
   "news_current_affairs": { label: "News & Current Affairs", questions: [
     {type:"multiple_choice",question:"Which sentence uses the passive correctly?",options:["The new law was announce yesterday by the government.","The new law was announced yesterday by the government.","The new law announced yesterday by the government."],answer:"The new law was announced yesterday by the government.",explanation:"Passive past simple: 'was + past participle'."},
@@ -766,7 +598,8 @@ answer:"They discussed about the new company strategy.",explanation:"'Discuss' i
     {type:"story_builder",question:"Order these sentences about a journalist's big story:",sentences:["Then, she spent three months gathering evidence.","First, Elena received a tip about fraud at a large company.","Finally, she published the story and it won a national award."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Receive the tip → gather evidence → publish and win."},
     {type:"fill_idiom",question:"Complete: The politician tried to avoid the question — he was clearly beating around the ___.",answer:"bush",options:["bush","point","issue","subject"],hint:"avoiding the main point",explanation:"'Beat around the bush' means to avoid getting to the main point of a topic."},
     {type:"word_match",question:"Match journalism words with their meanings:",pairs:[{word:"editorial",meaning:"an article expressing the newspaper's opinion"},{word:"correspondent",meaning:"a journalist reporting from a specific region"},{word:"bias",meaning:"favouring one side unfairly in reporting"},{word:"headline",meaning:"the title of a news article in large print"}],answer:"match_all_correct",explanation:"Key journalism and media vocabulary."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The report highlighted serious issues in the healthcare system.","Journalists must always protect their sources.","She has been covering international news for fifteen years.","The new policy were announced during a press conference."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BROADCAST",syllables:2,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The report highlighted serious issues in the healthcare system.","Journalists must always protect their sources.","She has been covering international news for fifteen years.","The new policy were announced during a press conference."],answer:"The new policy were announced during a press conference.",explanation:"'Policy' is singular: 'The new policy was announced during a press conference.'"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"BROADCAST",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"INTERVIEW",syllables:3,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"JOURNALIST",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"NEWSPAPER",syllables:3,stressed:1,answer:"B"},
@@ -774,7 +607,6 @@ answer:"They discussed about the new company strategy.",explanation:"'Discuss' i
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"POLITICAL",syllables:4,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROPAGANDA",syllables:4,stressed:3,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"EDITORIAL",syllables:5,stressed:3,answer:"B"},
-answer:"The new policy were announced during a press conference.",explanation:"'Policy' is singular: 'The new policy was announced during a press conference.'"},
   ]},
   "hobbies_free_time": { label: "Hobbies & Free Time", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'have been to' correctly?",options:["I have been to that pottery class before — it's great!","I have been at that pottery class before — it's great!","I have been in that pottery class before — it's great!"],answer:"I have been to that pottery class before — it's great!",explanation:"'Have been to' means you visited a place and came back."},
@@ -795,7 +627,8 @@ answer:"The new policy were announced during a press conference.",explanation:"'
     {type:"story_builder",question:"Order these sentences about discovering a new hobby:",sentences:["Then, she signed up for a beginner's pottery class at the local centre.","First, Sofia was looking for something creative to do in her spare time.","Finally, she became so passionate that she set up a small studio at home."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Look for a hobby → join a class → become passionate."},
     {type:"fill_idiom",question:"Complete: He's been playing chess for years — he could do it with his eyes ___.",answer:"closed",options:["closed","open","shut","wide"],hint:"able to do something very easily from long practice",explanation:"'Do something with your eyes closed' means to do it so well it requires almost no effort."},
     {type:"word_match",question:"Match hobby-related words with their meanings:",pairs:[{word:"dedication",meaning:"committed effort and time given to an activity"},{word:"enthusiast",meaning:"a person who is very keen on a particular activity"},{word:"novice",meaning:"a person new to a skill or activity"},{word:"craftsmanship",meaning:"skill in making things by hand"}],answer:"match_all_correct",explanation:"Key vocabulary for hobbies and free time."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She enjoys hiking in the mountains at weekends.","He has been collecting stamps since he was a child.","They went cycling yesterday despite the rain.","We are very interesting in joining the book club."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LEISURE",syllables:2,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She enjoys hiking in the mountains at weekends.","He has been collecting stamps since he was a child.","They went cycling yesterday despite the rain.","We are very interesting in joining the book club."],answer:"We are very interesting in joining the book club.",explanation:"Use the past participle for personal feelings: 'We are very interested in joining the book club.'"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LEISURE",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"SCULPTURE",syllables:2,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"CREATIVE",syllables:3,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"GARDENING",syllables:3,stressed:1,answer:"B"},
@@ -803,7 +636,6 @@ answer:"The new policy were announced during a press conference.",explanation:"'
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"PHOTOGRAPHY",syllables:4,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"RELAXATION",syllables:4,stressed:3,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXHIBITION",syllables:4,stressed:3,answer:"B"},
-answer:"We are very interesting in joining the book club.",explanation:"Use the past participle for personal feelings: 'We are very interested in joining the book club.'"},
   ]},
   "nature_animals": { label: "Nature & Animals", questions: [
     {type:"multiple_choice",question:"Which sentence uses the present perfect correctly?",options:["Many species of animals has become extinct in recent years.","Many species of animals have become extinct in recent years.","Many species of animals became extinct in recent years."],answer:"Many species of animals have become extinct in recent years.",explanation:"'Many species' is plural, so use 'have'. Present perfect with 'in recent years' for a current trend."},
@@ -817,7 +649,8 @@ answer:"We are very interesting in joining the book club.",explanation:"Use the 
     {type:"story_builder",question:"Order these sentences about a wildlife encounter:",sentences:["Then, she saw a large deer just fifteen metres away.","First, Clara was hiking when she suddenly stopped.","Finally, she stood still and watched it for five minutes."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Hiking → spot the deer → watch in silence."},
     {type:"fill_idiom",question:"Complete: He's been working non-stop — he's been burning the midnight ___.",answer:"oil",options:["oil","candle","light","lamp"],hint:"working very late into the night",explanation:"'Burn the midnight oil' means to work or study very late into the night."},
     {type:"word_match",question:"Match nature words with their meanings:",pairs:[{word:"habitat",meaning:"the natural environment where an animal lives"},{word:"predator",meaning:"an animal that hunts other animals for food"},{word:"hibernate",meaning:"to spend winter in a sleeping state"},{word:"endangered",meaning:"at risk of becoming extinct"}],answer:"match_all_correct",explanation:"Key nature and animal vocabulary."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The river otters have returned to this area after many years.","Scientists are monitoring the bear population closely.","The conservation project have helped several species recover.","She photographed a rare butterfly in the meadow."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FOREST",syllables:2,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["The river otters have returned to this area after many years.","Scientists are monitoring the bear population closely.","The conservation project have helped several species recover.","She photographed a rare butterfly in the meadow."],answer:"The conservation project have helped several species recover.",explanation:"'Project' is singular: 'The conservation project has helped several species recover.'"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"FOREST",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"TROPICAL",syllables:3,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"HABITAT",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"PREDATOR",syllables:3,stressed:1,answer:"B"},
@@ -825,7 +658,6 @@ answer:"We are very interesting in joining the book club.",explanation:"Use the 
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"MIGRATION",syllables:3,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"ENDANGERED",syllables:3,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"VOLCANO",syllables:3,stressed:2,answer:"B"},
-answer:"The conservation project have helped several species recover.",explanation:"'Project' is singular: 'The conservation project has helped several species recover.'"},
   ]},
   "jobs_interviews": { label: "Jobs & Interviews", questions: [
     {type:"multiple_choice",question:"Which phrase correctly completes a job interview answer?",options:["I am interest in this role because I enjoy working in teams.","I am interested in this role because I enjoy working in teams.","I have interest in this role because I enjoy working in teams."],answer:"I am interested in this role because I enjoy working in teams.",explanation:"'Interested in' is the correct adjective. 'Interesting' describes the thing that causes interest."},
@@ -846,7 +678,8 @@ answer:"The conservation project have helped several species recover.",explanati
     {type:"story_builder",question:"Order these sentences about a job interview:",sentences:["Then, the interviewer asked about her strengths and management experience.","First, Priya arrived fifteen minutes early and introduced herself at reception.","Finally, she received a call the next day offering her the position."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Arrive early and make a good impression → answer interview questions → receive the offer."},
     {type:"fill_idiom",question:"Complete: He was nervous at first but then hit his ___ and answered every question confidently.",answer:"stride",options:["stride","pace","step","run"],hint:"finding your rhythm and performing well",explanation:"'Hit your stride' means to reach a point where you are performing confidently and effectively."},
     {type:"word_match",question:"Match job-search words with their meanings:",pairs:[{word:"shortlisted",meaning:"selected as one of the final candidates for a role"},{word:"probation",meaning:"a trial period at the start of a new job"},{word:"referee",meaning:"a person who provides a professional reference"},{word:"redundancy",meaning:"losing a job because the role is no longer needed"}],answer:"match_all_correct",explanation:"Key vocabulary for job applications and interviews."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She answered every question confidently and clearly.","The panel was impressed by his presentation skills.","They offered her the position at the end of the interview.","He has applied for the same role two years ago."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"QUALIFIED",syllables:3,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She answered every question confidently and clearly.","The panel was impressed by his presentation skills.","They offered her the position at the end of the interview.","He has applied for the same role two years ago."],answer:"He has applied for the same role two years ago.",explanation:"'Two years ago' refers to a finished past time. Use past simple: 'He applied for the same role two years ago.'"},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"QUALIFIED",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"REFERENCE",syllables:3,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"FREELANCER",syllables:3,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"CANDIDATE",syllables:3,stressed:1,answer:"B"},
@@ -854,7 +687,6 @@ answer:"The conservation project have helped several species recover.",explanati
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"TECHNICIAN",syllables:3,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"ACHIEVEMENT",syllables:3,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"OCCUPATION",syllables:4,stressed:3,answer:"B"},
-answer:"He has applied for the same role two years ago.",explanation:"'Two years ago' refers to a finished past time. Use past simple: 'He applied for the same role two years ago.'"},
   ]},
   "past_memories": {
     label: "Past & Memories",
@@ -902,7 +734,8 @@ answer:"He has applied for the same role two years ago.",explanation:"'Two years
     {type:"story_builder",question:"Order these sentences about a childhood memory:",sentences:["Then, we climbed the old oak tree and could see for miles.","First, my brother and I used to walk to the park every Saturday morning.","Finally, we always stopped for ice cream on the way home."],correctOrder:[1,0,2],answer:"1,0,2",explanation:"Regular walks to the park → climbing the tree → ice cream on the way home."},
     {type:"fill_idiom",question:"Complete: The old argument is ___ under the bridge — we've forgiven each other.",answer:"water",options:["water","blood","rain","mud"],hint:"something that happened in the past and can no longer be changed",explanation:"'Water under the bridge' means something that happened in the past and is no longer worth worrying about."},
     {type:"word_match",question:"Match memory-related words with their meanings:",pairs:[{word:"anecdote",meaning:"a short, amusing story about a real event"},{word:"flashback",meaning:"a sudden vivid memory of a past event"},{word:"bittersweet",meaning:"producing a mix of happiness and sadness"},{word:"keepsake",meaning:"an object kept as a reminder of a person or event"}],answer:"match_all_correct",explanation:"Key vocabulary for talking about memories and the past."},
-    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She used to walk to school when she was little.","He would often cook Sunday lunch for the whole family.","They didn't use to have a television when they were children.","We were use to going to church every Sunday morning."],    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHILDHOOD",syllables:2,stressed:1,answer:"A"},
+    {type:"odd_one_out",question:"Which sentence has a grammar mistake?",options:["She used to walk to school when she was little.","He would often cook Sunday lunch for the whole family.","They didn't use to have a television when they were children.","We were use to going to church every Sunday morning."],answer:"We were use to going to church every Sunday morning.",explanation:"The correct form is 'were used to going' — 'used' must be the past participle in the adjective phrase 'used to'."},
+    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CHILDHOOD",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"FLASHBACK",syllables:2,stressed:1,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"KEEPSAKE",syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"ANCESTOR",syllables:3,stressed:1,answer:"B"},
@@ -910,7 +743,6 @@ answer:"He has applied for the same role two years ago.",explanation:"'Two years
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"NOSTALGIA",syllables:3,stressed:2,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"REMINISCE",syllables:3,stressed:3,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"BITTERSWEET",syllables:3,stressed:1,answer:"B"},
-answer:"We were use to going to church every Sunday morning.",explanation:"The correct form is 'were used to going' — 'used' must be the past participle in the adjective phrase 'used to'."},
   ]},
   "verb_tenses": {
     label: "Verb Tenses & Habits",
@@ -1140,36 +972,6 @@ answer:"We were use to going to church every Sunday morning.",explanation:"The c
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"JAPANESE",syllables:3,stressed:3,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"EMPLOYEE",syllables:3,stressed:3,answer:"B"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"REFUGEE",syllables:3,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RELATIONSHIP",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DEVELOPMENT",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ENVIRONMENT",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"RESPONSIBLE",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"PROFESSIONAL",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ECONOMY",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DEMOCRACY",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMMUNITY",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"MAJORITY",syllables:4,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"DIVERSITY",syllables:4,stressed:2,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EDUCATION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INFORMATION",syllables:4,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CELEBRATION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INVITATION",syllables:4,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"SITUATION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"CONVERSATION",syllables:4,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POPULATION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"GENERATION",syllables:4,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"OPERATION",syllables:4,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"EXPECTATION",syllables:4,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMFORTABLE",syllables:4,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ORDINARY",syllables:4,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"LITERALLY",syllables:4,stressed:1,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"TEMPORARY",syllables:4,stressed:1,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"OPPORTUNITY",syllables:5,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"UNIVERSITY",syllables:5,stressed:3,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"POSSIBILITY",syllables:5,stressed:3,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"COMMUNICATION",syllables:5,stressed:4,answer:"B"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"IMAGINATION",syllables:5,stressed:4,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"ORGANIZATION",syllables:5,stressed:4,answer:"B"},
   ]},
 };
 
@@ -1178,94 +980,96 @@ const css = `
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --ink:#fdf3dd;--paper:#181d3a;--cream:#0f1226;
-    --gold:#ffce47;--coral:#ff5c42;--teal:#42dac3;
-    --cobalt:#5b8bff;--plum:#c87aff;--green:#7adc5a;--red:#ff5c42;
-    --line:rgba(253,243,221,0.14);--ghost:rgba(253,243,221,0.28);--muted-c:rgba(253,243,221,0.5);
+    --cream:#0f1226;--paper:#181d3a;
+    --ink:#fdf3dd;--ink-soft:rgba(253,243,221,0.72);--muted:rgba(253,243,221,0.45);
+    --line:rgba(253,243,221,0.14);--dot:rgba(253,243,221,0.05);
+    --on-light:#0f1226;--on-dark:#fdf3dd;
+    --sun:#ffce47;--tomato:#ff5c42;--aqua:#42dac3;--cobalt:#5b8bff;--plum:#c87aff;--leaf:#7adc5a;
+    --gold:var(--sun);--coral:var(--tomato);--teal:var(--aqua);--green:var(--leaf);--red:var(--tomato);
   }
   body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif}
   h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:900}
 
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden;background:var(--cream)}
-  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(253,243,221,0.06) 1px,transparent 1px);background-size:14px 14px}
+  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:14px 14px}
   .hero-title{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.8rem,9vw,6.5rem);font-weight:900;font-style:italic;letter-spacing:-0.03em;text-align:center;line-height:0.95;position:relative;color:var(--ink)}
   .hero-title span{color:var(--coral)}
   .hero-sub{margin-top:1.2rem;font-size:1rem;opacity:0.55;text-align:center;max-width:400px;line-height:1.7}
   .hero-btns{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;justify-content:center}
 
-  .btn{font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:700;padding:0.9rem 1.8rem;border:2px solid var(--ink);cursor:pointer;transition:transform 0.1s,box-shadow 0.1s;background:var(--ink);color:var(--paper);border-radius:14px;box-shadow:4px 4px 0 rgba(0,0,0,0.5)}
-  .btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,0.5)}
-  .btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(0,0,0,0.5);transition-duration:0.06s}
+  .btn{font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:700;padding:0.9rem 1.8rem;border:2px solid var(--ink);cursor:pointer;transition:transform 0.1s,box-shadow 0.1s;background:var(--ink);color:var(--paper);border-radius:14px;box-shadow:4px 4px 0 rgba(30,26,20,0.35)}
+  .btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(30,26,20,0.35)}
+  .btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(30,26,20,0.35);transition-duration:0.06s}
   .btn:disabled{opacity:0.35;cursor:not-allowed}
-  .btn-gold{background:var(--gold);color:#0f1226;border-color:var(--gold);box-shadow:4px 4px 0 rgba(0,0,0,0.5)}
-  .btn-gold:hover:not(:disabled){box-shadow:6px 6px 0 rgba(0,0,0,0.5)}
-  .btn-teal{background:var(--teal);color:#0f1226;border-color:var(--teal);box-shadow:4px 4px 0 rgba(0,0,0,0.5)}
-  .btn-teal:hover:not(:disabled){box-shadow:6px 6px 0 rgba(0,0,0,0.5)}
-  .btn-coral{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:4px 4px 0 rgba(0,0,0,0.5)}
-  .btn-coral:hover:not(:disabled){box-shadow:6px 6px 0 rgba(0,0,0,0.5)}
-  .btn-green{background:var(--green);color:#0f1226;border-color:var(--green);box-shadow:4px 4px 0 rgba(0,0,0,0.5)}
-  .btn-green:hover:not(:disabled){box-shadow:6px 6px 0 rgba(0,0,0,0.5)}
-  .btn-ghost{background:transparent;border-color:var(--ghost);color:var(--muted-c);box-shadow:none}
-  .btn-ghost:hover:not(:disabled){border-color:var(--ink);color:var(--ink);box-shadow:3px 3px 0 rgba(0,0,0,0.3);transform:translate(-1px,-1px)}
+  .btn-gold{background:var(--gold);color:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .btn-gold:hover:not(:disabled){box-shadow:6px 6px 0 var(--ink)}
+  .btn-teal{background:var(--teal);color:#fff;border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .btn-teal:hover:not(:disabled){box-shadow:6px 6px 0 var(--ink)}
+  .btn-coral{background:var(--coral);color:#fff;border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .btn-coral:hover:not(:disabled){box-shadow:6px 6px 0 var(--ink)}
+  .btn-green{background:var(--green);color:#fff;border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .btn-green:hover:not(:disabled){box-shadow:6px 6px 0 var(--ink)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--muted);box-shadow:none}
+  .btn-ghost:hover:not(:disabled){border-color:var(--muted);color:var(--ink);box-shadow:none;transform:translate(-1px,-1px)}
   .btn-sm{padding:0.45rem 0.9rem;font-size:0.75rem}
   .btn-full{width:100%}
 
   .panel{min-height:100vh;padding:1.5rem;max-width:860px;margin:0 auto;background:var(--cream)}
-  .card{background:var(--paper);border:2px solid var(--line);padding:1.1rem;margin-bottom:0.65rem;border-radius:14px;box-shadow:3px 3px 0 rgba(0,0,0,0.3)}
-  .card-gold{border-color:var(--gold);background:rgba(255,206,71,0.1)}
+  .card{background:var(--paper);border:1.5px solid var(--line);padding:1.1rem;margin-bottom:0.65rem;border-radius:14px}
+  .card-gold{border-color:var(--sun);background:rgba(255,206,71,0.07)}
 
   .label{font-family:'JetBrains Mono',monospace;font-size:0.57rem;letter-spacing:0.14em;text-transform:uppercase;opacity:0.5;margin-bottom:0.3rem;display:block}
-  .badge{display:inline-block;padding:0.18rem 0.65rem;font-family:'JetBrains Mono',monospace;font-size:0.54rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--gold);color:#0f1226;border-radius:999px}
+  .badge{display:inline-block;padding:0.18rem 0.65rem;font-family:'JetBrains Mono',monospace;font-size:0.54rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--sun);color:var(--on-light);border-radius:999px}
 
   .input{width:100%;padding:0.8rem 1rem;font-family:'DM Sans',sans-serif;font-size:1rem;border:2px solid var(--line);background:var(--paper);color:var(--ink);outline:none;transition:border-color 0.15s;border-radius:10px}
-  .input:focus{border-color:var(--ink)}
-  .input::placeholder{opacity:0.35}
+  .input:focus{border-color:var(--muted)}
+  .input::placeholder{opacity:0.35;color:var(--ink)}
   .input-xl{font-size:2rem;text-align:center;font-family:'Fraunces',serif;letter-spacing:0.15em;font-weight:900}
   .select{width:100%;padding:0.8rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;border:2px solid var(--line);background:var(--paper);color:var(--ink);outline:none;cursor:pointer;border-radius:10px}
 
-  .code-badge{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.5rem,8vw,4.5rem);font-weight:900;letter-spacing:0.12em;color:#0f1226;text-align:center;padding:1rem 1.5rem;border:3px solid var(--gold);display:inline-block;border-radius:12px;background:var(--gold)}
+  .code-badge{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.5rem,8vw,4.5rem);font-weight:900;letter-spacing:0.12em;color:var(--on-light);text-align:center;padding:1rem 1.5rem;border:3px solid var(--on-light);display:inline-block;border-radius:12px;background:var(--sun)}
 
-  .mode-toggle{display:flex;border:2px solid var(--line);overflow:hidden;margin-bottom:1rem;border-radius:12px}
-  .mode-btn{flex:1;padding:0.7rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:700;border:none;cursor:pointer;transition:all 0.15s;background:transparent;color:var(--muted-c)}
-  .mode-btn.active{background:var(--ink);color:var(--paper)}
+  .mode-toggle{display:flex;border:1.5px solid var(--line);overflow:hidden;margin-bottom:1rem;border-radius:12px}
+  .mode-btn{flex:1;padding:0.7rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:700;border:none;cursor:pointer;transition:all 0.15s;background:transparent;color:var(--muted)}
+  .mode-btn.active{background:var(--paper);color:var(--ink)}
 
   .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.6rem;margin:0.6rem 0}
-  .team-card{padding:0.9rem;border:2px solid var(--line);text-align:center;border-radius:12px;background:var(--paper);box-shadow:3px 3px 0 rgba(0,0,0,0.3)}
+  .team-card{padding:0.9rem;border:2px solid var(--ink);text-align:center;border-radius:12px;background:var(--paper);box-shadow:3px 3px 0 rgba(30,26,20,0.12)}
   .team-card-name{font-family:'Fraunces',serif;font-size:0.85rem;font-weight:700;margin-top:0.35rem;color:var(--ink)}
   .team-card-count{font-size:0.75rem;opacity:0.55;margin-top:0.15rem}
   .team-members{font-size:0.72rem;margin-top:0.4rem;opacity:0.6;line-height:1.7}
 
   .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:0.9rem}
-  .opt-btn{padding:1.1rem 1rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;border:2px solid transparent;cursor:pointer;transition:all 0.13s;text-align:left;display:flex;align-items:flex-start;gap:0.55rem;min-height:76px;line-height:1.45;color:var(--ink);border-radius:14px}
-  .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(0,0,0,0.35)}
+  .opt-btn{padding:1.1rem 1rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;border:2.5px solid transparent;cursor:pointer;transition:all 0.13s;text-align:left;display:flex;align-items:flex-start;gap:0.55rem;min-height:76px;line-height:1.45;color:var(--ink);border-radius:14px}
+  .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(0,0,0,0.25)}
   .opt-btn:disabled{cursor:not-allowed}
-  .opt-0{background:rgba(255,92,66,0.18);border-color:var(--coral)}
-  .opt-1{background:rgba(91,139,255,0.18);border-color:var(--cobalt)}
-  .opt-2{background:rgba(122,220,90,0.18);border-color:var(--green)}
-  .opt-3{background:rgba(200,122,255,0.18);border-color:var(--plum)}
-  .opt-selected{box-shadow:inset 0 0 0 3px rgba(253,243,221,0.35)}
-  .opt-icon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;font-family:'Fraunces',serif;font-size:14px;font-weight:900;color:#fff;flex-shrink:0;line-height:1}
-  .opt-0 .opt-icon{background:var(--coral)}
+  .opt-0{background:rgba(255,92,66,0.12);border-color:var(--tomato)}
+  .opt-1{background:rgba(91,139,255,0.12);border-color:var(--cobalt)}
+  .opt-2{background:rgba(122,220,90,0.12);border-color:var(--leaf)}
+  .opt-3{background:rgba(200,122,255,0.12);border-color:var(--plum)}
+  .opt-selected{box-shadow:inset 0 0 0 3px rgba(253,243,221,0.2)}
+  .opt-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;font-family:'Fraunces',serif;font-size:14px;font-weight:900;color:#fff;flex-shrink:0;line-height:1}
+  .opt-0 .opt-icon{background:var(--tomato)}
   .opt-1 .opt-icon{background:var(--cobalt)}
-  .opt-2 .opt-icon{background:var(--green);color:#0f1226}
+  .opt-2 .opt-icon{background:var(--leaf)}
   .opt-3 .opt-icon{background:var(--plum)}
 
   .tiles{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.65rem;border:2px dashed var(--line);min-height:50px;border-radius:10px}
-  .tile{padding:0.38rem 0.85rem;background:var(--gold);color:#0f1226;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.11s;user-select:none;border-radius:8px;border:2px solid rgba(0,0,0,0.2)}
-  .tile:hover{transform:translateY(-2px);box-shadow:2px 2px 0 rgba(0,0,0,0.3)}
-  .tile.used{background:rgba(253,243,221,0.07);color:rgba(253,243,221,0.25);cursor:default;transform:none;border-color:transparent}
-  .tile.placed{background:var(--teal);color:#0f1226;border-color:rgba(0,0,0,0.2)}
+  .tile{padding:0.38rem 0.85rem;background:var(--gold);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.11s;user-select:none;border-radius:8px;border:2px solid var(--ink)}
+  .tile:hover{transform:translateY(-2px);box-shadow:2px 2px 0 var(--ink)}
+  .tile.used{background:rgba(253,243,221,0.06);color:rgba(253,243,221,0.2);cursor:default;transform:none;border-color:transparent}
+  .tile.placed{background:var(--aqua);color:var(--on-light);border-color:var(--ink)}
 
   .story-card{padding:0.8rem 1rem;border:2px solid var(--line);margin-bottom:0.4rem;cursor:pointer;transition:all 0.13s;display:flex;align-items:flex-start;gap:0.65rem;font-size:1.05rem;line-height:1.55;border-radius:10px;background:var(--paper)}
-  .story-card:hover:not(.placed){border-color:var(--gold);background:rgba(255,206,71,0.08)}
-  .story-card.placed{border-color:var(--teal);background:rgba(66,218,195,0.08)}
-  .story-num{font-family:'Fraunces',serif;font-size:0.85rem;font-weight:700;color:var(--teal);width:1.4rem;flex-shrink:0;margin-top:0.1rem}
+  .story-card:hover:not(.placed){border-color:var(--sun);background:rgba(255,206,71,0.08)}
+  .story-card.placed{border-color:var(--aqua);background:rgba(66,218,195,0.08)}
+  .story-num{font-family:'Fraunces',serif;font-size:0.85rem;font-weight:700;color:var(--aqua);width:1.4rem;flex-shrink:0;margin-top:0.1rem}
 
   .match-word{padding:0.65rem 0.9rem;border:2px solid var(--line);font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.13s;text-align:center;margin-bottom:0.4rem;border-radius:10px;background:var(--paper);color:var(--ink)}
-  .match-word:hover{border-color:var(--ink)}
-  .match-word.selected{border-color:var(--gold);background:rgba(255,206,71,0.1)}
-  .match-word.matched-correct{border-color:var(--green);background:rgba(122,220,90,0.12);cursor:default}
-  .match-word.matched-wrong{border-color:var(--red);background:rgba(255,92,66,0.12);cursor:default}
+  .match-word:hover{border-color:var(--muted)}
+  .match-word.selected{border-color:var(--sun);background:rgba(255,206,71,0.12)}
+  .match-word.matched-correct{border-color:var(--leaf);background:rgba(122,220,90,0.1);cursor:default}
+  .match-word.matched-wrong{border-color:var(--tomato);background:rgba(255,92,66,0.1);cursor:default}
 
   .timer-num{font-family:'Fraunces',Georgia,serif;font-size:3rem;font-weight:900;color:var(--gold);line-height:1}
   .timer-num.urgent{color:var(--coral);animation:timerPulse 0.5s ease-in-out infinite}
@@ -1279,27 +1083,27 @@ const css = `
   @keyframes sa-shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
   @keyframes sa-confetti-fall{0%{transform:translateY(-20vh) rotate(0deg);opacity:1}100%{transform:translateY(120vh) rotate(720deg);opacity:0}}
 
-  .lb-row{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0.9rem;margin-bottom:0.35rem;border-left:4px solid transparent;animation:slideIn 0.35s ease forwards;opacity:0;border-radius:10px;background:var(--paper);border:2px solid var(--line)}
+  .lb-row{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0.9rem;margin-bottom:0.35rem;border-left:4px solid transparent;animation:slideIn 0.35s ease forwards;opacity:0;border-radius:10px;background:var(--paper);border:1.5px solid var(--line)}
   @keyframes slideIn{from{transform:translateX(-22px);opacity:0}to{transform:translateX(0);opacity:1}}
   .lb-rank{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;width:1.9rem;opacity:0.45}
   .lb-name{flex:1;font-weight:600;font-size:0.95rem}
-  .lb-score{font-family:'Fraunces',serif;font-size:1rem;font-weight:900;color:var(--gold)}
+  .lb-score{font-family:'Fraunces',serif;font-size:1rem;font-weight:900;color:var(--coral)}
 
-  .prog{height:5px;background:var(--line);margin-bottom:1.2rem;border-radius:99px}
+  .prog{height:5px;background:rgba(30,26,20,0.1);margin-bottom:1.2rem;border-radius:99px}
   .prog-fill{height:100%;background:var(--gold);transition:width 0.5s;border-radius:99px}
 
-  .result-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:200;animation:fadeIn 0.2s}
+  .result-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(30,26,20,0.85);z-index:200;animation:fadeIn 0.2s}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  .result-box{text-align:center;padding:2.5rem;background:var(--paper);border:3px solid var(--line);border-radius:20px;box-shadow:6px 6px 0 rgba(0,0,0,0.5)}
+  .result-box{text-align:center;padding:2.5rem;background:var(--paper);border:2px solid var(--line);border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.5)}
   .result-emoji{font-size:5rem;display:block;animation:boing 0.45s cubic-bezier(0.175,0.885,0.32,1.275)}
   @keyframes boing{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
 
-  .qr-wrap{display:flex;flex-direction:column;align-items:center;gap:0.55rem;padding:1.1rem;background:#fff;border:3px solid var(--gold);max-width:210px;margin:0.9rem auto 0;border-radius:14px;box-shadow:4px 4px 0 rgba(0,0,0,0.5)}
+  .qr-wrap{display:flex;flex-direction:column;align-items:center;gap:0.55rem;padding:1.1rem;background:#fff;border:3px solid var(--on-light);max-width:210px;margin:0.9rem auto 0;border-radius:14px;box-shadow:4px 4px 0 var(--sun)}
   .qr-wrap img{width:155px;height:155px;display:block}
-  .qr-label{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);text-align:center}
-  .qr-url{font-size:0.57rem;color:var(--ink);opacity:0.45;text-align:center;word-break:break-all;max-width:175px}
+  .qr-label{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--on-light);text-align:center}
+  .qr-url{font-size:0.57rem;color:var(--on-light);opacity:0.45;text-align:center;word-break:break-all;max-width:175px}
 
-  .chip{display:inline-flex;align-items:center;gap:0.3rem;padding:0.28rem 0.65rem;font-family:'JetBrains Mono',monospace;font-size:0.56rem;font-weight:700;margin:0.18rem;animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);border-radius:999px;border:2px solid var(--ink)}
+  .chip{display:inline-flex;align-items:center;gap:0.3rem;padding:0.28rem 0.65rem;font-family:'JetBrains Mono',monospace;font-size:0.56rem;font-weight:700;margin:0.18rem;animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);border-radius:999px;border:1.5px solid var(--line);background:var(--paper)}
   @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
 
   .dots span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin:0 3px;animation:dotP 1.2s ease-in-out infinite}
@@ -1363,6 +1167,239 @@ const GAME_MODES = [
   {v:"odd_one_out",   label:"🎯 Odd One Out",       desc:"Spot the wrong one"},
 ];
 
+// ─── BRAND PRIMITIVES ─────────────────────────────────────────────────────────
+
+function SALogo({ size = 30, mark = true, wordmark = true }) {
+  return (
+    <div style={{ display:"inline-flex", alignItems:"center", gap:size*0.32 }}>
+      {mark && (
+        <svg width={size} height={size} viewBox="0 0 32 32" style={{display:"block"}}>
+          <path d="M5 6 H27 A4 4 0 0 1 31 10 V20 A4 4 0 0 1 27 24 H16.5 L10.5 30 V24 H5 A4 4 0 0 1 1 20 V10 A4 4 0 0 1 5 6 Z" fill="var(--tomato)" />
+          <rect x="8"  y="16" width="3.5" height="4" rx="0.5" fill="var(--on-dark)" />
+          <rect x="14" y="12" width="3.5" height="8" rx="0.5" fill="var(--on-dark)" />
+          <rect x="20" y="9"  width="3.5" height="11" rx="0.5" fill="var(--on-dark)" />
+        </svg>
+      )}
+      {wordmark && (
+        <div style={{ fontFamily:"'Fraunces',serif", fontWeight:800, fontSize:size*0.57, color:"var(--ink)", letterSpacing:"-0.015em", lineHeight:1 }}>
+          English <span style={{color:"var(--tomato)",fontStyle:"italic"}}>Arena</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SAIconWrap({ size, color, children, fill="none", stroke=true }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}
+      stroke={stroke ? (color||"currentColor") : "none"} strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" style={{display:"block",flexShrink:0}}>
+      {children}
+    </svg>
+  );
+}
+
+const SA_ICONS = {
+  wolf:   ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 8 L7 4 L9 7 L15 7 L17 4 L20 8 L20 15 Q20 20 16 21 L8 21 Q4 20 4 15 Z" fill={c} stroke="none" /><circle cx="9.5" cy="13" r="0.9" fill="white" /><circle cx="14.5" cy="13" r="0.9" fill="white" /><path d="M11 16 Q12 17.2 13 16" stroke="white" strokeWidth="1.4" fill="none" /></SAIconWrap>,
+  shark:  ({s,c}) => <SAIconWrap size={s} color={c}><path d="M2 13 Q6 9 11 9 L18 6 L17 11 L21 12 L17 13 L18 17 L11 15 Q6 16 2 13 Z" fill={c} stroke="none" /><circle cx="13.5" cy="11" r="0.9" fill="white" /><path d="M11 13 L13 13" stroke="white" strokeWidth="1" fill="none" /></SAIconWrap>,
+  tiger:  ({s,c}) => <SAIconWrap size={s} color={c}><path d="M5 7 L4 4 L8 6 L16 6 L20 4 L19 7 Q21 9 21 13 Q21 19 16 21 L8 21 Q3 19 3 13 Q3 9 5 7 Z" fill={c} stroke="none" /><path d="M9 9 L9.5 12 M15 9 L14.5 12" stroke="white" strokeWidth="1.2" /><circle cx="9.5" cy="14" r="0.9" fill="white" /><circle cx="14.5" cy="14" r="0.9" fill="white" /><path d="M10.5 17 Q12 18 13.5 17" stroke="white" strokeWidth="1.3" fill="none" /></SAIconWrap>,
+  eagle:  ({s,c}) => <SAIconWrap size={s} color={c}><path d="M12 4 Q15 6 16 10 L20 8 L17 13 L21 14 L16 16 L18 21 L12 18 L6 21 L8 16 L3 14 L7 13 L4 8 L8 10 Q9 6 12 4 Z" fill={c} stroke="none" /></SAIconWrap>,
+  multiple_choice: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="4" width="8" height="6" rx="1.5" /><rect x="13" y="4" width="8" height="6" rx="1.5" fill={c} stroke={c} /><rect x="3" y="14" width="8" height="6" rx="1.5" /><rect x="13" y="14" width="8" height="6" rx="1.5" /></SAIconWrap>,
+  true_false: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 12 L8 16 L14 8" /><path d="M16 8 L22 16 M22 8 L16 16" /></SAIconWrap>,
+  error_spotter: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="11" cy="11" r="7" /><path d="M16 16 L21 21" /><path d="M9 11 L13 11" /></SAIconWrap>,
+  type_answer: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 7 L4 17 L20 17" /><path d="M4 7 L20 7" /><path d="M8 12 L16 12" /></SAIconWrap>,
+  rearrange: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="6" width="6" height="5" rx="1" /><rect x="11" y="6" width="6" height="5" rx="1" fill={c} stroke={c} /><rect x="7" y="13" width="6" height="5" rx="1" /><rect x="15" y="13" width="6" height="5" rx="1" /></SAIconWrap>,
+  word_match: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="2" y="5" width="7" height="6" rx="1.5" /><rect x="15" y="13" width="7" height="6" rx="1.5" /><path d="M9 8 Q12 8 12 12 Q12 16 15 16" strokeDasharray="2 2" /></SAIconWrap>,
+  odd_one_out: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="6" cy="18" r="2.5" /><circle cx="18" cy="18" r="2.5" fill={c} stroke={c} /><path d="M14.5 14.5 L21.5 21.5" stroke="white" strokeWidth="1.5" /></SAIconWrap>,
+  stress_battle: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M2 12 L5 12 L7 7 L10 17 L13 5 L16 19 L19 12 L22 12" /></SAIconWrap>,
+  idiom: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 H17 A3 3 0 0 1 20 8 V13 A3 3 0 0 1 17 16 H10 L6 20 V16 A2 2 0 0 1 4 14 V8 A3 3 0 0 1 4 5 Z" /><path d="M8 10 L8.5 11 L9 10 M11 10 L11.5 11 L12 10 M14 10 L14.5 11 L15 10" strokeWidth="1.2" /></SAIconWrap>,
+  fill_idiom: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 H17 A3 3 0 0 1 20 8 V13 A3 3 0 0 1 17 16 H10 L6 20 V16 A2 2 0 0 1 4 14 V8 A3 3 0 0 1 4 5 Z" /><path d="M8 10 L8.5 11 L9 10 M11 10 L11.5 11 L12 10 M14 10 L14.5 11 L15 10" strokeWidth="1.2" /></SAIconWrap>,
+  story_builder: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 L4 19 Q4 21 6 21 L18 21 Q20 21 20 19 L20 7 Q20 5 18 5 Z" /><path d="M4 5 Q6 4 12 5 Q18 4 20 5" /><path d="M8 11 L16 11 M8 14 L13 14" /></SAIconWrap>,
+  fire: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M12 22 Q5 19 5 13 Q5 9 8 6 Q8 9 11 9 Q11 4 14 2 Q13 7 17 9 Q19 11 19 14 Q19 19 12 22 Z" fill={c} stroke="none" /></SAIconWrap>,
+  bolt: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M13 2 L4 13 L11 13 L10 22 L20 11 L13 11 Z" fill={c} stroke="none" /></SAIconWrap>,
+  trophy: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M8 4 L16 4 L16 12 Q16 16 12 16 Q8 16 8 12 Z" fill={c} stroke="none" /><path d="M8 6 L4 6 L4 9 Q4 11 8 11" /><path d="M16 6 L20 6 L20 9 Q20 11 16 11" /><path d="M10 16 L10 20 L14 20 L14 16" stroke={c} fill={c} /><path d="M7 21 L17 21" strokeWidth="2.5" /></SAIconWrap>,
+  medal: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M7 2 L10 9 M17 2 L14 9" /><circle cx="12" cy="15" r="6" fill={c} stroke="none" /><circle cx="12" cy="15" r="3" fill="white" stroke="none" /></SAIconWrap>,
+  sparkle: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M12 3 L13.5 10 L20 12 L13.5 14 L12 21 L10.5 14 L4 12 L10.5 10 Z" fill={c} stroke="none" /></SAIconWrap>,
+  party: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M3 21 L8 8 L20 17 Z" fill={c} stroke="none" /><circle cx="8" cy="6" r="1.5" fill={c} stroke="none" /><circle cx="15" cy="4" r="1.5" fill={c} stroke="none" /><circle cx="20" cy="9" r="1.5" fill={c} stroke="none" /></SAIconWrap>,
+  hand_wave: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M6 12 L6 8 Q6 6.5 7.5 6.5 Q9 6.5 9 8 L9 11 L10 6 Q10 4.5 11.5 4.5 Q13 4.5 13 6 L13 11 L14 5 Q14 3.5 15.5 3.5 Q17 3.5 17 5 L17 12 L18 9 Q18 7.5 19.5 7.5 Q21 7.5 21 9 L21 14 Q21 21 14 21 Q7 21 5 16 L3 12 Q2.5 10.5 4 10 Q5 9.5 6 12 Z" fill={c} stroke="none" /></SAIconWrap>,
+  pause: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="6" y="5" width="4" height="14" rx="1" fill={c} stroke="none" /><rect x="14" y="5" width="4" height="14" rx="1" fill={c} stroke="none" /></SAIconWrap>,
+  play: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M6 4 L20 12 L6 20 Z" fill={c} stroke="none" /></SAIconWrap>,
+  skip: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 L14 12 L4 19 Z" fill={c} stroke="none" /><rect x="16" y="5" width="3" height="14" rx="0.5" fill={c} stroke="none" /></SAIconWrap>,
+  repeat: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M3 8 H17 A4 4 0 0 1 21 12" /><path d="M17 4 L21 8 L17 12" /><path d="M21 16 H7 A4 4 0 0 1 3 12" /><path d="M7 20 L3 16 L7 12" /></SAIconWrap>,
+  reveal: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M2 12 Q6 5 12 5 Q18 5 22 12 Q18 19 12 19 Q6 19 2 12 Z" /><circle cx="12" cy="12" r="3" fill={c} stroke="none" /></SAIconWrap>,
+  arrow_right: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M5 12 L19 12 M13 6 L19 12 L13 18" /></SAIconWrap>,
+  qr: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="3" width="7" height="7" rx="0.5" /><rect x="14" y="3" width="7" height="7" rx="0.5" /><rect x="3" y="14" width="7" height="7" rx="0.5" /><rect x="6" y="6" width="1" height="1" fill={c} stroke="none" /><rect x="17" y="6" width="1" height="1" fill={c} stroke="none" /><rect x="6" y="17" width="1" height="1" fill={c} stroke="none" /><rect x="14" y="14" width="2" height="2" fill={c} stroke="none" /><rect x="18" y="18" width="3" height="3" fill={c} stroke="none" /><rect x="14" y="18" width="2" height="2" fill={c} stroke="none" /></SAIconWrap>,
+  users: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="9" cy="8" r="3" /><path d="M3 20 Q3 14 9 14 Q15 14 15 20" /><circle cx="17" cy="9" r="2.5" /><path d="M14 14.5 Q21 14 21 20" /></SAIconWrap>,
+  solo: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="12" cy="8" r="3.5" /><path d="M5 20 Q5 14 12 14 Q19 14 19 20" /></SAIconWrap>,
+  dice: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="8" cy="8" r="1.3" fill={c} stroke="none" /><circle cx="16" cy="8" r="1.3" fill={c} stroke="none" /><circle cx="12" cy="12" r="1.3" fill={c} stroke="none" /><circle cx="8" cy="16" r="1.3" fill={c} stroke="none" /><circle cx="16" cy="16" r="1.3" fill={c} stroke="none" /></SAIconWrap>,
+  hourglass: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M5 3 L19 3 M5 21 L19 21" strokeWidth="2" /><path d="M7 3 Q7 10 12 12 Q17 10 17 3" /><path d="M7 21 Q7 14 12 12 Q17 14 17 21" /></SAIconWrap>,
+  target: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.5" fill={c} stroke="none" /></SAIconWrap>,
+};
+
+function SAIcon({ name, size=18, color }) {
+  const fn = SA_ICONS[name];
+  if (!fn) return null;
+  return fn({ s:size, c:color||"var(--ink)" });
+}
+
+const SA_BLOB_PATHS = [
+  "M50 8 Q78 8 88 32 Q98 56 82 78 Q66 100 40 90 Q14 80 8 54 Q2 28 26 14 Q38 8 50 8 Z",
+  "M50 6 Q82 18 90 44 Q98 70 76 88 Q54 100 30 88 Q6 76 6 50 Q6 24 26 12 Q38 6 50 6 Z",
+  "M50 10 Q72 4 88 22 Q104 40 90 64 Q76 88 50 92 Q24 96 12 72 Q0 48 16 28 Q32 8 50 10 Z",
+  "M50 8 Q74 14 86 36 Q98 58 84 80 Q70 102 44 92 Q18 82 10 56 Q2 30 26 16 Q40 8 50 8 Z",
+];
+function saHash(s) {
+  let h = 2166136261;
+  for (let i=0; i<s.length; i++) { h ^= s.charCodeAt(i); h=(h*16777619)>>>0; }
+  return h;
+}
+function SABlob({ name="?", size=32, color }) {
+  const palette = ["var(--tomato)","var(--cobalt)","var(--aqua)","var(--leaf)","var(--plum)","var(--sun)"];
+  const h = saHash(name||"x");
+  const swatch = color || palette[h % palette.length];
+  const pathIdx = (h>>4) % SA_BLOB_PATHS.length;
+  const rotate = (h>>8) % 360;
+  return (
+    <div style={{width:size,height:size,position:"relative",display:"inline-flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+      <svg viewBox="0 0 100 100" width={size} height={size} style={{position:"absolute",inset:0,transform:`rotate(${rotate}deg)`}}>
+        <path d={SA_BLOB_PATHS[pathIdx]} fill={swatch} />
+      </svg>
+      <span style={{position:"relative",color:"var(--on-dark)",fontWeight:800,fontFamily:"'Fraunces',serif",fontSize:size*0.42}}>
+        {(name||"?").charAt(0).toUpperCase()}
+      </span>
+    </div>
+  );
+}
+
+function SATimerRing({ value, max=20, size=110 }) {
+  const warn = value<=5;
+  const radius = size/2-10;
+  const circ = 2*Math.PI*radius;
+  const offset = circ*(1-value/max);
+  return (
+    <div style={{width:size,height:size,position:"relative",display:"flex",alignItems:"center",justifyContent:"center"}} className={warn?"sa-anim-warn":""}>
+      <svg width={size} height={size} style={{position:"absolute",inset:0,transform:"rotate(-90deg)"}}>
+        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="var(--line)" strokeWidth={8} />
+        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke={warn?"var(--tomato)":"var(--sun)"} strokeWidth={8}
+          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+          style={{transition:"stroke-dashoffset 1s linear"}} />
+      </svg>
+      <div style={{textAlign:"center"}}>
+        <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:size*0.36,color:warn?"var(--tomato)":"var(--on-light)",lineHeight:1}}>{value}</div>
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.18em",color:"var(--on-light)",opacity:0.55,marginTop:2}}>SEC</div>
+      </div>
+    </div>
+  );
+}
+
+function SAStreakMeter({ count=0, size="md" }) {
+  const tier = count>=6 ? {label:"×5",c:"var(--tomato)",h:1.0,glow:true}
+    : count>=4 ? {label:"×3",c:"var(--sun)",h:0.78,glow:true}
+    : count>=2 ? {label:"×2",c:"var(--sun)",h:0.6,glow:false}
+    : count>=1 ? {label:"×1",c:"var(--sun)",h:0.42,glow:false}
+    : {label:"—",c:"var(--muted)",h:0.2,glow:false};
+  const isLg = size==="lg";
+  const base = isLg ? 56 : 32;
+  return (
+    <div style={{display:"inline-flex",alignItems:"center",gap:isLg?12:8,padding:isLg?"10px 16px":"5px 10px",background:count>0?`${tier.c}18`:"transparent",border:`1.5px solid ${count>0?tier.c:"var(--line)"}`,borderRadius:999}}>
+      <div style={{position:"relative",width:base,height:base,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+        {tier.glow && <div style={{position:"absolute",inset:0,background:`radial-gradient(${tier.c}55,transparent 65%)`,filter:"blur(4px)"}} />}
+        <div style={{width:base*0.7*tier.h+base*0.3,height:base*tier.h,background:`linear-gradient(180deg,${tier.c},var(--tomato))`,borderRadius:"50% 50% 50% 50% / 75% 75% 35% 35%",transform:`rotate(${count>0?-3:0}deg) scaleX(${0.85+tier.h*0.2})`,transition:"all 0.3s cubic-bezier(0.2,0.8,0.3,1.2)",boxShadow:tier.glow?`0 -4px 14px ${tier.c}aa`:"none"}} />
+      </div>
+      <div>
+        <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:isLg?22:14,color:count>0?tier.c:"var(--muted)",lineHeight:1}}>{count>0?tier.label:"—"}</div>
+        {isLg && <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.15em",color:"var(--muted)",marginTop:2,textTransform:"uppercase"}}>Streak · {count}</div>}
+      </div>
+    </div>
+  );
+}
+
+function SARollingNumber({ value, style }) {
+  const [display, setDisplay] = useState(value);
+  const fromRef = useRef(value);
+  useEffect(() => {
+    const from = fromRef.current;
+    const to = value;
+    if (from===to) return;
+    const duration = 600;
+    const start = performance.now();
+    let raf;
+    const tick = (now) => {
+      const t = Math.min(1,(now-start)/duration);
+      const e = 1-Math.pow(1-t,3);
+      setDisplay(Math.round(from+(to-from)*e));
+      if (t<1) raf=requestAnimationFrame(tick);
+      else fromRef.current=to;
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [value]);
+  return <span style={style}>{display.toLocaleString()}</span>;
+}
+
+function SAScorePop({ value, color, trigger }) {
+  const [active, setActive] = useState(false);
+  const prevRef = useRef(trigger);
+  useEffect(() => {
+    if (trigger!==prevRef.current) {
+      prevRef.current = trigger;
+      setActive(true);
+      const t = setTimeout(()=>setActive(false), 1500);
+      return ()=>clearTimeout(t);
+    }
+  }, [trigger]);
+  if (!active||!value) return null;
+  return (
+    <div style={{position:"absolute",left:"50%",top:0,transform:"translateX(-50%)",fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:32,color:color||"var(--leaf)",pointerEvents:"none",zIndex:50,animation:"sa-score-pop 1.4s cubic-bezier(0.2,0.8,0.3,1) forwards",textShadow:"0 2px 0 var(--cream)"}}>+{value}</div>
+  );
+}
+
+function SARoomChip({ code, playerCount }) {
+  return (
+    <div style={{display:"inline-flex",alignItems:"center",gap:10,padding:"8px 12px 8px 8px",background:"var(--paper)",border:"1.5px solid var(--line)",borderRadius:12,boxShadow:"2px 2px 0 var(--sun)"}}>
+      <div style={{width:30,height:30,background:"var(--sun)",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}>
+        <SAIcon name="qr" size={16} color="var(--on-light)" />
+      </div>
+      <div>
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.16em",color:"var(--muted)",textTransform:"uppercase",lineHeight:1}}>Room</div>
+        <div style={{fontFamily:"'Fraunces',serif",fontSize:18,fontWeight:900,lineHeight:1.05,letterSpacing:"0.08em"}}>{code}</div>
+      </div>
+      <div style={{height:28,width:1,background:"var(--line)",margin:"0 2px"}} />
+      <div style={{display:"flex",alignItems:"center",gap:5}}>
+        <SAIcon name="users" size={14} color="var(--muted)" />
+        <span style={{fontFamily:"'DM Sans',sans-serif",fontWeight:700,fontSize:13}}>{playerCount}</span>
+      </div>
+    </div>
+  );
+}
+
+function SAConfetti({ active, count=50 }) {
+  const colors = ["var(--sun)","var(--tomato)","var(--aqua)","var(--cobalt)","var(--plum)","var(--leaf)"];
+  if (!active) return null;
+  const pieces = [];
+  for (let i=0; i<count; i++) {
+    pieces.push({left:Math.random()*100,delay:Math.random()*0.5,duration:1.8+Math.random()*1.4,size:6+Math.random()*10,color:colors[i%colors.length],rotate:Math.random()*360,shape:["rect","circle","stripe"][i%3]});
+  }
+  return (
+    <div style={{position:"absolute",inset:0,pointerEvents:"none",overflow:"hidden",zIndex:50}}>
+      {pieces.map((p,i)=>(
+        <div key={i} style={{position:"absolute",left:`${p.left}%`,top:0,width:p.shape==="stripe"?p.size*0.5:p.size,height:p.shape==="stripe"?p.size*1.8:p.size,background:p.color,borderRadius:p.shape==="circle"?"50%":2,animation:`sa-confetti-fall ${p.duration}s ${p.delay}s cubic-bezier(0.2,0.5,0.5,1) forwards`,transform:`rotate(${p.rotate}deg)`}} />
+      ))}
+    </div>
+  );
+}
+
+function TeacherBtn({ icon, label, onClick, variant="default" }) {
+  const bg = variant==="primary" ? "var(--tomato)" : variant==="active" ? "var(--muted)" : "var(--paper)";
+  const fg = variant==="primary"||variant==="active" ? "var(--on-dark)" : "var(--ink)";
+  return (
+    <div onClick={onClick} className="sa-pressable" style={{display:"flex",alignItems:"center",gap:6,padding:"8px 10px",background:variant==="ghost"?"transparent":bg,color:variant==="ghost"?"var(--muted)":fg,border:`1.5px solid ${variant==="ghost"?"var(--line)":bg}`,borderRadius:8,cursor:"pointer",fontSize:11,fontWeight:600}}>
+      {icon && <SAIcon name={icon} size={13} color={variant==="ghost"?"var(--muted)":fg} />}
+      <span>{label}</span>
+    </div>
+  );
+}
+
 // ─── APP ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const joinCode = typeof window !== "undefined" ? (new URLSearchParams(window.location.search).get("join") || "") : "";
@@ -1382,38 +1419,42 @@ export default function App() {
 function Home({ onHost, onJoin, onSolo }) {
   return (
     <div className="hero">
-      <div style={{textAlign:"center",marginBottom:"0.6rem"}}>
-        <svg width="56" height="56" viewBox="0 0 32 32" style={{display:"inline-block"}}>
-          <path d="M5 6 H27 A4 4 0 0 1 31 10 V20 A4 4 0 0 1 27 24 H16.5 L10.5 30 V24 H5 A4 4 0 0 1 1 20 V10 A4 4 0 0 1 5 6 Z" fill="var(--coral)" />
-          <rect x="8" y="16" width="3.5" height="4" rx="0.5" fill="var(--cream)" />
-          <rect x="14" y="12" width="3.5" height="8" rx="0.5" fill="var(--cream)" />
-          <rect x="20" y="9" width="3.5" height="11" rx="0.5" fill="var(--cream)" />
-        </svg>
-      </div>
-      <h1 className="hero-title">English<br/><span>Arena</span></h1>
-      <p className="hero-sub">Live classroom games to improve your English. No app needed.</p>
+      {/* decorative blobs */}
+      <div style={{position:"absolute",top:-80,right:-80,width:260,height:260,borderRadius:"50%",background:"var(--sun)",opacity:0.18,pointerEvents:"none"}} />
+      <div style={{position:"absolute",bottom:-100,left:-60,width:300,height:300,borderRadius:"50%",background:"var(--aqua)",opacity:0.12,pointerEvents:"none"}} />
+      <div style={{position:"absolute",top:160,right:80,width:60,height:60,borderRadius:"50%",background:"var(--tomato)",opacity:0.55,pointerEvents:"none"}} className="sa-anim-pulse" />
 
-      <div style={{width:"100%",maxWidth:340,margin:"0 auto"}}>
-        {/* Teacher */}
-        <button className="btn btn-gold btn-full" onClick={onHost} style={{marginBottom:"1.4rem"}}>🎓 I'm the Teacher</button>
-
-        {/* Student divider */}
-        <div style={{display:"flex",alignItems:"center",gap:"0.7rem",marginBottom:"1rem",opacity:0.4}}>
-          <div style={{flex:1,height:1,background:"rgba(255,255,255,0.3)"}}/>
-          <span style={{fontSize:"0.72rem",letterSpacing:"0.08em",textTransform:"uppercase"}}>I'm a Student</span>
-          <div style={{flex:1,height:1,background:"rgba(255,255,255,0.3)"}}/>
+      <div style={{position:"relative",zIndex:2,display:"flex",flexDirection:"column",alignItems:"center",gap:"1.2rem",width:"100%",maxWidth:400}}>
+        <div className="sa-anim-pop">
+          <SALogo size={40} />
         </div>
 
-        <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-          <button className="btn btn-ghost btn-full" onClick={onJoin}>📱 Join a Teacher's Game</button>
-          <button className="btn btn-ghost btn-full" onClick={onSolo} style={{opacity:0.7,fontSize:"0.88rem"}}>🎮 Practise on My Own</button>
+        <div className="sa-anim-slide" style={{textAlign:"center"}}>
+          <h1 style={{fontFamily:"'Fraunces',serif",fontSize:"clamp(3rem,10vw,5.5rem)",fontWeight:900,fontStyle:"italic",letterSpacing:"-0.03em",lineHeight:0.92,color:"var(--ink)"}}>
+            Grammar,<br/>make it<br/><span style={{color:"var(--tomato)"}}>a game.</span>
+          </h1>
+          <p style={{marginTop:"1rem",fontSize:"0.9rem",color:"var(--muted)",lineHeight:1.65,maxWidth:320}}>
+            Live classroom games. Ten types, thirty topics.<br/>No app — just a browser.
+          </p>
+        </div>
+
+        <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"0.65rem",marginTop:"0.5rem"}}>
+          <button className="btn btn-gold btn-full" onClick={onHost} style={{fontSize:"1rem",color:"var(--on-light)",borderColor:"var(--on-light)"}}>
+            Host a game →
+          </button>
+          <div style={{display:"flex",alignItems:"center",gap:"0.7rem",opacity:0.35}}>
+            <div style={{flex:1,height:1,background:"var(--line)"}}/><span style={{fontSize:"0.68rem",letterSpacing:"0.1em",textTransform:"uppercase"}}>Students</span><div style={{flex:1,height:1,background:"var(--line)"}}/>
+          </div>
+          <button className="btn btn-ghost btn-full" onClick={onJoin}>Join a game with code</button>
+          <button className="btn btn-ghost btn-full" onClick={onSolo} style={{fontSize:"0.85rem",opacity:0.7}}>Practise on my own</button>
+        </div>
+
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"center",marginTop:"0.5rem"}}>
+          {[{t:"Multiple Choice",c:"var(--tomato)"},{t:"Stress Battle",c:"var(--cobalt)"},{t:"Word Match",c:"var(--aqua)"},{t:"Idioms",c:"var(--sun)"},{t:"+6 more",c:"var(--muted)"}].map(g=>(
+            <div key={g.t} style={{padding:"5px 12px",background:"var(--paper)",border:`1.5px solid ${g.c}`,borderRadius:10,fontSize:11,fontWeight:600,color:g.c}}>{g.t}</div>
+          ))}
         </div>
       </div>
-
-      <p className="op30 text-center mt-4" style={{fontSize:"0.72rem",maxWidth:440,lineHeight:1.8}}>
-        Multiple Choice · True/False · Error Spotter · Word Order · Story Builder · Idioms · Word Match · Odd One Out · Stress Battle
-        <br/>Solo practice · Teams mode · Live leaderboard · 30 curated topic banks
-      </p>
     </div>
   );
 }
@@ -1504,43 +1545,49 @@ function SoloView({ onBack }) {
   const restart = () => { setPhase("setup"); setQuestions([]); setQIndex(0); setResults([]); setStreak(0); setBestStreak(0); };
 
   // ── SETUP SCREEN ───────────────────────────────────────────────────────────
+  const noStressBattle = new Set(["verb_tenses","present_perfect"]);
+
   if (phase === "setup") {
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.2rem"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
-        <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.2rem"}}>Practise on Your Own</h2>
-        <p className="op50 mb-3" style={{fontSize:"0.82rem"}}>Pick a topic and start practising — no teacher needed.</p>
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.4rem",marginBottom:"0.2rem"}}>Practise on your own.</h2>
+        <p style={{color:"var(--muted)",fontSize:"0.85rem",marginBottom:"1rem"}}>Pick a topic — no teacher needed.</p>
 
-        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.35rem"}}>
-          <span className="label" style={{marginBottom:0}}>Topic</span>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.4rem"}}>
+          <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace"}}>Topic</div>
           <div className="flex gap-1">
             <button className={`btn btn-sm ${topicFilter==="all"?"btn-teal":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={()=>setTopicFilter("all")}>All</button>
-            <button className={`btn btn-sm ${topicFilter==="saved"?"btn-gold":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={()=>setTopicFilter("saved")}>⭐ Saved{faves.length>0?` (${faves.length})`:""}</button>
+            <button className={`btn btn-sm ${topicFilter==="saved"?"btn-gold":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={()=>setTopicFilter("saved")}>★ Saved{faves.length>0?` (${faves.length})`:""}</button>
           </div>
         </div>
         {topicFilter==="saved"&&faves.length===0&&(
-          <p style={{fontSize:"0.78rem",opacity:0.45,marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
+          <p style={{fontSize:"0.78rem",color:"var(--muted)",marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid rgba(255,255,255,0.1)"}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:8}}>
           {Object.entries(QUESTION_BANK).filter(([k])=>(topicFilter==="all"||faves.includes(k))).map(([key,{label}])=>{
-            const sbDisabled = gameType==="stress_battle" && !QUESTION_BANK[key].questions.some(q=>q.type==="stress_battle");
+            const disabled = gameType==="stress_battle" && noStressBattle.has(key);
+            const sel = selectedTopic===key;
             return (
-            <div key={key} style={{position:"relative",display:"flex"}}>
-              <button disabled={sbDisabled} onClick={()=>{ setSelectedTopic(key); if(key==="stress_battle") setGameType("stress_battle"); }} title={sbDisabled?"No Stress Battle words for this topic":undefined} style={{flex:1,padding:"0.5rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${sbDisabled?"rgba(255,255,255,0.06)":selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key&&!sbDisabled?"rgba(232,184,75,0.15)":"transparent",color:sbDisabled?"rgba(255,255,255,0.2)":selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:sbDisabled?"not-allowed":"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
-              {!sbDisabled&&<button onClick={(e)=>{e.stopPropagation();toggleFave(key);}} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--gold)":"rgba(255,255,255,0.25)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>}
-            </div>
+              <div key={key} style={{position:"relative",display:"flex"}}>
+                <button
+                  disabled={disabled}
+                  onClick={()=>!disabled&&setSelectedTopic(key)}
+                  style={{flex:1,padding:"0.5rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.78rem",fontWeight:sel?700:400,border:`2px solid ${sel?"var(--sun)":disabled?"var(--line)":"var(--line)"}`,background:sel?"rgba(255,206,71,0.12)":"transparent",color:sel?"var(--sun)":disabled?"var(--muted)":"var(--ink-soft)",cursor:disabled?"not-allowed":"pointer",textAlign:"left",transition:"all 0.12s",opacity:disabled?0.35:1,borderRadius:6}}>{label}</button>
+                <button onClick={(e)=>{e.stopPropagation();toggleFave(key);}} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--sun)":"var(--muted)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
+              </div>
             );
           })}
         </div>
 
-        <span className="label">Question type</span>
+        <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","🎲 Mixed"],["stress_battle","⚡ Stress Battle"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Fill the Idiom"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"]].map(([v,l])=>(
-            <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={()=>{ setGameType(v); if(v==="stress_battle") setSelectedTopic("stress_battle"); }}>{l}</button>
+          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Idioms"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l])=>(
+            <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={()=>setGameType(v)}>{l}</button>
           ))}
         </div>
 
-        <span className="label">Number of questions</span>
+        <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:"0.4rem"}}>Number of questions</div>
         <div className="flex gap-1 mb-1">
           {[5,8,10,12,15].map(n=>(
             <button key={n} className={`btn btn-sm ${qCount===n?"btn-gold":"btn-ghost"}`} onClick={()=>setQCount(n)}>{n}</button>
@@ -1551,12 +1598,12 @@ function SoloView({ onBack }) {
           const available = gameType === "mixed" ? bank.length : bank.filter(q => q.type === gameType).length;
           const actual = Math.min(qCount, available);
           return available < qCount
-            ? <p style={{fontSize:"0.78rem",color:"var(--gold)",marginBottom:"1rem",marginTop:"0.3rem"}}>⚠ Only {available} {gameType==="mixed"?"":"\""+gameType.replace(/_/g," ")+"\" "}question{available!==1?"s":""} available for this topic — you'll get {actual}.</p>
-            : <p style={{fontSize:"0.75rem",opacity:0.4,marginBottom:"1rem",marginTop:"0.3rem"}}>{actual} questions ready</p>;
+            ? <p style={{fontSize:"0.78rem",color:"var(--sun)",marginBottom:"1rem",marginTop:"0.3rem"}}>Only {available} {gameType==="mixed"?"":"\""+gameType.replace(/_/g," ")+"\" "}question{available!==1?"s":""} available — you'll get {actual}.</p>
+            : <p style={{fontSize:"0.75rem",color:"var(--muted)",marginBottom:"1rem",marginTop:"0.3rem"}}>{actual} questions ready</p>;
         })()}
         {!selectedTopic && <div style={{marginBottom:"1rem"}}/>}
 
-        <button className="btn btn-teal btn-full" disabled={!selectedTopic} onClick={loadQuestions}>Start Practising →</button>
+        <button className="btn btn-teal btn-full" disabled={!selectedTopic||(gameType==="stress_battle"&&noStressBattle.has(selectedTopic))} onClick={loadQuestions}>Start Practising →</button>
       </div>
     );
   }
@@ -1567,12 +1614,12 @@ function SoloView({ onBack }) {
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.5rem"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={()=>setPhase("setup")}>← Back</button>
-        <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",marginBottom:"0.15rem"}}>Before You Start</h2>
-        <p className="op50 mb-3" style={{fontSize:"0.82rem"}}>A quick grammar reminder for this topic.</p>
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.3rem",marginBottom:"0.2rem"}}>Before you start.</h2>
+        <p style={{color:"var(--muted)",fontSize:"0.82rem",marginBottom:"1rem"}}>A quick grammar reminder for this topic.</p>
         {intro?.sections?.map((s, i) => (
           <div key={i} className="card mb-3">
-            <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.74rem",color:"var(--gold)",marginBottom:"0.45rem",letterSpacing:"0.04em"}}>{s.heading}</div>
-            <div style={{fontFamily:"'DM Mono',monospace",fontSize:"0.87rem",color:"var(--teal)",padding:"0.35rem 0.6rem",background:"rgba(64,192,170,0.08)",borderRadius:4,marginBottom:"0.6rem"}}>{s.form}</div>
+            <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.74rem",color:"var(--sun)",marginBottom:"0.45rem",letterSpacing:"0.06em",textTransform:"uppercase"}}>{s.heading}</div>
+            <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.87rem",color:"var(--aqua)",padding:"0.35rem 0.6rem",background:"rgba(66,218,195,0.08)",borderRadius:4,marginBottom:"0.6rem"}}>{s.form}</div>
             <div style={{marginBottom:"0.5rem"}}>
               {s.examples.map((ex, j) => (
                 <p key={j} style={{fontSize:"0.85rem",marginBottom:"0.15rem",opacity:0.82,fontStyle:"italic"}}>"{ex}"</p>
@@ -1582,9 +1629,9 @@ function SoloView({ onBack }) {
           </div>
         ))}
         {intro?.tip && (
-          <div className="card mb-4" style={{border:"1px solid rgba(232,184,75,0.4)",background:"rgba(232,184,75,0.06)"}}>
-            <span style={{fontSize:"0.74rem",fontWeight:700,color:"var(--gold)"}}>💡 Key difference</span>
-            <p style={{fontSize:"0.83rem",marginTop:"0.3rem",lineHeight:1.55,opacity:0.85}}>{intro.tip}</p>
+          <div className="card mb-4" style={{border:"1.5px solid rgba(255,206,71,0.35)",background:"rgba(255,206,71,0.06)"}}>
+            <span style={{fontSize:"0.74rem",fontWeight:700,color:"var(--sun)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.06em"}}>KEY DIFFERENCE</span>
+            <p style={{fontSize:"0.83rem",marginTop:"0.3rem",lineHeight:1.55,color:"var(--ink-soft)"}}>{intro.tip}</p>
           </div>
         )}
         <button className="btn btn-teal btn-full" onClick={()=>setPhase("question")}>
@@ -1599,50 +1646,42 @@ function SoloView({ onBack }) {
     const total   = results.length;
     const correct = results.filter(r => r.correct).length;
     const pct     = Math.round((correct / total) * 100);
-    const grade   = pct >= 90 ? "🏆 Outstanding!" : pct >= 70 ? "🌟 Well done!" : pct >= 50 ? "💪 Keep practising!" : "📚 Review and try again!";
+    const gradeLabel = pct >= 90 ? "Outstanding!" : pct >= 70 ? "Well done!" : pct >= 50 ? "Keep practising!" : "Review and try again!";
+    const gradeColor = pct >= 70 ? "var(--leaf)" : pct >= 50 ? "var(--sun)" : "var(--tomato)";
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.5rem"}}>
-        <div className="card card-gold" style={{textAlign:"center",marginBottom:"1.2rem"}}>
-          <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"2.8rem",fontWeight:900,marginBottom:"0.3rem"}}>{pct}%</div>
-          <div style={{fontSize:"1.1rem",fontWeight:700,marginBottom:"0.2rem"}}>{grade}</div>
-          <div className="op50" style={{fontSize:"0.85rem"}}>{correct} / {total} correct · {QUESTION_BANK[selectedTopic]?.label}</div>
+        <div className="card sa-anim-pop" style={{textAlign:"center",marginBottom:"1.2rem",border:"1.5px solid var(--line)",boxShadow:`4px 4px 0 ${gradeColor}`}}>
+          <SAIcon name="trophy" size={32} color={gradeColor} />
+          <div style={{fontFamily:"'Fraunces',serif",fontSize:"3rem",fontWeight:900,fontStyle:"italic",color:gradeColor,lineHeight:1,margin:"0.3rem 0"}}>{pct}%</div>
+          <div style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontStyle:"italic",fontSize:"1.1rem",marginBottom:"0.2rem",color:"var(--ink)"}}>{gradeLabel}</div>
+          <div style={{color:"var(--muted)",fontSize:"0.85rem"}}>{correct} / {total} correct · {QUESTION_BANK[selectedTopic]?.label}</div>
           {bestStreak >= 2 && (
-            <div style={{marginTop:"0.6rem",fontSize:"0.82rem",color:"var(--gold)"}}>Best streak: 🔥 {bestStreak} in a row!</div>
+            <div style={{marginTop:"0.6rem",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
+              <SAStreakMeter count={bestStreak} size="sm" />
+              <span style={{fontSize:"0.8rem",color:"var(--sun)"}}>Best streak</span>
+            </div>
           )}
         </div>
 
         <div style={{marginBottom:"1.2rem"}}>
           {results.map((r,i)=>(
-            <div key={i} style={{display:"flex",gap:"0.6rem",alignItems:"flex-start",padding:"0.5rem 0",borderBottom:"1px solid rgba(255,255,255,0.06)"}}>
-              <span style={{fontSize:"1rem",marginTop:"0.1rem"}}>{r.correct?"✅":"❌"}</span>
+            <div key={i} style={{display:"flex",gap:"0.6rem",alignItems:"flex-start",padding:"0.5rem 0",borderBottom:"1px solid var(--line)"}}>
+              <div style={{width:20,height:20,borderRadius:"50%",background:r.correct?"rgba(122,220,90,0.2)":"rgba(255,92,66,0.2)",border:`1.5px solid ${r.correct?"var(--leaf)":"var(--tomato)"}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:"0.1rem"}}>
+                <SAIcon name={r.correct?"bolt":"skip"} size={10} color={r.correct?"var(--leaf)":"var(--tomato)"} />
+              </div>
               <div>
-                <div style={{fontSize:"0.83rem",opacity:0.8,lineHeight:1.4}}>
-                  {r.q.type==="stress_battle" ? r.q.word : r.q.question}
-                  {r.q.sentence ? " " + r.q.sentence : ""}
-                </div>
-                <div style={{fontSize:"0.78rem",color:r.correct?"var(--teal)":"var(--gold)",opacity:r.correct?0.7:1,marginTop:"0.2rem"}}>
-                  {r.q.type==="stress_battle"
-                    ? `Stressed syllable ${r.q.stressed} of ${r.q.syllables} (${r.q.answer})`
-                    : r.q.type==="error_spotter"
-                    ? `${r.q.errorWord} → ${r.q.answer}`
-                    : r.q.type==="story_builder"
-                    ? `Order: ${(r.q.correctOrder||[]).filter(i=>i<3).join(",")}`
-                    : r.q.type==="word_match"
-                    ? "Match all pairs correctly"
-                    : r.q.type==="multiple_choice"||r.q.type==="odd_one_out"
-                    ? r.q.options?.[r.q.correctIdx]
-                    : r.q.type==="type_answer"
-                    ? (r.q.correct||r.q.answer)
-                    : r.q.answer}
-                </div>
+                <div style={{fontSize:"0.83rem",color:"var(--ink-soft)",lineHeight:1.4}}>{r.q.question}{r.q.sentence?" "+r.q.sentence:""}</div>
+                {!r.correct&&<div style={{fontSize:"0.78rem",color:"var(--sun)",marginTop:"0.2rem"}}>
+                  {r.q.type==="error_spotter"?`Error: ${r.q.errorWord} → ${r.q.answer}`:r.q.type==="story_builder"?`Order: ${(r.q.correctOrder||[]).filter(i=>i<3).join(",")}`:r.q.type==="word_match"?"Match all pairs correctly":`Answer: ${r.q.answer}`}
+                </div>}
               </div>
             </div>
           ))}
         </div>
 
         {results.some(r => !r.correct) && (
-          <button className="btn btn-full mb-2" style={{background:"rgba(232,88,58,0.18)",border:"1px solid var(--coral)",color:"var(--coral)"}} onClick={retryMissed}>
-            🔁 Retry missed ({results.filter(r=>!r.correct).length})
+          <button className="btn btn-full mb-2" style={{background:"rgba(255,92,66,0.1)",border:"1.5px solid var(--tomato)",color:"var(--tomato)"}} onClick={retryMissed}>
+            Retry missed ({results.filter(r=>!r.correct).length})
           </button>
         )}
         <div className="flex gap-2">
@@ -1667,25 +1706,28 @@ function SoloView({ onBack }) {
       {/* Progress bar */}
       <div style={{display:"flex",alignItems:"center",gap:"0.6rem",marginBottom:"1rem"}}>
         <button className="btn btn-ghost btn-sm" onClick={onBack} style={{padding:"0.3rem 0.7rem",fontSize:"0.75rem"}}>✕</button>
-        <div style={{flex:1,height:6,background:"rgba(255,255,255,0.1)",borderRadius:3}}>
-          <div style={{height:"100%",borderRadius:3,background:"var(--teal)",width:`${((qIndex)/questions.length)*100}%`,transition:"width 0.4s"}}/>
+        <div style={{flex:1,height:5,background:"var(--line)",borderRadius:3}}>
+          <div style={{height:"100%",borderRadius:3,background:"var(--aqua)",width:`${((qIndex)/questions.length)*100}%`,transition:"width 0.4s"}}/>
         </div>
-        <span style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.72rem",opacity:0.5}}>{qIndex+1}/{questions.length}</span>
+        <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.72rem",color:"var(--muted)"}}>{qIndex+1}/{questions.length}</span>
       </div>
 
       {/* Result flash */}
       {phase === "reveal" && (
-        <div style={{textAlign:"center",padding:"0.7rem",marginBottom:"0.9rem",borderRadius:8,background:isCorrect?"rgba(46,204,113,0.12)":"rgba(232,58,58,0.12)",border:`1px solid ${isCorrect?"var(--green)":"var(--coral)"}`}}>
-          <span style={{fontSize:"1.5rem"}}>{isCorrect?"✅":"❌"}</span>
-          <div style={{fontWeight:700,marginTop:"0.2rem",color:isCorrect?"var(--green)":"var(--coral)"}}>{isCorrect?"Correct!":"Not quite."}</div>
-          {pendingStreak >= 2 && (
-            <div style={{fontSize:"0.8rem",color:"var(--gold)",fontWeight:700,marginTop:"0.25rem"}}>🔥 {pendingStreak} in a row!</div>
-          )}
-          {!isCorrect&&q.type==="error_spotter"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Error: <strong>{q.errorWord}</strong> → <strong>{q.answer}</strong></div>}
-          {!isCorrect&&q.type==="stress_battle"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Correct pattern: <strong>{q.answer}</strong> — <strong>{q.word}</strong> is stressed on syllable {q.stressed}</div>}
-          {!isCorrect&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&q.type!=="stress_battle"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Answer: <strong>{q.answer}</strong></div>}
-          {!isCorrect&&q.type==="story_builder"&&<div className="op50" style={{fontSize:"0.82rem",marginTop:"0.2rem"}}>Order: <strong>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
-          {q.explanation&&<div className="op50" style={{fontSize:"0.78rem",marginTop:"0.3rem",lineHeight:1.4}}>{q.explanation}</div>}
+        <div style={{position:"relative",overflow:"hidden"}}>
+          <SAConfetti active={isCorrect} count={35} />
+          <div className="sa-anim-pop" style={{padding:"0.8rem 1rem",marginBottom:"0.9rem",borderRadius:10,background:isCorrect?"rgba(122,220,90,0.1)":"rgba(255,92,66,0.1)",border:`1.5px solid ${isCorrect?"var(--leaf)":"var(--tomato)"}`,display:"flex",flexDirection:"column",alignItems:"center",gap:"0.3rem"}}>
+            <div style={{width:40,height:40,borderRadius:"50%",background:isCorrect?"rgba(122,220,90,0.2)":"rgba(255,92,66,0.2)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <SAIcon name={isCorrect?"bolt":"skip"} size={20} color={isCorrect?"var(--leaf)":"var(--tomato)"} />
+            </div>
+            <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.1rem",color:isCorrect?"var(--leaf)":"var(--tomato)"}}>{isCorrect?"Correct!":"Not quite."}</div>
+            {pendingStreak >= 2 && <SAStreakMeter count={pendingStreak} size="sm" />}
+            {!isCorrect&&q.type==="error_spotter"&&<div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Error: <strong style={{color:"var(--tomato)"}}>{q.errorWord}</strong> → <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
+            {!isCorrect&&q.type==="stress_battle"&&<div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — <strong>{q.word}</strong> stressed on syllable {q.stressed}</div>}
+            {!isCorrect&&q.type!=="error_spotter"&&q.type!=="word_match"&&q.type!=="story_builder"&&q.type!=="stress_battle"&&<div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Answer: <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
+            {!isCorrect&&q.type==="story_builder"&&<div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
+            {q.explanation&&<div style={{fontSize:"0.78rem",color:"var(--muted)",marginTop:"0.1rem",lineHeight:1.4,textAlign:"center"}}>{q.explanation}</div>}
+          </div>
         </div>
       )}
 
@@ -1717,14 +1759,22 @@ function HostView({ onBack }) {
   const [error, setError] = useState("");
   const [bigText, setBigText] = useState(() => readFont());
   const [showReview, setShowReview] = useState(false);
+  const [fbStatus, setFbStatus] = useState(db ? "checking" : "none"); // "checking"|"ok"|"error"|"none"
   const timerRef = useRef(null);
 
   const upd = (fn) => setRoom(prev =>
     typeof fn === "function" ? fn(prev) : { ...prev, ...fn }
   );
 
-  // Write room state to storage after every change
-  useEffect(() => { try { write(room); } catch {} }, [room]);
+  // Write room state to storage after every change; track Firebase reachability
+  useEffect(() => {
+    try { localStorage.setItem("englishgame_v2", JSON.stringify(room)); } catch {}
+    if (db && room?.code) {
+      set(ref(db, `rooms/${room.code}`), room)
+        .then(() => setFbStatus("ok"))
+        .catch(() => setFbStatus("error"));
+    }
+  }, [room]);
 
   // Sync players & answers (Firebase real-time or localStorage fallback)
   useEffect(() => {
@@ -1762,7 +1812,7 @@ function HostView({ onBack }) {
   const loadQuestions = () => {
     if (!selectedTopic) { setError("Select a topic first!"); return; }
     const bank = QUESTION_BANK[selectedTopic].questions;
-    let pool = gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
+    let pool = (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => q.type === gameType);
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const qs = shuffled.slice(0, Math.min(qCount, shuffled.length));
@@ -1905,11 +1955,11 @@ function HostView({ onBack }) {
     <div className="panel">
       {/* Top bar */}
       <div className="flex justify-between items-center mb-2 wrap gap-1">
-        <h1 style={{fontSize:"0.95rem"}}>🎓 TEACHER DASHBOARD</h1>
+        <SALogo size={24} />
         <div className="flex gap-1 wrap">
-          {room.phase!=="lobby" && <button className="btn btn-sm btn-ghost" onClick={()=>upd(p=>({...p,phase:"leaderboard"}))}>📊 Scores</button>}
-          <button className="btn btn-sm btn-ghost" onClick={reset}>🔄 New</button>
-          <button className="btn btn-sm btn-ghost" onClick={onBack}>← Exit</button>
+          {room.phase!=="lobby" && <button className="btn btn-sm btn-ghost" onClick={()=>upd(p=>({...p,phase:"leaderboard"}))}>Scores</button>}
+          <button className="btn btn-sm btn-ghost" onClick={reset}>New</button>
+          <button className="btn btn-sm btn-ghost" onClick={onBack}>Exit</button>
         </div>
       </div>
 
@@ -1917,22 +1967,33 @@ function HostView({ onBack }) {
       {room.phase==="lobby" && (() => {
         const qrUrl = typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app";
         return (
-          <div className="text-center mt-2">
-            <span className="label">Room Code</span>
-            <div className="code-badge">{room.code}</div>
-            <p className="op50 mt-1" style={{fontSize:"0.8rem"}}>{players.length} player{players.length!==1?"s":""} in lobby</p>
-            <QRDisplay url={qrUrl} />
-            <p className="op30 mt-1" style={{fontSize:"0.68rem"}}>Students scan QR → enter name → Join!</p>
+          <div style={{marginTop:"1rem"}}>
+            {fbStatus==="error" && (
+              <div style={{padding:"0.6rem 0.8rem",marginBottom:"0.75rem",borderRadius:8,background:"rgba(255,92,66,0.12)",border:"1.5px solid var(--tomato)",fontSize:"0.8rem",lineHeight:1.5}}>
+                <strong style={{color:"var(--tomato)"}}>Firebase not reachable.</strong> Students won't be able to join via QR or room code. Check your Firebase security rules — set <code style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.75rem"}}>.read</code> and <code style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.75rem"}}>.write</code> to <code style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.75rem"}}>true</code> in the Firebase Console.
+              </div>
+            )}
+            {fbStatus==="none" && (
+              <div style={{padding:"0.6rem 0.8rem",marginBottom:"0.75rem",borderRadius:8,background:"rgba(91,139,255,0.1)",border:"1.5px solid var(--cobalt)",fontSize:"0.8rem",color:"var(--ink-soft)",lineHeight:1.5}}>
+                Firebase not configured — multiplayer requires a Firebase Realtime Database. Solo mode works without it.
+              </div>
+            )}
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"0.75rem",marginBottom:"1rem"}}>
+              <SARoomChip code={room.code} playerCount={players.length} />
+              <QRDisplay url={qrUrl} />
+              <p style={{fontSize:"0.68rem",color:"var(--muted)",textAlign:"center"}}>Students scan QR or visit the URL and enter room code <strong style={{color:"var(--sun)"}}>{room.code}</strong></p>
+            </div>
             {players.length > 0 && (
-              <div className="card mt-2" style={{textAlign:"left"}}>
+              <div className="card" style={{textAlign:"left"}}>
                 <span className="label">Players joined</span>
                 <div className="flex wrap gap-1 mt-1">
                   {players.map(([name, p]) => {
                     const team = room.mode==="teams" ? TEAMS.find(t=>t.id===p.team) : null;
                     return (
-                      <span key={name} className="chip" style={{background:team?team.color:"rgba(255,255,255,0.1)",color:team?"#fff":"var(--ink)"}}>
-                        {team&&<TeamIcon icon={team.icon} color="#fff" size={13}/>} {name}
-                      </span>
+                      <div key={name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 10px 3px 3px",background:team?`${team.color}22`:"var(--paper)",border:`1.5px solid ${team?team.color:"var(--line)"}`,borderRadius:999}} className="sa-anim-pop">
+                        <SABlob name={name} size={22} color={team?team.color:undefined} />
+                        <span style={{fontSize:12,fontWeight:600}}>{name}</span>
+                      </div>
                     );
                   })}
                 </div>
@@ -1947,9 +2008,8 @@ function HostView({ onBack }) {
         const qrUrl = typeof window!=="undefined"?`${window.location.origin}${window.location.pathname}?join=${room.code}`:"https://english-arena.vercel.app";
         return (
           <>
-            <div style={{position:"fixed",bottom:"1rem",left:"1rem",zIndex:50,background:"var(--paper)",border:"2px solid var(--ink)",padding:"0.4rem 0.85rem",borderRadius:10,boxShadow:"3px 3px 0 var(--gold)"}}>
-              <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.5rem",opacity:0.5,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:"0.1rem"}}>Room</div>
-              <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.05rem",fontWeight:900,color:"var(--ink)",letterSpacing:"0.1em"}}>{room.code}</div>
+            <div style={{position:"fixed",bottom:"1rem",left:"1rem",zIndex:50}}>
+              <SARoomChip code={room.code} playerCount={players.length} />
             </div>
             {(room.phase==="question"||room.phase==="reveal") && <InGameQR url={qrUrl} />}
           </>
@@ -1959,23 +2019,25 @@ function HostView({ onBack }) {
       {/* ── LOBBY: START (after questions loaded) ── */}
       {room.phase === "lobby" && room.questions.length > 0 && (
         <div className="mt-3">
-          <div className="card card-gold mb-2" style={{textAlign:"center"}}>
-            <p style={{fontSize:"0.82rem",opacity:0.7,marginBottom:"0.6rem"}}>
-              {room.questions.length} questions ready · Topic: <strong>{room.topic}</strong>
-            </p>
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <label style={{fontSize:"0.79rem",opacity:0.75,cursor:"pointer",display:"flex",alignItems:"center",gap:"0.4rem"}}>
-                <input type="checkbox" checked={room.warmup} onChange={e=>upd(p=>({...p,warmup:e.target.checked}))} style={{accentColor:"var(--gold)",cursor:"pointer"}} />
-                Warm-up round (3 quick questions)
-              </label>
+          <div className="card card-gold mb-2">
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"0.6rem"}}>
+              <div>
+                <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.58rem",letterSpacing:"0.14em",textTransform:"uppercase",color:"var(--muted)"}}>Ready</div>
+                <div style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontSize:"1.05rem"}}>{room.questions.length} questions · <span style={{color:"var(--sun)"}}>{room.topic}</span></div>
+              </div>
+              <SAIcon name="sparkle" size={22} color="var(--sun)" />
             </div>
-            <button className="btn btn-green btn-full" style={{fontSize:"1rem"}} onClick={startGame}>▶ Start Game</button>
+            <label style={{fontSize:"0.79rem",color:"var(--muted)",cursor:"pointer",display:"flex",alignItems:"center",gap:"0.4rem",marginBottom:"0.7rem"}}>
+              <input type="checkbox" checked={room.warmup} onChange={e=>upd(p=>({...p,warmup:e.target.checked}))} style={{accentColor:"var(--sun)",cursor:"pointer"}} />
+              Warm-up round (3 quick questions)
+            </label>
+            <button className="btn btn-green btn-full" style={{fontSize:"1rem",color:"var(--on-light)",borderColor:"var(--on-light)"}} onClick={startGame}>Start Game →</button>
           </div>
           {/* Mode */}
           <span className="label">Game Mode</span>
           <div className="mode-toggle">
-            <button className={`mode-btn ${room.mode==="solo"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"solo"}))}>👤 Solo — Individual</button>
-            <button className={`mode-btn ${room.mode==="teams"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"teams"}))}>👥 Teams</button>
+            <button className={`mode-btn ${room.mode==="solo"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"solo"}))}>Solo — Individual</button>
+            <button className={`mode-btn ${room.mode==="teams"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"teams"}))}>Teams</button>
           </div>
           {room.mode==="teams" && (
             <div className="card card-gold mb-2">
@@ -2013,8 +2075,8 @@ function HostView({ onBack }) {
           {/* Mode */}
           <span className="label">Game Mode</span>
           <div className="mode-toggle">
-            <button className={`mode-btn ${room.mode==="solo"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"solo"}))}>👤 Solo — Individual</button>
-            <button className={`mode-btn ${room.mode==="teams"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"teams"}))}>👥 Teams</button>
+            <button className={`mode-btn ${room.mode==="solo"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"solo"}))}>Solo — Individual</button>
+            <button className={`mode-btn ${room.mode==="teams"?"active":""}`} onClick={()=>upd(p=>({...p,mode:"teams"}))}>Teams</button>
           </div>
 
           {/* Teams config */}
@@ -2032,26 +2094,36 @@ function HostView({ onBack }) {
                   const members = players.filter(([,p])=>p.team===t.id).map(([n])=>n);
                   return (
                     <div key={t.id} className="team-card" style={{borderColor:t.color,color:t.color}}>
-                      <div style={{fontSize:"1.4rem"}}>{t.emoji}</div>
+                      <SAIcon name={t.icon||"star"} size={22} color={t.color} />
                       <div className="team-card-name">{t.name}</div>
                       <div className="team-card-count">{members.length} member{members.length!==1?"s":""}</div>
-                      {members.length>0&&<div className="team-members" style={{color:"rgba(255,255,255,0.55)"}}>{members.join(", ")}</div>}
+                      {members.length>0&&<div className="team-members" style={{color:"var(--muted)"}}>{members.join(", ")}</div>}
                     </div>
                   );
                 })}
               </div>
-              {players.length>0 && !room.teamsLocked && <button className="btn btn-teal btn-sm mt-2" onClick={autoAssign}>⚡ Auto-assign players</button>}
-              {room.teamsLocked && <p className="text-green mt-1" style={{fontSize:"0.8rem"}}>✓ Teams assigned!</p>}
+              {players.length>0 && !room.teamsLocked && <button className="btn btn-teal btn-sm mt-2" onClick={autoAssign}>Auto-assign players</button>}
+              {room.teamsLocked && <p className="text-green mt-1" style={{fontSize:"0.8rem"}}>Teams assigned</p>}
             </div>
           )}
 
           {/* Topic */}
           <span className="label">Topic</span>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:"0.4rem",marginBottom:"0.75rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid rgba(255,255,255,0.1)"}}>
-            {Object.entries(QUESTION_BANK).map(([key,{label}])=>(
-              <button key={key} onClick={()=>setSelectedTopic(key)} style={{padding:"0.55rem 0.6rem",fontFamily:"'DM Sans',sans-serif",fontSize:"0.78rem",fontWeight:selectedTopic===key?700:400,border:`2px solid ${selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.15)"}`,background:selectedTopic===key?"rgba(232,184,75,0.15)":"transparent",color:selectedTopic===key?"var(--gold)":"rgba(255,255,255,0.7)",cursor:"pointer",textAlign:"left",transition:"all 0.12s"}}>{label}</button>
-            ))}
-          </div>
+          {(() => {
+            const noSB = new Set(["verb_tenses","present_perfect"]);
+            return (
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(155px,1fr))",gap:"0.4rem",marginBottom:"0.75rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:10}}>
+                {Object.entries(QUESTION_BANK).map(([key,{label}])=>{
+                  const dis = gameType==="stress_battle" && noSB.has(key);
+                  const sel = selectedTopic===key;
+                  return (
+                    <button key={key} disabled={dis} onClick={()=>!dis&&setSelectedTopic(key)}
+                      style={{padding:"0.55rem 0.6rem",fontFamily:"'DM Sans',sans-serif",fontSize:"0.78rem",fontWeight:sel?700:400,border:`1.5px solid ${sel?"var(--sun)":"var(--line)"}`,background:sel?"rgba(255,206,71,0.12)":"transparent",color:sel?"var(--sun)":dis?"var(--muted)":"var(--muted)",cursor:dis?"not-allowed":"pointer",textAlign:"left",transition:"all 0.12s",borderRadius:8,opacity:dis?0.35:1}}>{label}</button>
+                  );
+                })}
+              </div>
+            );
+          })()}
 
           <div className="flex gap-2 mb-2 wrap">
             <div style={{flex:2,minWidth:180}}>
@@ -2069,10 +2141,10 @@ function HostView({ onBack }) {
           </div>
 
           {error && <p className="text-coral mb-1" style={{fontSize:"0.85rem"}}>{error}</p>}
-          <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic}>
+          <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic} style={{color:"var(--on-light)",borderColor:"var(--on-light)"}}>
             Load Questions →
           </button>
-          <p style={{fontSize:"0.75rem",opacity:0.4,marginTop:"0.4rem"}}>Students can join via the QR above while you set up</p>
+          <p style={{fontSize:"0.75rem",color:"var(--muted)",marginTop:"0.4rem"}}>Students can join via the QR above while you set up</p>
         </div>
       )}
 
@@ -2086,11 +2158,11 @@ function HostView({ onBack }) {
           </div>
           <div className="flex gap-1 justify-center mt-2 wrap">
             <button className={`btn btn-sm ${room.paused?"btn-gold":"btn-ghost"}`} onClick={()=>upd(p=>({...p,paused:!p.paused}))}>
-              {room.paused ? "▶ Resume" : "⏸ Pause"}
+              {room.paused ? "Resume" : "Pause"}
             </button>
-            {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>⏭ End Early</button>}
-            <button className="btn btn-sm btn-ghost" onClick={skipQuestion} title="Skip — no one scores this question">⏭ Skip</button>
-            {room.currentQ?._warmup && <button className="btn btn-sm btn-ghost" onClick={skipWarmup} title="Skip the rest of the warm-up">⏭ Skip Warm-Up</button>}
+            {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>End Early</button>}
+            <button className="btn btn-sm btn-ghost" onClick={skipQuestion} title="Skip — no one scores this question">Skip Q</button>
+            {room.currentQ?._warmup && <button className="btn btn-sm btn-ghost" onClick={skipWarmup} title="Skip the rest of the warm-up">Skip Warm-Up</button>}
             <button className="btn btn-sm btn-ghost" onClick={()=>{ const n=!bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
               {bigText ? "A−" : "A+"}
             </button>
@@ -2104,11 +2176,11 @@ function HostView({ onBack }) {
         <div className="mt-3">
           <HostReveal q={room.currentQ} answers={room.answers||{}} players={room.players||{}} />
           <div className="flex gap-2 mt-3 wrap">
-            <button className="btn btn-gold" style={{flex:1}} onClick={advance}>
-              {room.currentQ?._warmup ? "Next →" : room.qIndex+1>=room.questions.length?"🏆 Final Results":"📊 Show Scores →"}
+            <button className="btn btn-gold" style={{flex:1,color:"var(--on-light)",borderColor:"var(--on-light)"}} onClick={advance}>
+              {room.currentQ?._warmup ? "Next →" : room.qIndex+1>=room.questions.length?"Final Results →":"Show Scores →"}
             </button>
-            <button className="btn btn-ghost btn-sm" onClick={replayQuestion} title="Show this question again">🔁 Replay</button>
-            {room.currentQ?._warmup && <button className="btn btn-ghost btn-sm" onClick={skipWarmup} title="Skip the rest of the warm-up">⏭ Skip Warm-Up</button>}
+            <button className="btn btn-ghost btn-sm" onClick={replayQuestion} title="Show this question again">Replay</button>
+            {room.currentQ?._warmup && <button className="btn btn-ghost btn-sm" onClick={skipWarmup} title="Skip the rest of the warm-up">Skip Warm-Up</button>}
           </div>
           <PlayersFooter players={players} mode={room.mode} />
         </div>
@@ -2117,10 +2189,10 @@ function HostView({ onBack }) {
       {/* ── WARM-UP DONE ── */}
       {room.phase==="warmup_done" && (
         <div className="card mt-4" style={{textAlign:"center",padding:"2rem 1.5rem"}}>
-          <div style={{fontSize:"2.5rem",marginBottom:"0.6rem"}}>✅</div>
-          <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",marginBottom:"0.4rem"}}>Warm-Up Complete!</h2>
-          <p className="op50" style={{fontSize:"0.85rem",marginBottom:"1.5rem"}}>Students are warmed up and ready. Main game starts now.</p>
-          <button className="btn btn-green btn-full" style={{fontSize:"1rem"}} onClick={goNextQuestion}>🚀 Start Main Game →</button>
+          <SAIcon name="sparkle" size={40} color="var(--sun)" />
+          <h2 style={{fontFamily:"'Fraunces',serif",fontSize:"1.4rem",margin:"0.6rem 0 0.4rem",fontStyle:"italic"}}>Warm-Up Complete!</h2>
+          <p style={{fontSize:"0.85rem",color:"var(--muted)",marginBottom:"1.5rem"}}>Students are warmed up and ready.</p>
+          <button className="btn btn-green btn-full" style={{fontSize:"1rem",color:"var(--on-light)",borderColor:"var(--on-light)"}} onClick={goNextQuestion}>Start Main Game →</button>
         </div>
       )}
 
@@ -2128,7 +2200,7 @@ function HostView({ onBack }) {
       {(room.phase==="leaderboard"||room.phase==="end") && (
         <>
           <Leaderboard sorted={sorted} mode={room.mode} teams={activeTeams}
-            teamScores={teamScores} isEnd={room.phase==="end"} />
+            teamScores={teamScores} isEnd={room.phase==="end"} room={room} />
           {room.phase==="leaderboard" && (
             <button className="btn btn-gold mt-3" onClick={goNextQuestion}>
               Next Question →
@@ -2222,55 +2294,73 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(()=> q.type==="rearrange" ? [...(q.words||[])].sort(()=>Math.random()-0.5) : [], [q.question]);
+  const typeColors = {multiple_choice:"var(--tomato)",true_false:"var(--leaf)",error_spotter:"var(--tomato)",type_answer:"var(--cobalt)",rearrange:"var(--sun)",story_builder:"var(--plum)",fill_idiom:"var(--sun)",word_match:"var(--aqua)",odd_one_out:"var(--tomato)",stress_battle:"var(--cobalt)"};
+  const tc = typeColors[q.type]||"var(--tomato)";
   return (
     <div className="mt-3">
-      <div className="prog"><div className="prog-fill" style={{width:`${((qIndex+1)/total)*100}%`}}/></div>
+      {/* Progress segments */}
+      <div style={{display:"flex",gap:3,marginBottom:"0.75rem"}}>
+        {Array.from({length:total}).map((_,i)=>(
+          <div key={i} style={{flex:1,height:5,borderRadius:99,background:i<qIndex?"var(--leaf)":i===qIndex?"var(--sun)":"var(--line)",transition:"background 0.3s"}} />
+        ))}
+      </div>
+
       <div className="flex justify-between items-center mb-2">
-        <div className="flex gap-1 items-center">
-          {q._warmup && <span className="badge" style={{background:"rgba(232,184,75,0.2)",color:"var(--gold)",border:"1px solid rgba(232,184,75,0.4)"}}>WARM UP</span>}
-          <span className="badge">{q.type.replace(/_/g," ")}</span>
+        <div className="flex gap-2 items-center">
+          <div style={{display:"inline-flex",alignItems:"center",gap:5,padding:"3px 10px 3px 6px",background:tc,color:"var(--on-dark)",borderRadius:999,fontSize:11,fontWeight:700}}>
+            <SAIcon name={q.type} size={12} color="var(--on-dark)" />
+            <span>{q.type.replace(/_/g," ")}</span>
+          </div>
+          {q._warmup && <span className="badge" style={{background:"rgba(255,206,71,0.15)",color:"var(--sun)",border:"1px solid rgba(255,206,71,0.3)"}}>WARM UP</span>}
         </div>
-        <div className="flex gap-1 items-center">
-          {paused && <span style={{fontSize:"0.68rem",color:"var(--coral)",fontWeight:700,letterSpacing:"0.05em"}}>⏸ PAUSED</span>}
-          <span className="op50" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.68rem"}}>Q{qIndex+1}/{total}</span>
+        <div className="flex gap-2 items-center">
+          {paused && <span style={{fontSize:"0.68rem",color:"var(--tomato)",fontWeight:700,letterSpacing:"0.05em"}}>PAUSED</span>}
+          <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.68rem",color:"var(--muted)"}}>Q{qIndex+1}/{total}</span>
         </div>
       </div>
+
       {mode==="teams" && (
         <div className="flex gap-1 wrap mb-2">
-          {teams.map(t=><span key={t.id} style={{fontFamily:"'DM Sans',sans-serif",fontSize:"0.75rem",fontWeight:700,padding:"0.3rem 0.8rem",background:t.color,color:"#fff",borderRadius:999,display:"inline-flex",alignItems:"center",gap:"0.3rem"}}><TeamIcon icon={t.icon} color="#fff" size={14}/>{(teamScores[t.id]||0).toLocaleString()}</span>)}
+          {teams.map(t=><span key={t.id} style={{fontFamily:"'DM Sans',sans-serif",fontSize:"0.75rem",fontWeight:700,padding:"0.3rem 0.8rem",background:t.color,color:"var(--on-dark)",borderRadius:999,display:"inline-flex",alignItems:"center",gap:"0.3rem"}}><TeamIcon icon={t.icon} color="var(--on-dark)" size={14}/>{(teamScores[t.id]||0).toLocaleString()}</span>)}
         </div>
       )}
-      <div className="text-center mb-2">
-        <div className={`timer-num ${timeLeft<=5?"urgent":""}`}>{timeLeft}</div>
+
+      <div className="flex justify-center mb-3">
+        <SATimerRing value={timeLeft} max={getTimeLimit(q)} size={110} />
       </div>
-      <h2 style={{fontSize:"clamp(1.1rem,2.6vw,1.6rem)",lineHeight:1.4,textAlign:"center",marginBottom:"1.2rem",maxWidth:680,margin:"0 auto 1.2rem"}}>{q.question}</h2>
+
+      <h2 className="sa-anim-slide" style={{fontSize:"clamp(1.1rem,2.6vw,1.55rem)",lineHeight:1.4,textAlign:"center",marginBottom:"1.2rem",maxWidth:680,margin:"0 auto 1.2rem",fontFamily:"'Fraunces',serif"}}>{q.question}</h2>
+
       {q.type==="rearrange"&&<div className="tiles" style={{justifyContent:"center"}}>{shuffledRearrange.map((w,i)=><span key={i} className="tile">{w}</span>)}</div>}
       {q.type==="multiple_choice"&&q.options&&(
         <div className="opt-grid">{q.options.map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>
       )}
-      {q.type==="odd_one_out"&&q.options&&(()=>{
-        const wrong = q.answer;
-        const right = q.options.find(o=>o!==wrong);
-        return <div className="opt-grid">{[wrong,right].map((o,i)=><div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>;
-      })()}
-      {q.type==="true_false"&&<div className="flex gap-2 mt-2"><div className="opt-btn opt-2" style={{justifyContent:"center",flex:1,fontWeight:700}}>✓ True</div><div className="opt-btn opt-0" style={{justifyContent:"center",flex:1,fontWeight:700}}>✕ False</div></div>}
+      {q.type==="odd_one_out"&&q.options&&(
+        <div className="opt-grid">{q.options.map((o,i)=><div key={i} className={`opt-btn opt-${i%4}`} style={{fontFamily:"'Fraunces',serif",fontStyle:"italic",color:`var(--${["tomato","cobalt","leaf","plum"][i%4]})`}}>{o}</div>)}</div>
+      )}
+      {q.type==="true_false"&&(
+        <div className="flex gap-2 mt-2">
+          <div className="opt-btn opt-2" style={{justifyContent:"center",flex:1,fontWeight:700,fontFamily:"'Fraunces',serif",fontSize:"1.4rem"}}>✓ True</div>
+          <div className="opt-btn opt-0" style={{justifyContent:"center",flex:1,fontWeight:700,fontFamily:"'Fraunces',serif",fontSize:"1.4rem"}}>✕ False</div>
+        </div>
+      )}
       {q.type==="story_builder"&&q.sentences&&<div className="mt-2">{q.sentences.slice(0,3).map((s,i)=><div key={i} className="story-card" style={{cursor:"default"}}><span className="story-num">{i+1}</span>{s}</div>)}</div>}
       {q.type==="word_match"&&q.pairs&&(
         <div className="flex gap-2 mt-2">
-          <div style={{flex:1}}><span className="label">Words</span>{q.pairs.slice(0,2).map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.word}</div>)}</div>
+          <div style={{flex:1}}><span className="label">Words</span>{q.pairs.slice(0,2).map((p,i)=><div key={i} className="match-word" style={{cursor:"default",color:`var(--${["tomato","cobalt"][i]})`,borderColor:`var(--${["tomato","cobalt"][i]})`}}>{p.word}</div>)}</div>
           <div style={{flex:1}}><span className="label">Meanings</span>{q.pairs.slice(0,2).map((p,i)=><div key={i} className="match-word" style={{cursor:"default"}}>{p.meaning}</div>)}</div>
         </div>
       )}
       {q.type==="stress_battle"&&(
         <div style={{textAlign:"center",marginTop:"0.5rem"}}>
-          <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"clamp(2rem,6vw,3rem)",fontWeight:900,letterSpacing:"0.1em",color:"var(--gold)",marginBottom:"1.5rem"}}>{q.word}</div>
+          <div style={{fontFamily:"'Fraunces',serif",fontSize:"clamp(2.2rem,6vw,3.5rem)",fontWeight:900,letterSpacing:"0.08em",color:"var(--sun)",marginBottom:"1.5rem",fontStyle:"italic"}}>{q.word}</div>
           <div style={{display:"flex",gap:"3rem",justifyContent:"center"}}>
             {["A","B"].map(label=>{
               const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
               const stressAt = label===q.answer ? q.stressed : wrongStress;
               return (
                 <div key={label} style={{textAlign:"center"}}>
-                  <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.1rem",marginBottom:"0.6rem",opacity:0.6}}>{label}</div>
+                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.9rem",marginBottom:"0.6rem",color:"var(--muted)",letterSpacing:"0.1em"}}>{label}</div>
                   <StressDots syllables={q.syllables} stressAt={stressAt} size="md" />
                 </div>
               );
@@ -2278,11 +2368,27 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           </div>
         </div>
       )}
+      {q.type==="fill_idiom"&&q.options&&(
+        <div style={{textAlign:"center",marginTop:"0.5rem"}}>
+          <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.2rem",fontStyle:"italic",color:"var(--ink-soft)",marginBottom:"1rem"}}>
+            {q.question.replace("___","______")}
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"0.5rem",maxWidth:500,margin:"0 auto"}}>
+            {q.options.map((o,i)=><div key={i} className={`opt-btn opt-${i}`} style={{justifyContent:"center",fontFamily:"'Fraunces',serif",fontWeight:700,fontSize:"1.1rem"}}>{o}</div>)}
+          </div>
+        </div>
+      )}
+
       <div className="text-center mt-3">
-        <span className="label">Answers received</span>
-        <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"2rem",color:"var(--gold)"}}>{ansCount}<span className="op50" style={{fontSize:"1.1rem"}}>/{pCount}</span></div>
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.58rem",letterSpacing:"0.14em",textTransform:"uppercase",color:"var(--muted)",marginBottom:"0.2rem"}}>Answered</div>
+        <div style={{fontFamily:"'Fraunces',serif",fontSize:"2.2rem",fontWeight:900,color:"var(--leaf)",lineHeight:1}}>{ansCount}<span style={{color:"var(--muted)",fontSize:"1.2rem"}}>/{pCount}</span></div>
         <div className="flex wrap justify-center gap-1 mt-1">
-          {Object.keys(answers).map(n=><span key={n} className="chip" style={{background:"var(--teal)",color:"#fff"}}>✓ {n}</span>)}
+          {Object.keys(answers).map(n=>(
+            <div key={n} style={{display:"inline-flex",alignItems:"center",gap:5,padding:"2px 9px 2px 3px",background:"rgba(122,220,90,0.12)",border:"1.5px solid var(--leaf)",borderRadius:999}} className="sa-anim-pop">
+              <SABlob name={n} size={18} />
+              <span style={{fontSize:11,fontWeight:600}}>{n}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -2292,26 +2398,33 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
 function HostReveal({ q, answers, players }) {
   const correct = Object.entries(answers).filter(([,a])=>checkAnswer(a?.v??a,q));
   const wrong = Object.entries(answers).filter(([,a])=>!checkAnswer(a?.v??a,q));
+  const anyCorrect = correct.length > 0;
   return (
     <div>
-      <span className="label">{q.type==="odd_one_out"?"The sentence with the error":"Correct Answer"}</span>
-      <div className="card card-gold">
+      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:"0.5rem"}}>
+        <SAIcon name="reveal" size={18} color="var(--sun)" />
+        <span className="label" style={{margin:0}}>{q.type==="odd_one_out"?"The sentence with the error":"Correct Answer"}</span>
+      </div>
+      <div className="card" style={{borderColor:"var(--sun)",background:"rgba(255,206,71,0.07)",position:"relative",overflow:"hidden"}}>
+        {anyCorrect && <SAConfetti active count={30} />}
         {q.type==="word_match" ? (
-          <div>{q.pairs?.slice(0,2).map((p,i)=>(
-            <div key={i} style={{display:"flex",gap:"0.5rem",marginBottom:"0.25rem",fontSize:"0.9rem"}}>
-              <strong>{p.word}</strong><span className="op50">→</span><span>{p.meaning}</span>
+          <div>{q.pairs?.slice(0,4).map((p,i)=>(
+            <div key={i} style={{display:"flex",gap:"0.5rem",marginBottom:"0.3rem",fontSize:"0.9rem",alignItems:"center"}}>
+              <span style={{fontWeight:700,color:"var(--sun)"}}>{p.word}</span>
+              <SAIcon name="arrow_right" size={14} color="var(--muted)" />
+              <span style={{color:"var(--ink-soft)"}}>{p.meaning}</span>
             </div>))}</div>
         ) : q.type==="stress_battle" ? (
           <div style={{textAlign:"center"}}>
-            <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.5rem",fontWeight:900,letterSpacing:"0.1em",marginBottom:"1rem"}}>{q.word}</div>
+            <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.8rem",fontWeight:900,letterSpacing:"0.08em",marginBottom:"1rem",fontStyle:"italic",color:"var(--sun)"}}>{q.word}</div>
             <div style={{display:"flex",gap:"2.5rem",justifyContent:"center"}}>
               {["A","B"].map(label=>{
                 const isCorrect = label===q.answer;
                 const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
                 const stressAt = isCorrect?q.stressed:wrongStress;
                 return (
-                  <div key={label} style={{textAlign:"center",padding:"0.8rem 1.4rem",border:`2px solid ${isCorrect?"var(--gold)":"rgba(255,255,255,0.12)"}`,background:isCorrect?"rgba(232,184,75,0.1)":"transparent"}}>
-                    <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1rem",marginBottom:"0.5rem",color:isCorrect?"var(--gold)":"rgba(255,255,255,0.4)"}}>{label}{isCorrect?" ✓":""}</div>
+                  <div key={label} style={{textAlign:"center",padding:"0.8rem 1.4rem",borderRadius:12,border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,background:isCorrect?"rgba(255,206,71,0.1)":"transparent"}}>
+                    <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.9rem",marginBottom:"0.5rem",color:isCorrect?"var(--sun)":"var(--muted)",letterSpacing:"0.1em"}}>{label}{isCorrect?" ✓":""}</div>
                     <StressDots syllables={q.syllables} stressAt={stressAt} />
                   </div>
                 );
@@ -2320,38 +2433,44 @@ function HostReveal({ q, answers, players }) {
           </div>
         ) : q.type==="story_builder" ? (
           <div>{(q.correctOrder||[]).filter(i=>i<3).map((idx,pos)=>(
-            <div key={idx} style={{fontSize:"0.88rem",marginBottom:"0.3rem"}}>
-              <span style={{color:"var(--gold)",fontWeight:700,marginRight:"0.4rem"}}>{pos+1}.</span>{q.sentences[idx]}
+            <div key={idx} style={{fontSize:"0.88rem",marginBottom:"0.3rem",display:"flex",gap:"0.4rem"}}>
+              <span style={{color:"var(--sun)",fontWeight:700,flexShrink:0}}>{pos+1}.</span><span>{q.sentences[idx]}</span>
             </div>
           ))}</div>
         ) : q.type==="error_spotter" ? (
           <div>
-            <div style={{fontSize:"0.88rem",marginBottom:"0.4rem"}}>{q.sentence?.split(" ").map((w,i)=>{
+            <div style={{fontSize:"0.88rem",marginBottom:"0.4rem",lineHeight:1.6}}>{q.sentence?.split(" ").map((w,i)=>{
               const clean = w.replace(/[.,!?;:]/g,"");
               const isErr = clean.toLowerCase()===q.errorWord?.toLowerCase();
-              return <span key={i} style={{marginRight:"0.35rem",color:isErr?"var(--coral)":"#fff",textDecoration:isErr?"line-through":"none",fontWeight:isErr?700:400}}>{w}</span>;
+              return <span key={i} style={{marginRight:"0.35rem",color:isErr?"var(--tomato)":"var(--ink)",textDecoration:isErr?"line-through":"none",fontWeight:isErr?700:400}}>{w}</span>;
             })}</div>
-            <div style={{fontSize:"1rem",fontWeight:700}}>
-              <span style={{color:"var(--coral)"}}>{q.errorWord}</span>
-              <span className="op50" style={{margin:"0 0.4rem"}}>→</span>
-              <span style={{color:"var(--gold)"}}>{q.answer}</span>
+            <div style={{fontSize:"1rem",fontWeight:700,display:"flex",alignItems:"center",gap:"0.5rem"}}>
+              <span style={{color:"var(--tomato)"}}>{q.errorWord}</span>
+              <SAIcon name="arrow_right" size={16} color="var(--muted)" />
+              <span style={{color:"var(--sun)"}}>{q.answer}</span>
             </div>
           </div>
         ) : (
-          <div style={{fontSize:"1.1rem",fontWeight:700}}>{q.answer}</div>
+          <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.2rem",fontWeight:700,color:"var(--sun)"}}>{q.answer}</div>
         )}
-        {q.explanation&&<p className="op50 mt-1" style={{fontSize:"0.82rem"}}>{q.explanation}</p>}
+        {q.explanation&&<p style={{color:"var(--muted)",marginTop:"0.5rem",fontSize:"0.82rem"}}>{q.explanation}</p>}
       </div>
       <div className="flex gap-2 wrap mt-2">
-        <div className="card" style={{flex:1,minWidth:120,borderColor:"var(--green)"}}>
-          <span className="label text-green">Correct ✓ — {correct.length}</span>
-          {correct.map(([n])=><div key={n} style={{fontSize:"0.85rem",marginTop:"0.28rem"}}>🟢 {n}</div>)}
-          {!correct.length&&<div className="op30" style={{fontSize:"0.8rem"}}>Nobody</div>}
+        <div className="card" style={{flex:1,minWidth:120,borderColor:"var(--leaf)"}}>
+          <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:"0.3rem"}}>
+            <SAIcon name="sparkle" size={13} color="var(--leaf)" />
+            <span className="label" style={{margin:0,color:"var(--leaf)"}}>Correct — {correct.length}</span>
+          </div>
+          {correct.map(([n])=><div key={n} style={{fontSize:"0.85rem",marginTop:"0.2rem",display:"flex",alignItems:"center",gap:5}}><SABlob name={n} size={16} /> {n}</div>)}
+          {!correct.length&&<div style={{opacity:0.3,fontSize:"0.8rem"}}>Nobody yet</div>}
         </div>
-        <div className="card" style={{flex:1,minWidth:120,borderColor:"var(--coral)"}}>
-          <span className="label text-coral">Incorrect ✗ — {wrong.length}</span>
-          {wrong.map(([n])=><div key={n} style={{fontSize:"0.85rem",marginTop:"0.28rem"}}>🔴 {n}</div>)}
-          {!wrong.length&&<div className="op30" style={{fontSize:"0.8rem"}}>Nobody</div>}
+        <div className="card" style={{flex:1,minWidth:120,borderColor:"var(--tomato)"}}>
+          <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:"0.3rem"}}>
+            <SAIcon name="target" size={13} color="var(--tomato)" />
+            <span className="label" style={{margin:0,color:"var(--tomato)"}}>Incorrect — {wrong.length}</span>
+          </div>
+          {wrong.map(([n])=><div key={n} style={{fontSize:"0.85rem",marginTop:"0.2rem",display:"flex",alignItems:"center",gap:5}}><SABlob name={n} size={16} /> {n}</div>)}
+          {!wrong.length&&<div style={{opacity:0.3,fontSize:"0.8rem"}}>Nobody</div>}
         </div>
       </div>
     </div>
@@ -2396,46 +2515,56 @@ function Confetti() {
   return <canvas ref={ref} style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:100}} />;
 }
 
-function Leaderboard({ sorted, mode, teams, teamScores, isEnd }) {
-  const title = isEnd ? "🏆 FINAL RESULTS" : "📊 LEADERBOARD";
-  // Podium delay: for isEnd, reveal 3rd→2nd→1st (most dramatic last)
+function Leaderboard({ sorted, mode, teams, teamScores, isEnd, room }) {
+  const title = isEnd ? "Final Results" : "Leaderboard";
   const rowDelay = (i) => isEnd ? [`1.8s`,`1.0s`,`0.2s`][i] ?? `2.4s` : `${i*0.07}s`;
+  const podiumColors = ["var(--sun)","var(--muted)","var(--tomato)"];
   const podiumStyle = (i) => isEnd && i < 3 ? {
     animation:`podiumDrop 0.55s cubic-bezier(0.175,0.885,0.32,1.275) forwards`,
     animationDelay: rowDelay(i),
-    padding: i===0 ? "1rem 0.9rem" : undefined,
-    borderLeftWidth: i===0 ? 6 : 4,
-    background: i===0 ? "rgba(232,184,75,0.08)" : undefined,
+    borderLeftWidth: i===0 ? 5 : 3,
+    borderLeftColor: podiumColors[i]||"var(--line)",
+    background: i===0 ? "rgba(255,206,71,0.07)" : "var(--paper)",
     marginBottom: i===0 ? "0.5rem" : undefined,
   } : {};
+
+  const LBRow = ({name, p, i, team, firstC}) => (
+    <div key={name} className="lb-row" style={{borderLeftColor:team?team.color:(podiumColors[i]||"var(--line)"),animationDelay:rowDelay(i),...podiumStyle(i)}}>
+      <span className="lb-rank" style={{fontFamily:"'Fraunces',serif",fontSize:i<3?"1rem":"0.85rem",opacity:i<3?1:0.5}}>
+        {i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}
+      </span>
+      <SABlob name={name} size={28} color={team?.color} />
+      <span className="lb-name" style={{fontFamily:"'DM Sans',sans-serif"}}>
+        {name}
+        {firstC && <span title="First correct!" style={{marginLeft:5,fontSize:"0.8rem",color:"var(--sun)"}}>⚡</span>}
+      </span>
+      {(p.streak||0)>1&&<SAStreakMeter count={p.streak} />}
+      <span className="lb-score" style={{fontFamily:"'Fraunces',serif",fontWeight:900}}><SARollingNumber value={p.score||0} /></span>
+    </div>
+  );
 
   if (mode === "teams") {
     const tSorted = [...teams].sort((a,b)=>(teamScores[b.id]||0)-(teamScores[a.id]||0));
     return (
       <div className="mt-3">
         {isEnd && <Confetti />}
-        <h2 className="text-center text-gold mb-3" style={{fontSize:"1.35rem"}}>{title}</h2>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:"1rem"}}>
+          <SAIcon name={isEnd?"trophy":"medal"} size={26} color="var(--sun)" />
+          <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:"1.4rem",fontStyle:"italic",color:"var(--sun)"}}>{title}</h2>
+        </div>
         <span className="label">Team standings</span>
         {tSorted.map((t,i)=>(
-          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:rowDelay(i),...podiumStyle(i)}}>
-            <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
-            <span style={{fontSize:"1.3rem"}}>{t.emoji}</span>
+          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:rowDelay(i),...(i<3?podiumStyle(i):{})}}>
+            <span className="lb-rank">{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</span>
+            <TeamIcon icon={t.icon} color={t.color} size={20}/>
             <span className="lb-name" style={{color:t.color,fontWeight:700}}>{t.name}</span>
-            <span className="lb-score">{(teamScores[t.id]||0).toLocaleString()}</span>
+            <span className="lb-score" style={{fontFamily:"'Fraunces',serif",fontWeight:900}}><SARollingNumber value={teamScores[t.id]||0} /></span>
           </div>
         ))}
         <span className="label mt-3">Individual scores</span>
         {sorted.map(([name,p],i)=>{
           const team = teams.find(t=>t.id===p.team);
-          return (
-            <div key={name} className="lb-row" style={{borderLeftColor:team?.color||"rgba(255,255,255,0.08)",animationDelay:`${i*0.05}s`}}>
-              <span className="lb-rank" style={{fontSize:"0.85rem"}}>{MEDAL[i]||`#${i+1}`}</span>
-              {team&&<TeamIcon icon={team.icon} color={team.color} size={18}/>}
-              <span className="lb-name">{name}</span>
-              {(p.streak||0)>1&&<FlameStreak count={p.streak}/>}
-              <span className="lb-score">{(p.score||0).toLocaleString()}</span>
-            </div>
-          );
+          return <LBRow key={name} name={name} p={p} i={i} team={team} firstC={room?.firstCorrect===name} />;
         })}
       </div>
     );
@@ -2443,18 +2572,11 @@ function Leaderboard({ sorted, mode, teams, teamScores, isEnd }) {
   return (
     <div className="mt-3">
       {isEnd && <Confetti />}
-      <h2 className="text-center text-gold mb-3" style={{fontSize:"1.35rem"}}>{title}</h2>
-      {sorted.map(([name,p],i)=>(
-        <div key={name} className="lb-row" style={{
-          borderLeftColor:i===0?"var(--gold)":i===1?"#c0c0c0":i===2?"#cd7f32":"rgba(255,255,255,0.08)",
-          animationDelay: rowDelay(i), ...podiumStyle(i),
-        }}>
-          <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
-          <span className="lb-name">{name}</span>
-          {(p.streak||0)>1&&<span style={{fontSize:"0.85rem"}}>🔥×{p.streak}</span>}
-          <span className="lb-score">{(p.score||0).toLocaleString()}</span>
-        </div>
-      ))}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:"1rem"}}>
+        <SAIcon name={isEnd?"trophy":"medal"} size={26} color="var(--sun)" />
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:"1.4rem",fontStyle:"italic",color:"var(--sun)"}}>{title}</h2>
+      </div>
+      {sorted.map(([name,p],i)=><LBRow key={name} name={name} p={p} i={i} firstC={room?.firstCorrect===name} />)}
     </div>
   );
 }
@@ -2542,30 +2664,35 @@ function StudentView({ onBack, initialCode = "" }) {
   if (step==="join") return (
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"1.5rem",maxWidth:400,margin:"0 auto"}}>
       <button className="btn btn-sm btn-ghost mb-3" onClick={onBack} style={{alignSelf:"flex-start"}}>← Back</button>
-      <h1 style={{fontSize:"1.5rem",marginBottom:"0.35rem"}}>Join Game</h1>
-      <p className="op50 mb-3" style={{fontSize:"0.88rem"}}>Ask your teacher for the 4-letter room code</p>
-      <span className="label w100">Room Code</span>
-      <input className="input input-xl mb-2" placeholder="XXXX" maxLength={4} value={code} onChange={e=>setCode(e.target.value.toUpperCase())} />
-      <span className="label w100">Your Name</span>
-      <input className="input" placeholder="e.g. Maria, Carlos, Ana…" value={name}
-        onChange={e=>setName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&join()} />
-      {error&&<p className="text-coral mt-1" style={{fontSize:"0.85rem"}}>{error}</p>}
-      <button className="btn btn-gold btn-full mt-3" onClick={join} disabled={joining}>
-        {joining ? "Joining…" : "Join →"}
-      </button>
+      <div className="sa-anim-pop" style={{background:"var(--paper)",border:"2px solid var(--ink)",borderRadius:22,padding:24,boxShadow:`5px 5px 0 var(--sun)`,width:"100%"}}>
+        <SAIcon name="hand_wave" size={36} color="var(--tomato)" />
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:800,fontSize:"2rem",lineHeight:1.05,margin:"10px 0 6px",letterSpacing:"-0.02em",fontStyle:"italic"}}>Jump in.</h2>
+        <p style={{color:"var(--muted)",fontSize:"0.85rem",lineHeight:1.5,marginBottom:"1.2rem"}}>Enter the 4-letter code from your teacher.</p>
+        <span className="label">Room Code</span>
+        <input className="input input-xl mb-2" placeholder="XXXX" maxLength={4} value={code} onChange={e=>setCode(e.target.value.toUpperCase())} style={{fontFamily:"'Fraunces',serif",letterSpacing:"0.2em",border:"2.5px solid var(--line)"}} />
+        <span className="label">Your Name</span>
+        <input className="input" placeholder="e.g. Maria, Carlos, Ana…" value={name}
+          onChange={e=>setName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&join()} style={{border:"2px solid var(--line)"}} />
+        {error&&<p style={{color:"var(--tomato)",marginTop:"0.5rem",fontSize:"0.85rem"}}>{error}</p>}
+        <button className="btn btn-gold btn-full mt-3" onClick={join} disabled={joining} style={{color:"var(--on-light)",borderColor:"var(--on-light)"}}>
+          {joining ? "Joining…" : "Let's go →"}
+        </button>
+      </div>
     </div>
   );
 
   if (step==="waiting") {
     const myTeam = room?.players?.[name]?.team ? TEAMS.find(t=>t.id===room.players[name].team) : null;
     return (
-      <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"2rem"}}>
-        <div style={{fontSize:"3rem",marginBottom:"1rem"}}>⏳</div>
-        <h2>Waiting for teacher…</h2>
-        <p className="op50 mt-1">You're in the lobby — game starts soon.</p>
-        <div className="mt-2" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.2rem",color:"var(--gold)"}}>{name}</div>
-        {myTeam&&<div className="mt-1" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.95rem",color:myTeam.color}}>{myTeam.emoji} {myTeam.name}</div>}
-        <div className="dots mt-3"><span/><span/><span/></div>
+      <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"2rem",gap:"1rem"}}>
+        <SABlob name={name} size={72} color={myTeam?.color} />
+        <div>
+          <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.5rem",fontWeight:900,fontStyle:"italic"}}>{name}</div>
+          {myTeam&&<div style={{fontSize:"0.9rem",color:myTeam.color,marginTop:"0.25rem"}}>{myTeam.name}</div>}
+        </div>
+        <div style={{color:"var(--muted)",fontSize:"0.85rem"}}>Waiting for the teacher to start…</div>
+        <div className="dots"><span/><span/><span/></div>
+        {room?.code && <SARoomChip code={room.code} playerCount={Object.keys(room.players||{}).length} />}
       </div>
     );
   }
@@ -2583,36 +2710,46 @@ function StudentView({ onBack, initialCode = "" }) {
       {/* Result flash */}
       {showResult && phase==="reveal" && myAnswer!==null && (
         <div className="result-overlay">
-          <div className="result-box">
-            <span className="result-emoji">{wasCorrect?"✅":"❌"}</span>
-            <div style={{fontSize:"1.35rem",fontWeight:700,color:wasCorrect?"var(--green)":"var(--coral)"}}>
+          <div className="result-box sa-anim-pop">
+            <div style={{display:"flex",justifyContent:"center",marginBottom:"0.6rem"}}>
+              {wasCorrect
+                ? <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(122,220,90,0.18)",border:"2px solid var(--leaf)",display:"flex",alignItems:"center",justifyContent:"center"}}><SAIcon name="bolt" size={28} color="var(--leaf)" /></div>
+                : <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(255,92,66,0.18)",border:"2px solid var(--tomato)",display:"flex",alignItems:"center",justifyContent:"center"}}><SAIcon name="skip" size={28} color="var(--tomato)" /></div>
+              }
+            </div>
+            <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.4rem",fontWeight:900,fontStyle:"italic",color:wasCorrect?"var(--leaf)":"var(--tomato)"}}>
               {wasCorrect?((myData.streak||0)>=2?"Correct! +1250":"Correct! +1000"):"Not quite…"}
             </div>
             {wasCorrect&&(myData.streak||0)>=2&&(
-              <div style={{marginTop:"0.8rem",fontFamily:"'Fraunces',Georgia,serif",fontSize:"1.3rem",fontWeight:900,color:"var(--gold)",animation:"streakPop 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards",display:"flex",alignItems:"center",justifyContent:"center",gap:"0.4rem"}}>
-                <svg width="22" height="26" viewBox="0 0 9 11" style={{display:"block"}}>
-                  <path d="M4.5 10.5 Q0.5 8.5 0.5 5.5 Q0.5 3.5 2.5 1.5 Q2 4 4 4 Q4 1 5.5 0 Q5 3 7.5 3.5 Q8.5 4.5 8.5 6.5 Q8.5 8.5 4.5 10.5 Z" fill="var(--gold)" />
-                </svg>
-                On fire! ×{myData.streak||0}
+              <div style={{marginTop:"0.8rem",display:"flex",alignItems:"center",justifyContent:"center",gap:"0.4rem"}}>
+                <SAStreakMeter count={myData.streak||0} size="sm" />
               </div>
             )}
-            {!wasCorrect&&q&&<div className="op50 mt-2" style={{fontSize:"0.88rem"}}>{q.type==="stress_battle"?`Correct: ${q.answer}`:q.type==="error_spotter"?<span>Error: <strong style={{color:"var(--coral)"}}>{q.errorWord}</strong> → <strong style={{color:"#fff"}}>{q.answer}</strong></span>:<span>Answer: <strong style={{color:"#fff"}}>{q.type==="story_builder"?q.correctOrder?.filter(i=>i<3).join(","):q.answer}</strong></span>}</div>}
-            {q?.explanation&&<div className="op30 mt-1" style={{fontSize:"0.78rem",fontStyle:"italic"}}>{q.explanation}</div>}
+            {!wasCorrect&&q&&<div style={{marginTop:"0.5rem",fontSize:"0.85rem",opacity:0.65,lineHeight:1.5}}>
+              {q.type==="stress_battle"?`Correct: ${q.answer}`
+               :q.type==="error_spotter"?<span>Error: <strong style={{color:"var(--coral)"}}>{q.errorWord}</strong> → <strong style={{color:"var(--ink)"}}>{q.answer}</strong></span>
+               :<span>Answer: <strong style={{color:"var(--sun)"}}>{q.type==="story_builder"?q.correctOrder?.filter(i=>i<3).join(","):q.answer}</strong></span>}
+            </div>}
+            {q?.explanation&&<div style={{marginTop:"0.4rem",fontSize:"0.78rem",opacity:0.4,fontStyle:"italic",lineHeight:1.4}}>{q.explanation}</div>}
           </div>
         </div>
       )}
 
       {/* Header */}
       <div className="flex justify-between items-center mb-3">
-        <div>
-          <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.78rem"}}>{name}</div>
-          {myTeam&&<div style={{fontSize:"0.68rem",color:myTeam.color}}>{myTeam.emoji} {myTeam.name}</div>}
+        <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
+          <SABlob name={name} size={32} color={myTeam?.color} />
+          <div>
+            <div style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontSize:"0.85rem",lineHeight:1.1}}>{name}</div>
+            {myTeam&&<div style={{fontSize:"0.65rem",color:myTeam.color,fontWeight:600,letterSpacing:"0.02em"}}>{myTeam.name}</div>}
+          </div>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
-          <button onClick={()=>{const n=!bigText;setBigText(n);writeFont(n);}} style={{background:"none",border:"1px solid rgba(255,255,255,0.18)",borderRadius:4,color:"rgba(255,255,255,0.55)",fontSize:"0.7rem",padding:"0.18rem 0.45rem",cursor:"pointer",lineHeight:1}} title="Toggle text size">{bigText?"A−":"A+"}</button>
+          <button onClick={()=>{const n=!bigText;setBigText(n);writeFont(n);}} style={{background:"none",border:"1px solid var(--line)",borderRadius:4,color:"var(--muted)",fontSize:"0.7rem",padding:"0.18rem 0.45rem",cursor:"pointer",lineHeight:1}} title="Toggle text size">{bigText?"A−":"A+"}</button>
           <div style={{textAlign:"right"}}>
-            <div className="text-gold" style={{fontFamily:"'Unbounded',sans-serif",fontWeight:700,fontSize:"1.05rem"}}>{myScore.toLocaleString()} pts</div>
-            {myTeam&&<div style={{fontSize:"0.68rem",color:myTeam.color}}>Team: {(teamScores[myTeam.id]||0).toLocaleString()}</div>}
+            <div style={{color:"var(--sun)",fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:"1.1rem",lineHeight:1}}><SARollingNumber value={myScore} /></div>
+            <div style={{fontSize:"0.65rem",color:"var(--muted)",letterSpacing:"0.04em",textTransform:"uppercase"}}>pts</div>
+            {myTeam&&<div style={{fontSize:"0.65rem",color:myTeam.color,marginTop:"0.1rem"}}>Team: {(teamScores[myTeam.id]||0).toLocaleString()}</div>}
           </div>
         </div>
       </div>
@@ -2620,10 +2757,12 @@ function StudentView({ onBack, initialCode = "" }) {
       {phase==="leaderboard"||phase==="end" ? (
         <StudentLeaderboard room={room} name={name} showReview={showReview} setShowReview={setShowReview} />
       ) : phase==="warmup_done" ? (
-        <div style={{textAlign:"center",padding:"3rem 1rem"}}>
-          <div style={{fontSize:"3rem",marginBottom:"0.8rem"}}>⏳</div>
-          <h2 style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.95rem",marginBottom:"0.4rem"}}>Get ready!</h2>
-          <p className="op50">Main game starting soon…</p>
+        <div style={{textAlign:"center",padding:"3rem 1rem"}} className="sa-anim-pop">
+          <div style={{width:72,height:72,borderRadius:"50%",background:"rgba(91,139,255,0.18)",border:"2px solid var(--cobalt)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 1rem"}}>
+            <SAIcon name="hourglass" size={32} color="var(--cobalt)" />
+          </div>
+          <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.4rem",marginBottom:"0.4rem"}}>Get ready!</h2>
+          <p style={{color:"var(--muted)",fontSize:"0.9rem"}}>Main game starting soon…</p>
           <div className="dots mt-3"><span/><span/><span/></div>
         </div>
       ) : phase==="question"&&q ? (
@@ -2649,28 +2788,33 @@ function StudentView({ onBack, initialCode = "" }) {
         </div>
       ) : phase==="reveal" ? (
         <div className="text-center mt-4">
-          <div style={{fontSize:"2.5rem",marginBottom:"0.8rem"}}>{myAnswer!==null?(wasCorrect?"✅":"❌"):"⏱️"}</div>
-          <p className="op50">{myAnswer!==null?"Waiting for next question…":"Time's up!"}</p>
-          {q&&<div className="card mt-3">
+          <div style={{width:56,height:56,borderRadius:"50%",background:myAnswer!==null?(wasCorrect?"rgba(122,220,90,0.15)":"rgba(255,92,66,0.15)"):"rgba(253,243,221,0.08)",border:`2px solid ${myAnswer!==null?(wasCorrect?"var(--leaf)":"var(--tomato)"):"var(--line)"}`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 0.7rem"}}>
+            {myAnswer!==null
+              ? <SAIcon name={wasCorrect?"bolt":"skip"} size={24} color={wasCorrect?"var(--leaf)":"var(--tomato)"} />
+              : <SAIcon name="hourglass" size={24} color="var(--muted)" />
+            }
+          </div>
+          <p style={{color:"var(--muted)",fontSize:"0.88rem"}}>{myAnswer!==null?"Waiting for next question…":"Time's up!"}</p>
+          {q&&<div className="card mt-3" style={{textAlign:"left"}}>
             <span className="label">Correct Answer</span>
             {q.type==="word_match" ? (
               q.pairs?.slice(0,2).map((p,i)=>(
                 <div key={i} style={{display:"flex",gap:"0.5rem",marginTop:"0.28rem",fontSize:"0.88rem"}}>
-                  <strong style={{color:"var(--gold)"}}>{p.word}</strong>
-                  <span className="op50">→</span><span>{p.meaning}</span>
+                  <strong style={{color:"var(--sun)"}}>{p.word}</strong>
+                  <span style={{color:"var(--muted)"}}>→</span><span>{p.meaning}</span>
                 </div>
               ))
             ) : q.type==="stress_battle" ? (
               <div style={{textAlign:"center",marginTop:"0.5rem"}}>
-                <div style={{fontFamily:"'Unbounded',sans-serif",fontWeight:900,fontSize:"1.3rem",letterSpacing:"0.08em",marginBottom:"0.8rem"}}>{q.word}</div>
+                <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.4rem",color:"var(--sun)",marginBottom:"0.8rem"}}>{q.word}</div>
                 <div style={{display:"flex",gap:"1.5rem",justifyContent:"center"}}>
                   {["A","B"].map(label=>{
                     const isCorrect = label===q.answer;
                     const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
                     const stressAt = isCorrect?q.stressed:wrongStress;
                     return (
-                      <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--gold)":"rgba(255,255,255,0.1)"}`,background:isCorrect?"rgba(232,184,75,0.1)":"transparent"}}>
-                        <div style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.85rem",color:isCorrect?"var(--gold)":"rgba(255,255,255,0.35)",marginBottom:"0.4rem"}}>{label}{isCorrect?" ✓":""}</div>
+                      <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,borderRadius:8,background:isCorrect?"rgba(255,206,71,0.12)":"transparent"}}>
+                        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.85rem",color:isCorrect?"var(--sun)":"var(--muted)",marginBottom:"0.4rem"}}>{label}{isCorrect?" ✓":""}</div>
                         <StressDots syllables={q.syllables} stressAt={stressAt} />
                       </div>
                     );
@@ -2680,11 +2824,11 @@ function StudentView({ onBack, initialCode = "" }) {
             ) : q.type==="story_builder" ? (
               <div>{(q.correctOrder||[]).filter(i=>i<3).map((idx,pos)=>(
                 <div key={idx} style={{fontSize:"0.82rem",marginTop:"0.25rem"}}>
-                  <span style={{color:"var(--gold)",fontWeight:700,marginRight:"0.35rem"}}>{pos+1}.</span>{q.sentences[idx]}
+                  <span style={{color:"var(--sun)",fontWeight:700,marginRight:"0.35rem"}}>{pos+1}.</span>{q.sentences[idx]}
                 </div>
               ))}</div>
             ) : (
-              <div style={{fontWeight:700,fontSize:"1rem"}}>{q.answer}</div>
+              <div style={{fontWeight:700,fontSize:"1rem",color:"var(--sun)"}}>{q.answer}</div>
             )}
           </div>}
         </div>
@@ -2738,13 +2882,19 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
     }
   };
 
+  const OPT_COLORS = ["var(--tomato)","var(--cobalt)","var(--leaf)","var(--plum)"];
+  const OPT_LETTERS = ["A","B","C","D"];
+
   return (
     <div>
-      <div className="flex justify-between items-center mb-2">
-        <span className="badge">{q.type.replace(/_/g," ")}</span>
-        <span className="op50" style={{fontFamily:"'Unbounded',sans-serif",fontSize:"0.72rem"}}>Q{(room?.qIndex||0)+1}/{room?.questions?.length||0}</span>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.7rem"}}>
+        <div style={{display:"flex",alignItems:"center",gap:6,padding:"4px 10px",background:"var(--paper)",border:"1.5px solid var(--tomato)",borderRadius:8}}>
+          <SAIcon name={q.type} size={13} color="var(--tomato)" />
+          <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.68rem",letterSpacing:"0.08em",color:"var(--tomato)",textTransform:"uppercase"}}>{q.type.replace(/_/g," ")}</span>
+        </div>
+        <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.72rem",color:"var(--muted)"}}>Q{(room?.qIndex||0)+1}/{room?.questions?.length||0}</span>
       </div>
-      <h2 style={{fontSize:"1.18rem",lineHeight:1.5,marginBottom:"0.9rem"}}>{q.question}</h2>
+      <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontSize:"1.15rem",lineHeight:1.45,marginBottom:"1rem",color:"var(--ink)"}}>{q.question}</h2>
 
       {/* Multiple choice */}
       {q.type==="multiple_choice"&&q.options&&(
@@ -2752,9 +2902,10 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           {q.options.map((opt,i)=>(
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s",animation:answered&&myAnswer===opt?"lockIn 0.38s ease":"none"}}
+              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?`3px solid ${OPT_COLORS[i]}`:"none",transition:"opacity 0.18s",animation:answered&&myAnswer===opt?"lockIn 0.38s ease":"none",display:"flex",alignItems:"center",gap:"0.5rem"}}
               onClick={()=>onAnswer(opt)}>
-              <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
+              <span style={{width:22,height:22,borderRadius:6,background:OPT_COLORS[i],color:"var(--on-light)",fontSize:"0.7rem",fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{OPT_LETTERS[i]}</span>
+              <span style={{textAlign:"left",fontSize:"0.88rem"}}>{opt}</span>
             </button>
           ))}
         </div>
@@ -2766,9 +2917,9 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           {twoOptions.map((opt,i)=>(
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?"4px solid rgba(0,0,0,0.45)":"none",transition:"opacity 0.18s",animation:answered&&myAnswer===opt?"lockIn 0.38s ease":"none"}}
+              style={{opacity:answered&&myAnswer!==opt?0.28:1,outline:answered&&myAnswer===opt?`3px solid ${OPT_COLORS[i]}`:"none",transition:"opacity 0.18s",animation:answered&&myAnswer===opt?"lockIn 0.38s ease":"none",fontSize:"0.9rem",fontWeight:600}}
               onClick={()=>onAnswer(opt)}>
-              <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
+              {opt}
             </button>
           ))}
         </div>
@@ -2776,19 +2927,23 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
 
       {/* True / False */}
       {q.type==="true_false"&&(
-        <div className="flex gap-2 mt-2">
-          {["True","False"].map(v=>(
+        <div style={{display:"flex",gap:"0.8rem",marginTop:"0.5rem"}}>
+          {[{v:"True",c:"var(--leaf)",icon:"bolt"},{v:"False",c:"var(--tomato)",icon:"skip"}].map(({v,c,icon})=>(
             <button key={v} disabled={answered}
-              className={`btn ${v==="True"?"btn-green":"btn-coral"} btn-full`}
               style={{
-                fontSize:"1.15rem", padding:"1.2rem", flex:1,
-                opacity: answered && myAnswer!==v ? 0.28 : 1,
-                outline: answered && myAnswer===v ? "4px solid rgba(255,255,255,0.7)" : "none",
-                animation: answered && myAnswer===v ? "lockIn 0.38s ease" : "none",
-                transition:"opacity 0.18s"
+                flex:1, padding:"1.4rem 1rem",
+                border:`2px solid ${myAnswer===v?c:"var(--line)"}`,
+                background:myAnswer===v?`${c}22`:"var(--paper)",
+                color:myAnswer===v?c:"var(--ink-soft)",
+                borderRadius:12, cursor:answered?"default":"pointer",
+                opacity:answered&&myAnswer!==v?0.28:1,
+                transition:"all 0.15s",
+                display:"flex",flexDirection:"column",alignItems:"center",gap:"0.5rem",
+                fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:"1.2rem",fontStyle:"italic"
               }}
               onClick={()=>onAnswer(v)}>
-              {v==="True"?"✅ True":"❌ False"}
+              <SAIcon name={icon} size={26} color={myAnswer===v?c:"var(--muted)"} />
+              {v}
             </button>
           ))}
         </div>
@@ -2797,39 +2952,41 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       {/* Error spotter */}
       {q.type==="error_spotter"&&q.sentence&&(
         <div>
-          <p className="op50 mb-2" style={{fontSize:"0.82rem"}}>Tap the incorrect word in the sentence:</p>
+          <p style={{fontSize:"0.8rem",color:"var(--muted)",marginBottom:"0.6rem",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.04em"}}>Tap the word with the error:</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:"0.4rem",lineHeight:1.8}}>
             {q.sentence.split(" ").map((word,i)=>{
               const clean = word.replace(/[.,!?;:]/g,"");
+              const sel = myAnswer===clean;
               return (
                 <button key={i} disabled={answered}
-                  style={{padding:"0.42rem 0.8rem",fontFamily:"'DM Sans',sans-serif",fontSize:"0.95rem",border:`2px solid ${myAnswer===clean?"var(--coral)":"rgba(255,255,255,0.18)"}`,background:myAnswer===clean?"rgba(232,58,58,0.18)":"transparent",color:"#fff",cursor:answered?"default":"pointer",transition:"all 0.12s"}}
+                  style={{padding:"0.42rem 0.8rem",fontFamily:"'DM Sans',sans-serif",fontSize:"0.95rem",border:`2px solid ${sel?"var(--tomato)":"var(--line)"}`,background:sel?"rgba(255,92,66,0.15)":"transparent",color:sel?"var(--tomato)":"var(--ink)",borderRadius:8,cursor:answered?"default":"pointer",transition:"all 0.12s",fontWeight:sel?700:400}}
                   onClick={()=>onAnswer(clean)}>
                   {word}
                 </button>
               );
             })}
           </div>
-          {myAnswer&&<p className="op50 mt-2" style={{fontSize:"0.82rem"}}>You tapped: <strong style={{color:"var(--coral)"}}>{myAnswer}</strong></p>}
+          {myAnswer&&<p style={{marginTop:"0.5rem",fontSize:"0.82rem",color:"var(--tomato)"}}>Selected: <strong>{myAnswer}</strong></p>}
         </div>
       )}
 
       {/* Fill idiom — multiple choice */}
       {q.type==="fill_idiom"&&(
         <div>
-          {q.hint&&<p className="op50 mb-1" style={{fontSize:"0.82rem",fontStyle:"italic"}}>💡 {q.hint}</p>}
+          {q.hint&&<p style={{fontSize:"0.82rem",color:"var(--muted)",fontStyle:"italic",marginBottom:"0.5rem",borderLeft:"2px solid var(--cobalt)",paddingLeft:"0.5rem"}}>{q.hint}</p>}
           <div className="opt-grid">
             {(q.options||[]).map((opt,i)=>(
               <button key={i} disabled={answered}
                 className={`opt-btn opt-${i}`}
                 style={{
                   opacity: answered && myAnswer!==opt ? 0.28 : 1,
-                  outline: answered && myAnswer===opt ? "4px solid rgba(0,0,0,0.45)" : "none",
+                  outline: answered && myAnswer===opt ? `3px solid ${OPT_COLORS[i]}` : "none",
                   animation: answered && myAnswer===opt ? "lockIn 0.38s ease" : "none",
-                  transition:"opacity 0.18s"
+                  transition:"opacity 0.18s",display:"flex",alignItems:"center",gap:"0.5rem"
                 }}
                 onClick={()=>onAnswer(opt)}>
-                <span className="opt-icon">{OPT_ICONS[i]}</span>{opt}
+                <span style={{width:22,height:22,borderRadius:6,background:OPT_COLORS[i],color:"var(--on-light)",fontSize:"0.7rem",fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{OPT_LETTERS[i]}</span>
+                <span style={{textAlign:"left",fontSize:"0.88rem"}}>{opt}</span>
               </button>
             ))}
           </div>
@@ -2840,9 +2997,10 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       {q.type==="type_answer"&&(
         <div>
           <input className="input" placeholder="Type your answer…" value={typeVal} disabled={answered}
+            style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1.1rem",letterSpacing:"0.05em"}}
             onChange={e=>setTypeVal(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!answered&&submitTyped()} />
           <button className="btn btn-teal btn-full mt-2" disabled={answered||!typeVal.trim()} onClick={submitTyped}>
-            {answered?"✓ Submitted":"Submit →"}
+            {answered?"Submitted":"Submit →"}
           </button>
         </div>
       )}
@@ -2850,9 +3008,9 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       {/* Rearrange */}
       {q.type==="rearrange"&&(
         <div>
-          <span className="label">Your sentence:</span>
-          <div className="tiles" style={{borderColor:"var(--teal)",minHeight:48}}>
-            {rearranged.length===0&&<span className="op30" style={{fontSize:"0.8rem"}}>Tap words below to build the sentence…</span>}
+          <div style={{fontSize:"0.76rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.05em",marginBottom:"0.3rem"}}>YOUR SENTENCE</div>
+          <div className="tiles" style={{borderColor:"var(--cobalt)",minHeight:52,background:"rgba(91,139,255,0.06)"}}>
+            {rearranged.length===0&&<span style={{fontSize:"0.8rem",color:"var(--muted)"}}>Tap words below…</span>}
             {rearranged.map((w,i)=>(
               <span key={i} className="tile placed" onClick={()=>{
                 if (answered) return;
@@ -2861,7 +3019,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
               }}>{w}</span>
             ))}
           </div>
-          <span className="label mt-2">Word bank (tap to use):</span>
+          <div style={{fontSize:"0.76rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.05em",marginTop:"0.7rem",marginBottom:"0.3rem"}}>WORD BANK</div>
           <div className="tiles">
             {(shuffledWords.length?shuffledWords:q.words||[]).map((w,i)=>(
               <span key={i} className={`tile ${usedIdx.includes(i)?"used":""}`}
@@ -2873,7 +3031,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           <div className="flex gap-2 mt-2">
             <button className="btn btn-sm btn-ghost" disabled={answered} onClick={()=>{setRearranged([]);setUsedIdx([]);}}>Clear</button>
             <button className="btn btn-teal" disabled={answered||!rearranged.length} onClick={submitRearranged}>
-              {answered?"✓ Submitted":"Submit →"}
+              {answered?"Submitted":"Submit →"}
             </button>
           </div>
         </div>
@@ -2884,17 +3042,17 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
         <div>
           {storyOrder.length>0&&(
             <>
-              <span className="label">Your order (tap to remove):</span>
-              <div className="mb-2">
+              <div style={{fontSize:"0.76rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.05em",marginBottom:"0.3rem"}}>YOUR ORDER (tap to remove)</div>
+              <div style={{marginBottom:"0.6rem"}}>
                 {storyOrder.map((idx,pos)=>(
                   <div key={pos} className="story-card placed" onClick={()=>{ if (!answered) setStoryOrder(p=>p.filter((_,pi)=>pi!==pos)); }}>
-                    <span className="story-num">{pos+1}</span>{q.sentences[idx]}
+                    <span className="story-num" style={{background:"var(--cobalt)",color:"var(--on-light)"}}>{pos+1}</span>{q.sentences[idx]}
                   </div>
                 ))}
               </div>
             </>
           )}
-          <span className="label">Tap sentences in the correct order:</span>
+          <div style={{fontSize:"0.76rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.05em",marginBottom:"0.3rem"}}>TAP IN ORDER</div>
           {q.sentences.slice(0,3).map((s,i)=>(
             <div key={i} className={`story-card ${storyOrder.includes(i)?"placed":""}`}
               onClick={()=>{
@@ -2902,13 +3060,13 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                 if (storyOrder.includes(i)) { setStoryOrder(p=>p.filter(x=>x!==i)); return; }
                 setStoryOrder(p=>[...p,i]);
               }}>
-              <span className="story-num">{storyOrder.includes(i)?`✓`:"·"}</span>{s}
+              <span className="story-num">{storyOrder.includes(i)?storyOrder.indexOf(i)+1:"·"}</span>{s}
             </div>
           ))}
           <div className="flex gap-2 mt-2">
             <button className="btn btn-sm btn-ghost" disabled={answered} onClick={()=>setStoryOrder([])}>Clear</button>
             <button className="btn btn-teal" disabled={answered||storyOrder.length!==3} onClick={submitStory}>
-              {answered?"✓ Submitted":"Submit Order →"}
+              {answered?"Submitted":"Submit Order →"}
             </button>
           </div>
         </div>
@@ -2917,29 +3075,30 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       {/* Word match */}
       {q.type==="word_match"&&q.pairs&&(
         <div>
-          <p className="op50 mb-2" style={{fontSize:"0.82rem"}}>Tap a word, then tap its meaning.</p>
-          <div className="flex gap-2">
-            <div style={{flex:1}}>
-              <span className="label">Words</span>
+          <p style={{fontSize:"0.8rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.04em",marginBottom:"0.6rem"}}>Tap a word, then its meaning.</p>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"0.6rem"}}>
+            <div>
+              <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:"0.3rem",fontFamily:"'JetBrains Mono',monospace"}}>Words</div>
               {q.pairs.slice(0,2).map((p,i)=>{
                 const m = matchState.matched[p.word];
+                const sel = matchState.sel===p.word;
                 return (
-                  <div key={i} className={`match-word ${matchState.sel===p.word?"selected":""} ${m?(m.correct?"matched-correct":"matched-wrong"):""}`}
-                    style={{minHeight:52,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.95rem",fontWeight:600}}
+                  <div key={i} className={`match-word ${sel?"selected":""} ${m?(m.correct?"matched-correct":"matched-wrong"):""}`}
+                    style={{minHeight:56,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.95rem",fontWeight:700,cursor:m||answered?"default":"pointer",marginBottom:"0.4rem"}}
                     onClick={()=>!m&&!answered&&handleMatch("word",p.word)}>
                     {p.word}
                   </div>
                 );
               })}
             </div>
-            <div style={{flex:1}}>
-              <span className="label">Meanings</span>
+            <div>
+              <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:"0.3rem",fontFamily:"'JetBrains Mono',monospace"}}>Meanings</div>
               {shuffledMeanings.map((p,i)=>{
                 const isMatched = Object.values(matchState.matched).some(m=>m.meaning===p.meaning);
                 const entry = Object.entries(matchState.matched).find(([,m])=>m.meaning===p.meaning);
                 return (
                   <div key={p.meaning} className={`match-word ${isMatched?(entry?.[1]?.correct?"matched-correct":"matched-wrong"):""}`}
-                    style={{minHeight:52,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.82rem"}}
+                    style={{minHeight:56,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.8rem",cursor:isMatched||answered?"default":"pointer",marginBottom:"0.4rem",textAlign:"center"}}
                     onClick={()=>!isMatched&&!answered&&handleMatch("meaning",p.meaning)}>
                     {p.meaning}
                   </div>
@@ -2953,25 +3112,26 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
       {/* Stress battle */}
       {q.type==="stress_battle"&&(
         <div>
-          <div style={{textAlign:"center",fontFamily:"'Unbounded',sans-serif",fontSize:"clamp(2rem,10vw,3.5rem)",fontWeight:900,letterSpacing:"0.1em",color:"var(--gold)",marginBottom:"2rem"}}>{q.word}</div>
-          <div style={{display:"flex",gap:"1rem"}}>
+          <div style={{textAlign:"center",fontFamily:"'Fraunces',serif",fontSize:"clamp(2.2rem,10vw,3.5rem)",fontWeight:900,fontStyle:"italic",letterSpacing:"0.04em",color:"var(--sun)",marginBottom:"0.5rem"}}>{q.word}</div>
+          <div style={{textAlign:"center",fontSize:"0.75rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.08em",marginBottom:"1.5rem"}}>Which stress pattern is correct?</div>
+          <div style={{display:"flex",gap:"0.8rem"}}>
             {["A","B"].map(label=>{
               const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
               const stressAt = label===q.answer?q.stressed:wrongStress;
+              const sel = myAnswer===label;
               return (
                 <button key={label} disabled={answered}
                   style={{
-                    flex:1, padding:"1.5rem 1rem",
-                    border:`3px solid ${myAnswer===label?"var(--gold)":"rgba(255,255,255,0.2)"}`,
-                    background:myAnswer===label?"rgba(232,184,75,0.15)":"rgba(255,255,255,0.04)",
-                    color:"#fff", cursor:answered?"default":"pointer",
-                    opacity:answered&&myAnswer!==label?0.28:1,
-                    animation:answered&&myAnswer===label?"lockIn 0.38s ease":"none",
+                    flex:1, padding:"1.4rem 0.8rem",
+                    border:`2px solid ${sel?"var(--sun)":"var(--line)"}`,
+                    background:sel?"rgba(255,206,71,0.12)":"var(--paper)",
+                    borderRadius:12, cursor:answered?"default":"pointer",
+                    opacity:answered&&!sel?0.28:1,
                     transition:"all 0.15s",
                     display:"flex", flexDirection:"column", alignItems:"center", gap:"0.9rem"
                   }}
                   onClick={()=>onAnswer(label)}>
-                  <span style={{fontFamily:"'Unbounded',sans-serif",fontSize:"1.5rem",fontWeight:700}}>{label}</span>
+                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1.4rem",fontWeight:700,color:sel?"var(--sun)":"var(--muted)"}}>{label}</span>
                   <StressDots syllables={q.syllables} stressAt={stressAt} size="lg" />
                 </button>
               );
@@ -2980,7 +3140,7 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
         </div>
       )}
 
-      {answered&&<p className="text-center op50 mt-3" style={{fontSize:"0.82rem"}}>✓ Answer submitted — waiting for others…</p>}
+      {answered&&<p style={{textAlign:"center",color:"var(--muted)",marginTop:"1rem",fontSize:"0.82rem",fontFamily:"'JetBrains Mono',monospace"}}>Submitted — waiting for others…</p>}
     </div>
   );
 }
@@ -3010,14 +3170,14 @@ function StudentLeaderboard({ room, name, showReview, setShowReview }) {
   const reviewSection = isEnd && setShowReview ? (
     <>
       <button className="btn btn-ghost btn-full mt-3" onClick={()=>setShowReview(v=>!v)}>
-        📚 {showReview ? "Hide" : "Review"} Questions
+        {showReview ? "Hide" : "Review"} Questions
       </button>
       {showReview && (() => {
         const mainQs = (room.questions||[]).filter(q=>!q._warmup);
         return (
           <div className="card mt-2" style={{maxHeight:"55vh",overflowY:"auto"}}>
             <button className="btn btn-ghost btn-sm mb-3" onClick={()=>navigator.clipboard.writeText(buildSummary(mainQs, room.topic||""))}>
-              📋 Copy as text
+              Copy as text
             </button>
             {mainQs.map((q,i)=>(
               <div key={i} style={{borderBottom:"1px solid rgba(255,255,255,0.07)",paddingBottom:"0.7rem",marginBottom:"0.7rem"}}>
@@ -3032,25 +3192,38 @@ function StudentLeaderboard({ room, name, showReview, setShowReview }) {
     </>
   ) : null;
 
+  const RANK_COLORS = ["var(--sun)","#c0c0c0","#cd7f32"];
+
   if (mode==="teams") {
     const usedTeams = TEAMS.filter(t=>Object.values(room.players||{}).some(p=>p.team===t.id));
     const tSorted = [...usedTeams].sort((a,b)=>(teamScores[b.id]||0)-(teamScores[a.id]||0));
     const myTeam = room.players?.[name]?.team ? TEAMS.find(t=>t.id===room.players[name].team) : null;
     return (
       <div>
-        <h2 className="text-center text-gold mb-3" style={{fontSize:"1.2rem"}}>{isEnd?"🏆 Final":"📊 Scores"}</h2>
-        <span className="label">Teams</span>
+        <div style={{textAlign:"center",marginBottom:"1rem"}}>
+          <SAIcon name={isEnd?"trophy":"medal"} size={28} color="var(--sun)" />
+          <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.3rem",color:"var(--sun)",marginTop:"0.3rem"}}>{isEnd?"Final Scores":"Scores"}</h2>
+        </div>
+        <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:"0.4rem"}}>Teams</div>
         {tSorted.map((t,i)=>(
-          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:`${i*0.08}s`}}>
-            <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
-            <span style={{fontSize:"1.2rem"}}>{t.emoji}</span>
-            <span className="lb-name" style={{color:t.color}}>{t.name}</span>
-            <span className="lb-score">{(teamScores[t.id]||0).toLocaleString()}</span>
+          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:`${i*0.08}s`,display:"flex",alignItems:"center",gap:"0.6rem"}}>
+            <span className="lb-rank" style={{color:RANK_COLORS[i]||"var(--muted)"}}>{i<3?["🥇","🥈","🥉"][i]:`#${i+1}`}</span>
+            <span style={{fontSize:"1.1rem"}}>{t.emoji}</span>
+            <span className="lb-name" style={{color:t.color,flex:1}}>{t.name}</span>
+            <span className="lb-score" style={{fontFamily:"'Fraunces',serif",fontWeight:900,color:RANK_COLORS[i]||"var(--ink)"}}><SARollingNumber value={teamScores[t.id]||0} /></span>
           </div>
         ))}
-        <span className="label mt-3">You</span>
-        {myTeam&&<p style={{color:myTeam.color,fontFamily:"'Unbounded',sans-serif",fontSize:"0.85rem"}}>{myTeam.emoji} {myTeam.name}</p>}
-        <p className="op50 mt-1" style={{fontSize:"0.82rem"}}>Your score: <strong style={{color:"var(--gold)"}}>{(room.players?.[name]?.score||0).toLocaleString()}</strong> pts (#{myPos+1})</p>
+        {myTeam&&<div style={{marginTop:"0.8rem",padding:"0.6rem 0.8rem",background:"var(--paper)",border:`1.5px solid ${myTeam.color}`,borderRadius:8}}>
+          <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
+            <SABlob name={name} size={28} color={myTeam.color} />
+            <div style={{flex:1}}>
+              <div style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontSize:"0.85rem"}}>{name}</div>
+              <div style={{fontSize:"0.68rem",color:myTeam.color}}>{myTeam.name}</div>
+            </div>
+            <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,color:"var(--sun)",fontSize:"1rem"}}>{(room.players?.[name]?.score||0).toLocaleString()} <span style={{fontSize:"0.65rem",opacity:0.5}}>pts</span></div>
+          </div>
+          <div style={{fontSize:"0.72rem",color:"var(--muted)",marginTop:"0.2rem"}}>#{myPos+1} overall</div>
+        </div>}
         {reviewSection}
       </div>
     );
@@ -3058,21 +3231,25 @@ function StudentLeaderboard({ room, name, showReview, setShowReview }) {
 
   return (
     <div>
-      <h2 className="text-center text-gold mb-3" style={{fontSize:"1.2rem"}}>{isEnd?"🏆 Final":"📊 Scores"}</h2>
+      <div style={{textAlign:"center",marginBottom:"1rem"}}>
+        <SAIcon name={isEnd?"trophy":"medal"} size={28} color="var(--sun)" />
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.3rem",color:"var(--sun)",marginTop:"0.3rem"}}>{isEnd?"Final Scores":"Scores"}</h2>
+      </div>
       {sorted.map(([n,p],i)=>(
         <div key={n} className="lb-row" style={{
-          borderLeftColor:n===name?"var(--gold)":i===0?"var(--gold)":i===1?"#c0c0c0":i===2?"#cd7f32":"rgba(255,255,255,0.08)",
-          background:n===name?"rgba(232,184,75,0.09)":"transparent",
-          animationDelay:`${i*0.06}s`
+          borderLeftColor:n===name?"var(--sun)":RANK_COLORS[i]||"var(--line)",
+          background:n===name?"rgba(255,206,71,0.07)":"transparent",
+          animationDelay:`${i*0.06}s`,display:"flex",alignItems:"center",gap:"0.5rem"
         }}>
-          <span className="lb-rank">{MEDAL[i]||`#${i+1}`}</span>
-          <span className="lb-name">{n}{n===name&&<span className="text-gold"> ← you</span>}</span>
-          {n===room?.firstCorrect&&<span title="First correct answer!" style={{fontSize:"0.8rem"}}>⚡</span>}
-          {(p.streak||0)>1&&<span style={{fontSize:"0.82rem"}}>🔥</span>}
-          <span className="lb-score">{(p.score||0).toLocaleString()}</span>
+          <span className="lb-rank" style={{color:RANK_COLORS[i]||"var(--muted)",minWidth:24}}>{i<3?["🥇","🥈","🥉"][i]:`#${i+1}`}</span>
+          <SABlob name={n} size={26} color={RANK_COLORS[i]} />
+          <span className="lb-name" style={{flex:1,fontWeight:n===name?700:400}}>{n}{n===name&&<span style={{color:"var(--sun)",fontSize:"0.72rem",marginLeft:"0.3rem",fontFamily:"'JetBrains Mono',monospace"}}>← you</span>}</span>
+          {n===room?.firstCorrect&&<span title="First correct!" style={{fontSize:"0.8rem",color:"var(--cobalt)"}}>⚡</span>}
+          {(p.streak||0)>1&&<SAStreakMeter count={p.streak} size="sm" />}
+          <span className="lb-score" style={{fontFamily:"'Fraunces',serif",fontWeight:900,color:RANK_COLORS[i]||"var(--ink)"}}><SARollingNumber value={p.score||0} /></span>
         </div>
       ))}
-      {myPos>=0&&<p className="text-center op30 mt-2" style={{fontSize:"0.78rem"}}>#{myPos+1} of {sorted.length} players</p>}
+      {myPos>=0&&<p style={{textAlign:"center",color:"var(--muted)",marginTop:"0.5rem",fontSize:"0.75rem",fontFamily:"'JetBrains Mono',monospace"}}>#{myPos+1} of {sorted.length} players</p>}
       {reviewSection}
     </div>
   );
