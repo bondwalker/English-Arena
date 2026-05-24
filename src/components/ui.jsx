@@ -329,6 +329,82 @@ export function InGameQR({ url }) {
   );
 }
 
+// ─── WoodenTile ───────────────────────────────────────────────────────────────
+export function WoodenTile({ word, size = "md", angle = 0, placed = false, onClick, valueNum }) {
+  const sizes = {
+    sm: { p: "6px 11px 8px", fs: 13, vs: 8, r: 6 },
+    md: { p: "9px 16px 12px", fs: 18, vs: 10, r: 8 },
+    lg: { p: "12px 22px 18px", fs: 24, vs: 12, r: 10 },
+  };
+  const s = sizes[size] || sizes.md;
+  return (
+    <span onClick={onClick} className={onClick ? "sa-pressable" : ""}
+      style={{
+        position: "relative", display: "inline-flex", alignItems: "center", padding: s.p, borderRadius: s.r,
+        background: placed
+          ? "linear-gradient(180deg,#7addc0 0%,#42b090 100%)"
+          : "linear-gradient(180deg,#f6e3a8 0%,#f0d99a 30%,#c4a26a 100%)",
+        boxShadow: placed
+          ? "0 2px 0 #2e8a6e,inset 0 1px 0 #a8ffe8"
+          : "0 4px 0 #8c6e44,0 6px 0 rgba(0,0,0,0.22),inset 0 1px 0 #fff1c0",
+        fontFamily: "'Fraunces',Georgia,serif", fontSize: s.fs, fontWeight: 700,
+        color: placed ? "#0d3328" : "#3a2a18", letterSpacing: "0.01em",
+        transform: `rotate(${angle}deg)`, cursor: onClick ? "pointer" : "default",
+        userSelect: "none", whiteSpace: "nowrap",
+      }}>
+      {word}
+      {valueNum != null && (
+        <span style={{ position: "absolute", bottom: 2, right: 4, fontSize: s.vs, fontWeight: 600, color: placed ? "rgba(13,51,40,0.55)" : "rgba(58,42,24,0.55)", fontFamily: "'JetBrains Mono',monospace" }}>{valueNum}</span>
+      )}
+    </span>
+  );
+}
+
+// ─── Waveform ─────────────────────────────────────────────────────────────────
+export function Waveform({ color = "var(--tomato)", stress = 0.3, size = 1, bars = 14 }) {
+  const heights = [0.2, 0.35, 0.55, 0.75, 0.92, 1.0, 0.92, 0.78, 0.62, 0.5, 0.42, 0.35, 0.28, 0.2];
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4 * size, height: 60 * size }}>
+      {heights.slice(0, bars).map((h, i) => (
+        <div key={i} style={{ width: 4 * size, height: `${h * 100 * stress}%`, background: color, borderRadius: 2, transition: "height 0.4s cubic-bezier(0.2,0.8,0.3,1.2)" }} />
+      ))}
+    </div>
+  );
+}
+
+// ─── RedInkUnderline ──────────────────────────────────────────────────────────
+export function RedInkUnderline({ color = "var(--tomato)" }) {
+  return (
+    <svg width="100%" height="10" viewBox="0 0 100 10" preserveAspectRatio="none" style={{ position: "absolute", bottom: -8, left: 0, pointerEvents: "none" }}>
+      <path d="M 2 5 Q 12 1 22 5 T 42 5 T 62 5 T 82 5 T 98 5" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// ─── MatchConnector ───────────────────────────────────────────────────────────
+export function MatchConnector({ from, to, color, dashed = false }) {
+  const dx = to.x - from.x;
+  const mx = from.x + dx * 0.5;
+  return (
+    <path d={`M ${from.x} ${from.y} C ${mx} ${from.y}, ${mx} ${to.y}, ${to.x} ${to.y}`}
+      fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round"
+      strokeDasharray={dashed ? "4 4" : "none"}
+      style={{ transition: "all 0.4s cubic-bezier(0.2,0.8,0.3,1)" }} />
+  );
+}
+
+// ─── TeacherBtn ───────────────────────────────────────────────────────────────
+export function TeacherBtn({ icon, label, onClick, variant = "default" }) {
+  const bg = variant === "primary" ? "var(--tomato)" : variant === "active" ? "var(--muted)" : "var(--paper)";
+  const fg = variant === "primary" || variant === "active" ? "var(--on-dark)" : "var(--ink)";
+  return (
+    <div onClick={onClick} className="sa-pressable" style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 10px", background: variant === "ghost" ? "transparent" : bg, color: variant === "ghost" ? "var(--muted)" : fg, border: `1.5px solid ${variant === "ghost" ? "var(--line)" : bg}`, borderRadius: 8, cursor: "pointer", fontSize: 11, fontWeight: 600 }}>
+      {icon && <SAIcon name={icon} size={13} color={variant === "ghost" ? "var(--muted)" : fg} />}
+      <span>{label}</span>
+    </div>
+  );
+}
+
 // ─── PlayersFooter ────────────────────────────────────────────────────────────
 export function PlayersFooter({ players, mode }) {
   if (!players.length) return null;
