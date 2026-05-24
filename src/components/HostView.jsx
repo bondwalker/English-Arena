@@ -242,27 +242,31 @@ export default function HostView({ onBack }) {
     if (!db) {
       const id = setInterval(() => {
         const s = read();
-        if (s?.code === code) {
-          setRoomState(prev => ({ ...prev, players: s.players || {}, answers: s.answers || {} }));
-        }
+        if (!s || s.code !== code) return;
+        const np = s.players || {}, na = s.answers || {};
+        if (JSON.stringify(roomRef.current.players) === JSON.stringify(np) &&
+            JSON.stringify(roomRef.current.answers) === JSON.stringify(na)) return;
+        const next = { ...roomRef.current, players: np, answers: na };
+        roomRef.current = next;
+        setRoomState(next);
       }, 700);
       return () => clearInterval(id);
     }
 
     const unsubPlayers = onValue(ref(db, `rooms/${code}/players`), snap => {
       const np = snap.val() || {};
-      setRoomState(prev => {
-        if (JSON.stringify(prev.players) === JSON.stringify(np)) return prev;
-        return { ...prev, players: np };
-      });
+      if (JSON.stringify(roomRef.current.players) === JSON.stringify(np)) return;
+      const next = { ...roomRef.current, players: np };
+      roomRef.current = next;
+      setRoomState(next);
     });
 
     const unsubAnswers = onValue(ref(db, `rooms/${code}/answers`), snap => {
       const na = snap.val() || {};
-      setRoomState(prev => {
-        if (JSON.stringify(prev.answers) === JSON.stringify(na)) return prev;
-        return { ...prev, answers: na };
-      });
+      if (JSON.stringify(roomRef.current.answers) === JSON.stringify(na)) return;
+      const next = { ...roomRef.current, answers: na };
+      roomRef.current = next;
+      setRoomState(next);
     });
 
     return () => { unsubPlayers(); unsubAnswers(); };
