@@ -1766,21 +1766,34 @@ function HostView({ onBack }) {
     typeof fn === "function" ? fn(prev) : { ...prev, ...fn }
   );
 
-  // Write room state to storage after every change; track Firebase reachability
+  const fromFirebaseRef = useRef(false);
+
+  // Write teacher-side room changes to Firebase (skip if update came FROM Firebase to avoid loop)
   useEffect(() => {
     try { localStorage.setItem("englishgame_v2", JSON.stringify(room)); } catch {}
     if (db && room?.code) {
+      if (fromFirebaseRef.current) { fromFirebaseRef.current = false; return; }
       set(ref(db, `rooms/${room.code}`), room)
         .then(() => setFbStatus("ok"))
         .catch(() => setFbStatus("error"));
     }
   }, [room]);
 
-  // Sync players & answers (Firebase real-time or localStorage fallback)
+  // Sync players & answers from Firebase (students write their own answers)
   useEffect(() => {
     if (db) {
       return listenRoom(room.code, (s) => {
-        if (s.code === room.code) setRoom(prev => ({ ...prev, players: s.players||{}, answers: s.answers||{} }));
+        if (s.code === room.code) {
+          setRoom(prev => {
+            const np = s.players||{};
+            const na = s.answers||{};
+            // Only update if values actually changed — prevents write→listen→write loop
+            if (JSON.stringify(prev.players)===JSON.stringify(np) &&
+                JSON.stringify(prev.answers)===JSON.stringify(na)) return prev;
+            fromFirebaseRef.current = true;
+            return { ...prev, players: np, answers: na };
+          });
+        }
       });
     }
     const id = setInterval(() => {
