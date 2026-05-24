@@ -199,7 +199,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
 // ─── HostView ──────────────────────────────────────────────────────────────────
 export default function HostView({ onBack }) {
   const [room, setRoomState] = useState(() => defaultRoom());
-  const roomRef = useRef(defaultRoom());
+  const roomRef = useRef(room); // same initial value — shares the same room code
 
   const [selectedTopic, setSelectedTopic] = useState("");
   const [gameType, setGameType] = useState("mixed");
@@ -232,6 +232,9 @@ export default function HostView({ onBack }) {
     setRoom(next);
     syncState(next);
   };
+
+  // Write initial room to Firebase on mount so students can find it immediately via QR/code
+  useEffect(() => { syncState(roomRef.current); }, []);
 
   // Listen ONLY to /players and /answers sub-paths — avoids overwriting teacher's game state
   useEffect(() => {
