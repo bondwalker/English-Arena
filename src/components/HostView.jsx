@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay } from "./ui.jsx";
+import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, RedInkUnderline, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
 import { TEAMS, GAME_MODES, OPT_ICONS, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
@@ -91,7 +91,7 @@ function HostReveal({ q, answers, players }) {
 }
 
 // ─── HostQuestion ──────────────────────────────────────────────────────────────
-function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused }) {
+function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? [...(q.words || [])].sort(() => Math.random() - 0.5) : [], [q.question]);
@@ -132,7 +132,15 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
 
       <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.1rem,2.6vw,1.55rem)", lineHeight: 1.4, textAlign: "center", marginBottom: "1.2rem", maxWidth: 680, margin: "0 auto 1.2rem", fontFamily: "'Fraunces',serif" }}>{q.question}</h2>
 
-      {q.type === "rearrange" && <div className="tiles" style={{ justifyContent: "center" }}>{shuffledRearrange.map((w, i) => <span key={i} className="tile">{w}</span>)}</div>}
+      {q.type === "rearrange" && (
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
+          <div style={{ background: "linear-gradient(180deg,#6b4a2a 0%,#4a3320 100%)", borderRadius: 14, padding: "18px 16px 22px", display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", boxShadow: "inset 0 4px 8px rgba(0,0,0,0.35), inset 0 -3px 0 rgba(0,0,0,0.3)" }}>
+            {shuffledRearrange.map((w, i) => (
+              <WoodenTile key={i} word={w} size="lg" angle={(i % 2 === 0 ? -1.2 : 1.4)} valueNum={Math.max(1, Math.min(8, w.length - 1))} />
+            ))}
+          </div>
+        </div>
+      )}
       {q.type === "multiple_choice" && q.options && (
         <div className="opt-grid">{q.options.map((o, i) => <div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>
       )}
@@ -146,26 +154,50 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
       {q.type === "story_builder" && q.sentences && <div className="mt-2">{q.sentences.slice(0, 3).map((s, i) => <div key={i} className="story-card" style={{ cursor: "default" }}><span className="story-num">{i + 1}</span>{s}</div>)}</div>}
-      {q.type === "word_match" && q.pairs && (
-        <div className="flex gap-2 mt-2">
-          <div style={{ flex: 1 }}><span className="label">Words</span>{q.pairs.slice(0, 2).map((p, i) => <div key={i} className="match-word" style={{ cursor: "default", color: `var(--${["tomato", "cobalt"][i]})`, borderColor: `var(--${["tomato", "cobalt"][i]})` }}>{p.word}</div>)}</div>
-          <div style={{ flex: 1 }}><span className="label">Meanings</span>{q.pairs.slice(0, 2).map((p, i) => <div key={i} className="match-word" style={{ cursor: "default" }}>{p.meaning}</div>)}</div>
-        </div>
-      )}
+      {q.type === "word_match" && q.pairs && (() => {
+        const colors = ["var(--tomato)", "var(--cobalt)"];
+        const pairs2 = q.pairs.slice(0, 2);
+        const rOrder = [1, 0];
+        const rowY = (i) => 28 + i * 44;
+        return (
+          <div style={{ position: "relative", maxWidth: 720, margin: "0 auto", minHeight: 200 }}>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
+              {pairs2.map((_, i) => {
+                const rIdx = rOrder.indexOf(i);
+                return <MatchConnector key={i} from={{ x: 36, y: rowY(i) }} to={{ x: 64, y: rowY(rIdx) }} color={colors[i]} dashed />;
+              })}
+            </svg>
+            <div style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, padding: "8px 6px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                {pairs2.map((p, i) => (
+                  <div key={i} style={{ background: "var(--paper)", border: `2.5px solid ${colors[i]}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: 20, color: colors[i], boxShadow: `3px 3px 0 ${colors[i]}55`, transform: `rotate(${i === 0 ? -1.5 : 1.5}deg)` }}>{p.word}</div>
+                ))}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                {rOrder.map((origIdx, displayIdx) => (
+                  <div key={displayIdx} style={{ background: "var(--cream)", border: `2px dashed ${colors[origIdx]}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "var(--ink-soft)", fontWeight: 500, transform: `rotate(${displayIdx === 0 ? 1 : -1}deg)` }}>{pairs2[origIdx].meaning}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
       {q.type === "stress_battle" && (
-        <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
-          <div style={{ fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,6vw,3.5rem)", fontWeight: 900, letterSpacing: "0.08em", color: "var(--sun)", marginBottom: "1.5rem", fontStyle: "italic" }}>{q.word}</div>
-          <div style={{ display: "flex", gap: "3rem", justifyContent: "center" }}>
-            {["A", "B"].map(label => {
-              const wrongStress = q.stressed === 1 ? 2 : q.stressed === 3 ? 2 : 1;
-              const stressAt = label === q.answer ? q.stressed : wrongStress;
+        <div style={{ textAlign: "center", marginTop: "0.5rem", maxWidth: 680, margin: "0 auto" }}>
+          <div style={{ display: "inline-flex", alignItems: "flex-end", gap: 24, padding: "22px 30px", background: "var(--paper)", borderRadius: 18, border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--ink)" }}>
+            {(q.syllables || []).map((s, i) => {
+              const isStressed = (i + 1) === q.stressed;
               return (
-                <div key={label} style={{ textAlign: "center" }}>
-                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.9rem", marginBottom: "0.6rem", color: "var(--muted)", letterSpacing: "0.1em" }}>{label}</div>
-                  <StressDots syllables={q.syllables} stressAt={stressAt} size="md" />
+                <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                  <div className={isStressed ? "sa-anim-pulse" : ""}><Waveform color={isStressed ? "var(--tomato)" : "var(--muted)"} stress={isStressed ? 1 : 0.25} size={1.1} /></div>
+                  <div style={{ fontFamily: "'Fraunces',serif", fontSize: isStressed ? 52 : 34, fontWeight: 900, letterSpacing: "-0.01em", textTransform: "uppercase", color: isStressed ? "var(--ink)" : "var(--muted)", fontStyle: isStressed ? "italic" : "normal", transition: "all 0.3s" }}>{s}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: isStressed ? "var(--tomato)" : "var(--muted)", letterSpacing: "0.15em", fontWeight: 700 }}>{isStressed ? "STRESS" : `· ${i + 1} ·`}</div>
                 </div>
               );
             })}
+          </div>
+          <div style={{ marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 14px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 999, color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", fontSize: 13, letterSpacing: "0.04em" }}>
+            <SAIcon name="play" size={12} color="var(--tomato)" /><span>{q.word}</span>
           </div>
         </div>
       )}
@@ -176,6 +208,26 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", maxWidth: 500, margin: "0 auto" }}>
             {q.options.map((o, i) => <div key={i} className={`opt-btn opt-${i}`} style={{ justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.1rem" }}>{o}</div>)}
+          </div>
+        </div>
+      )}
+
+      {q.type === "error_spotter" && q.sentence && (
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
+          <div style={{ background: "var(--paper)", borderRadius: 14, padding: "22px 28px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 28px, var(--line) 28px 29px)`, backgroundPosition: "0 16px", border: "1.5px solid var(--line)" }}>
+            <div style={{ position: "absolute", left: 24, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "clamp(1.1rem,2.4vw,1.6rem)", lineHeight: 1.65, letterSpacing: "-0.005em", paddingLeft: 18, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline", position: "relative" }}>
+              {q.sentence.split(" ").map((word, i) => {
+                const clean = word.replace(/[.,!?;:]/g, "");
+                const isError = clean === q.errorWord;
+                return (
+                  <span key={i} style={{ position: "relative", paddingBottom: 4, color: isError ? "var(--tomato)" : "var(--ink)", fontStyle: isError ? "italic" : "normal" }}>
+                    {word}
+                    {isError && <RedInkUnderline />}
+                  </span>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
@@ -192,6 +244,16 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           ))}
         </div>
       </div>
+
+      {(onPause || onRepeat || onReveal || onSkip) && (
+        <div style={{ marginTop: "1rem", padding: "10px 12px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 12, display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", width: "100%", textAlign: "center", marginBottom: 4 }}>Teacher controls</div>
+          {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
+          {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
+          {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
+          {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
+        </div>
+      )}
     </div>
   );
 }
@@ -620,7 +682,11 @@ export default function HostView({ onBack }) {
           <div style={{ fontSize: bigText ? "1.2em" : "1em" }}>
             <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers || {}}
               players={room.players || {}} qIndex={room.qIndex} total={room.questions.length}
-              mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused} />
+              mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused}
+              onPause={() => upd(p => ({ ...p, paused: !p.paused }))}
+              onRepeat={() => upd(p => ({ ...p, timeLeft: getTimeLimit(p.currentQ) }))}
+              onReveal={() => endEarly()}
+              onSkip={skipQuestion} />
           </div>
           <div className="flex gap-1 justify-center mt-2 wrap">
             <button className={`btn btn-sm ${room.paused ? "btn-gold" : "btn-ghost"}`} onClick={() => upd(p => ({ ...p, paused: !p.paused }))}>

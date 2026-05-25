@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SAIcon, StressDots } from "./ui.jsx";
+import { SAIcon, StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 
 const OPT_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 const OPT_LETTERS = ["A", "B", "C", "D"];
@@ -102,18 +102,21 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "error_spotter" && q.sentence && (
         <div>
           <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginBottom: "0.6rem", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em" }}>Tap the word with the error:</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", lineHeight: 1.8 }}>
-            {q.sentence.split(" ").map((word, i) => {
-              const clean = word.replace(/[.,!?;:]/g, "");
-              const sel = myAnswer === clean;
-              return (
-                <button key={i} disabled={answered}
-                  style={{ padding: "0.42rem 0.8rem", fontFamily: "'DM Sans',sans-serif", fontSize: "0.95rem", border: `2px solid ${sel ? "var(--tomato)" : "var(--line)"}`, background: sel ? "rgba(255,92,66,0.15)" : "transparent", color: sel ? "var(--tomato)" : "var(--ink)", borderRadius: 8, cursor: answered ? "default" : "pointer", transition: "all 0.12s", fontWeight: sel ? 700 : 400 }}
-                  onClick={() => onAnswer(clean)}>
-                  {word}
-                </button>
-              );
-            })}
+          <div style={{ background: "var(--paper)", borderRadius: 12, padding: "14px 12px 18px 14px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 22px, var(--line) 22px 23px)`, backgroundPosition: "0 10px", border: "1.5px solid var(--line)" }}>
+            <div style={{ position: "absolute", left: 14, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "1.1rem", lineHeight: 1.8, paddingLeft: 10, display: "flex", flexWrap: "wrap", gap: "4px 8px", alignItems: "baseline" }}>
+              {q.sentence.split(" ").map((word, i) => {
+                const clean = word.replace(/[.,!?;:]/g, "");
+                const sel = myAnswer === clean;
+                return (
+                  <span key={i} className="sa-pressable" onClick={() => !answered && onAnswer(clean)}
+                    style={{ position: "relative", cursor: answered ? "default" : "pointer", paddingBottom: 4, color: sel ? "var(--tomato)" : "var(--ink)", fontStyle: sel ? "italic" : "normal", fontWeight: sel ? 700 : 600 }}>
+                    {word}
+                    {sel && <RedInkUnderline />}
+                  </span>
+                );
+              })}
+            </div>
           </div>
           {myAnswer && <p style={{ marginTop: "0.5rem", fontSize: "0.82rem", color: "var(--tomato)" }}>Selected: <strong>{myAnswer}</strong></p>}
         </div>
@@ -150,23 +153,19 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "rearrange" && (
         <div>
           <div style={{ fontSize: "0.76rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>YOUR SENTENCE</div>
-          <div className="tiles" style={{ borderColor: "var(--cobalt)", minHeight: 52, background: "rgba(91,139,255,0.06)" }}>
-            {rearranged.length === 0 && <span style={{ fontSize: "0.8rem", color: "var(--muted)" }}>Tap words below…</span>}
+          <div style={{ background: "linear-gradient(180deg,#6b4a2a 0%,#4a3320 100%)", borderRadius: 10, padding: "10px 10px 14px", minHeight: 54, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center", boxShadow: "inset 0 3px 6px rgba(0,0,0,0.3),0 2px 0 rgba(0,0,0,0.15)" }}>
+            {rearranged.length === 0 && <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", fontFamily: "'JetBrains Mono',monospace" }}>Tap words below…</span>}
             {rearranged.map((w, i) => (
-              <span key={i} className="tile placed" onClick={() => {
-                if (answered) return;
-                setRearranged(p => p.filter((_, pi) => pi !== i));
-                setUsedIdx(p => p.filter((_, pi) => pi !== i));
-              }}>{w}</span>
+              <WoodenTile key={i} word={w} size="sm" angle={(i % 2 === 0 ? -1 : 1)} placed valueNum={Math.max(1, Math.min(8, w.length - 1))}
+                onClick={() => { if (answered) return; setRearranged(p => p.filter((_, pi) => pi !== i)); setUsedIdx(p => p.filter((_, pi) => pi !== i)); }} />
             ))}
           </div>
           <div style={{ fontSize: "0.76rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.05em", marginTop: "0.7rem", marginBottom: "0.3rem" }}>WORD BANK</div>
-          <div className="tiles">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
             {(shuffledWords.length ? shuffledWords : q.words || []).map((w, i) => (
-              <span key={i} className={`tile ${usedIdx.includes(i) ? "used" : ""}`}
-                onClick={() => { if (answered || usedIdx.includes(i)) return; setRearranged(p => [...p, w]); setUsedIdx(p => [...p, i]); }}>
-                {w}
-              </span>
+              <WoodenTile key={i} word={w} size="sm" angle={((i % 3) - 1) * 1.5}
+                onClick={() => { if (answered || usedIdx.includes(i)) return; setRearranged(p => [...p, w]); setUsedIdx(p => [...p, i]); }}
+                {...(usedIdx.includes(i) ? { placed: true } : {})} />
             ))}
           </div>
           <div className="flex gap-2 mt-2">
@@ -215,34 +214,47 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "word_match" && q.pairs && (
         <div>
           <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em", marginBottom: "0.6rem" }}>Tap a word, then its meaning.</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
-            <div>
-              <div style={{ fontSize: "0.68rem", color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem", fontFamily: "'JetBrains Mono',monospace" }}>Words</div>
-              {q.pairs.slice(0, 2).map((p, i) => {
-                const m = matchState.matched[p.word];
-                const sel = matchState.sel === p.word;
-                return (
-                  <div key={i} className={`match-word ${sel ? "selected" : ""} ${m ? (m.correct ? "matched-correct" : "matched-wrong") : ""}`}
-                    style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.95rem", fontWeight: 700, cursor: m || answered ? "default" : "pointer", marginBottom: "0.4rem" }}
-                    onClick={() => !m && !answered && handleMatch("word", p.word)}>
-                    {p.word}
-                  </div>
-                );
+          <div style={{ position: "relative", minHeight: 160 }}>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 1 }}>
+              {Object.entries(matchState.matched).map(([w, m]) => {
+                const pairs2 = q.pairs.slice(0, 2);
+                const li = pairs2.findIndex(p => p.word === w);
+                const ri = shuffledMeanings.findIndex(p => p.meaning === m.meaning);
+                if (li < 0 || ri < 0) return null;
+                const fromY = 24 + li * 52;
+                const toY = 24 + ri * 52;
+                return <MatchConnector key={w} from={{ x: 34, y: fromY }} to={{ x: 66, y: toY }} color={m.correct ? "var(--leaf)" : "var(--tomato)"} />;
               })}
-            </div>
-            <div>
-              <div style={{ fontSize: "0.68rem", color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem", fontFamily: "'JetBrains Mono',monospace" }}>Meanings</div>
-              {shuffledMeanings.map((p, i) => {
-                const isMatched = Object.values(matchState.matched).some(m => m.meaning === p.meaning);
-                const entry = Object.entries(matchState.matched).find(([, m]) => m.meaning === p.meaning);
-                return (
-                  <div key={p.meaning} className={`match-word ${isMatched ? (entry?.[1]?.correct ? "matched-correct" : "matched-wrong") : ""}`}
-                    style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", cursor: isMatched || answered ? "default" : "pointer", marginBottom: "0.4rem", textAlign: "center" }}
-                    onClick={() => !isMatched && !answered && handleMatch("meaning", p.meaning)}>
-                    {p.meaning}
-                  </div>
-                );
-              })}
+            </svg>
+            <div style={{ position: "relative", zIndex: 2, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
+              <div>
+                <div style={{ fontSize: "0.68rem", color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem", fontFamily: "'JetBrains Mono',monospace" }}>Words</div>
+                {q.pairs.slice(0, 2).map((p, i) => {
+                  const m = matchState.matched[p.word];
+                  const sel = matchState.sel === p.word;
+                  return (
+                    <div key={i} className={`match-word ${sel ? "selected" : ""} ${m ? (m.correct ? "matched-correct" : "matched-wrong") : ""}`}
+                      style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.95rem", fontWeight: 700, cursor: m || answered ? "default" : "pointer", marginBottom: "0.4rem" }}
+                      onClick={() => !m && !answered && handleMatch("word", p.word)}>
+                      {p.word}
+                    </div>
+                  );
+                })}
+              </div>
+              <div>
+                <div style={{ fontSize: "0.68rem", color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem", fontFamily: "'JetBrains Mono',monospace" }}>Meanings</div>
+                {shuffledMeanings.map((p, i) => {
+                  const isMatched = Object.values(matchState.matched).some(m => m.meaning === p.meaning);
+                  const entry = Object.entries(matchState.matched).find(([, m]) => m.meaning === p.meaning);
+                  return (
+                    <div key={p.meaning} className={`match-word ${isMatched ? (entry?.[1]?.correct ? "matched-correct" : "matched-wrong") : ""}`}
+                      style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", cursor: isMatched || answered ? "default" : "pointer", marginBottom: "0.4rem", textAlign: "center" }}
+                      onClick={() => !isMatched && !answered && handleMatch("meaning", p.meaning)}>
+                      {p.meaning}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -250,8 +262,18 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "stress_battle" && (
         <div>
-          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", color: "var(--sun)", marginBottom: "0.5rem" }}>{q.word}</div>
-          <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>Which stress pattern is correct?</div>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 14, padding: "14px", background: "var(--paper)", borderRadius: 14, border: "2px solid var(--ink)", boxShadow: "3px 3px 0 var(--ink)", marginBottom: "1rem" }}>
+            {(q.syllables || []).map((s, i) => {
+              const isStressed = (i + 1) === q.stressed;
+              return (
+                <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                  <Waveform color={isStressed ? "var(--tomato)" : "var(--muted)"} stress={isStressed ? 1 : 0.25} size={0.8} bars={10} />
+                  <div style={{ fontFamily: "'Fraunces',serif", fontSize: isStressed ? 28 : 18, fontWeight: 900, textTransform: "uppercase", color: isStressed ? "var(--ink)" : "var(--muted)", fontStyle: isStressed ? "italic" : "normal" }}>{s}</div>
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "0.8rem" }}>Which stress pattern is correct?</div>
           <div style={{ display: "flex", gap: "0.8rem" }}>
             {["A", "B"].map(label => {
               const wrongStress = q.stressed === 1 ? 2 : q.stressed === 3 ? 2 : 1;
