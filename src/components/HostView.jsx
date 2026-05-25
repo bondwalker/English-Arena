@@ -253,7 +253,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
           {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
           {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
-          {onToggleFont && <TeacherBtn icon="text" label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
+          {onToggleFont && <TeacherBtn label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
         </div>
       )}
     </div>
