@@ -91,7 +91,7 @@ function HostReveal({ q, answers, players }) {
 }
 
 // ─── HostQuestion ──────────────────────────────────────────────────────────────
-function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip }) {
+function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? [...(q.words || [])].sort(() => Math.random() - 0.5) : [], [q.question]);
@@ -252,6 +252,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
           {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
           {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
+          {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
+          {onToggleFont && <TeacherBtn icon="text" label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
         </div>
       )}
     </div>
@@ -686,18 +688,10 @@ export default function HostView({ onBack }) {
               onPause={() => upd(p => ({ ...p, paused: !p.paused }))}
               onRepeat={() => upd(p => ({ ...p, timeLeft: getTimeLimit(p.currentQ) }))}
               onReveal={() => endEarly()}
-              onSkip={skipQuestion} />
-          </div>
-          <div className="flex gap-1 justify-center mt-2 wrap">
-            <button className={`btn btn-sm ${room.paused ? "btn-gold" : "btn-ghost"}`} onClick={() => upd(p => ({ ...p, paused: !p.paused }))}>
-              {room.paused ? "Resume" : "Pause"}
-            </button>
-            {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>End Early</button>}
-            <button className="btn btn-sm btn-ghost" onClick={skipQuestion} title="Skip — no one scores this question">Skip Q</button>
-            {room.currentQ?._warmup && <button className="btn btn-sm btn-ghost" onClick={skipWarmup} title="Skip the rest of the warm-up">Skip Warm-Up</button>}
-            <button className="btn btn-sm btn-ghost" onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
-              {bigText ? "A−" : "A+"}
-            </button>
+              onSkip={skipQuestion}
+              onSkipWarmup={room.currentQ?._warmup ? skipWarmup : undefined}
+              bigText={bigText}
+              onToggleFont={() => { const n = !bigText; setBigText(n); writeFont(n); }} />
           </div>
           <PlayersFooter players={players} mode={room.mode} />
         </>
