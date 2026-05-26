@@ -263,7 +263,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "stress_battle" && (
         <div>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 14, padding: "14px", background: "var(--paper)", borderRadius: 14, border: "2px solid var(--ink)", boxShadow: "3px 3px 0 var(--ink)", marginBottom: "1rem" }}>
-            {(q.syllables || []).map((s, i) => {
+            {(Array.isArray(q.syllables) ? q.syllables : Array.from({length: q.syllables || 0}, (_, i) => `${i+1}`)).map((s, i) => {
               const isStressed = (i + 1) === q.stressed;
               return (
                 <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>

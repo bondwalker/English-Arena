@@ -185,7 +185,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type === "stress_battle" && (
         <div style={{ textAlign: "center", marginTop: "0.5rem", maxWidth: 680, margin: "0 auto" }}>
           <div style={{ display: "inline-flex", alignItems: "flex-end", gap: 24, padding: "22px 30px", background: "var(--paper)", borderRadius: 18, border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--ink)" }}>
-            {(q.syllables || []).map((s, i) => {
+            {(Array.isArray(q.syllables) ? q.syllables : Array.from({length: q.syllables || 0}, (_, i) => `${i+1}`)).map((s, i) => {
               const isStressed = (i + 1) === q.stressed;
               return (
                 <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
