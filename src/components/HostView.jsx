@@ -91,7 +91,7 @@ function HostReveal({ q, answers, players }) {
 }
 
 // ─── HostQuestion ──────────────────────────────────────────────────────────────
-function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip }) {
+function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? [...(q.words || [])].sort(() => Math.random() - 0.5) : [], [q.question]);
@@ -185,7 +185,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type === "stress_battle" && (
         <div style={{ textAlign: "center", marginTop: "0.5rem", maxWidth: 680, margin: "0 auto" }}>
           <div style={{ display: "inline-flex", alignItems: "flex-end", gap: 24, padding: "22px 30px", background: "var(--paper)", borderRadius: 18, border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--ink)" }}>
-            {(q.syllables || []).map((s, i) => {
+            {(Array.isArray(q.syllables) ? q.syllables : Array.from({length: q.syllables || 0}, (_, i) => `${i+1}`)).map((s, i) => {
               const isStressed = (i + 1) === q.stressed;
               return (
                 <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
@@ -245,15 +245,15 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       </div>
 
-      {(onPause || onRepeat || onReveal || onSkip) && (
-        <div style={{ marginTop: "1rem", padding: "10px 12px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 12, display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", width: "100%", textAlign: "center", marginBottom: 4 }}>Teacher controls</div>
-          {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
-          {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
-          {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
-          {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
-        </div>
-      )}
+      <div style={{ marginTop: "1rem", padding: "10px 12px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 12, display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", width: "100%", textAlign: "center", marginBottom: 4 }}>Teacher controls</div>
+        {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
+        {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
+        {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
+        {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
+        {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
+        {onToggleFont && <TeacherBtn label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
+      </div>
     </div>
   );
 }
@@ -686,18 +686,10 @@ export default function HostView({ onBack }) {
               onPause={() => upd(p => ({ ...p, paused: !p.paused }))}
               onRepeat={() => upd(p => ({ ...p, timeLeft: getTimeLimit(p.currentQ) }))}
               onReveal={() => endEarly()}
-              onSkip={skipQuestion} />
-          </div>
-          <div className="flex gap-1 justify-center mt-2 wrap">
-            <button className={`btn btn-sm ${room.paused ? "btn-gold" : "btn-ghost"}`} onClick={() => upd(p => ({ ...p, paused: !p.paused }))}>
-              {room.paused ? "Resume" : "Pause"}
-            </button>
-            {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>End Early</button>}
-            <button className="btn btn-sm btn-ghost" onClick={skipQuestion} title="Skip — no one scores this question">Skip Q</button>
-            {room.currentQ?._warmup && <button className="btn btn-sm btn-ghost" onClick={skipWarmup} title="Skip the rest of the warm-up">Skip Warm-Up</button>}
-            <button className="btn btn-sm btn-ghost" onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
-              {bigText ? "A−" : "A+"}
-            </button>
+              onSkip={skipQuestion}
+              onSkipWarmup={room.currentQ?._warmup ? skipWarmup : undefined}
+              bigText={bigText}
+              onToggleFont={() => { const n = !bigText; setBigText(n); writeFont(n); }} />
           </div>
           <PlayersFooter players={players} mode={room.mode} />
         </>

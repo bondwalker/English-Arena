@@ -27,7 +27,7 @@ export function checkAnswer(given, q) {
   if (q.type === "story_builder") {
     const count = Math.min((q.sentences || []).length, 3);
     const correct3 = (q.correctOrder || []).filter(i => i < count).join(",");
-    return n(given) === correct3;
+    return given.trim() === correct3;
   }
   if (q.type === "error_spotter") return n(given) === n(q.errorWord);
   return n(given) === n(q.answer);
