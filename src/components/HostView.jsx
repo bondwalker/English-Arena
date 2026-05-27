@@ -245,17 +245,15 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       </div>
 
-      {(onPause || onRepeat || onReveal || onSkip) && (
-        <div style={{ marginTop: "1rem", padding: "10px 12px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 12, display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", width: "100%", textAlign: "center", marginBottom: 4 }}>Teacher controls</div>
-          {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
-          {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
-          {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
-          {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
-          {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
-          {onToggleFont && <TeacherBtn label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
-        </div>
-      )}
+      <div style={{ marginTop: "1rem", padding: "10px 12px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 12, display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", width: "100%", textAlign: "center", marginBottom: 4 }}>Teacher controls</div>
+        {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
+        {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
+        {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
+        {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
+        {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
+        {onToggleFont && <TeacherBtn label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
+      </div>
     </div>
   );
 }

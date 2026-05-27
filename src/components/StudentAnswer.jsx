@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { SAIcon, StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
+import { readFont, writeFont } from "../lib/storage.js";
 
 const OPT_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
 export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedIdx, setUsedIdx, typeVal, setTypeVal, storyOrder, setStoryOrder, matchState, setMatchState, room }) {
   const answered = myAnswer !== null;
+  const [bigText, setBigText] = useState(() => readFont());
+  const toggleFont = () => { const n = !bigText; setBigText(n); writeFont(n); };
 
   const pairsKey = q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => p.word).join("|") : "";
   const [shuffledMeanings, setShuffledMeanings] = useState([]);
@@ -48,13 +51,16 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   };
 
   return (
-    <div>
+    <div style={{ fontSize: bigText ? "1.2em" : "1em" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.7rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 10px", background: "var(--paper)", border: "1.5px solid var(--tomato)", borderRadius: 8 }}>
           <SAIcon name={q.type} size={13} color="var(--tomato)" />
           <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", letterSpacing: "0.08em", color: "var(--tomato)", textTransform: "uppercase" }}>{q.type.replace(/_/g, " ")}</span>
         </div>
-        {room && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", color: "var(--muted)" }}>Q{(room.qIndex || 0) + 1}/{room.questions?.length || 0}</span>}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {room && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", color: "var(--muted)" }}>Q{(room.qIndex || 0) + 1}/{room.questions?.length || 0}</span>}
+          <button onClick={toggleFont} style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", fontWeight: 700, padding: "3px 8px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 6, cursor: "pointer", color: "var(--muted)", letterSpacing: "0.04em" }}>{bigText ? "A−" : "A+"}</button>
+        </div>
       </div>
 
       <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.15rem", lineHeight: 1.45, marginBottom: "1rem", color: "var(--ink)" }}>{q.question}</h2>
