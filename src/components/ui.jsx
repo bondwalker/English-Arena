@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import QRCode from "qrcode";
 import { TEAMS } from "../lib/utils.js";
 
 // ─── Team Icon ────────────────────────────────────────────────────────────────
@@ -305,11 +306,16 @@ export function FlameStreak({ count }) {
 
 // ─── QRDisplay ────────────────────────────────────────────────────────────────
 export function QRDisplay({ url }) {
-  const qr = `https://api.qrserver.com/v1/create-qr-code/?size=155x155&data=${encodeURIComponent(url)}&bgcolor=ffffff&color=0d0d0d&margin=6&format=png`;
+  const [dataUrl, setDataUrl] = useState("");
+  useEffect(() => {
+    if (!url) return;
+    QRCode.toDataURL(url, { width: 155, margin: 1, color: { dark: "#0d0d0d", light: "#ffffff" } })
+      .then(setDataUrl).catch(() => {});
+  }, [url]);
   return (
     <div className="qr-wrap">
       <div className="qr-label">📱 Scan to Join</div>
-      <img src={qr} alt="QR code to join" />
+      {dataUrl && <img src={dataUrl} alt="QR code to join" />}
       <div className="qr-label" style={{opacity:1}}>Camera → scan → join!</div>
       <div className="qr-url">{url}</div>
     </div>
@@ -318,13 +324,17 @@ export function QRDisplay({ url }) {
 
 // ─── InGameQR ─────────────────────────────────────────────────────────────────
 export function InGameQR({ url }) {
-  const [failed, setFailed] = useState(false);
-  const src = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(url)}&bgcolor=ffffff&color=0d0d0d&margin=2&format=png`;
+  const [dataUrl, setDataUrl] = useState("");
+  useEffect(() => {
+    if (!url) return;
+    QRCode.toDataURL(url, { width: 80, margin: 1, color: { dark: "#0d0d0d", light: "#ffffff" } })
+      .then(setDataUrl).catch(() => {});
+  }, [url]);
   return (
-    <div style={{position:"fixed",bottom:"1rem",right:"1rem",zIndex:50,background:"#fff",padding:"0.4rem",borderRadius:8,border:"2px solid var(--ink)",boxShadow:"3px 3px 0 var(--ink)",lineHeight:failed?1.3:0}}>
-      {failed
-        ? <div style={{fontSize:"0.55rem",color:"#000",maxWidth:80,wordBreak:"break-all",padding:"0.1rem"}}>{url}</div>
-        : <img src={src} alt="Join QR" width={80} height={80} onError={() => setFailed(true)} />}
+    <div style={{position:"fixed",bottom:"1rem",right:"1rem",zIndex:50,background:"#fff",padding:"0.4rem",borderRadius:8,border:"2px solid var(--ink)",boxShadow:"3px 3px 0 var(--ink)",lineHeight:dataUrl?0:1.3}}>
+      {dataUrl
+        ? <img src={dataUrl} alt="Join QR" width={80} height={80} />
+        : <div style={{fontSize:"0.55rem",color:"#000",maxWidth:80,wordBreak:"break-all",padding:"0.1rem"}}>{url}</div>}
     </div>
   );
 }
