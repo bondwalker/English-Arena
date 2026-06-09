@@ -1285,8 +1285,8 @@ function SATimerRing({ value, max=20, size=110 }) {
           style={{transition:"stroke-dashoffset 1s linear"}} />
       </svg>
       <div style={{textAlign:"center"}}>
-        <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:size*0.36,color:warn?"var(--tomato)":"var(--on-light)",lineHeight:1}}>{value}</div>
-        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.18em",color:"var(--on-light)",opacity:0.55,marginTop:2}}>SEC</div>
+        <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:size*0.36,color:warn?"var(--tomato)":"var(--ink)",lineHeight:1}}>{value}</div>
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.18em",color:"var(--muted)",marginTop:2}}>SEC</div>
       </div>
     </div>
   );
@@ -1766,20 +1766,34 @@ function HostView({ onBack }) {
     typeof fn === "function" ? fn(prev) : { ...prev, ...fn }
   );
 
-  const fromFirebaseRef = useRef(false);
+  // Track last-written phase/qIndex — only write to Firebase when game state changes, not on every timer tick
+  const lastFBWrite = useRef({ phase: null, qIndex: -1 });
 
-  // Write teacher-side room changes to Firebase (skip if update came FROM Firebase to avoid loop)
+  // localStorage sync on every room change (fast, local)
   useEffect(() => {
     try { localStorage.setItem("englishgame_v2", JSON.stringify(room)); } catch {}
-    if (db && room?.code) {
-      if (fromFirebaseRef.current) { fromFirebaseRef.current = false; return; }
-      set(ref(db, `rooms/${room.code}`), room)
-        .then(() => setFbStatus("ok"))
-        .catch(() => setFbStatus("error"));
-    }
   }, [room]);
 
-  // Sync players & answers from Firebase (students write their own answers)
+  // Firebase sync — only when phase or question number changes (not on timer ticks)
+  useEffect(() => {
+    if (!db || !room?.code) return;
+    const { phase, qIndex } = room;
+    if (phase === lastFBWrite.current.phase && qIndex === lastFBWrite.current.qIndex) return;
+    lastFBWrite.current = { phase, qIndex };
+    set(ref(db, `rooms/${room.code}`), room)
+      .then(() => setFbStatus("ok"))
+      .catch(() => setFbStatus("error"));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room.phase, room.qIndex, room.code]);
+
+  // Also sync when paused state changes so students see paused indicator
+  useEffect(() => {
+    if (!db || !room?.code || room.phase !== "question") return;
+    set(ref(db, `rooms/${room.code}`), room).catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room.paused]);
+
+  // Sync players & answers from Firebase (students write their own answers directly)
   useEffect(() => {
     if (db) {
       return listenRoom(room.code, (s) => {
@@ -1787,10 +1801,8 @@ function HostView({ onBack }) {
           setRoom(prev => {
             const np = s.players||{};
             const na = s.answers||{};
-            // Only update if values actually changed — prevents write→listen→write loop
             if (JSON.stringify(prev.players)===JSON.stringify(np) &&
                 JSON.stringify(prev.answers)===JSON.stringify(na)) return prev;
-            fromFirebaseRef.current = true;
             return { ...prev, players: np, answers: na };
           });
         }
@@ -2164,7 +2176,7 @@ function HostView({ onBack }) {
       {/* ── QUESTION PHASE ── */}
       {room.phase==="question" && room.currentQ && (
         <>
-          <div style={{fontSize: bigText ? "1.2em" : "1em"}}>
+          <div style={{zoom: bigText ? 1.18 : 1}}>
             <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers||{}}
               players={room.players||{}} qIndex={room.qIndex} total={room.questions.length}
               mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused} />
@@ -2176,7 +2188,8 @@ function HostView({ onBack }) {
             {ansCount > 0 && <button className="btn btn-sm btn-ghost" onClick={endEarly}>End Early</button>}
             <button className="btn btn-sm btn-ghost" onClick={skipQuestion} title="Skip — no one scores this question">Skip Q</button>
             {room.currentQ?._warmup && <button className="btn btn-sm btn-ghost" onClick={skipWarmup} title="Skip the rest of the warm-up">Skip Warm-Up</button>}
-            <button className="btn btn-sm btn-ghost" onClick={()=>{ const n=!bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
+            <button className="btn btn-sm" style={{background:"var(--cobalt)",color:"var(--on-dark)",border:"none",fontWeight:700,fontSize:"0.85rem",minWidth:44}}
+              onClick={()=>{ const n=!bigText; setBigText(n); writeFont(n); }} title="Toggle text size">
               {bigText ? "A−" : "A+"}
             </button>
           </div>
@@ -2367,14 +2380,16 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type==="stress_battle"&&(
         <div style={{textAlign:"center",marginTop:"0.5rem"}}>
           <div style={{fontFamily:"'Fraunces',serif",fontSize:"clamp(2.2rem,6vw,3.5rem)",fontWeight:900,letterSpacing:"0.08em",color:"var(--sun)",marginBottom:"1.5rem",fontStyle:"italic"}}>{q.word}</div>
-          <div style={{display:"flex",gap:"3rem",justifyContent:"center"}}>
+          <div style={{display:"flex",gap:"2rem",justifyContent:"center"}}>
             {["A","B"].map(label=>{
-              const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
-              const stressAt = label===q.answer ? q.stressed : wrongStress;
+              const n = q.syllables||2;
+              const s = q.stressed||1;
+              const wrongStress = s===n ? s-1 : s+1;
+              const stressAt = label===q.answer ? s : wrongStress;
               return (
-                <div key={label} style={{textAlign:"center"}}>
-                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.9rem",marginBottom:"0.6rem",color:"var(--muted)",letterSpacing:"0.1em"}}>{label}</div>
-                  <StressDots syllables={q.syllables} stressAt={stressAt} size="md" />
+                <div key={label} style={{textAlign:"center",padding:"1rem 1.6rem",borderRadius:14,border:`2px solid var(--line)`,background:"var(--paper)",minWidth:100}}>
+                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1rem",marginBottom:"0.8rem",color:"var(--muted)",letterSpacing:"0.1em",fontWeight:700}}>{label}</div>
+                  <StressDots syllables={n} stressAt={stressAt} size="md" />
                 </div>
               );
             })}
@@ -2430,15 +2445,16 @@ function HostReveal({ q, answers, players }) {
         ) : q.type==="stress_battle" ? (
           <div style={{textAlign:"center"}}>
             <div style={{fontFamily:"'Fraunces',serif",fontSize:"1.8rem",fontWeight:900,letterSpacing:"0.08em",marginBottom:"1rem",fontStyle:"italic",color:"var(--sun)"}}>{q.word}</div>
-            <div style={{display:"flex",gap:"2.5rem",justifyContent:"center"}}>
+            <div style={{display:"flex",gap:"2rem",justifyContent:"center"}}>
               {["A","B"].map(label=>{
                 const isCorrect = label===q.answer;
-                const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
-                const stressAt = isCorrect?q.stressed:wrongStress;
+                const n = q.syllables||2; const s = q.stressed||1;
+                const wrongStress = s===n ? s-1 : s+1;
+                const stressAt = isCorrect?s:wrongStress;
                 return (
                   <div key={label} style={{textAlign:"center",padding:"0.8rem 1.4rem",borderRadius:12,border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,background:isCorrect?"rgba(255,206,71,0.1)":"transparent"}}>
-                    <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.9rem",marginBottom:"0.5rem",color:isCorrect?"var(--sun)":"var(--muted)",letterSpacing:"0.1em"}}>{label}{isCorrect?" ✓":""}</div>
-                    <StressDots syllables={q.syllables} stressAt={stressAt} />
+                    <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.9rem",marginBottom:"0.5rem",color:isCorrect?"var(--sun)":"var(--muted)",letterSpacing:"0.1em",fontWeight:700}}>{label}{isCorrect?" ✓":""}</div>
+                    <StressDots syllables={n} stressAt={stressAt} />
                   </div>
                 );
               })}
@@ -2758,7 +2774,7 @@ function StudentView({ onBack, initialCode = "" }) {
           </div>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
-          <button onClick={()=>{const n=!bigText;setBigText(n);writeFont(n);}} style={{background:"none",border:"1px solid var(--line)",borderRadius:4,color:"var(--muted)",fontSize:"0.7rem",padding:"0.18rem 0.45rem",cursor:"pointer",lineHeight:1}} title="Toggle text size">{bigText?"A−":"A+"}</button>
+          <button onClick={()=>{const n=!bigText;setBigText(n);writeFont(n);}} style={{background:"var(--cobalt)",border:"none",borderRadius:8,color:"var(--on-dark)",fontSize:"0.82rem",fontWeight:700,padding:"0.3rem 0.65rem",cursor:"pointer",lineHeight:1}} title="Toggle text size">{bigText?"A−":"A+"}</button>
           <div style={{textAlign:"right"}}>
             <div style={{color:"var(--sun)",fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:"1.1rem",lineHeight:1}}><SARollingNumber value={myScore} /></div>
             <div style={{fontSize:"0.65rem",color:"var(--muted)",letterSpacing:"0.04em",textTransform:"uppercase"}}>pts</div>
@@ -2779,7 +2795,7 @@ function StudentView({ onBack, initialCode = "" }) {
           <div className="dots mt-3"><span/><span/><span/></div>
         </div>
       ) : phase==="question"&&q ? (
-        <div style={{fontSize: bigText ? "1.2em" : "1em"}}>
+        <div style={{zoom: bigText ? 1.18 : 1}}>
           {/* Countdown bar */}
           {(() => {
             const total = getTimeLimit(q);
@@ -2820,15 +2836,16 @@ function StudentView({ onBack, initialCode = "" }) {
             ) : q.type==="stress_battle" ? (
               <div style={{textAlign:"center",marginTop:"0.5rem"}}>
                 <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.4rem",color:"var(--sun)",marginBottom:"0.8rem"}}>{q.word}</div>
-                <div style={{display:"flex",gap:"1.5rem",justifyContent:"center"}}>
+                <div style={{display:"flex",gap:"1rem",justifyContent:"center"}}>
                   {["A","B"].map(label=>{
                     const isCorrect = label===q.answer;
-                    const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
-                    const stressAt = isCorrect?q.stressed:wrongStress;
+                    const n = q.syllables||2; const s = q.stressed||1;
+                    const wrongStress = s===n ? s-1 : s+1;
+                    const stressAt = isCorrect?s:wrongStress;
                     return (
-                      <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,borderRadius:8,background:isCorrect?"rgba(255,206,71,0.12)":"transparent"}}>
-                        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.85rem",color:isCorrect?"var(--sun)":"var(--muted)",marginBottom:"0.4rem"}}>{label}{isCorrect?" ✓":""}</div>
-                        <StressDots syllables={q.syllables} stressAt={stressAt} />
+                      <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,borderRadius:10,background:isCorrect?"rgba(255,206,71,0.12)":"transparent"}}>
+                        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.85rem",color:isCorrect?"var(--sun)":"var(--muted)",marginBottom:"0.4rem",fontWeight:700}}>{label}{isCorrect?" ✓":""}</div>
+                        <StressDots syllables={n} stressAt={stressAt} />
                       </div>
                     );
                   })}
@@ -3129,8 +3146,9 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
           <div style={{textAlign:"center",fontSize:"0.75rem",color:"var(--muted)",fontFamily:"'JetBrains Mono',monospace",letterSpacing:"0.08em",marginBottom:"1.5rem"}}>Which stress pattern is correct?</div>
           <div style={{display:"flex",gap:"0.8rem"}}>
             {["A","B"].map(label=>{
-              const wrongStress = q.stressed===1?2:q.stressed===3?2:1;
-              const stressAt = label===q.answer?q.stressed:wrongStress;
+              const n = q.syllables||2; const s = q.stressed||1;
+              const wrongStress = s===n ? s-1 : s+1;
+              const stressAt = label===q.answer?s:wrongStress;
               const sel = myAnswer===label;
               return (
                 <button key={label} disabled={answered}
@@ -3138,14 +3156,14 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                     flex:1, padding:"1.4rem 0.8rem",
                     border:`2px solid ${sel?"var(--sun)":"var(--line)"}`,
                     background:sel?"rgba(255,206,71,0.12)":"var(--paper)",
-                    borderRadius:12, cursor:answered?"default":"pointer",
+                    borderRadius:14, cursor:answered?"default":"pointer",
                     opacity:answered&&!sel?0.28:1,
                     transition:"all 0.15s",
                     display:"flex", flexDirection:"column", alignItems:"center", gap:"0.9rem"
                   }}
                   onClick={()=>onAnswer(label)}>
                   <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1.4rem",fontWeight:700,color:sel?"var(--sun)":"var(--muted)"}}>{label}</span>
-                  <StressDots syllables={q.syllables} stressAt={stressAt} size="lg" />
+                  <StressDots syllables={n} stressAt={stressAt} size="lg" />
                 </button>
               );
             })}
