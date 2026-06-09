@@ -2302,23 +2302,21 @@ function PlayersFooter({ players, mode }) {
 }
 
 const ORDINALS = ["1st","2nd","3rd","4th","5th","6th"];
+// Equal-size dots in an even row — only the stressed syllable is filled.
+// A clear stress marker, NOT a waveform (no size variation between dots).
 function StressDots({ syllables, stressAt, size = "md", label = false }) {
-  const big = size === "lg" ? 34 : 26;
-  const small = size === "lg" ? 18 : 14;
+  const dot = size === "lg" ? 16 : 13;
   return (
-    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:size==="lg"?"0.7rem":"0.5rem"}}>
-      <div style={{ display:"flex", gap: size==="lg"?"0.7rem":"0.5rem", justifyContent:"center", alignItems:"center" }}>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"0.45rem"}}>
+      <div style={{ display:"flex", gap: size==="lg"?"0.6rem":"0.45rem", justifyContent:"center", alignItems:"center" }}>
         {Array.from({ length: syllables }, (_, i) => {
           const isStressed = i + 1 === stressAt;
           return (
             <div key={i} style={{
-              width: isStressed ? big : small,
-              height: isStressed ? big : small,
-              borderRadius: "50%",
+              width: dot, height: dot, borderRadius: "50%",
               background: isStressed ? "var(--sun)" : "transparent",
-              border: `2.5px solid ${isStressed ? "var(--sun)" : "var(--muted)"}`,
-              boxShadow: isStressed ? "0 0 12px rgba(255,206,71,0.5)" : "none",
-              transition: "all 0.15s",
+              border: `2px solid ${isStressed ? "var(--sun)" : "var(--muted)"}`,
+              boxShadow: isStressed ? "0 0 10px rgba(255,206,71,0.55)" : "none",
               flexShrink: 0,
             }} />
           );
@@ -2396,18 +2394,17 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       )}
       {q.type==="stress_battle"&&(
         <div style={{textAlign:"center",marginTop:"0.5rem"}}>
-          <div style={{fontFamily:"'Fraunces',serif",fontSize:"clamp(2.2rem,6vw,3.5rem)",fontWeight:900,letterSpacing:"0.08em",color:"var(--sun)",marginBottom:"1.5rem",fontStyle:"italic"}}>{q.word}</div>
-          <div style={{display:"flex",gap:"2rem",justifyContent:"center"}}>
+          <div style={{fontFamily:"'Fraunces',serif",fontSize:"clamp(2.4rem,6vw,3.8rem)",fontWeight:900,letterSpacing:"0.08em",color:"var(--sun)",marginBottom:"1.6rem",fontStyle:"italic"}}>{q.word}</div>
+          <div style={{display:"flex",gap:"1.5rem",justifyContent:"center"}}>
             {["A","B"].map(label=>{
               const n = q.syllables||2;
               const s = q.stressed||1;
               const wrongStress = s===n ? s-1 : s+1;
               const stressAt = label===q.answer ? s : wrongStress;
               return (
-                <div key={label} style={{textAlign:"center",padding:"1rem 1.6rem",borderRadius:14,border:`2px solid var(--line)`,background:"var(--paper)",minWidth:120,display:"flex",flexDirection:"column",alignItems:"center",gap:"0.7rem"}}>
-                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1rem",color:"var(--muted)",letterSpacing:"0.1em",fontWeight:700}}>{label}</div>
-                  <div style={{fontFamily:"'Fraunces',serif",fontWeight:800,fontStyle:"italic",fontSize:"1.3rem",color:"var(--ink)",letterSpacing:"0.04em"}}>{q.word}</div>
-                  <StressDots syllables={n} stressAt={stressAt} size="md" label />
+                <div key={label} style={{textAlign:"center",padding:"1.2rem 1.8rem",borderRadius:16,border:`2px solid var(--line)`,background:"var(--paper)",minWidth:150,display:"flex",flexDirection:"column",alignItems:"center",gap:"0.9rem"}}>
+                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1.1rem",color:"var(--muted)",letterSpacing:"0.1em",fontWeight:700}}>{label}</div>
+                  <StressDots syllables={n} stressAt={stressAt} size="lg" label />
                 </div>
               );
             })}
@@ -2472,7 +2469,7 @@ function HostReveal({ q, answers, players }) {
                 return (
                   <div key={label} style={{textAlign:"center",padding:"0.8rem 1.4rem",borderRadius:12,border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,background:isCorrect?"rgba(255,206,71,0.1)":"transparent"}}>
                     <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.9rem",marginBottom:"0.5rem",color:isCorrect?"var(--sun)":"var(--muted)",letterSpacing:"0.1em",fontWeight:700}}>{label}{isCorrect?" ✓":""}</div>
-                    <StressDots syllables={n} stressAt={stressAt} />
+                    <StressDots syllables={n} stressAt={stressAt} label />
                   </div>
                 );
               })}
@@ -2863,7 +2860,7 @@ function StudentView({ onBack, initialCode = "" }) {
                     return (
                       <div key={label} style={{textAlign:"center",padding:"0.6rem 1rem",border:`2px solid ${isCorrect?"var(--sun)":"var(--line)"}`,borderRadius:10,background:isCorrect?"rgba(255,206,71,0.12)":"transparent"}}>
                         <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.85rem",color:isCorrect?"var(--sun)":"var(--muted)",marginBottom:"0.4rem",fontWeight:700}}>{label}{isCorrect?" ✓":""}</div>
-                        <StressDots syllables={n} stressAt={stressAt} />
+                        <StressDots syllables={n} stressAt={stressAt} label />
                       </div>
                     );
                   })}
@@ -3181,7 +3178,6 @@ function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedI
                   }}
                   onClick={()=>onAnswer(label)}>
                   <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"1.4rem",fontWeight:700,color:sel?"var(--sun)":"var(--muted)"}}>{label}</span>
-                  <div style={{fontFamily:"'Fraunces',serif",fontWeight:800,fontStyle:"italic",fontSize:"1.15rem",color:"var(--ink)",letterSpacing:"0.04em"}}>{q.word}</div>
                   <StressDots syllables={n} stressAt={stressAt} size="lg" label />
                 </button>
               );
