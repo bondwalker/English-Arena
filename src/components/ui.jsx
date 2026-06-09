@@ -40,7 +40,7 @@ const SA_ICONS = {
   rearrange: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="6" width="6" height="5" rx="1" /><rect x="11" y="6" width="6" height="5" rx="1" fill={c} stroke={c} /><rect x="7" y="13" width="6" height="5" rx="1" /><rect x="15" y="13" width="6" height="5" rx="1" /></SAIconWrap>,
   word_match: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="2" y="5" width="7" height="6" rx="1.5" /><rect x="15" y="13" width="7" height="6" rx="1.5" /><path d="M9 8 Q12 8 12 12 Q12 16 15 16" strokeDasharray="2 2" /></SAIconWrap>,
   odd_one_out: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="6" cy="18" r="2.5" /><circle cx="18" cy="18" r="2.5" fill={c} stroke={c} /><path d="M14.5 14.5 L21.5 21.5" stroke="white" strokeWidth="1.5" /></SAIconWrap>,
-  stress_battle: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M2 12 L5 12 L7 7 L10 17 L13 5 L16 19 L19 12 L22 12" /></SAIconWrap>,
+  stress_battle: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="6" cy="12" r="2" /><circle cx="12" cy="12" r="3.5" fill={c} stroke={c} /><circle cx="18" cy="12" r="2" /></SAIconWrap>,
   idiom:    ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 H17 A3 3 0 0 1 20 8 V13 A3 3 0 0 1 17 16 H10 L6 20 V16 A2 2 0 0 1 4 14 V8 A3 3 0 0 1 4 5 Z" /><path d="M8 10 L8.5 11 L9 10 M11 10 L11.5 11 L12 10 M14 10 L14.5 11 L15 10" strokeWidth="1.2" /></SAIconWrap>,
   fill_idiom: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 H17 A3 3 0 0 1 20 8 V13 A3 3 0 0 1 17 16 H10 L6 20 V16 A2 2 0 0 1 4 14 V8 A3 3 0 0 1 4 5 Z" /><path d="M8 10 L8.5 11 L9 10 M11 10 L11.5 11 L12 10 M14 10 L14.5 11 L15 10" strokeWidth="1.2" /></SAIconWrap>,
   story_builder: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 5 L4 19 Q4 21 6 21 L18 21 Q20 21 20 19 L20 7 Q20 5 18 5 Z" /><path d="M4 5 Q6 4 12 5 Q18 4 20 5" /><path d="M8 11 L16 11 M8 14 L13 14" /></SAIconWrap>,
@@ -137,8 +137,8 @@ export function SATimerRing({ value, max = 20, size = 110 }) {
           style={{transition:"stroke-dashoffset 1s linear"}} />
       </svg>
       <div style={{textAlign:"center"}}>
-        <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:size*0.36,color:warn?"var(--tomato)":"var(--on-light)",lineHeight:1}}>{value}</div>
-        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.18em",color:"var(--on-light)",opacity:0.55,marginTop:2}}>SEC</div>
+        <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontSize:size*0.36,color:warn?"var(--tomato)":"var(--ink)",lineHeight:1}}>{value}</div>
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:"0.18em",color:"var(--muted)",marginTop:2}}>SEC</div>
       </div>
     </div>
   );
@@ -268,25 +268,34 @@ export function Confetti() {
 }
 
 // ─── StressDots ───────────────────────────────────────────────────────────────
-export function StressDots({ syllables, stressAt, size = "md" }) {
-  const big = size === "lg" ? 32 : 24;
-  const small = size === "lg" ? 20 : 15;
+// Equal-size dots in an even row — only the stressed syllable is filled gold.
+// A clear stress marker, NOT a waveform (no size variation between dots).
+// Accepts `syllables` as a number OR an array of syllable strings.
+const STRESS_ORDINALS = ["1st","2nd","3rd","4th","5th","6th"];
+export function StressDots({ syllables, stressAt, size = "md", label = false }) {
+  const n = Array.isArray(syllables) ? syllables.length : (syllables || 0);
+  const dot = size === "lg" ? 16 : 13;
   return (
-    <div style={{display:"flex",gap:size==="lg"?"0.7rem":"0.5rem",justifyContent:"center",alignItems:"center"}}>
-      {Array.from({length: syllables}, (_, i) => {
-        const isStressed = i + 1 === stressAt;
-        return (
-          <div key={i} style={{
-            width: isStressed ? big : small,
-            height: isStressed ? big : small,
-            borderRadius: "50%",
-            background: isStressed ? "#fff" : "transparent",
-            border: `2.5px solid ${isStressed ? "#fff" : "rgba(255,255,255,0.55)"}`,
-            transition: "all 0.15s",
-            flexShrink: 0,
-          }} />
-        );
-      })}
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"0.45rem"}}>
+      <div style={{display:"flex",gap:size==="lg"?"0.6rem":"0.45rem",justifyContent:"center",alignItems:"center"}}>
+        {Array.from({length: n}, (_, i) => {
+          const isStressed = i + 1 === stressAt;
+          return (
+            <div key={i} style={{
+              width: dot, height: dot, borderRadius: "50%",
+              background: isStressed ? "var(--sun)" : "transparent",
+              border: `2px solid ${isStressed ? "var(--sun)" : "var(--muted)"}`,
+              boxShadow: isStressed ? "0 0 10px rgba(255,206,71,0.55)" : "none",
+              flexShrink: 0,
+            }} />
+          );
+        })}
+      </div>
+      {label && (
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.62rem",letterSpacing:"0.06em",color:"var(--muted)",textTransform:"uppercase"}}>
+          stress on {STRESS_ORDINALS[stressAt-1] || stressAt+"th"} syllable
+        </div>
+      )}
     </div>
   );
 }

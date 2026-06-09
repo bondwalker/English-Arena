@@ -56,7 +56,10 @@ export default function SoloView({ onBack }) {
   const loadQuestions = () => {
     if (!selectedTopic) return;
     const bank = QUESTION_BANK[selectedTopic].questions;
-    const pool = gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
+    // Stress Battle type always draws from the full dedicated word bank, regardless of topic
+    const pool = gameType === "stress_battle"
+      ? QUESTION_BANK.stress_battle.questions
+      : gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
     if (!pool.length) return;
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
@@ -138,7 +141,9 @@ export default function SoloView({ onBack }) {
         </div>
         {selectedTopic && (() => {
           const bank = QUESTION_BANK[selectedTopic].questions;
-          const available = gameType === "mixed" ? bank.length : bank.filter(q => q.type === gameType).length;
+          const available = gameType === "stress_battle"
+            ? QUESTION_BANK.stress_battle.questions.length
+            : gameType === "mixed" ? bank.length : bank.filter(q => q.type === gameType).length;
           const actual = Math.min(qCount, available);
           return available < qCount
             ? <p style={{fontSize:"0.78rem",color:"var(--sun)",marginBottom:"1rem",marginTop:"0.3rem"}}>Only {available} question{available!==1?"s":""} available — you'll get {actual}.</p>

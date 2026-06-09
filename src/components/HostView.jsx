@@ -30,15 +30,17 @@ function HostReveal({ q, answers, players }) {
         ) : q.type === "stress_battle" ? (
           <div style={{ textAlign: "center" }}>
             <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.8rem", fontWeight: 900, letterSpacing: "0.08em", marginBottom: "1rem", fontStyle: "italic", color: "var(--sun)" }}>{q.word}</div>
-            <div style={{ display: "flex", gap: "2.5rem", justifyContent: "center" }}>
+            <div style={{ display: "flex", gap: "2rem", justifyContent: "center" }}>
               {["A", "B"].map(label => {
                 const isCorrect = label === q.answer;
-                const wrongStress = q.stressed === 1 ? 2 : q.stressed === 3 ? 2 : 1;
-                const stressAt = isCorrect ? q.stressed : wrongStress;
+                const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
+                const s = q.stressed || 1;
+                const wrongStress = s === n ? s - 1 : s + 1;
+                const stressAt = isCorrect ? s : wrongStress;
                 return (
-                  <div key={label} style={{ textAlign: "center", padding: "0.8rem 1.4rem", borderRadius: 12, border: `2px solid ${isCorrect ? "var(--sun)" : "var(--line)"}`, background: isCorrect ? "rgba(255,206,71,0.1)" : "transparent" }}>
-                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.9rem", marginBottom: "0.5rem", color: isCorrect ? "var(--sun)" : "var(--muted)", letterSpacing: "0.1em" }}>{label}{isCorrect ? " ✓" : ""}</div>
-                    <StressDots syllables={q.syllables} stressAt={stressAt} />
+                  <div key={label} style={{ textAlign: "center", padding: "0.9rem 1.4rem", borderRadius: 12, border: `2px solid ${isCorrect ? "var(--sun)" : "var(--line)"}`, background: isCorrect ? "rgba(255,206,71,0.1)" : "transparent" }}>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.9rem", marginBottom: "0.5rem", color: isCorrect ? "var(--sun)" : "var(--muted)", letterSpacing: "0.1em", fontWeight: 700 }}>{label}{isCorrect ? " ✓" : ""}</div>
+                    <StressDots syllables={n} stressAt={stressAt} label />
                   </div>
                 );
               })}
@@ -184,20 +186,20 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       })()}
       {q.type === "stress_battle" && (
         <div style={{ textAlign: "center", marginTop: "0.5rem", maxWidth: 680, margin: "0 auto" }}>
-          <div style={{ display: "inline-flex", alignItems: "flex-end", gap: 24, padding: "22px 30px", background: "var(--paper)", borderRadius: 18, border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--ink)" }}>
-            {(Array.isArray(q.syllables) ? q.syllables : Array.from({length: q.syllables || 0}, (_, i) => `${i+1}`)).map((s, i) => {
-              const isStressed = (i + 1) === q.stressed;
+          <div style={{ fontFamily: "'Fraunces',serif", fontSize: "clamp(2.4rem,6vw,3.8rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.6rem" }}>{q.word}</div>
+          <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center" }}>
+            {["A", "B"].map(label => {
+              const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
+              const s = q.stressed || 1;
+              const wrongStress = s === n ? s - 1 : s + 1;
+              const stressAt = label === q.answer ? s : wrongStress;
               return (
-                <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                  <div className={isStressed ? "sa-anim-pulse" : ""}><Waveform color={isStressed ? "var(--tomato)" : "var(--muted)"} stress={isStressed ? 1 : 0.25} size={1.1} /></div>
-                  <div style={{ fontFamily: "'Fraunces',serif", fontSize: isStressed ? 52 : 34, fontWeight: 900, letterSpacing: "-0.01em", textTransform: "uppercase", color: isStressed ? "var(--ink)" : "var(--muted)", fontStyle: isStressed ? "italic" : "normal", transition: "all 0.3s" }}>{s}</div>
-                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: isStressed ? "var(--tomato)" : "var(--muted)", letterSpacing: "0.15em", fontWeight: 700 }}>{isStressed ? "STRESS" : `· ${i + 1} ·`}</div>
+                <div key={label} style={{ textAlign: "center", padding: "1.2rem 1.8rem", borderRadius: 16, border: "2px solid var(--line)", background: "var(--paper)", minWidth: 150, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.9rem" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.1rem", color: "var(--muted)", letterSpacing: "0.1em", fontWeight: 700 }}>{label}</div>
+                  <StressDots syllables={n} stressAt={stressAt} size="lg" label />
                 </div>
               );
             })}
-          </div>
-          <div style={{ marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 14px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 999, color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", fontSize: 13, letterSpacing: "0.04em" }}>
-            <SAIcon name="play" size={12} color="var(--tomato)" /><span>{q.word}</span>
           </div>
         </div>
       )}
@@ -358,7 +360,10 @@ export default function HostView({ onBack }) {
   const loadQuestions = () => {
     if (!selectedTopic) { setError("Select a topic first!"); return; }
     const bank = QUESTION_BANK[selectedTopic].questions;
-    let pool = (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => q.type === gameType);
+    // Stress Battle type always draws from the full dedicated word bank, regardless of topic
+    let pool = gameType === "stress_battle"
+      ? QUESTION_BANK.stress_battle.questions
+      : (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => q.type === gameType);
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
     const qs = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(qCount, pool.length));
     setError("");
@@ -679,7 +684,7 @@ export default function HostView({ onBack }) {
       {/* Question phase */}
       {room.phase === "question" && room.currentQ && (
         <>
-          <div style={{ fontSize: bigText ? "1.2em" : "1em" }}>
+          <div style={{ zoom: bigText ? 1.3 : 1 }}>
             <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers || {}}
               players={room.players || {}} qIndex={room.qIndex} total={room.questions.length}
               mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused}

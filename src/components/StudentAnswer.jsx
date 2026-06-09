@@ -268,29 +268,21 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "stress_battle" && (
         <div>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 14, padding: "14px", background: "var(--paper)", borderRadius: 14, border: "2px solid var(--ink)", boxShadow: "3px 3px 0 var(--ink)", marginBottom: "1rem" }}>
-            {(Array.isArray(q.syllables) ? q.syllables : Array.from({length: q.syllables || 0}, (_, i) => `${i+1}`)).map((s, i) => {
-              const isStressed = (i + 1) === q.stressed;
-              return (
-                <div key={i} style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                  <Waveform color={isStressed ? "var(--tomato)" : "var(--muted)"} stress={isStressed ? 1 : 0.25} size={0.8} bars={10} />
-                  <div style={{ fontFamily: "'Fraunces',serif", fontSize: isStressed ? 28 : 18, fontWeight: 900, textTransform: "uppercase", color: isStressed ? "var(--ink)" : "var(--muted)", fontStyle: isStressed ? "italic" : "normal" }}>{s}</div>
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "0.8rem" }}>Which stress pattern is correct?</div>
+          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "0.5rem" }}>{q.word}</div>
+          <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "1.4rem" }}>Which stress pattern is correct?</div>
           <div style={{ display: "flex", gap: "0.8rem" }}>
             {["A", "B"].map(label => {
-              const wrongStress = q.stressed === 1 ? 2 : q.stressed === 3 ? 2 : 1;
-              const stressAt = label === q.answer ? q.stressed : wrongStress;
+              const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
+              const s = q.stressed || 1;
+              const wrongStress = s === n ? s - 1 : s + 1;
+              const stressAt = label === q.answer ? s : wrongStress;
               const sel = myAnswer === label;
               return (
                 <button key={label} disabled={answered}
-                  style={{ flex: 1, padding: "1.4rem 0.8rem", border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "var(--paper)", borderRadius: 12, cursor: answered ? "default" : "pointer", opacity: answered && !sel ? 0.28 : 1, transition: "all 0.15s", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.9rem" }}
+                  style={{ flex: 1, padding: "1.5rem 0.8rem", border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "var(--paper)", borderRadius: 14, cursor: answered ? "default" : "pointer", opacity: answered && !sel ? 0.28 : 1, transition: "all 0.15s", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}
                   onClick={() => onAnswer(label)}>
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.4rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--muted)" }}>{label}</span>
-                  <StressDots syllables={q.syllables} stressAt={stressAt} size="lg" />
+                  <StressDots syllables={n} stressAt={stressAt} size="lg" label />
                 </button>
               );
             })}

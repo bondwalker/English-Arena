@@ -178,7 +178,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <button onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} style={{ background: "none", border: "1px solid var(--line)", borderRadius: 4, color: "var(--muted)", fontSize: "0.7rem", padding: "0.18rem 0.45rem", cursor: "pointer", lineHeight: 1 }} title="Toggle text size">{bigText ? "A−" : "A+"}</button>
+          <button onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} style={{ background: "var(--cobalt)", border: "none", borderRadius: 8, color: "var(--on-dark)", fontSize: "0.82rem", fontWeight: 700, padding: "0.3rem 0.65rem", cursor: "pointer", lineHeight: 1 }} title="Toggle text size">{bigText ? "A−" : "A+"}</button>
           <div style={{ textAlign: "right" }}>
             <div style={{ color: "var(--sun)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.1rem", lineHeight: 1 }}><SARollingNumber value={myScore} /></div>
             <div style={{ fontSize: "0.65rem", color: "var(--muted)", letterSpacing: "0.04em", textTransform: "uppercase" }}>pts</div>
@@ -199,7 +199,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
           <div className="dots mt-3"><span /><span /><span /></div>
         </div>
       ) : phase === "question" && q ? (
-        <div style={{ fontSize: bigText ? "1.2em" : "1em" }}>
+        <div style={{ zoom: bigText ? 1.3 : 1 }}>
           {(() => {
             const total = getTimeLimit(q);
             const pct = Math.max(0, (room.timeLeft / total) * 100);
@@ -239,15 +239,17 @@ export default function StudentView({ onBack, initialCode = "" }) {
             ) : q.type === "stress_battle" ? (
               <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
                 <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.4rem", color: "var(--sun)", marginBottom: "0.8rem" }}>{q.word}</div>
-                <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center" }}>
+                <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                   {["A", "B"].map(label => {
                     const isCorrect = label === q.answer;
-                    const wrongStress = q.stressed === 1 ? 2 : q.stressed === 3 ? 2 : 1;
-                    const stressAt = isCorrect ? q.stressed : wrongStress;
+                    const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
+                    const s = q.stressed || 1;
+                    const wrongStress = s === n ? s - 1 : s + 1;
+                    const stressAt = isCorrect ? s : wrongStress;
                     return (
-                      <div key={label} style={{ textAlign: "center", padding: "0.6rem 1rem", border: `2px solid ${isCorrect ? "var(--sun)" : "var(--line)"}`, borderRadius: 8, background: isCorrect ? "rgba(255,206,71,0.12)" : "transparent" }}>
-                        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", color: isCorrect ? "var(--sun)" : "var(--muted)", marginBottom: "0.4rem" }}>{label}{isCorrect ? " ✓" : ""}</div>
-                        <StressDots syllables={q.syllables} stressAt={stressAt} />
+                      <div key={label} style={{ textAlign: "center", padding: "0.7rem 1rem", border: `2px solid ${isCorrect ? "var(--sun)" : "var(--line)"}`, borderRadius: 10, background: isCorrect ? "rgba(255,206,71,0.12)" : "transparent" }}>
+                        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", color: isCorrect ? "var(--sun)" : "var(--muted)", marginBottom: "0.4rem", fontWeight: 700 }}>{label}{isCorrect ? " ✓" : ""}</div>
+                        <StressDots syllables={n} stressAt={stressAt} label />
                       </div>
                     );
                   })}
