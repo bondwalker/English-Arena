@@ -354,12 +354,12 @@ export default function HostView({ onBack }) {
   }, [room.phase, room.qIndex]);
 
   useEffect(() => {
-    if (selectedTopic === "stress_battle") setQCount(15);
-  }, [selectedTopic]);
+    if (selectedTopic === "stress_battle" || gameType === "stress_battle") setQCount(15);
+  }, [selectedTopic, gameType]);
 
   const loadQuestions = () => {
-    if (!selectedTopic) { setError("Select a topic first!"); return; }
-    const bank = QUESTION_BANK[selectedTopic].questions;
+    if (!selectedTopic && gameType !== "stress_battle") { setError("Select a topic first!"); return; }
+    const bank = selectedTopic ? QUESTION_BANK[selectedTopic].questions : [];
     // Stress Battle type always draws from the full dedicated word bank, regardless of topic
     let pool = gameType === "stress_battle"
       ? QUESTION_BANK.stress_battle.questions
@@ -674,7 +674,7 @@ export default function HostView({ onBack }) {
             </div>
           </div>
           {error && <p className="text-coral mb-1" style={{ fontSize: "0.85rem" }}>{error}</p>}
-          <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic} style={{ color: "var(--on-light)", borderColor: "var(--on-light)" }}>
+          <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic && gameType !== "stress_battle"} style={{ color: "var(--on-light)", borderColor: "var(--on-light)" }}>
             Load Questions →
           </button>
           <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.4rem" }}>Students can join via the QR above while you set up</p>

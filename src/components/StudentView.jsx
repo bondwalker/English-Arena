@@ -219,7 +219,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
             room={room} />
         </div>
       ) : phase === "reveal" ? (
-        <div className="text-center mt-4">
+        <div className="text-center mt-4" style={{ zoom: bigText ? 1.3 : 1 }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: myAnswer !== null ? (wasCorrect ? "rgba(122,220,90,0.15)" : "rgba(255,92,66,0.15)") : "rgba(253,243,221,0.08)", border: `2px solid ${myAnswer !== null ? (wasCorrect ? "var(--leaf)" : "var(--tomato)") : "var(--line)"}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 0.7rem" }}>
             {myAnswer !== null
               ? <SAIcon name={wasCorrect ? "bolt" : "skip"} size={24} color={wasCorrect ? "var(--leaf)" : "var(--tomato)"} />

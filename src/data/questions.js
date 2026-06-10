@@ -2409,7 +2409,7 @@ export const QUESTION_BANK = {
     {type:"stress_battle",word:"POPULATION",syllables:["pop","u","la","tion"],stressed:3,answer:"B",explanation:"pop-u-LA-tion — the stress falls on the third syllable."},
     {type:"stress_battle",word:"TOURISM",syllables:["tour","is","m"],stressed:1,answer:"A",explanation:"TOUR-is-m — the stress falls on the first syllable."},
     {type:"stress_battle",word:"METROPOLITAN",syllables:["met","ro","pol","i","tan"],stressed:3,answer:"B",explanation:"met-ro-POL-i-tan — the stress falls on the third syllable."},
-    {type:"stress_battle",word:"TRANSPORT",syllables:["trans","port"],stressed:1,answer:"A",explanation:"TRANS-port — the stress falls on the first syllable when used as a noun."},
+
     {type:"stress_battle",word:"INFRASTRUCTURE",syllables:["in","fra","struc","ture"],stressed:1,answer:"A",explanation:"IN-fra-struc-ture — the stress falls on the first syllable."},
     {type:"stress_battle",word:"SUBURBAN",syllables:["sub","ur","ban"],stressed:2,answer:"B",explanation:"sub-UR-ban — the stress falls on the second syllable."},
   ]},
@@ -2525,7 +2525,7 @@ export const QUESTION_BANK = {
 
     // stress_battle ×10
     {type:"stress_battle",word:"DISCOVERY",syllables:["dis","cov","er","y"],stressed:2,answer:"B",explanation:"dis-COV-er-y — the stress falls on the second syllable."},
-    {type:"stress_battle",word:"RESEARCH",syllables:["re","search"],stressed:2,answer:"B",explanation:"re-SEARCH — when used as a verb or noun in British English, the stress often falls on the second syllable."},
+
     {type:"stress_battle",word:"HYPOTHESIS",syllables:["hy","poth","e","sis"],stressed:2,answer:"B",explanation:"hy-POTH-e-sis — the stress falls on the second syllable."},
     {type:"stress_battle",word:"EXPERIMENT",syllables:["ex","per","i","ment"],stressed:2,answer:"B",explanation:"ex-PER-i-ment — the stress falls on the second syllable."},
     {type:"stress_battle",word:"TECHNOLOGY",syllables:["tech","nol","o","gy"],stressed:2,answer:"B",explanation:"tech-NOL-o-gy — the stress falls on the second syllable."},
@@ -3778,7 +3778,7 @@ export const QUESTION_BANK = {
     // 10 stress_battle questions for verb_tenses
     // Topic-relevant words: continuous, perfect, regular, irregular, passive, active, conditional, subjunctive, gerund, participle
     {type:"stress_battle",word:"CONTINUOUS",syllables:["con","tin","u","ous"],stressed:2,answer:"A",explanation:"con-TIN-u-ous — stress falls on the second syllable."},
-    {type:"stress_battle",word:"PERFECT",syllables:["per","fect"],stressed:1,answer:"B",explanation:"PER-fect — stress falls on the first syllable."},
+
     {type:"stress_battle",word:"REGULAR",syllables:["reg","u","lar"],stressed:1,answer:"A",explanation:"REG-u-lar — stress falls on the first syllable."},
     {type:"stress_battle",word:"IRREGULAR",syllables:["ir","reg","u","lar"],stressed:2,answer:"B",explanation:"ir-REG-u-lar — stress falls on the second syllable."},
     {type:"stress_battle",word:"PASSIVE",syllables:["pas","sive"],stressed:1,answer:"A",explanation:"PAS-sive — stress falls on the first syllable."},
@@ -4104,7 +4104,7 @@ export const QUESTION_BANK = {
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"BEHIND",syllables:2,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"BECOME",syllables:2,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"RETURN",syllables:2,stressed:2,answer:"A"},
-    {type:"stress_battle",question:"Which stress pattern is correct?",word:"INVITE",syllables:2,stressed:2,answer:"A"},
+
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"CORRECT",syllables:2,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"BELOW",syllables:2,stressed:2,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"REPEAT",syllables:2,stressed:2,answer:"B"},
