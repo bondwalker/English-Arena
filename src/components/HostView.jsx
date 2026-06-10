@@ -354,8 +354,15 @@ export default function HostView({ onBack }) {
   }, [room.phase, room.qIndex]);
 
   useEffect(() => {
-    if (selectedTopic === "stress_battle" || gameType === "stress_battle") setQCount(15);
-  }, [selectedTopic, gameType]);
+    if (gameType === "stress_battle") {
+      setSelectedTopic("stress_battle");
+      setQCount(15);
+    }
+  }, [gameType]);
+
+  useEffect(() => {
+    if (selectedTopic === "stress_battle") setQCount(15);
+  }, [selectedTopic]);
 
   const loadQuestions = () => {
     if (!selectedTopic && gameType !== "stress_battle") { setError("Select a topic first!"); return; }
@@ -367,7 +374,8 @@ export default function HostView({ onBack }) {
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
     const qs = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(qCount, pool.length));
     setError("");
-    upd(prev => ({ ...prev, questions: qs, topic: QUESTION_BANK[selectedTopic].label, gameType, phase: "lobby" }));
+    const topicLabel = selectedTopic ? (QUESTION_BANK[selectedTopic]?.label ?? "Stress Battle") : "⚡ Stress Battle";
+    upd(prev => ({ ...prev, questions: qs, topic: topicLabel, gameType, phase: "lobby" }));
   };
 
   const autoAssign = () => {
@@ -643,22 +651,30 @@ export default function HostView({ onBack }) {
               {room.teamsLocked && <p className="text-green mt-1" style={{ fontSize: "0.8rem" }}>Teams assigned</p>}
             </div>
           )}
-          <span className="label">Topic</span>
-          {(() => {
-            const noSB = new Set(["verb_tenses", "present_perfect"]);
-            return (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(155px,1fr))", gap: "0.4rem", marginBottom: "0.75rem", maxHeight: "260px", overflowY: "auto", padding: "0.5rem", border: "1px solid var(--line)", borderRadius: 10 }}>
-                {Object.entries(QUESTION_BANK).map(([key, { label }]) => {
-                  const dis = gameType === "stress_battle" && noSB.has(key);
-                  const sel = selectedTopic === key;
-                  return (
-                    <button key={key} disabled={dis} onClick={() => !dis && setSelectedTopic(key)}
-                      style={{ padding: "0.55rem 0.6rem", fontFamily: "'DM Sans',sans-serif", fontSize: "0.78rem", fontWeight: sel ? 700 : 400, border: `1.5px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "transparent", color: sel ? "var(--sun)" : dis ? "var(--muted)" : "var(--muted)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", transition: "all 0.12s", borderRadius: 8, opacity: dis ? 0.35 : 1 }}>{label}</button>
-                  );
-                })}
-              </div>
-            );
-          })()}
+          {gameType === "stress_battle" ? (
+            <div style={{ padding: "0.7rem 0.9rem", borderRadius: 10, border: "1px solid rgba(91,139,255,0.3)", background: "rgba(91,139,255,0.07)", marginBottom: "0.75rem", fontSize: "0.78rem", color: "var(--cobalt)" }}>
+              ⚡ Using the dedicated <strong>209-word Stress Battle bank</strong> — no topic needed
+            </div>
+          ) : (
+            <>
+              <span className="label">Topic</span>
+              {(() => {
+                const noSB = new Set(["verb_tenses", "present_perfect"]);
+                return (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(155px,1fr))", gap: "0.4rem", marginBottom: "0.75rem", maxHeight: "260px", overflowY: "auto", padding: "0.5rem", border: "1px solid var(--line)", borderRadius: 10 }}>
+                    {Object.entries(QUESTION_BANK).map(([key, { label }]) => {
+                      const dis = noSB.has(key);
+                      const sel = selectedTopic === key;
+                      return (
+                        <button key={key} disabled={dis} onClick={() => !dis && setSelectedTopic(key)}
+                          style={{ padding: "0.55rem 0.6rem", fontFamily: "'DM Sans',sans-serif", fontSize: "0.78rem", fontWeight: sel ? 700 : 400, border: `1.5px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "transparent", color: sel ? "var(--sun)" : dis ? "var(--muted)" : "var(--muted)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", transition: "all 0.12s", borderRadius: 8, opacity: dis ? 0.35 : 1 }}>{label}</button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+            </>
+          )}
           <div className="flex gap-2 mb-2 wrap">
             <div style={{ flex: 2, minWidth: 180 }}>
               <span className="label">Game Type</span>
@@ -677,6 +693,9 @@ export default function HostView({ onBack }) {
           <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic && gameType !== "stress_battle"} style={{ color: "var(--on-light)", borderColor: "var(--on-light)" }}>
             Load Questions →
           </button>
+          {room.phase === "lobby" && room.questions.length > 0 && (
+            <p style={{ fontSize: "0.78rem", color: "var(--leaf)", marginTop: "0.3rem", textAlign: "center" }}>✓ {room.questions.length} questions ready</p>
+          )}
           <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.4rem" }}>Students can join via the QR above while you set up</p>
         </div>
       )}
