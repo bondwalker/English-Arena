@@ -273,6 +273,7 @@ export default function HostView({ onBack }) {
   const [showReview, setShowReview] = useState(false);
   const [fbStatus, setFbStatus] = useState(db ? "checking" : "none");
   const timerRef = useRef(null);
+  const lastAnswersClearedRef = useRef(0);
 
   // Sync room ref with state
   const setRoom = (newRoom) => {
@@ -308,9 +309,11 @@ export default function HostView({ onBack }) {
         const s = read();
         if (!s || s.code !== code) return;
         const np = s.players || {}, na = s.answers || {};
+        const answersStale = Object.keys(na).length > 0 && Date.now() - lastAnswersClearedRef.current < 2000;
+        const naEff = answersStale ? roomRef.current.answers : na;
         if (JSON.stringify(roomRef.current.players) === JSON.stringify(np) &&
-            JSON.stringify(roomRef.current.answers) === JSON.stringify(na)) return;
-        const next = { ...roomRef.current, players: np, answers: na };
+            JSON.stringify(roomRef.current.answers) === JSON.stringify(naEff)) return;
+        const next = { ...roomRef.current, players: np, answers: naEff };
         roomRef.current = next;
         setRoomState(next);
       }, 700);
@@ -328,6 +331,8 @@ export default function HostView({ onBack }) {
     const unsubAnswers = onValue(ref(db, `rooms/${code}/answers`), snap => {
       const na = snap.val() || {};
       if (JSON.stringify(roomRef.current.answers) === JSON.stringify(na)) return;
+      // Block stale answers arriving right after a question transition (Firebase write race)
+      if (Object.keys(na).length > 0 && Date.now() - lastAnswersClearedRef.current < 2000) return;
       const next = { ...roomRef.current, answers: na };
       roomRef.current = next;
       setRoomState(next);
@@ -391,6 +396,7 @@ export default function HostView({ onBack }) {
   const startGame = () => {
     if (!roomRef.current.questions.length) return;
     window.scrollTo(0, 0);
+    lastAnswersClearedRef.current = Date.now();
     upd(prev => {
       let qs = prev.questions;
       let warmupCount = 0;
@@ -444,18 +450,22 @@ export default function HostView({ onBack }) {
 
   const goNextQuestion = () => {
     window.scrollTo(0, 0);
-    upd(prev => ({ ...prev, phase: "question", timeLeft: getTimeLimit(prev.currentQ), paused: false, firstCorrect: null }));
+    lastAnswersClearedRef.current = Date.now();
+    upd(prev => ({ ...prev, phase: "question", timeLeft: getTimeLimit(prev.currentQ), answers: {}, paused: false, firstCorrect: null }));
   };
 
   const replayQuestion = () => {
+    lastAnswersClearedRef.current = Date.now();
     upd(prev => ({ ...prev, phase: "question", timeLeft: getTimeLimit(prev.currentQ), answers: {}, paused: false, firstCorrect: null }));
   };
 
   const skipQuestion = () => {
+    lastAnswersClearedRef.current = Date.now();
     upd(prev => ({ ...prev, phase: "reveal", timeLeft: 0, answers: {}, firstCorrect: null }));
   };
 
   const skipWarmup = () => {
+    lastAnswersClearedRef.current = Date.now();
     upd(prev => {
       const nextQ = prev.questions[prev.warmupCount];
       if (!nextQ) return prev;
