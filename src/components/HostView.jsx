@@ -668,7 +668,6 @@ export default function HostView({ onBack }) {
               bigText={bigText}
               onToggleFont={() => { const n = !bigText; setBigText(n); writeFont(n); }} />
           </div>
-          <PlayersFooter players={players} mode={room.mode} />
         </>
       )}
 
