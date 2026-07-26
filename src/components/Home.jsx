@@ -1,39 +1,31 @@
-import { SALogo } from "./ui.jsx";
-
 export default function Home({ onHost, onJoin, onSolo }) {
   return (
-    <div className="hero">
-      <div style={{position:"absolute",top:-80,right:-80,width:260,height:260,borderRadius:"50%",background:"var(--sun)",opacity:0.18,pointerEvents:"none"}} />
-      <div style={{position:"absolute",bottom:-100,left:-60,width:300,height:300,borderRadius:"50%",background:"var(--aqua)",opacity:0.12,pointerEvents:"none"}} />
-      <div style={{position:"absolute",top:160,right:80,width:60,height:60,borderRadius:"50%",background:"var(--tomato)",opacity:0.55,pointerEvents:"none"}} className="sa-anim-pulse" />
+    <div className="hero" style={{ justifyContent: "center", alignItems: "stretch", padding: "clamp(1.5rem,5vw,4rem)" }}>
+      {/* decorative blobs */}
+      <div style={{ position: "absolute", top: -150, right: -110, width: 440, height: 440, borderRadius: "46% 46% 50% 50%", background: "var(--sun)", opacity: 0.22, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: 210, right: 190, width: 130, height: 130, borderRadius: "50%", background: "var(--tomato)", opacity: 0.95, pointerEvents: "none" }} className="sa-anim-pulse" />
+      <div style={{ position: "absolute", bottom: -160, left: -120, width: 460, height: 460, borderRadius: "50%", background: "var(--aqua)", opacity: 0.14, pointerEvents: "none" }} />
 
-      <div style={{position:"relative",zIndex:2,display:"flex",flexDirection:"column",alignItems:"center",gap:"1.2rem",width:"100%",maxWidth:400}}>
-        <div className="sa-anim-pop"><SALogo size={40} /></div>
-
-        <div className="sa-anim-slide" style={{textAlign:"center"}}>
-          <h1 style={{fontFamily:"'Fraunces',serif",fontSize:"clamp(3rem,10vw,5.5rem)",fontWeight:900,fontStyle:"italic",letterSpacing:"-0.03em",lineHeight:0.92,color:"var(--ink)"}}>
-            Grammar,<br/>make it<br/><span style={{color:"var(--tomato)"}}>a game.</span>
+      <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", justifyContent: "center", minHeight: "min(100vh,880px)" }}>
+        {/* hero content */}
+        <div className="sa-anim-slide" style={{ textAlign: "left", maxWidth: 900 }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "0.5rem 1.1rem", border: "1.5px solid rgba(91,139,255,0.55)", borderRadius: 999, color: "var(--cobalt)", fontSize: "0.95rem", fontWeight: 700, marginBottom: "1.6rem" }}>
+            <span style={{ fontSize: "0.7rem" }}>◆</span> Live classroom games
+          </span>
+          <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: "clamp(2.8rem,9vw,6.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 0.92, color: "var(--ink)" }}>
+            English <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>Arena<span style={{ color: "var(--sun)" }}>.</span></span>
           </h1>
-          <p style={{marginTop:"1rem",fontSize:"0.9rem",color:"var(--muted)",lineHeight:1.65,maxWidth:320}}>
-            Live classroom games. Ten types, thirty topics.<br/>No app — just a browser.
-          </p>
-        </div>
-
-        <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"0.65rem",marginTop:"0.5rem"}}>
-          <button className="btn btn-gold btn-full" onClick={onHost} style={{fontSize:"1rem",color:"var(--on-light)",borderColor:"var(--on-light)"}}>
-            Host a game →
-          </button>
-          <div style={{display:"flex",alignItems:"center",gap:"0.7rem",opacity:0.35}}>
-            <div style={{flex:1,height:1,background:"var(--line)"}}/><span style={{fontSize:"0.68rem",letterSpacing:"0.1em",textTransform:"uppercase"}}>Students</span><div style={{flex:1,height:1,background:"var(--line)"}}/>
+          <div style={{ display: "flex", gap: "1rem", marginTop: "2.6rem", flexWrap: "wrap", alignItems: "center" }}>
+            <button className="btn" onClick={onHost} style={{ fontSize: "1.05rem", background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", padding: "1.05rem 2.4rem" }}>
+              Host a game →
+            </button>
+            <button className="btn btn-ghost" onClick={onJoin} style={{ fontSize: "1.05rem", background: "var(--paper)", color: "var(--ink)", borderColor: "var(--line)", padding: "1.05rem 2.2rem" }}>
+              I have a code
+            </button>
+            <button className="btn btn-ghost btn-sm" onClick={onSolo} style={{ color: "var(--sun)", fontWeight: 700, fontSize: "0.9rem", border: "none", padding: "0.3rem 0.4rem" }}>
+              or practise solo →
+            </button>
           </div>
-          <button className="btn btn-ghost btn-full" onClick={onJoin}>Join a game with code</button>
-          <button className="btn btn-ghost btn-full" onClick={onSolo} style={{fontSize:"0.85rem",opacity:0.7}}>Practise on my own</button>
-        </div>
-
-        <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"center",marginTop:"0.5rem"}}>
-          {[{t:"Multiple Choice",c:"var(--tomato)"},{t:"Stress Battle",c:"var(--cobalt)"},{t:"Word Match",c:"var(--aqua)"},{t:"Idioms",c:"var(--sun)"},{t:"+6 more",c:"var(--muted)"}].map(g => (
-            <div key={g.t} style={{padding:"5px 12px",background:"var(--paper)",border:`1.5px solid ${g.c}`,borderRadius:10,fontSize:11,fontWeight:600,color:g.c}}>{g.t}</div>
-          ))}
         </div>
       </div>
     </div>

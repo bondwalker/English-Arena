@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { SAIcon, StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
+import { OPT_COLORS, ordinal } from "../lib/utils.js";
 
-const OPT_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
 export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedIdx, setUsedIdx, typeVal, setTypeVal, storyOrder, setStoryOrder, matchState, setMatchState, room }) {
@@ -51,19 +51,8 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   };
 
   return (
-    <div style={{ fontSize: bigText ? "1.2em" : "1em" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.7rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 10px", background: "var(--paper)", border: "1.5px solid var(--tomato)", borderRadius: 8 }}>
-          <SAIcon name={q.type} size={13} color="var(--tomato)" />
-          <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", letterSpacing: "0.08em", color: "var(--tomato)", textTransform: "uppercase" }}>{q.type.replace(/_/g, " ")}</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {room && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", color: "var(--muted)" }}>Q{(room.qIndex || 0) + 1}/{room.questions?.length || 0}</span>}
-          <button onClick={toggleFont} style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", fontWeight: 700, padding: "3px 8px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 6, cursor: "pointer", color: "var(--muted)", letterSpacing: "0.04em" }}>{bigText ? "A−" : "A+"}</button>
-        </div>
-      </div>
-
-      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.15rem", lineHeight: 1.45, marginBottom: "1rem", color: "var(--ink)" }}>{q.question}</h2>
+    <div>
+      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.35rem", lineHeight: 1.35, marginBottom: "1.1rem", color: "var(--ink)" }}>{q.question}</h2>
 
       {q.type === "multiple_choice" && q.options && (
         <div className="opt-grid">
@@ -72,8 +61,8 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               className={`opt-btn opt-${i}`}
               style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
               onClick={() => onAnswer(opt)}>
-              <span style={{ width: 22, height: 22, borderRadius: 6, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "0.7rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-              <span style={{ textAlign: "left", fontSize: "0.88rem" }}>{opt}</span>
+              <span style={{ width: 34, height: 34, borderRadius: 9, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
+              <span style={{ textAlign: "left", fontSize: "1rem", fontWeight: 600 }}>{opt}</span>
             </button>
           ))}
         </div>
@@ -268,9 +257,8 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "stress_battle" && (
         <div>
-          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "0.5rem" }}>{q.word}</div>
-          <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "1.4rem" }}>Which stress pattern is correct?</div>
-          <div style={{ display: "flex", gap: "0.8rem" }}>
+          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.4rem" }}>{q.word}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
             {["A", "B"].map(label => {
               const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
               const s = q.stressed || 1;
@@ -279,10 +267,13 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               const sel = myAnswer === label;
               return (
                 <button key={label} disabled={answered}
-                  style={{ flex: 1, padding: "1.5rem 0.8rem", border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "var(--paper)", borderRadius: 14, cursor: answered ? "default" : "pointer", opacity: answered && !sel ? 0.28 : 1, transition: "all 0.15s", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}
+                  style={{ width: "100%", padding: "1.3rem 1.2rem", border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "var(--paper)", borderRadius: 16, cursor: answered ? "default" : "pointer", opacity: answered && !sel ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", gap: "1.2rem" }}
                   onClick={() => onAnswer(label)}>
-                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.4rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--muted)" }}>{label}</span>
-                  <StressDots syllables={n} stressAt={stressAt} size="lg" label />
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--muted)", opacity: 0.6, flexShrink: 0 }}>{label}</span>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", flex: 1 }}>
+                    <StressDots syllables={n} stressAt={stressAt} size="lg" />
+                    <span style={{ fontSize: "1.15rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--ink-soft)" }}>stress on {ordinal(stressAt)} syllable</span>
+                  </div>
                 </button>
               );
             })}
