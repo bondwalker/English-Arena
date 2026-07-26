@@ -752,9 +752,11 @@ export default function HostView({ onBack }) {
       {(room.phase === "leaderboard" || room.phase === "end") && (
         <>
           <Leaderboard sorted={sorted} mode={room.mode} teams={activeTeams}
-            teamScores={teamScores} isEnd={room.phase === "end"} room={room} />
+            teamScores={teamScores} isEnd={room.phase === "end"} room={room}
+            onPlayAgain={room.phase === "end" ? reset : undefined}
+            onShareRecap={room.phase === "end" ? () => setShowReview(v => !v) : undefined} />
           {room.phase === "leaderboard" && (
-            <button className="btn btn-gold mt-3" onClick={goNextQuestion}>Next Question →</button>
+            <div className="text-center mt-3"><button className="btn btn-gold" style={{ color: "var(--on-light)", borderColor: "var(--on-light)" }} onClick={goNextQuestion}>Next Question →</button></div>
           )}
           {room.phase === "end" && (
             <>
