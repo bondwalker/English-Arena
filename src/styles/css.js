@@ -153,6 +153,8 @@ const css = `
   .sa-anim-fade{animation:sa-fade-in 0.4s ease both}
   .sa-anim-shake{animation:sa-shake 0.5s both}
   .sa-anim-pulse{animation:sa-pulse 1.4s ease-in-out infinite}
+  .sa-anim-float{animation:sa-float 2.6s ease-in-out infinite}
+  @keyframes sa-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
   .sa-anim-letter{animation:sa-letter-pop 0.7s cubic-bezier(0.2,0.8,0.3,1.3) both}
   .sa-anim-warn{animation:sa-timer-warn 0.5s ease-in-out infinite}
   .sa-stagger>*{animation-fill-mode:both}

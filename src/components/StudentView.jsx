@@ -93,37 +93,56 @@ export default function StudentView({ onBack, initialCode = "" }) {
   };
 
   if (step === "join") return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "1.5rem", maxWidth: 400, margin: "0 auto" }}>
-      <button className="btn btn-sm btn-ghost mb-3" onClick={onBack} style={{ alignSelf: "flex-start" }}>← Back</button>
-      <div className="sa-anim-pop" style={{ background: "var(--paper)", border: "2px solid var(--ink)", borderRadius: 22, padding: 24, boxShadow: "5px 5px 0 var(--sun)", width: "100%" }}>
-        <SAIcon name="hand_wave" size={36} color="var(--tomato)" />
-        <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "2rem", lineHeight: 1.05, margin: "10px 0 6px", letterSpacing: "-0.02em", fontStyle: "italic" }}>Jump in.</h2>
-        <p style={{ color: "var(--muted)", fontSize: "0.85rem", lineHeight: 1.5, marginBottom: "1.2rem" }}>Enter the 4-letter code from your teacher.</p>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "1.5rem", maxWidth: 430, margin: "0 auto" }}>
+      <button className="btn btn-sm btn-ghost mb-3" onClick={onBack} style={{ alignSelf: "flex-start", border: "none", opacity: 0.7 }}>← Back</button>
+      <div className="sa-anim-pop" style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 26, padding: "28px 26px", boxShadow: "6px 8px 0 var(--sun)", width: "100%" }}>
+        <div style={{ fontSize: "2.3rem", lineHeight: 1, marginBottom: "0.6rem" }}>✋</div>
+        <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.6rem", lineHeight: 1, margin: "0 0 0.5rem", letterSpacing: "-0.02em" }}>Jump in.</h2>
+        <p style={{ color: "var(--ink-soft)", fontSize: "1rem", lineHeight: 1.5, marginBottom: "1.6rem" }}>Four-letter code, then your name.</p>
+
         <span className="label">Room Code</span>
-        <input className="input input-xl mb-2" placeholder="XXXX" maxLength={4} value={code} onChange={e => setCode(e.target.value.toUpperCase())} style={{ fontFamily: "'Fraunces',serif", letterSpacing: "0.2em", border: "2.5px solid var(--line)" }} />
+        <div style={{ position: "relative", marginTop: "0.4rem", marginBottom: "1.3rem" }}>
+          <input value={code} onChange={e => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4))} maxLength={4} autoFocus autoCapitalize="characters"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0, border: "none", cursor: "text", zIndex: 2, fontSize: 16 }} />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", pointerEvents: "none" }}>
+            {[0, 1, 2, 3].map(i => {
+              const filled = !!code[i];
+              const active = code.length === i;
+              return (
+                <div key={i} style={{ aspectRatio: "1", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 14, border: `2.5px solid ${filled || active ? "var(--tomato)" : "var(--line)"}`, background: "var(--cream)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2rem", color: "var(--ink)" }}>{code[i] || ""}</div>
+              );
+            })}
+          </div>
+        </div>
+
         <span className="label">Your Name</span>
         <input className="input" placeholder="e.g. Maria, Carlos, Ana…" value={name}
-          onChange={e => setName(e.target.value)} onKeyDown={e => e.key === "Enter" && join()} style={{ border: "2px solid var(--line)" }} />
-        {error && <p style={{ color: "var(--tomato)", marginTop: "0.5rem", fontSize: "0.85rem" }}>{error}</p>}
-        <button className="btn btn-gold btn-full mt-3" onClick={join} disabled={joining} style={{ color: "var(--on-light)", borderColor: "var(--on-light)" }}>
+          onChange={e => setName(e.target.value)} onKeyDown={e => e.key === "Enter" && join()} style={{ border: "2px solid var(--line)", marginTop: "0.4rem" }} />
+        {error && <p style={{ color: "var(--tomato)", marginTop: "0.6rem", fontSize: "0.85rem" }}>{error}</p>}
+        <button className="btn btn-coral btn-full mt-3" onClick={join} disabled={joining} style={{ fontSize: "1.05rem", padding: "1rem", marginTop: "1.3rem" }}>
           {joining ? "Joining…" : "Let's go →"}
         </button>
       </div>
+      <p style={{ color: "var(--muted)", fontSize: "0.85rem", marginTop: "1.4rem", textAlign: "center" }}>No app, no signup. Just your browser.</p>
     </div>
   );
 
   if (step === "waiting") {
     const myTeam = room?.players?.[name]?.team ? TEAMS.find(t => t.id === room.players[name].team) : null;
+    const others = Math.max(0, Object.keys(room?.players || {}).length - 1);
     return (
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "2rem", gap: "1rem" }}>
-        <SABlob name={name} size={72} color={myTeam?.color} />
-        <div>
-          <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.5rem", fontWeight: 900, fontStyle: "italic" }}>{name}</div>
-          {myTeam && <div style={{ fontSize: "0.9rem", color: myTeam.color, marginTop: "0.25rem" }}>{myTeam.name}</div>}
-        </div>
-        <div style={{ color: "var(--muted)", fontSize: "0.85rem" }}>Waiting for the teacher to start…</div>
-        <div className="dots"><span /><span /><span /></div>
-        {room?.code && <SARoomChip code={room.code} playerCount={Object.keys(room.players || {}).length} />}
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "2rem", gap: "1.1rem" }}>
+        <div className="sa-anim-float"><SAIcon name="hourglass" size={54} color="var(--tomato)" /></div>
+        <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: "2.2rem", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.01em", margin: 0 }}>You're in, {name}!</h2>
+        <p style={{ color: "var(--ink-soft)", fontSize: "1rem", lineHeight: 1.5, maxWidth: 300 }}>Waiting for your teacher to start the game.</p>
+        {room?.code && (
+          <div style={{ marginTop: "0.6rem", background: "var(--sun)", color: "var(--on-light)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.5rem", padding: "0.8rem 2.2rem", borderRadius: 16, letterSpacing: "0.04em" }}>Room · {room.code}</div>
+        )}
+        {myTeam && (
+          <div style={{ marginTop: "0.5rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", color: myTeam.color, fontWeight: 700, fontSize: "0.95rem" }}>
+            <SAIcon name={myTeam.icon} size={18} color={myTeam.color} /> Team {myTeam.name}{others > 0 ? ` · ${others} other${others > 1 ? "s" : ""}` : ""}
+          </div>
+        )}
       </div>
     );
   }
@@ -140,49 +159,20 @@ export default function StudentView({ onBack, initialCode = "" }) {
 
   return (
     <div style={{ minHeight: "100vh", maxWidth: 460, margin: "0 auto", padding: "1.2rem" }}>
-      {/* Result flash */}
-      {showResult && phase === "reveal" && myAnswer !== null && (
-        <div className="result-overlay">
-          <div className="result-box sa-anim-pop">
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.6rem" }}>
-              {wasCorrect
-                ? <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(122,220,90,0.18)", border: "2px solid var(--leaf)", display: "flex", alignItems: "center", justifyContent: "center" }}><SAIcon name="bolt" size={28} color="var(--leaf)" /></div>
-                : <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(255,92,66,0.18)", border: "2px solid var(--tomato)", display: "flex", alignItems: "center", justifyContent: "center" }}><SAIcon name="skip" size={28} color="var(--tomato)" /></div>
-              }
-            </div>
-            <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.4rem", fontWeight: 900, fontStyle: "italic", color: wasCorrect ? "var(--leaf)" : "var(--tomato)" }}>
-              {wasCorrect ? ((myData.streak || 0) >= 2 ? "Correct! +1250" : "Correct! +1000") : "Not quite…"}
-            </div>
-            {wasCorrect && (myData.streak || 0) >= 2 && (
-              <div style={{ marginTop: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}>
-                <SAStreakMeter count={myData.streak || 0} size="sm" />
-              </div>
-            )}
-            {!wasCorrect && q && <div style={{ marginTop: "0.5rem", fontSize: "0.85rem", opacity: 0.65, lineHeight: 1.5 }}>
-              {q.type === "stress_battle" ? `Correct: ${q.answer}`
-                : q.type === "error_spotter" ? <span>Error: <strong style={{ color: "var(--coral)" }}>{q.errorWord}</strong> → <strong style={{ color: "var(--ink)" }}>{q.answer}</strong></span>
-                  : <span>Answer: <strong style={{ color: "var(--sun)" }}>{q.type === "story_builder" ? q.correctOrder?.filter(i => i < 3).join(",") : q.answer}</strong></span>}
-            </div>}
-            {q?.explanation && <div style={{ marginTop: "0.4rem", fontSize: "0.78rem", opacity: 0.4, fontStyle: "italic", lineHeight: 1.4 }}>{q.explanation}</div>}
-          </div>
-        </div>
-      )}
-
       {/* Header */}
-      <div className="flex justify-between items-center mb-3">
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <SABlob name={name} size={32} color={myTeam?.color} />
-          <div>
-            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "0.85rem", lineHeight: 1.1 }}>{name}</div>
-            {myTeam && <div style={{ fontSize: "0.65rem", color: myTeam.color, fontWeight: 600, letterSpacing: "0.02em" }}>{myTeam.name}</div>}
+      <div className="flex justify-between items-center mb-3" style={{ gap: "0.6rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", minWidth: 0 }}>
+          <SABlob name={name} size={38} color={myTeam?.color} />
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.15rem", lineHeight: 1.05, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{name}</div>
+            {myTeam && <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.78rem", color: myTeam.color, fontWeight: 700 }}><SAIcon name={myTeam.icon} size={13} color={myTeam.color} />{myTeam.name}</div>}
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <button onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} style={{ background: "var(--cobalt)", border: "none", borderRadius: 8, color: "var(--on-dark)", fontSize: "0.82rem", fontWeight: 700, padding: "0.3rem 0.65rem", cursor: "pointer", lineHeight: 1 }} title="Toggle text size">{bigText ? "A−" : "A+"}</button>
-          <div style={{ textAlign: "right" }}>
-            <div style={{ color: "var(--sun)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.1rem", lineHeight: 1 }}><SARollingNumber value={myScore} /></div>
-            <div style={{ fontSize: "0.65rem", color: "var(--muted)", letterSpacing: "0.04em", textTransform: "uppercase" }}>pts</div>
-            {myTeam && <div style={{ fontSize: "0.65rem", color: myTeam.color, marginTop: "0.1rem" }}>Team: {(teamScores[myTeam.id] || 0).toLocaleString()}</div>}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", flexShrink: 0 }}>
+          <button onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} style={{ background: "transparent", border: "1.5px solid var(--line)", borderRadius: 8, color: "var(--ink-soft)", fontSize: "0.78rem", fontWeight: 700, padding: "0.35rem 0.55rem", cursor: "pointer", lineHeight: 1 }} title="Toggle text size">{bigText ? "A−" : "A+"}</button>
+          <div style={{ background: "var(--sun)", color: "var(--on-light)", borderRadius: 12, padding: "0.4rem 0.9rem", textAlign: "right", lineHeight: 1 }}>
+            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.55rem", letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.7, marginBottom: "0.15rem" }}>Score</div>
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.35rem" }}><SARollingNumber value={myScore} /></div>
           </div>
         </div>
       </div>
@@ -202,11 +192,22 @@ export default function StudentView({ onBack, initialCode = "" }) {
         <div style={{ zoom: bigText ? 1.3 : 1 }}>
           {(() => {
             const total = getTimeLimit(q);
-            const pct = Math.max(0, (room.timeLeft / total) * 100);
             const urgent = room.timeLeft <= 5 && !room.paused;
+            const typeLabel = q.type.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+            const mult = (myData.streak || 0) >= 1 ? (myData.streak || 0) >= 2 ? 2 : 1 : 0;
             return (
-              <div style={{ height: 4, background: "rgba(255,255,255,0.08)", borderRadius: 2, marginBottom: "0.9rem", overflow: "hidden" }}>
-                <div style={{ height: "100%", borderRadius: 2, background: urgent ? "var(--coral)" : "var(--teal)", width: `${pct}%`, transition: "width 1s linear" }} />
+              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 14, padding: "0.5rem", marginBottom: "1rem" }}>
+                <div style={{ width: 56, height: 56, flexShrink: 0, borderRadius: 12, background: urgent ? "var(--tomato)" : "var(--sun)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--on-light)" }}>{room.paused ? "‖" : room.timeLeft}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1rem", lineHeight: 1.1 }}>Question {room.qIndex + 1} of {room.questions.length}</div>
+                  <div style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{typeLabel}</div>
+                </div>
+                {mult > 1 && (
+                  <div style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 5, border: "1.5px solid var(--sun)", borderRadius: 999, padding: "0.35rem 0.7rem 0.35rem 0.5rem" }}>
+                    <span style={{ width: 16, height: 16, borderRadius: "50%", background: "var(--tomato)", display: "inline-block" }} />
+                    <span style={{ color: "var(--sun)", fontWeight: 800, fontSize: "0.9rem" }}>×{mult}</span>
+                  </div>
+                )}
               </div>
             );
           })()}
@@ -218,55 +219,42 @@ export default function StudentView({ onBack, initialCode = "" }) {
             matchState={matchState} setMatchState={setMatchState}
             room={room} />
         </div>
-      ) : phase === "reveal" ? (
-        <div className="text-center mt-4" style={{ zoom: bigText ? 1.3 : 1 }}>
-          <div style={{ width: 56, height: 56, borderRadius: "50%", background: myAnswer !== null ? (wasCorrect ? "rgba(122,220,90,0.15)" : "rgba(255,92,66,0.15)") : "rgba(253,243,221,0.08)", border: `2px solid ${myAnswer !== null ? (wasCorrect ? "var(--leaf)" : "var(--tomato)") : "var(--line)"}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 0.7rem" }}>
-            {myAnswer !== null
-              ? <SAIcon name={wasCorrect ? "bolt" : "skip"} size={24} color={wasCorrect ? "var(--leaf)" : "var(--tomato)"} />
-              : <SAIcon name="hourglass" size={24} color="var(--muted)" />
-            }
-          </div>
-          <p style={{ color: "var(--muted)", fontSize: "0.88rem" }}>{myAnswer !== null ? "Waiting for next question…" : "Time's up!"}</p>
-          {q && <div className="card mt-3" style={{ textAlign: "left" }}>
-            <span className="label">Correct Answer</span>
-            {q.type === "word_match" ? (
-              q.pairs?.slice(0, 2).map((p, i) => (
-                <div key={i} style={{ display: "flex", gap: "0.5rem", marginTop: "0.28rem", fontSize: "0.88rem" }}>
-                  <strong style={{ color: "var(--sun)" }}>{p.word}</strong>
-                  <span style={{ color: "var(--muted)" }}>→</span><span>{p.meaning}</span>
-                </div>
-              ))
-            ) : q.type === "stress_battle" ? (
-              <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
-                <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.4rem", color: "var(--sun)", marginBottom: "0.8rem" }}>{q.word}</div>
-                <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
-                  {["A", "B"].map(label => {
-                    const isCorrect = label === q.answer;
-                    const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
-                    const s = q.stressed || 1;
-                    const wrongStress = s === n ? s - 1 : s + 1;
-                    const stressAt = isCorrect ? s : wrongStress;
-                    return (
-                      <div key={label} style={{ textAlign: "center", padding: "0.7rem 1rem", border: `2px solid ${isCorrect ? "var(--sun)" : "var(--line)"}`, borderRadius: 10, background: isCorrect ? "rgba(255,206,71,0.12)" : "transparent" }}>
-                        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", color: isCorrect ? "var(--sun)" : "var(--muted)", marginBottom: "0.4rem", fontWeight: 700 }}>{label}{isCorrect ? " ✓" : ""}</div>
-                        <StressDots syllables={n} stressAt={stressAt} label />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : q.type === "story_builder" ? (
-              <div>{(q.correctOrder || []).filter(i => i < 3).map((idx, pos) => (
-                <div key={idx} style={{ fontSize: "0.82rem", marginTop: "0.25rem" }}>
-                  <span style={{ color: "var(--sun)", fontWeight: 700, marginRight: "0.35rem" }}>{pos + 1}.</span>{q.sentences[idx]}
-                </div>
-              ))}</div>
-            ) : (
-              <div style={{ fontWeight: 700, fontSize: "1rem", color: "var(--sun)" }}>{q.answer}</div>
-            )}
-          </div>}
-        </div>
       ) : null}
+
+      {/* Reveal — full coral takeover */}
+      {phase === "reveal" && (() => {
+        const answered = myAnswer !== null;
+        const streak = myData.streak || 0;
+        const headline = !answered ? "Time's up!" : wasCorrect ? "Correct!" : "Missed!";
+        const sub = !answered ? "No answer this round." : wasCorrect ? `+${(streak >= 2 ? 1250 : 1000).toLocaleString()} points${streak >= 2 ? " · on a streak!" : ""}` : "Streak ended.";
+        const ansText = q ? (
+          q.type === "word_match" ? "Match all pairs correctly"
+            : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
+              : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).join(", ")}`
+                : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
+                  : q.answer
+        ) : "";
+        return (
+          <div style={{ position: "fixed", inset: 0, background: "var(--tomato)", zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1.4rem", overflowY: "auto", textAlign: "center", gap: "0.5rem" }}>
+            <div className="sa-anim-float"><SAIcon name="hourglass" size={54} color="var(--ink)" /></div>
+            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "3rem", color: "var(--ink)", lineHeight: 1, margin: "0.4rem 0 0.2rem" }}>{headline}</h1>
+            <p style={{ color: "var(--ink)", opacity: 0.85, fontSize: "1.05rem", fontWeight: 600, marginBottom: "1.4rem" }}>{sub}</p>
+            {q && (
+              <div style={{ width: "100%", maxWidth: 340 }}>
+                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.18em", color: "rgba(15,18,38,0.6)", marginBottom: "0.6rem" }}>CORRECT ANSWER</div>
+                <div style={{ background: "var(--cream)", borderRadius: 16, padding: "1.3rem 1.2rem", boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
+                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", color: "var(--tomato)", lineHeight: 1.25 }}>{ansText}</div>
+                </div>
+                {q.explanation && <p style={{ color: "var(--ink)", opacity: 0.8, fontSize: "0.85rem", lineHeight: 1.45, marginTop: "0.9rem" }}>{q.explanation}</p>}
+              </div>
+            )}
+            <div style={{ marginTop: "1.6rem", background: "var(--cream)", borderRadius: 16, padding: "0.9rem 2rem", minWidth: 200, boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.14em", color: "var(--tomato)", textTransform: "uppercase", marginBottom: "0.15rem" }}>Your score</div>
+              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.4rem", color: "var(--tomato)", lineHeight: 1 }}>{myScore.toLocaleString()}</div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
