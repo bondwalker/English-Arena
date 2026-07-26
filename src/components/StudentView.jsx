@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -245,7 +245,20 @@ export default function StudentView({ onBack, initialCode = "" }) {
               <div style={{ width: "100%", maxWidth: 340 }}>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.18em", color: "rgba(15,18,38,0.6)", marginBottom: "0.6rem" }}>CORRECT ANSWER</div>
                 <div style={{ background: "var(--cream)", borderRadius: 16, padding: "1.3rem 1.2rem", boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
-                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", color: "var(--tomato)", lineHeight: 1.25 }}>{ansText}</div>
+                  {q.type === "stress_battle" ? (() => {
+                    const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
+                    const st = q.stressed || 1;
+                    return (
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
+                        <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--sun)" }}>{q.word}</div>
+                        <StressDots syllables={n} stressAt={st} size="lg" />
+                        {Array.isArray(q.syllables) && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.4rem", color: "var(--tomato)" }}>{stressBreakdown(q.syllables, st)}</div>}
+                        <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ink-soft)" }}>stress on {ordinal(st)} syllable</div>
+                      </div>
+                    );
+                  })() : (
+                    <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", color: "var(--tomato)", lineHeight: 1.25 }}>{ansText}</div>
+                  )}
                 </div>
                 {q.explanation && <p style={{ color: "var(--ink)", opacity: 0.8, fontSize: "0.85rem", lineHeight: 1.45, marginTop: "0.9rem" }}>{q.explanation}</p>}
               </div>

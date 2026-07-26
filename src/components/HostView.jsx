@@ -12,36 +12,49 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const pCount = Object.keys(players).length;
   const missed = Math.max(0, pCount - correct);
   const pill = pCount === 0 ? "The answer" : correct === 0 ? "Not this time" : correct === pCount ? "Everyone got it!" : "Answer revealed";
+  const isStress = q.type === "stress_battle";
+  const sN = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
+  const sStressed = q.stressed || 1;
   const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
   const ansText =
     q.type === "word_match" ? "Match all pairs correctly"
       : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
         : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).join(", ")}`
-          : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
-            : q.answer;
+          : q.answer;
   return (
-    <div style={{ position: "fixed", inset: 0, background: "var(--tomato)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
-      {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(253,243,221,0.13)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
+    <div style={{ position: "fixed", inset: 0, background: "var(--sun)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
+      {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(15,18,38,0.09)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", height: "100%", maxWidth: 1100, margin: "0 auto", width: "100%", justifyContent: "center", textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.4rem" }}>
-          <span style={{ border: "1.5px solid rgba(15,18,38,0.6)", borderRadius: 999, padding: "0.5rem 1.3rem", fontWeight: 700, fontSize: "1rem", color: "var(--on-light)" }}>{pill}</span>
+          <span style={{ border: "1.5px solid rgba(15,18,38,0.5)", borderRadius: 999, padding: "0.5rem 1.3rem", fontWeight: 700, fontSize: "1rem", color: "var(--on-light)" }}>{pill}</span>
         </div>
-        <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--ink)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{ansText}"</h1>
-        {q.explanation && <p style={{ color: "var(--ink)", opacity: 0.85, fontSize: "clamp(1rem,1.9vw,1.5rem)", lineHeight: 1.5, marginTop: "1.4rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}>{q.explanation}</p>}
+        {isStress ? (
+          <div className="sa-anim-pop" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.4rem" }}>
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.4rem,6vw,4.5rem)", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--on-light)", lineHeight: 1 }}>{q.word}</div>
+            <StressDots syllables={sN} stressAt={sStressed} size="lg" color="var(--on-light)" dim="rgba(15,18,38,0.35)" glow={false} />
+            {Array.isArray(q.syllables) && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(2rem,4.5vw,3.4rem)", letterSpacing: "0.02em", color: "var(--on-light)" }}>{stressBreakdown(q.syllables, sStressed)}</div>}
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "clamp(1.1rem,2vw,1.6rem)", color: "var(--on-light)", opacity: 0.75 }}>stress on {ordinal(sStressed)} syllable</div>
+          </div>
+        ) : (
+          <>
+            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{ansText}"</h1>
+            {q.explanation && <p style={{ color: "var(--on-light)", opacity: 0.8, fontSize: "clamp(1rem,1.9vw,1.5rem)", lineHeight: 1.5, marginTop: "1.4rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}>{q.explanation}</p>}
+          </>
+        )}
       </div>
       <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "0.8rem" }}>
           {[{ k: "Correct", v: correct }, { k: "Missed", v: missed }].map(s => (
-            <div key={s.k} style={{ background: "var(--cream)", borderRadius: 14, padding: "0.8rem 1.4rem", textAlign: "center", minWidth: 96, boxShadow: "0 0 0 3px rgba(253,243,221,0.3)" }}>
-              <div style={{ color: "var(--tomato)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.1rem" }}>{s.k}</div>
-              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2rem", color: "var(--tomato)", lineHeight: 1 }}>{s.v}</div>
+            <div key={s.k} style={{ background: "var(--cream)", borderRadius: 14, padding: "0.8rem 1.4rem", textAlign: "center", minWidth: 96 }}>
+              <div style={{ color: "var(--sun)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.1rem" }}>{s.k}</div>
+              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2rem", color: "var(--ink)", lineHeight: 1 }}>{s.v}</div>
             </div>
           ))}
         </div>
         <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
           {onReplay && <button className="btn btn-ghost btn-sm" onClick={onReplay} style={{ color: "var(--on-light)", borderColor: "rgba(15,18,38,0.4)" }}>Replay</button>}
           {warmup && onSkipWarmup && <button className="btn btn-ghost btn-sm" onClick={onSkipWarmup} style={{ color: "var(--on-light)", borderColor: "rgba(15,18,38,0.4)" }}>Skip Warm-Up</button>}
-          {onNext && <button className="btn" onClick={onNext} style={{ background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", fontSize: "1.05rem", padding: "1rem 2rem", boxShadow: "5px 5px 0 var(--sun)" }}>{nextLabel} →</button>}
+          {onNext && <button className="btn" onClick={onNext} style={{ background: "var(--cream)", color: "var(--ink)", borderColor: "var(--cream)", fontSize: "1.05rem", padding: "1rem 2rem", boxShadow: "5px 5px 0 rgba(15,18,38,0.25)" }}>{nextLabel} →</button>}
         </div>
       </div>
     </div>

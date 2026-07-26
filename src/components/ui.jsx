@@ -273,7 +273,7 @@ export function Confetti() {
 // A clear stress marker, NOT a waveform (no size variation between dots).
 // Accepts `syllables` as a number OR an array of syllable strings.
 const STRESS_ORDINALS = ["1st","2nd","3rd","4th","5th","6th"];
-export function StressDots({ syllables, stressAt, size = "md", label = false }) {
+export function StressDots({ syllables, stressAt, size = "md", label = false, color = "var(--sun)", dim = "var(--muted)", glow = true }) {
   const n = Array.isArray(syllables) ? syllables.length : (syllables || 0);
   const dot = size === "lg" ? 16 : 13;
   return (
@@ -283,10 +283,10 @@ export function StressDots({ syllables, stressAt, size = "md", label = false }) 
           const isStressed = i + 1 === stressAt;
           return (
             <div key={i} style={{
-              width: dot, height: dot, borderRadius: "50%",
-              background: isStressed ? "var(--sun)" : "transparent",
-              border: `2px solid ${isStressed ? "var(--sun)" : "var(--muted)"}`,
-              boxShadow: isStressed ? "0 0 10px rgba(255,206,71,0.55)" : "none",
+              width: isStressed ? dot + 3 : dot, height: isStressed ? dot + 3 : dot, borderRadius: "50%",
+              background: isStressed ? color : "transparent",
+              border: `2px solid ${isStressed ? color : dim}`,
+              boxShadow: isStressed && glow ? `0 0 10px ${color}88` : "none",
               flexShrink: 0,
             }} />
           );
