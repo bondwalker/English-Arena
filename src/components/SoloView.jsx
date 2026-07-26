@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer } from "../lib/utils.js";
 import { readFaves, writeFaves } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -215,9 +215,9 @@ export default function SoloView({ onBack }) {
                 <SAIcon name={r.correct?"bolt":"skip"} size={10} color={r.correct?"var(--leaf)":"var(--tomato)"} />
               </div>
               <div>
-                <div style={{fontSize:"0.83rem",color:"var(--ink-soft)",lineHeight:1.4}}>{r.q.question}{r.q.sentence?" "+r.q.sentence:""}</div>
+                <div style={{fontSize:"0.83rem",color:"var(--ink-soft)",lineHeight:1.4}}>{reviewPrompt(r.q)}</div>
                 {!r.correct && <div style={{fontSize:"0.78rem",color:"var(--sun)",marginTop:"0.2rem"}}>
-                  {r.q.type==="error_spotter"?`Error: ${r.q.errorWord} → ${r.q.answer}`:r.q.type==="story_builder"?`Order: ${(r.q.correctOrder||[]).filter(i=>i<3).join(",")}`:r.q.type==="word_match"?"Match all pairs correctly":`Answer: ${r.q.answer}`}
+                  {reviewAnswer(r.q)}
                 </div>}
               </div>
             </div>
