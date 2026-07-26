@@ -528,13 +528,18 @@ export default function HostView({ onBack }) {
       {room.phase === "lobby" && (() => {
         const DOTS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)", "var(--sun)", "var(--aqua)"];
         const noSB = new Set(["verb_tenses", "present_perfect"]);
-        const topicEntries = Object.entries(QUESTION_BANK);
-        const canStart = !!selectedTopic || gameType === "stress_battle";
+        const cleanLabel = (l) => l.replace(/^[^\w]+\s*/, "");
+        const stressMode = gameType === "stress_battle";
+        const topicEntries = Object.entries(QUESTION_BANK)
+          .filter(([key]) => key !== "stress_battle")
+          .sort((a, b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
+        const pickTopic = (key) => { setSelectedTopic(key); if (gameType === "stress_battle") setGameType("mixed"); };
+        const canStart = !!selectedTopic || stressMode;
         const startNow = () => { loadQuestions(); startGame(); };
         return (
           <div style={{ marginTop: "0.6rem" }}>
             <div style={{ textAlign: "center", marginBottom: "1.2rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.2em", color: "var(--muted)", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--tomato)" }} className="sa-anim-pulse" /> PROJECTOR · LOBBY
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--tomato)" }} className="sa-anim-pulse" /> LOBBY
             </div>
             {fbStatus === "error" && (
               <div style={{ padding: "0.6rem 0.8rem", marginBottom: "0.75rem", borderRadius: 8, background: "rgba(255,92,66,0.12)", border: "1.5px solid var(--tomato)", fontSize: "0.8rem", lineHeight: 1.5 }}>
@@ -547,45 +552,52 @@ export default function HostView({ onBack }) {
               </div>
             )}
             <div className="host-lobby-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 380px", gap: "1.6rem", alignItems: "start" }}>
-              {/* LEFT — topic picker */}
+              {/* LEFT — game mode + topic picker */}
               <div style={{ border: "1.5px solid var(--line)", borderRadius: 18, padding: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
-                  <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem" }}>Topic</h2>
+                  <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem" }}>Pick a game</h2>
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.1em", color: "var(--muted)" }}>{qCount} ROUNDS</span>
                 </div>
-                {gameType === "stress_battle" ? (
+                {/* Stress Battle — game mode */}
+                <button onClick={() => setGameType(stressMode ? "mixed" : "stress_battle")}
+                  style={{ display: "flex", alignItems: "center", gap: "0.8rem", width: "100%", padding: "0.9rem 1.1rem", borderRadius: 12, marginBottom: "0.9rem", border: `2px solid ${stressMode ? "var(--cobalt)" : "var(--line)"}`, background: stressMode ? "rgba(91,139,255,0.12)" : "var(--paper)", cursor: "pointer", textAlign: "left" }}>
+                  <span style={{ fontSize: "1.3rem" }}>⚡</span>
+                  <span style={{ flex: 1 }}>
+                    <span style={{ display: "block", fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.1rem", color: stressMode ? "var(--cobalt)" : "var(--ink)" }}>Stress Battle</span>
+                    <span style={{ fontSize: "0.78rem", color: "var(--muted)" }}>Word-stress mode · dedicated 209-word bank</span>
+                  </span>
+                  {stressMode && <span style={{ color: "var(--cobalt)", fontWeight: 800 }}>✓</span>}
+                </button>
+                {stressMode ? (
                   <div style={{ padding: "1rem", borderRadius: 12, border: "1px solid rgba(91,139,255,0.3)", background: "rgba(91,139,255,0.07)", fontSize: "0.9rem", color: "var(--cobalt)" }}>
-                    ⚡ Using the dedicated <strong>209-word Stress Battle bank</strong> — no topic needed.
+                    Stress Battle uses its own word bank — no topic needed. Tap it again to pick a topic instead.
                   </div>
                 ) : (
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", maxHeight: 440, overflowY: "auto" }}>
-                    {topicEntries.map(([key, { label }], i) => {
-                      const dis = noSB.has(key);
-                      const sel = selectedTopic === key;
-                      return (
-                        <button key={key} disabled={dis} onClick={() => !dis && setSelectedTopic(key)}
-                          style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.1)" : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
-                          <span style={{ width: 12, height: 12, borderRadius: "50%", background: DOTS[i % DOTS.length], flexShrink: 0 }} />
-                          <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? "var(--sun)" : "var(--ink)" }}>{label.replace(/^[^\w]+\s*/, "")}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.66rem", letterSpacing: "0.14em", color: "var(--muted)", marginBottom: "0.5rem" }}>OR CHOOSE A TOPIC</div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", maxHeight: 400, overflowY: "auto" }}>
+                      {topicEntries.map(([key, { label }], i) => {
+                        const dis = noSB.has(key);
+                        const sel = selectedTopic === key;
+                        return (
+                          <button key={key} disabled={dis} onClick={() => !dis && pickTopic(key)}
+                            style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.1)" : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
+                            <span style={{ width: 12, height: 12, borderRadius: "50%", background: DOTS[i % DOTS.length], flexShrink: 0 }} />
+                            <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? "var(--sun)" : "var(--ink)" }}>{cleanLabel(label)}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
                 )}
               </div>
 
               {/* RIGHT — room panel + controls */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                <div style={{ background: "var(--sun)", borderRadius: 20, padding: "1.4rem", color: "var(--on-light)" }}>
-                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.15em", opacity: 0.7 }}>CLASS · ROOM CODE</div>
-                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.6rem", letterSpacing: "0.06em", lineHeight: 1, margin: "0.3rem 0 1rem" }}>{room.code}</div>
-                  <div style={{ display: "flex", gap: "0.8rem", alignItems: "stretch" }}>
-                    <div style={{ background: "#fff", borderRadius: 12, padding: 6, flexShrink: 0 }}><QRDisplay url={qrUrl} compact /></div>
-                    <div style={{ background: "var(--cream)", borderRadius: 12, padding: "0.8rem 1rem", display: "flex", flexDirection: "column", justifyContent: "center", flex: 1 }}>
-                      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", letterSpacing: "0.12em", color: "var(--sun)" }}>SCAN OR VISIT</div>
-                      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.3rem", fontWeight: 700, color: "var(--ink)" }}>{room.code.toLowerCase()}</div>
-                    </div>
-                  </div>
+                <div style={{ background: "var(--sun)", borderRadius: 20, padding: "1.4rem", color: "var(--on-light)", textAlign: "center" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.15em", opacity: 0.7, marginBottom: "0.6rem", textAlign: "left" }}>SCAN OR VISIT · ROOM CODE</div>
+                  <QRDisplay url={qrUrl} compact size={300} light="#ffce47" />
+                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.4rem", letterSpacing: "0.08em", lineHeight: 1, marginTop: "0.6rem" }}>{room.code}</div>
                 </div>
 
                 <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 14, padding: "0.8rem 1rem" }}>
@@ -598,8 +610,8 @@ export default function HostView({ onBack }) {
 
                 <div>
                   <span className="label">Question type</span>
-                  <select className="select" value={gameType} onChange={e => setGameType(e.target.value)}>
-                    {GAME_MODES.map(g => <option key={g.v} value={g.v}>{g.label} — {g.desc}</option>)}
+                  <select className="select" value={stressMode ? "mixed" : gameType} onChange={e => setGameType(e.target.value)} disabled={stressMode}>
+                    {GAME_MODES.filter(g => g.v !== "stress_battle").map(g => <option key={g.v} value={g.v}>{g.label} — {g.desc}</option>)}
                   </select>
                 </div>
                 <div className="flex gap-2">

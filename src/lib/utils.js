@@ -7,6 +7,19 @@ export const TEAMS = [
 
 export const OPT_ICONS = ["A", "B", "C", "D"];
 
+// Shared answer-box colours (A/B/C/D) — used identically on host + student
+export const OPT_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
+
+// "2" -> "2nd", for "stress on Nth syllable"
+export const ordinal = (n) => {
+  const s = ["th", "st", "nd", "rd"], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+
+// ["de","par","ture"], 2 -> "de-PAR-ture"
+export const stressBreakdown = (syllables, stressed) =>
+  (Array.isArray(syllables) ? syllables : []).map((s, i) => (i + 1 === stressed ? s.toUpperCase() : s)).join("-");
+
 export const GAME_MODES = [
   { v: "mixed",          label: "🎲 Mixed",           desc: "All types" },
   { v: "multiple_choice",label: "📋 Multiple Choice",  desc: "Choose the answer" },
