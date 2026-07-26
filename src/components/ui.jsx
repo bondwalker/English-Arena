@@ -314,13 +314,14 @@ export function FlameStreak({ count }) {
 }
 
 // ─── QRDisplay ────────────────────────────────────────────────────────────────
-export function QRDisplay({ url }) {
+export function QRDisplay({ url, compact }) {
   const [dataUrl, setDataUrl] = useState("");
   useEffect(() => {
     if (!url) return;
-    QRCode.toDataURL(url, { width: 155, margin: 1, color: { dark: "#0d0d0d", light: "#ffffff" } })
+    QRCode.toDataURL(url, { width: compact ? 96 : 155, margin: 1, color: { dark: "#0d0d0d", light: "#ffffff" } })
       .then(setDataUrl).catch(() => {});
-  }, [url]);
+  }, [url, compact]);
+  if (compact) return dataUrl ? <img src={dataUrl} alt="Join QR" width={96} height={96} style={{ display: "block", borderRadius: 6 }} /> : <div style={{ width: 96, height: 96 }} />;
   return (
     <div className="qr-wrap">
       <div className="qr-label">📱 Scan to Join</div>

@@ -511,7 +511,7 @@ export default function HostView({ onBack }) {
   const activeTeams = TEAMS.slice(0, room.teamCount);
   const qrUrl = typeof window !== "undefined" ? `${window.location.origin}${window.location.pathname}?join=${room.code}` : "";
 
-  const wideProjector = ["question", "reveal", "leaderboard", "end"].includes(room.phase);
+  const wideProjector = ["lobby", "question", "reveal", "leaderboard", "end"].includes(room.phase);
   return (
     <div className="panel" style={wideProjector ? { maxWidth: 1200 } : undefined}>
       {/* Top bar */}
@@ -524,42 +524,120 @@ export default function HostView({ onBack }) {
         </div>
       </div>
 
-      {/* Lobby: code + QR + players */}
-      {room.phase === "lobby" && (
-        <div style={{ marginTop: "1rem" }}>
-          {fbStatus === "error" && (
-            <div style={{ padding: "0.6rem 0.8rem", marginBottom: "0.75rem", borderRadius: 8, background: "rgba(255,92,66,0.12)", border: "1.5px solid var(--tomato)", fontSize: "0.8rem", lineHeight: 1.5 }}>
-              <strong style={{ color: "var(--tomato)" }}>Firebase not reachable.</strong> Students won't be able to join. Check your Firebase security rules — set <code style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.75rem" }}>.read</code> and <code style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.75rem" }}>.write</code> to <code style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.75rem" }}>true</code>.
+      {/* Lobby — two-column projector layout */}
+      {room.phase === "lobby" && (() => {
+        const DOTS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)", "var(--sun)", "var(--aqua)"];
+        const noSB = new Set(["verb_tenses", "present_perfect"]);
+        const topicEntries = Object.entries(QUESTION_BANK);
+        const canStart = !!selectedTopic || gameType === "stress_battle";
+        const startNow = () => { loadQuestions(); startGame(); };
+        return (
+          <div style={{ marginTop: "0.6rem" }}>
+            <div style={{ textAlign: "center", marginBottom: "1.2rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.2em", color: "var(--muted)", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--tomato)" }} className="sa-anim-pulse" /> PROJECTOR · LOBBY
             </div>
-          )}
-          {fbStatus === "none" && (
-            <div style={{ padding: "0.6rem 0.8rem", marginBottom: "0.75rem", borderRadius: 8, background: "rgba(91,139,255,0.1)", border: "1.5px solid var(--cobalt)", fontSize: "0.8rem", color: "var(--ink-soft)", lineHeight: 1.5 }}>
-              Firebase not configured — multiplayer requires a Firebase Realtime Database. Solo mode works without it.
-            </div>
-          )}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-            <SARoomChip code={room.code} playerCount={players.length} />
-            <QRDisplay url={qrUrl} />
-            <p style={{ fontSize: "0.68rem", color: "var(--muted)", textAlign: "center" }}>Students scan QR or visit the URL and enter room code <strong style={{ color: "var(--sun)" }}>{room.code}</strong></p>
-          </div>
-          {players.length > 0 && (
-            <div className="card" style={{ textAlign: "left" }}>
-              <span className="label">Players joined</span>
-              <div className="flex wrap gap-1 mt-1">
-                {players.map(([name, p]) => {
-                  const team = room.mode === "teams" ? TEAMS.find(t => t.id === p.team) : null;
-                  return (
-                    <div key={name} style={{ display: "flex", alignItems: "center", gap: 6, padding: "3px 10px 3px 3px", background: team ? `${team.color}22` : "var(--paper)", border: `1.5px solid ${team ? team.color : "var(--line)"}`, borderRadius: 999 }} className="sa-anim-pop">
-                      <SABlob name={name} size={22} color={team ? team.color : undefined} />
-                      <span style={{ fontSize: 12, fontWeight: 600 }}>{name}</span>
+            {fbStatus === "error" && (
+              <div style={{ padding: "0.6rem 0.8rem", marginBottom: "0.75rem", borderRadius: 8, background: "rgba(255,92,66,0.12)", border: "1.5px solid var(--tomato)", fontSize: "0.8rem", lineHeight: 1.5 }}>
+                <strong style={{ color: "var(--tomato)" }}>Firebase not reachable.</strong> Students won't be able to join. Set your Realtime Database <code style={{ fontFamily: "'JetBrains Mono',monospace" }}>.read</code>/<code style={{ fontFamily: "'JetBrains Mono',monospace" }}>.write</code> rules to <code style={{ fontFamily: "'JetBrains Mono',monospace" }}>true</code>.
+              </div>
+            )}
+            {fbStatus === "none" && (
+              <div style={{ padding: "0.6rem 0.8rem", marginBottom: "0.75rem", borderRadius: 8, background: "rgba(91,139,255,0.1)", border: "1.5px solid var(--cobalt)", fontSize: "0.8rem", color: "var(--ink-soft)", lineHeight: 1.5 }}>
+                Firebase not configured — multiplayer needs a Realtime Database. Solo mode works without it.
+              </div>
+            )}
+            <div className="host-lobby-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 380px", gap: "1.6rem", alignItems: "start" }}>
+              {/* LEFT — topic picker */}
+              <div style={{ border: "1.5px solid var(--line)", borderRadius: 18, padding: "1.2rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
+                  <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem" }}>Topic</h2>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.1em", color: "var(--muted)" }}>{qCount} ROUNDS</span>
+                </div>
+                {gameType === "stress_battle" ? (
+                  <div style={{ padding: "1rem", borderRadius: 12, border: "1px solid rgba(91,139,255,0.3)", background: "rgba(91,139,255,0.07)", fontSize: "0.9rem", color: "var(--cobalt)" }}>
+                    ⚡ Using the dedicated <strong>209-word Stress Battle bank</strong> — no topic needed.
+                  </div>
+                ) : (
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", maxHeight: 440, overflowY: "auto" }}>
+                    {topicEntries.map(([key, { label }], i) => {
+                      const dis = noSB.has(key);
+                      const sel = selectedTopic === key;
+                      return (
+                        <button key={key} disabled={dis} onClick={() => !dis && setSelectedTopic(key)}
+                          style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.1)" : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
+                          <span style={{ width: 12, height: 12, borderRadius: "50%", background: DOTS[i % DOTS.length], flexShrink: 0 }} />
+                          <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? "var(--sun)" : "var(--ink)" }}>{label.replace(/^[^\w]+\s*/, "")}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* RIGHT — room panel + controls */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div style={{ background: "var(--sun)", borderRadius: 20, padding: "1.4rem", color: "var(--on-light)" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.15em", opacity: 0.7 }}>CLASS · ROOM CODE</div>
+                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.6rem", letterSpacing: "0.06em", lineHeight: 1, margin: "0.3rem 0 1rem" }}>{room.code}</div>
+                  <div style={{ display: "flex", gap: "0.8rem", alignItems: "stretch" }}>
+                    <div style={{ background: "#fff", borderRadius: 12, padding: 6, flexShrink: 0 }}><QRDisplay url={qrUrl} compact /></div>
+                    <div style={{ background: "var(--cream)", borderRadius: 12, padding: "0.8rem 1rem", display: "flex", flexDirection: "column", justifyContent: "center", flex: 1 }}>
+                      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", letterSpacing: "0.12em", color: "var(--sun)" }}>SCAN OR VISIT</div>
+                      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.3rem", fontWeight: 700, color: "var(--ink)" }}>{room.code.toLowerCase()}</div>
                     </div>
-                  );
-                })}
+                  </div>
+                </div>
+
+                <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 14, padding: "0.8rem 1rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700 }}>Players · {players.length}</span>
+                    {players.map(([n, p]) => <SABlob key={n} name={n} size={26} color={room.mode === "teams" ? TEAMS.find(t => t.id === p.team)?.color : undefined} />)}
+                    {players.length === 0 && <span style={{ fontSize: "0.8rem", color: "var(--muted)" }}>waiting for students…</span>}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="label">Question type</span>
+                  <select className="select" value={gameType} onChange={e => setGameType(e.target.value)}>
+                    {GAME_MODES.map(g => <option key={g.v} value={g.v}>{g.label} — {g.desc}</option>)}
+                  </select>
+                </div>
+                <div className="flex gap-2">
+                  <div style={{ flex: 1 }}>
+                    <span className="label">Rounds</span>
+                    <select className="select" value={qCount} onChange={e => setQCount(+e.target.value)}>
+                      {[8, 10, 12, 15].map(n => <option key={n} value={n}>{n}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", gap: "0.6rem" }}>
+                  <button className="btn" onClick={() => upd(p => ({ ...p, mode: "solo" }))} style={{ flex: 1, background: room.mode === "solo" ? "var(--paper)" : "transparent", border: `1.5px solid ${room.mode === "solo" ? "var(--ink)" : "var(--line)"}`, color: "var(--ink)" }}>👤 Solo</button>
+                  <button className="btn" onClick={() => upd(p => ({ ...p, mode: "teams" }))} style={{ flex: 1, background: room.mode === "teams" ? "rgba(255,92,66,0.12)" : "transparent", border: `1.5px solid ${room.mode === "teams" ? "var(--tomato)" : "var(--line)"}`, color: room.mode === "teams" ? "var(--tomato)" : "var(--ink)" }}>👥 Teams</button>
+                </div>
+
+                {room.mode === "teams" && (
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap" }}>
+                    <span style={{ fontSize: "0.82rem", color: "var(--muted)" }}>Teams:</span>
+                    {[2, 3, 4].map(n => <button key={n} className={`btn btn-sm ${room.teamCount === n ? "btn-gold" : "btn-ghost"}`} onClick={() => upd(p => ({ ...p, teamCount: n }))} style={room.teamCount === n ? { color: "var(--on-light)", borderColor: "var(--on-light)" } : undefined}>{n}</button>)}
+                    {players.length > 0 && !room.teamsLocked && <button className="btn btn-teal btn-sm" onClick={autoAssign}>Auto-assign</button>}
+                  </div>
+                )}
+
+                <label style={{ fontSize: "0.85rem", color: "var(--ink-soft)", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <input type="checkbox" checked={room.warmup} onChange={e => upd(p => ({ ...p, warmup: e.target.checked }))} style={{ accentColor: "var(--sun)", cursor: "pointer" }} />
+                  Warm-up round (3 quick questions)
+                </label>
+
+                {error && <p className="text-coral" style={{ fontSize: "0.85rem" }}>{error}</p>}
+                <button className="btn btn-coral btn-full" disabled={!canStart} onClick={startNow} style={{ fontSize: "1.1rem", padding: "1.1rem", opacity: canStart ? 1 : 0.5 }}>
+                  ▶ Start the game — {qCount} questions
+                </button>
               </div>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        );
+      })()}
 
       {/* In-game fixed overlays */}
       {room.phase !== "lobby" && (
@@ -573,140 +651,6 @@ export default function HostView({ onBack }) {
         </>
       )}
 
-      {/* Lobby: ready to start */}
-      {room.phase === "lobby" && room.questions.length > 0 && (
-        <div className="mt-3">
-          <div className="card card-gold mb-2">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.6rem" }}>
-              <div>
-                <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}>Ready</div>
-                <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.05rem" }}>{room.questions.length} questions · <span style={{ color: "var(--sun)" }}>{room.topic}</span></div>
-              </div>
-              <SAIcon name="sparkle" size={22} color="var(--sun)" />
-            </div>
-            <label style={{ fontSize: "0.79rem", color: "var(--muted)", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.7rem" }}>
-              <input type="checkbox" checked={room.warmup} onChange={e => upd(p => ({ ...p, warmup: e.target.checked }))} style={{ accentColor: "var(--sun)", cursor: "pointer" }} />
-              Warm-up round (3 quick questions)
-            </label>
-            <button className="btn btn-green btn-full" style={{ fontSize: "1rem", color: "var(--on-light)", borderColor: "var(--on-light)" }} onClick={startGame}>Start Game →</button>
-          </div>
-          <span className="label">Game Mode</span>
-          <div className="mode-toggle">
-            <button className={`mode-btn ${room.mode === "solo" ? "active" : ""}`} onClick={() => upd(p => ({ ...p, mode: "solo" }))}>Solo — Individual</button>
-            <button className={`mode-btn ${room.mode === "teams" ? "active" : ""}`} onClick={() => upd(p => ({ ...p, mode: "teams" }))}>Teams</button>
-          </div>
-          {room.mode === "teams" && (
-            <div className="card card-gold mb-2">
-              <span className="label">Team Setup</span>
-              <div className="flex items-center gap-2 mt-1 mb-2 wrap">
-                <span style={{ fontSize: "0.85rem", opacity: 0.7 }}>Teams:</span>
-                {[2, 3, 4].map(n => (
-                  <button key={n} className={`btn btn-sm ${room.teamCount === n ? "btn-gold" : "btn-ghost"}`} onClick={() => upd(p => ({ ...p, teamCount: n }))}>{n}</button>
-                ))}
-              </div>
-              <div className="team-grid">
-                {activeTeams.map(t => {
-                  const members = players.filter(([, p]) => p.team === t.id).map(([n]) => n);
-                  return (
-                    <div key={t.id} className="team-card" style={{ borderColor: t.color, color: t.color }}>
-                      <div style={{ fontSize: "1.4rem" }}>{t.emoji}</div>
-                      <div className="team-card-name">{t.name}</div>
-                      <div className="team-card-count">{members.length} member{members.length !== 1 ? "s" : ""}</div>
-                      {members.length > 0 && <div className="team-members" style={{ color: "rgba(255,255,255,0.55)" }}>{members.join(", ")}</div>}
-                    </div>
-                  );
-                })}
-              </div>
-              {players.length > 0 && !room.teamsLocked && <button className="btn btn-teal btn-sm mt-2" onClick={autoAssign}>⚡ Auto-assign players</button>}
-              {room.teamsLocked && <p className="text-green mt-1" style={{ fontSize: "0.8rem" }}>✓ Teams assigned!</p>}
-            </div>
-          )}
-          <button className="btn btn-ghost btn-sm" onClick={() => upd(p => ({ ...p, questions: [], topic: "", phase: "lobby" }))}>← Change topic</button>
-        </div>
-      )}
-
-      {/* Lobby: setup (no questions yet) */}
-      {room.phase === "lobby" && room.questions.length === 0 && (
-        <div className="mt-3">
-          <span className="label">Game Mode</span>
-          <div className="mode-toggle">
-            <button className={`mode-btn ${room.mode === "solo" ? "active" : ""}`} onClick={() => upd(p => ({ ...p, mode: "solo" }))}>Solo — Individual</button>
-            <button className={`mode-btn ${room.mode === "teams" ? "active" : ""}`} onClick={() => upd(p => ({ ...p, mode: "teams" }))}>Teams</button>
-          </div>
-          {room.mode === "teams" && (
-            <div className="card card-gold mb-2">
-              <span className="label">Team Setup</span>
-              <div className="flex items-center gap-2 mt-1 mb-2 wrap">
-                <span style={{ fontSize: "0.85rem", opacity: 0.7 }}>Teams:</span>
-                {[2, 3, 4].map(n => (
-                  <button key={n} className={`btn btn-sm ${room.teamCount === n ? "btn-gold" : "btn-ghost"}`} onClick={() => upd(p => ({ ...p, teamCount: n }))}>{n}</button>
-                ))}
-              </div>
-              <div className="team-grid">
-                {activeTeams.map(t => {
-                  const members = players.filter(([, p]) => p.team === t.id).map(([n]) => n);
-                  return (
-                    <div key={t.id} className="team-card" style={{ borderColor: t.color, color: t.color }}>
-                      <SAIcon name={t.icon || "star"} size={22} color={t.color} />
-                      <div className="team-card-name">{t.name}</div>
-                      <div className="team-card-count">{members.length} member{members.length !== 1 ? "s" : ""}</div>
-                      {members.length > 0 && <div className="team-members" style={{ color: "var(--muted)" }}>{members.join(", ")}</div>}
-                    </div>
-                  );
-                })}
-              </div>
-              {players.length > 0 && !room.teamsLocked && <button className="btn btn-teal btn-sm mt-2" onClick={autoAssign}>Auto-assign players</button>}
-              {room.teamsLocked && <p className="text-green mt-1" style={{ fontSize: "0.8rem" }}>Teams assigned</p>}
-            </div>
-          )}
-          {gameType === "stress_battle" ? (
-            <div style={{ padding: "0.7rem 0.9rem", borderRadius: 10, border: "1px solid rgba(91,139,255,0.3)", background: "rgba(91,139,255,0.07)", marginBottom: "0.75rem", fontSize: "0.78rem", color: "var(--cobalt)" }}>
-              ⚡ Using the dedicated <strong>209-word Stress Battle bank</strong> — no topic needed
-            </div>
-          ) : (
-            <>
-              <span className="label">Topic</span>
-              {(() => {
-                const noSB = new Set(["verb_tenses", "present_perfect"]);
-                return (
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(155px,1fr))", gap: "0.4rem", marginBottom: "0.75rem", maxHeight: "260px", overflowY: "auto", padding: "0.5rem", border: "1px solid var(--line)", borderRadius: 10 }}>
-                    {Object.entries(QUESTION_BANK).map(([key, { label }]) => {
-                      const dis = noSB.has(key);
-                      const sel = selectedTopic === key;
-                      return (
-                        <button key={key} disabled={dis} onClick={() => !dis && setSelectedTopic(key)}
-                          style={{ padding: "0.55rem 0.6rem", fontFamily: "'DM Sans',sans-serif", fontSize: "0.78rem", fontWeight: sel ? 700 : 400, border: `1.5px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "transparent", color: sel ? "var(--sun)" : dis ? "var(--muted)" : "var(--muted)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", transition: "all 0.12s", borderRadius: 8, opacity: dis ? 0.35 : 1 }}>{label}</button>
-                      );
-                    })}
-                  </div>
-                );
-              })()}
-            </>
-          )}
-          <div className="flex gap-2 mb-2 wrap">
-            <div style={{ flex: 2, minWidth: 180 }}>
-              <span className="label">Game Type</span>
-              <select className="select" value={gameType} onChange={e => setGameType(e.target.value)}>
-                {GAME_MODES.map(g => <option key={g.v} value={g.v}>{g.label} — {g.desc}</option>)}
-              </select>
-            </div>
-            <div style={{ flex: 1, minWidth: 110 }}>
-              <span className="label">Questions</span>
-              <select className="select" value={qCount} onChange={e => setQCount(+e.target.value)}>
-                {[8, 10, 12, 15].map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </div>
-          </div>
-          {error && <p className="text-coral mb-1" style={{ fontSize: "0.85rem" }}>{error}</p>}
-          <button className="btn btn-gold btn-full" onClick={loadQuestions} disabled={!selectedTopic && gameType !== "stress_battle"} style={{ color: "var(--on-light)", borderColor: "var(--on-light)" }}>
-            Load Questions →
-          </button>
-          {room.phase === "lobby" && room.questions.length > 0 && (
-            <p style={{ fontSize: "0.78rem", color: "var(--leaf)", marginTop: "0.3rem", textAlign: "center" }}>✓ {room.questions.length} questions ready</p>
-          )}
-          <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.4rem" }}>Students can join via the QR above while you set up</p>
-        </div>
-      )}
 
       {/* Question phase */}
       {room.phase === "question" && room.currentQ && (
