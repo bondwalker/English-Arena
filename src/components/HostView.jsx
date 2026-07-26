@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, RedInkUnderline, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -517,11 +517,8 @@ export default function HostView({ onBack }) {
   const buildSummary = (questions, topic) => {
     const lines = [`=== English Arena · ${topic} ===\n`];
     questions.forEach((q, i) => {
-      lines.push(`Q${i + 1}. ${q.question}${q.sentence ? " " + q.sentence : ""}`);
-      const ans = q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}` :
-        q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).join(",")}` :
-          q.type === "word_match" ? "Match all pairs correctly" : q.answer;
-      lines.push(`Answer: ${ans}`);
+      lines.push(`Q${i + 1}. ${reviewPrompt(q)}`);
+      lines.push(`Answer: ${reviewAnswer(q)}`);
       if (q.explanation) lines.push(`Note: ${q.explanation}`);
       lines.push("");
     });
@@ -739,8 +736,8 @@ export default function HostView({ onBack }) {
                     </button>
                     {mainQs.map((q, i) => (
                       <div key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", paddingBottom: "0.7rem", marginBottom: "0.7rem" }}>
-                        <div style={{ fontWeight: 700, fontSize: "0.85rem", lineHeight: 1.4 }}>Q{i + 1}. {q.question}{q.sentence ? " " + q.sentence : ""}</div>
-                        <div style={{ color: "var(--teal)", fontSize: "0.8rem", marginTop: "0.2rem" }}>✔ {q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}` : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).join(",")}` : q.type === "word_match" ? "Match all pairs" : q.answer}</div>
+                        <div style={{ fontWeight: 700, fontSize: "0.85rem", lineHeight: 1.4 }}>Q{i + 1}. {reviewPrompt(q)}</div>
+                        <div style={{ color: "var(--teal)", fontSize: "0.8rem", marginTop: "0.2rem" }}>✔ {reviewAnswer(q)}</div>
                         {q.explanation && <div className="op50" style={{ fontSize: "0.76rem", marginTop: "0.15rem", lineHeight: 1.4 }}>{q.explanation}</div>}
                       </div>
                     ))}

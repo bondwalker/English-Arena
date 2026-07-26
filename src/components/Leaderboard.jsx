@@ -1,5 +1,5 @@
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, Confetti } from "./ui.jsx";
-import { TEAMS, getTeamScores } from "../lib/utils.js";
+import { TEAMS, getTeamScores, reviewPrompt, reviewAnswer } from "../lib/utils.js";
 import { TeamIcon } from "./ui.jsx";
 
 // ─── Leaderboard (host view) ──────────────────────────────────────────────────
@@ -119,11 +119,8 @@ export function StudentLeaderboard({ room, name, showReview, setShowReview }) {
   const buildSummary = (questions, topic) => {
     const lines = [`=== English Arena · ${topic} ===\n`];
     questions.forEach((q, i) => {
-      lines.push(`Q${i+1}. ${q.question}${q.sentence ? " " + q.sentence : ""}`);
-      const ans = q.type==="error_spotter" ? `${q.errorWord} → ${q.answer}` :
-                  q.type==="story_builder" ? `Order: ${(q.correctOrder||[]).filter(x=>x<3).join(",")}` :
-                  q.type==="word_match" ? "Match all pairs correctly" : q.answer;
-      lines.push(`Answer: ${ans}`);
+      lines.push(`Q${i+1}. ${reviewPrompt(q)}`);
+      lines.push(`Answer: ${reviewAnswer(q)}`);
       if (q.explanation) lines.push(`Note: ${q.explanation}`);
       lines.push("");
     });
@@ -144,8 +141,8 @@ export function StudentLeaderboard({ room, name, showReview, setShowReview }) {
             </button>
             {mainQs.map((q, i) => (
               <div key={i} style={{borderBottom:"1px solid rgba(255,255,255,0.07)",paddingBottom:"0.7rem",marginBottom:"0.7rem"}}>
-                <div style={{fontWeight:700,fontSize:"0.83rem",lineHeight:1.4}}>Q{i+1}. {q.question}{q.sentence?" "+q.sentence:""}</div>
-                <div style={{color:"var(--teal)",fontSize:"0.78rem",marginTop:"0.2rem"}}>✔ {q.type==="error_spotter"?`${q.errorWord} → ${q.answer}`:q.type==="story_builder"?`Order: ${(q.correctOrder||[]).filter(x=>x<3).join(",")}`:q.type==="word_match"?"Match all pairs":q.answer}</div>
+                <div style={{fontWeight:700,fontSize:"0.83rem",lineHeight:1.4}}>Q{i+1}. {reviewPrompt(q)}</div>
+                <div style={{color:"var(--teal)",fontSize:"0.78rem",marginTop:"0.2rem"}}>✔ {reviewAnswer(q)}</div>
                 {q.explanation && <div className="op50" style={{fontSize:"0.74rem",marginTop:"0.15rem",lineHeight:1.4}}>{q.explanation}</div>}
               </div>
             ))}

@@ -20,6 +20,19 @@ export const ordinal = (n) => {
 export const stressBreakdown = (syllables, stressed) =>
   (Array.isArray(syllables) ? syllables : []).map((s, i) => (i + 1 === stressed ? s.toUpperCase() : s)).join("-");
 
+// Review/summary line for a question — the prompt shown as the title
+export const reviewPrompt = (q) =>
+  q.type === "stress_battle" ? q.word : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
+
+// Review/summary line — the correct answer, human-readable per type
+export const reviewAnswer = (q) =>
+  q.type === "stress_battle"
+    ? `stress on ${ordinal(q.stressed)} syllable${Array.isArray(q.syllables) ? ` (${stressBreakdown(q.syllables, q.stressed)})` : ""}`
+    : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
+      : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).join(", ")}`
+        : q.type === "word_match" ? "Match all pairs correctly"
+          : q.answer;
+
 export const GAME_MODES = [
   { v: "mixed",          label: "🎲 Mixed",           desc: "All types" },
   { v: "multiple_choice",label: "📋 Multiple Choice",  desc: "Choose the answer" },
