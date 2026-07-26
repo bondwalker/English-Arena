@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { SAIcon, StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
+import { OPT_COLORS, ordinal } from "../lib/utils.js";
 
-const OPT_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
 export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedIdx, setUsedIdx, typeVal, setTypeVal, storyOrder, setStoryOrder, matchState, setMatchState, room }) {
@@ -259,7 +259,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
         <div>
           <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "0.5rem" }}>{q.word}</div>
           <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "1.4rem" }}>Which stress pattern is correct?</div>
-          <div style={{ display: "flex", gap: "0.8rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
             {["A", "B"].map(label => {
               const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
               const s = q.stressed || 1;
@@ -268,10 +268,13 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               const sel = myAnswer === label;
               return (
                 <button key={label} disabled={answered}
-                  style={{ flex: 1, padding: "1.5rem 0.8rem", border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "var(--paper)", borderRadius: 14, cursor: answered ? "default" : "pointer", opacity: answered && !sel ? 0.28 : 1, transition: "all 0.15s", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}
+                  style={{ width: "100%", padding: "1.3rem 1.2rem", border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.12)" : "var(--paper)", borderRadius: 16, cursor: answered ? "default" : "pointer", opacity: answered && !sel ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", gap: "1.2rem" }}
                   onClick={() => onAnswer(label)}>
-                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.4rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--muted)" }}>{label}</span>
-                  <StressDots syllables={n} stressAt={stressAt} size="lg" label />
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--muted)", opacity: 0.6, flexShrink: 0 }}>{label}</span>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", flex: 1 }}>
+                    <StressDots syllables={n} stressAt={stressAt} size="lg" />
+                    <span style={{ fontSize: "0.95rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--ink-soft)" }}>stress on {ordinal(stressAt)} syllable</span>
+                  </div>
                 </button>
               );
             })}

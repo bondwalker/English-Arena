@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, RedInkUnderline, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -49,7 +49,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
 }
 
 // ─── HostQuestion ──────────────────────────────────────────────────────────────
-function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont, code, topic }) {
+function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont, code, topic, qrUrl }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? [...(q.words || [])].sort(() => Math.random() - 0.5) : [], [q.question]);
@@ -60,10 +60,9 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
 
   const sidebar = (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-      {/* room chip + round */}
+      {/* round */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.6rem" }}>
-        <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem" }}>Round <span style={{ color: "var(--tomato)" }}>{qIndex + 1}</span> <span style={{ color: "var(--muted)" }}>/ {total}</span></span>
-        {code && <SARoomChip code={code} playerCount={pCount} />}
+        <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.15rem" }}>Round <span style={{ color: "var(--tomato)" }}>{qIndex + 1}</span> <span style={{ color: "var(--muted)" }}>/ {total}</span></span>
       </div>
       {/* timer card */}
       <div style={{ background: urgent ? "var(--tomato)" : "var(--sun)", borderRadius: 20, padding: "1.6rem 1rem", textAlign: "center", position: "relative", overflow: "hidden" }} className={urgent ? "sa-anim-pulse" : ""}>
@@ -71,20 +70,29 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.4rem", color: "var(--on-light)", lineHeight: 1 }}>{paused ? "‖" : timeLeft}</div>
         <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", letterSpacing: "0.2em", color: "rgba(15,18,38,0.6)", marginTop: "0.3rem" }}>{paused ? "PAUSED" : "SECONDS"}</div>
       </div>
-      {/* locked in */}
+      {/* locked in + join QR */}
       <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "0.9rem 1rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.6rem" }}>
           <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", letterSpacing: "0.12em", color: "var(--muted)" }}>LOCKED IN</span>
           <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.1rem", color: "var(--leaf)" }}>{ansCount}<span style={{ color: "var(--muted)", fontSize: "0.85rem" }}>/{pCount}</span></span>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: pCount ? "0.9rem" : 0 }}>
           {Object.keys(players).map(n => (
             <div key={n} style={{ opacity: answeredNames.has(n) ? 1 : 0.32, transition: "opacity 0.2s" }} className={answeredNames.has(n) ? "sa-anim-pop" : ""}>
               <SABlob name={n} size={26} color={mode === "teams" ? (teams.find(t => t.id === players[n]?.team)?.color) : undefined} />
             </div>
           ))}
-          {pCount === 0 && <span style={{ fontSize: "0.78rem", color: "var(--muted)", opacity: 0.6 }}>Waiting for players…</span>}
         </div>
+        {qrUrl && (
+          <div style={{ borderTop: "1px solid var(--line)", paddingTop: "0.9rem", display: "flex", alignItems: "center", gap: "0.9rem" }}>
+            <div style={{ background: "#fff", borderRadius: 10, padding: 6, flexShrink: 0 }}><QRDisplay url={qrUrl} compact size={112} /></div>
+            <div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.14em", color: "var(--muted)" }}>SCAN TO JOIN</div>
+              {code && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.6rem", letterSpacing: "0.05em" }}>{code}</div>}
+              <div style={{ fontSize: "0.72rem", color: "var(--muted)" }}>{pCount === 0 ? "waiting for players…" : "latecomers welcome"}</div>
+            </div>
+          </div>
+        )}
       </div>
       {/* teacher panel */}
       <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "0.9rem 1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -139,12 +147,12 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       )}
       {q.type === "multiple_choice" && q.options && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_ROW_COLORS[i % 4]} />)}
+          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} />)}
         </div>
       )}
       {q.type === "odd_one_out" && q.options && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_ROW_COLORS[i % 4]} italic />)}
+          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} italic />)}
         </div>
       )}
       {q.type === "true_false" && (
@@ -183,18 +191,21 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         );
       })()}
       {q.type === "stress_battle" && (
-        <div style={{ textAlign: "center", marginTop: "0.5rem", maxWidth: 680, margin: "0 auto" }}>
-          <div style={{ fontFamily: "'Fraunces',serif", fontSize: "clamp(2.4rem,6vw,3.8rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.6rem" }}>{q.word}</div>
-          <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center" }}>
+        <div style={{ marginTop: "0.5rem", maxWidth: 720, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.4rem,6vw,3.8rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.6rem" }}>{q.word}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {["A", "B"].map(label => {
               const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
               const s = q.stressed || 1;
               const wrongStress = s === n ? s - 1 : s + 1;
               const stressAt = label === q.answer ? s : wrongStress;
               return (
-                <div key={label} style={{ textAlign: "center", padding: "1.2rem 1.8rem", borderRadius: 16, border: "2px solid var(--line)", background: "var(--paper)", minWidth: 150, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.9rem" }}>
-                  <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.1rem", color: "var(--muted)", letterSpacing: "0.1em", fontWeight: 700 }}>{label}</div>
-                  <StressDots syllables={n} stressAt={stressAt} size="lg" label />
+                <div key={label} style={{ padding: "1.3rem 1.8rem", borderRadius: 16, border: "2px solid var(--line)", background: "var(--paper)", display: "flex", alignItems: "center", gap: "1.5rem" }}>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1rem", color: "var(--muted)", fontWeight: 700, opacity: 0.5, flexShrink: 0 }}>{label}</span>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.7rem" }}>
+                    <StressDots syllables={n} stressAt={stressAt} size="lg" />
+                    <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.3rem" }}>stress on {ordinal(stressAt)} syllable</span>
+                  </div>
                 </div>
               );
             })}
@@ -207,7 +218,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
             {q.question.replace("___", "______")}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: 560, margin: "0 auto", textAlign: "left" }}>
-            {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_ROW_COLORS[i % 4]} />)}
+            {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} />)}
           </div>
         </div>
       )}
@@ -253,7 +264,6 @@ function OptionRow({ letter, text, color, italic }) {
   );
 }
 
-const OPT_ROW_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 
 // ─── HostView ──────────────────────────────────────────────────────────────────
 export default function HostView({ onBack }) {
@@ -651,17 +661,6 @@ export default function HostView({ onBack }) {
         );
       })()}
 
-      {/* In-game fixed overlays */}
-      {room.phase !== "lobby" && (
-        <>
-          {!["question", "reveal"].includes(room.phase) && (
-            <div style={{ position: "fixed", bottom: "1rem", left: "1rem", zIndex: 50 }}>
-              <SARoomChip code={room.code} playerCount={players.length} />
-            </div>
-          )}
-          {(room.phase === "question" || room.phase === "reveal") && <InGameQR url={qrUrl} />}
-        </>
-      )}
 
 
       {/* Question phase */}
@@ -671,7 +670,7 @@ export default function HostView({ onBack }) {
             <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers || {}}
               players={room.players || {}} qIndex={room.qIndex} total={room.questions.length}
               mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused}
-              code={room.code} topic={room.topic}
+              code={room.code} topic={room.topic} qrUrl={qrUrl}
               onPause={() => upd(p => ({ ...p, paused: !p.paused }))}
               onRepeat={() => upd(p => ({ ...p, timeLeft: getTimeLimit(p.currentQ) }))}
               onReveal={() => endEarly()}
