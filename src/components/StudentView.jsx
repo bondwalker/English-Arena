@@ -159,7 +159,8 @@ export default function StudentView({ onBack, initialCode = "" }) {
 
   return (
     <div style={{ minHeight: "100vh", maxWidth: 460, margin: "0 auto", padding: "1.2rem" }}>
-      {/* Header */}
+      {/* Header — hidden on leaderboard/end (those stand alone) */}
+      {!["leaderboard", "end"].includes(phase) && (
       <div className="flex justify-between items-center mb-3" style={{ gap: "0.6rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", minWidth: 0 }}>
           <SABlob name={name} size={38} color={myTeam?.color} />
@@ -176,6 +177,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
           </div>
         </div>
       </div>
+      )}
 
       {phase === "leaderboard" || phase === "end" ? (
         <StudentLeaderboard room={room} name={name} showReview={showReview} setShowReview={setShowReview} />

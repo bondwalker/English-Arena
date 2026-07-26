@@ -142,69 +142,53 @@ export function StudentLeaderboard({ room, name, showReview, setShowReview }) {
     </>
   ) : null;
 
-  const RANK_COLORS = ["var(--sun)","#c0c0c0","#cd7f32"];
+  const RANK_COLORS = ["var(--sun)", "#c9cdd6", "#d98a4a"];
+  const total = sorted.length;
+  const roundNow = Math.max(1, (room?.qIndex || 0) - (room?.warmupCount || 0) + 1);
+  const myScore = room?.players?.[name]?.score || 0;
 
-  if (mode === "teams") {
-    const usedTeams = TEAMS.filter(t => Object.values(room.players||{}).some(p => p.team === t.id));
-    const tSorted = [...usedTeams].sort((a, b) => (teamScores[b.id]||0) - (teamScores[a.id]||0));
-    const myTeam = room.players?.[name]?.team ? TEAMS.find(t => t.id === room.players[name].team) : null;
+  // ── End: student winner screen (screen 12) ──
+  if (isEnd) {
+    const won = myPos === 0;
+    const top3 = myPos < 3;
     return (
-      <div>
-        <div style={{textAlign:"center",marginBottom:"1rem"}}>
-          <SAIcon name={isEnd?"trophy":"medal"} size={28} color="var(--sun)" />
-          <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.3rem",color:"var(--sun)",marginTop:"0.3rem"}}>{isEnd?"Final Scores":"Scores"}</h2>
+      <div style={{ textAlign: "center", paddingTop: "1.5rem" }}>
+        <div className="sa-anim-pop" style={{ marginBottom: "0.4rem" }}><SAIcon name="trophy" size={54} color="var(--sun)" /></div>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.2em", color: "var(--muted)", marginBottom: "0.4rem" }}>FINAL RESULT</div>
+        <h1 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.6rem", lineHeight: 1, marginBottom: "0.9rem" }}>You <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>{won ? "won!" : top3 ? "placed!" : "played!"}</span></h1>
+        <span style={{ display: "inline-block", border: "1.5px solid var(--line)", borderRadius: 999, padding: "0.45rem 1.2rem", marginBottom: "2rem" }}><span style={{ color: "var(--sun)", fontWeight: 800 }}>#{myPos + 1}</span> <span style={{ color: "var(--muted)" }}>of {total}</span></span>
+        <div style={{ background: "var(--sun)", color: "var(--on-light)", borderRadius: 20, padding: "1.4rem", margin: "0 auto 2rem", maxWidth: 320 }}>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 700, marginBottom: "0.3rem" }}>Final score</div>
+          <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.4rem", lineHeight: 1 }}>{myScore.toLocaleString()}</div>
         </div>
-        <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:"0.4rem"}}>Teams</div>
-        {tSorted.map((t, i) => (
-          <div key={t.id} className="lb-row" style={{borderLeftColor:t.color,animationDelay:`${i*0.08}s`,display:"flex",alignItems:"center",gap:"0.6rem"}}>
-            <span className="lb-rank" style={{color:RANK_COLORS[i]||"var(--muted)"}}>{i<3?["🥇","🥈","🥉"][i]:`#${i+1}`}</span>
-            <span style={{fontSize:"1.1rem"}}>{t.emoji}</span>
-            <span className="lb-name" style={{color:t.color,flex:1}}>{t.name}</span>
-            <span className="lb-score" style={{fontFamily:"'Fraunces',serif",fontWeight:900,color:RANK_COLORS[i]||"var(--ink)"}}><SARollingNumber value={teamScores[t.id]||0} /></span>
-          </div>
-        ))}
-        {myTeam && (
-          <div style={{marginTop:"0.8rem",padding:"0.6rem 0.8rem",background:"var(--paper)",border:`1.5px solid ${myTeam.color}`,borderRadius:8}}>
-            <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
-              <SABlob name={name} size={28} color={myTeam.color} />
-              <div style={{flex:1}}>
-                <div style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontSize:"0.85rem"}}>{name}</div>
-                <div style={{fontSize:"0.68rem",color:myTeam.color}}>{myTeam.name}</div>
-              </div>
-              <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,color:"var(--sun)",fontSize:"1rem"}}>{(room.players?.[name]?.score||0).toLocaleString()} <span style={{fontSize:"0.65rem",opacity:0.5}}>pts</span></div>
-            </div>
-            <div style={{fontSize:"0.72rem",color:"var(--muted)",marginTop:"0.2rem"}}>#{myPos+1} overall</div>
-          </div>
-        )}
+        <p style={{ color: "var(--ink-soft)", fontSize: "1.05rem", lineHeight: 1.5, maxWidth: 320, margin: "0 auto 1.6rem" }}>{won ? `Top of the class, ${name}. Want to defend your crown?` : `Nice game, ${name}. Ready for a rematch?`}</p>
+        <button className="btn btn-coral btn-full" style={{ fontSize: "1.05rem", padding: "1rem", maxWidth: 360, margin: "0 auto" }} onClick={() => window.location.assign(window.location.pathname)}>Play again</button>
         {reviewSection}
       </div>
     );
   }
 
+  // ── Mid-game: student leaderboard (screen 10) ──
   return (
     <div>
-      <div style={{textAlign:"center",marginBottom:"1rem"}}>
-        <SAIcon name={isEnd?"trophy":"medal"} size={28} color="var(--sun)" />
-        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.3rem",color:"var(--sun)",marginTop:"0.3rem"}}>{isEnd?"Final Scores":"Scores"}</h2>
+      <div style={{ textAlign: "center", marginBottom: "1.2rem" }}>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.2em", color: "var(--muted)", marginBottom: "0.2rem" }}>AFTER ROUND {roundNow}</div>
+        <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.9rem", lineHeight: 1 }}>{myPos >= 0 ? <>You're <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>#{myPos + 1}</span></> : "Scores"}</h2>
       </div>
-      {sorted.map(([n, p], i) => (
-        <div key={n} className="lb-row" style={{
-          borderLeftColor: n===name ? "var(--sun)" : RANK_COLORS[i]||"var(--line)",
-          background: n===name ? "rgba(255,206,71,0.07)" : "transparent",
-          animationDelay: `${i*0.06}s`,
-          display: "flex", alignItems: "center", gap: "0.5rem",
-        }}>
-          <span className="lb-rank" style={{color:RANK_COLORS[i]||"var(--muted)",minWidth:24}}>{i<3?["🥇","🥈","🥉"][i]:`#${i+1}`}</span>
-          <SABlob name={n} size={26} color={RANK_COLORS[i]} />
-          <span className="lb-name" style={{flex:1,fontWeight:n===name?700:400}}>
-            {n}{n===name && <span style={{color:"var(--sun)",fontSize:"0.72rem",marginLeft:"0.3rem",fontFamily:"'JetBrains Mono',monospace"}}>← you</span>}
-          </span>
-          {n===room?.firstCorrect && <span title="First correct!" style={{fontSize:"0.8rem",color:"var(--cobalt)"}}>⚡</span>}
-          {(p.streak||0)>1 && <SAStreakMeter count={p.streak} size="sm" />}
-          <span className="lb-score" style={{fontFamily:"'Fraunces',serif",fontWeight:900,color:RANK_COLORS[i]||"var(--ink)"}}><SARollingNumber value={p.score||0} /></span>
-        </div>
-      ))}
-      {myPos >= 0 && <p style={{textAlign:"center",color:"var(--muted)",marginTop:"0.5rem",fontSize:"0.75rem",fontFamily:"'JetBrains Mono',monospace"}}>#{myPos+1} of {sorted.length} players</p>}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {sorted.map(([n, p], i) => {
+          const isMe = n === name;
+          return (
+            <div key={n} className="sa-anim-slide" style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.7rem 1rem", borderRadius: 12, background: isMe ? "var(--sun)" : "var(--paper)", border: isMe ? "none" : "1.5px solid var(--line)", animationDelay: `${i * 0.05}s` }}>
+              <span style={{ width: 30, display: "flex", justifyContent: "center", flexShrink: 0 }}>
+                {i < 3 ? <SAIcon name={i === 0 ? "trophy" : "medal"} size={i === 0 ? 22 : 18} color={isMe ? "var(--on-light)" : RANK_COLORS[i]} /> : <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "0.85rem", color: isMe ? "var(--on-light)" : "var(--muted)" }}>#{i + 1}</span>}
+              </span>
+              <span style={{ flex: 1, fontFamily: "'Fraunces',serif", fontWeight: isMe ? 800 : 600, fontSize: "1.05rem", color: isMe ? "var(--on-light)" : "var(--ink)" }}>{n}{isMe && <span style={{ color: "var(--tomato)", fontWeight: 800, marginLeft: "0.4rem", fontSize: "0.8rem" }}>· YOU</span>}</span>
+              <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.15rem", color: isMe ? "var(--on-light)" : "var(--ink)" }}>{(p.score || 0).toLocaleString()}</span>
+            </div>
+          );
+        })}
+      </div>
       {reviewSection}
     </div>
   );
