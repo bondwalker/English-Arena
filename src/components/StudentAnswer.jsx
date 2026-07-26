@@ -257,8 +257,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "stress_battle" && (
         <div>
-          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "0.5rem" }}>{q.word}</div>
-          <div style={{ textAlign: "center", fontSize: "0.75rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.08em", marginBottom: "1.4rem" }}>Which stress pattern is correct?</div>
+          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.4rem" }}>{q.word}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
             {["A", "B"].map(label => {
               const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
@@ -273,7 +272,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--muted)", opacity: 0.6, flexShrink: 0 }}>{label}</span>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", flex: 1 }}>
                     <StressDots syllables={n} stressAt={stressAt} size="lg" />
-                    <span style={{ fontSize: "0.95rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--ink-soft)" }}>stress on {ordinal(stressAt)} syllable</span>
+                    <span style={{ fontSize: "1.15rem", fontWeight: 700, color: sel ? "var(--sun)" : "var(--ink-soft)" }}>stress on {ordinal(stressAt)} syllable</span>
                   </div>
                 </button>
               );
