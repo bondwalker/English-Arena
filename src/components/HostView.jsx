@@ -6,86 +6,42 @@ import { TEAMS, GAME_MODES, OPT_ICONS, checkAnswer, getTimeLimit, getTeamScores,
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
-// ─── HostReveal ────────────────────────────────────────────────────────────────
-function HostReveal({ q, answers, players }) {
-  const correct = Object.entries(answers).filter(([, a]) => checkAnswer(a?.v ?? a, q));
-  const wrong = Object.entries(answers).filter(([, a]) => !checkAnswer(a?.v ?? a, q));
-  const anyCorrect = correct.length > 0;
+// ─── HostReveal — coral takeover ─────────────────────────────────────────────────
+function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, onSkipWarmup }) {
+  const correct = Object.entries(answers).filter(([, a]) => checkAnswer(a?.v ?? a, q)).length;
+  const pCount = Object.keys(players).length;
+  const missed = Math.max(0, pCount - correct);
+  const pill = pCount === 0 ? "The answer" : correct === 0 ? "Not this time" : correct === pCount ? "Everyone got it!" : "Answer revealed";
+  const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
+  const ansText =
+    q.type === "word_match" ? "Match all pairs correctly"
+      : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
+        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).join(", ")}`
+          : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
+            : q.answer;
   return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "0.5rem" }}>
-        <SAIcon name="reveal" size={18} color="var(--sun)" />
-        <span className="label" style={{ margin: 0 }}>{q.type === "odd_one_out" ? "The sentence with the error" : "Correct Answer"}</span>
-      </div>
-      <div className="card" style={{ borderColor: "var(--sun)", background: "rgba(255,206,71,0.07)", position: "relative", overflow: "hidden" }}>
-        {anyCorrect && <SAConfetti active count={30} />}
-        {q.type === "word_match" ? (
-          <div>{q.pairs?.slice(0, 4).map((p, i) => (
-            <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.3rem", fontSize: "0.9rem", alignItems: "center" }}>
-              <span style={{ fontWeight: 700, color: "var(--sun)" }}>{p.word}</span>
-              <SAIcon name="arrow_right" size={14} color="var(--muted)" />
-              <span style={{ color: "var(--ink-soft)" }}>{p.meaning}</span>
-            </div>
-          ))}</div>
-        ) : q.type === "stress_battle" ? (
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.8rem", fontWeight: 900, letterSpacing: "0.08em", marginBottom: "1rem", fontStyle: "italic", color: "var(--sun)" }}>{q.word}</div>
-            <div style={{ display: "flex", gap: "2rem", justifyContent: "center" }}>
-              {["A", "B"].map(label => {
-                const isCorrect = label === q.answer;
-                const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
-                const s = q.stressed || 1;
-                const wrongStress = s === n ? s - 1 : s + 1;
-                const stressAt = isCorrect ? s : wrongStress;
-                return (
-                  <div key={label} style={{ textAlign: "center", padding: "0.9rem 1.4rem", borderRadius: 12, border: `2px solid ${isCorrect ? "var(--sun)" : "var(--line)"}`, background: isCorrect ? "rgba(255,206,71,0.1)" : "transparent" }}>
-                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.9rem", marginBottom: "0.5rem", color: isCorrect ? "var(--sun)" : "var(--muted)", letterSpacing: "0.1em", fontWeight: 700 }}>{label}{isCorrect ? " ✓" : ""}</div>
-                    <StressDots syllables={n} stressAt={stressAt} label />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : q.type === "story_builder" ? (
-          <div>{(q.correctOrder || []).filter(i => i < 3).map((idx, pos) => (
-            <div key={idx} style={{ fontSize: "0.88rem", marginBottom: "0.3rem", display: "flex", gap: "0.4rem" }}>
-              <span style={{ color: "var(--sun)", fontWeight: 700, flexShrink: 0 }}>{pos + 1}.</span><span>{q.sentences[idx]}</span>
-            </div>
-          ))}</div>
-        ) : q.type === "error_spotter" ? (
-          <div>
-            <div style={{ fontSize: "0.88rem", marginBottom: "0.4rem", lineHeight: 1.6 }}>{q.sentence?.split(" ").map((w, i) => {
-              const clean = w.replace(/[.,!?;:]/g, "");
-              const isErr = clean.toLowerCase() === q.errorWord?.toLowerCase();
-              return <span key={i} style={{ marginRight: "0.35rem", color: isErr ? "var(--tomato)" : "var(--ink)", textDecoration: isErr ? "line-through" : "none", fontWeight: isErr ? 700 : 400 }}>{w}</span>;
-            })}</div>
-            <div style={{ fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ color: "var(--tomato)" }}>{q.errorWord}</span>
-              <SAIcon name="arrow_right" size={16} color="var(--muted)" />
-              <span style={{ color: "var(--sun)" }}>{q.answer}</span>
-            </div>
-          </div>
-        ) : (
-          <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.2rem", fontWeight: 700, color: "var(--sun)" }}>{q.answer}</div>
-        )}
-        {q.explanation && <p style={{ color: "var(--muted)", marginTop: "0.5rem", fontSize: "0.82rem" }}>{q.explanation}</p>}
-      </div>
-      <div className="flex gap-2 wrap mt-2">
-        <div className="card" style={{ flex: 1, minWidth: 120, borderColor: "var(--leaf)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: "0.3rem" }}>
-            <SAIcon name="sparkle" size={13} color="var(--leaf)" />
-            <span className="label" style={{ margin: 0, color: "var(--leaf)" }}>Correct — {correct.length}</span>
-          </div>
-          {correct.map(([n]) => <div key={n} style={{ fontSize: "0.85rem", marginTop: "0.2rem", display: "flex", alignItems: "center", gap: 5 }}><SABlob name={n} size={16} /> {n}</div>)}
-          {!correct.length && <div style={{ opacity: 0.3, fontSize: "0.8rem" }}>Nobody yet</div>}
+    <div style={{ position: "fixed", inset: 0, background: "var(--tomato)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
+      {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(253,243,221,0.13)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
+      <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", height: "100%", maxWidth: 1100, margin: "0 auto", width: "100%", justifyContent: "center", textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.4rem" }}>
+          <span style={{ border: "1.5px solid rgba(15,18,38,0.6)", borderRadius: 999, padding: "0.5rem 1.3rem", fontWeight: 700, fontSize: "1rem", color: "var(--on-light)" }}>{pill}</span>
         </div>
-        <div className="card" style={{ flex: 1, minWidth: 120, borderColor: "var(--tomato)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: "0.3rem" }}>
-            <SAIcon name="target" size={13} color="var(--tomato)" />
-            <span className="label" style={{ margin: 0, color: "var(--tomato)" }}>Incorrect — {wrong.length}</span>
-          </div>
-          {wrong.map(([n]) => <div key={n} style={{ fontSize: "0.85rem", marginTop: "0.2rem", display: "flex", alignItems: "center", gap: 5 }}><SABlob name={n} size={16} /> {n}</div>)}
-          {!wrong.length && <div style={{ opacity: 0.3, fontSize: "0.8rem" }}>Nobody</div>}
+        <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--ink)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{ansText}"</h1>
+        {q.explanation && <p style={{ color: "var(--ink)", opacity: 0.85, fontSize: "clamp(1rem,1.9vw,1.5rem)", lineHeight: 1.5, marginTop: "1.4rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}>{q.explanation}</p>}
+      </div>
+      <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "0.8rem" }}>
+          {[{ k: "Correct", v: correct }, { k: "Missed", v: missed }].map(s => (
+            <div key={s.k} style={{ background: "var(--cream)", borderRadius: 14, padding: "0.8rem 1.4rem", textAlign: "center", minWidth: 96, boxShadow: "0 0 0 3px rgba(253,243,221,0.3)" }}>
+              <div style={{ color: "var(--tomato)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.1rem" }}>{s.k}</div>
+              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2rem", color: "var(--tomato)", lineHeight: 1 }}>{s.v}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
+          {onReplay && <button className="btn btn-ghost btn-sm" onClick={onReplay} style={{ color: "var(--on-light)", borderColor: "rgba(15,18,38,0.4)" }}>Replay</button>}
+          {warmup && onSkipWarmup && <button className="btn btn-ghost btn-sm" onClick={onSkipWarmup} style={{ color: "var(--on-light)", borderColor: "rgba(15,18,38,0.4)" }}>Skip Warm-Up</button>}
+          {onNext && <button className="btn" onClick={onNext} style={{ background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", fontSize: "1.05rem", padding: "1rem 2rem", boxShadow: "5px 5px 0 var(--sun)" }}>{nextLabel} →</button>}
         </div>
       </div>
     </div>
@@ -93,33 +49,75 @@ function HostReveal({ q, answers, players }) {
 }
 
 // ─── HostQuestion ──────────────────────────────────────────────────────────────
-function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont }) {
+function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont, code, topic }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? [...(q.words || [])].sort(() => Math.random() - 0.5) : [], [q.question]);
   const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", type_answer: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
+  const urgent = timeLeft <= 5 && !paused;
+  const answeredNames = new Set(Object.keys(answers));
 
-  return (
-    <div className="mt-3">
-      <div style={{ display: "flex", gap: 3, marginBottom: "0.75rem" }}>
-        {Array.from({ length: total }).map((_, i) => (
-          <div key={i} style={{ flex: 1, height: 5, borderRadius: 99, background: i < qIndex ? "var(--leaf)" : i === qIndex ? "var(--sun)" : "var(--line)", transition: "background 0.3s" }} />
-        ))}
+  const sidebar = (
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+      {/* room chip + round */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.6rem" }}>
+        <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem" }}>Round <span style={{ color: "var(--tomato)" }}>{qIndex + 1}</span> <span style={{ color: "var(--muted)" }}>/ {total}</span></span>
+        {code && <SARoomChip code={code} playerCount={pCount} />}
       </div>
+      {/* timer card */}
+      <div style={{ background: urgent ? "var(--tomato)" : "var(--sun)", borderRadius: 20, padding: "1.6rem 1rem", textAlign: "center", position: "relative", overflow: "hidden" }} className={urgent ? "sa-anim-pulse" : ""}>
+        <div style={{ position: "absolute", inset: "0.9rem", border: "3px solid rgba(15,18,38,0.15)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.4rem", color: "var(--on-light)", lineHeight: 1 }}>{paused ? "‖" : timeLeft}</div>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", letterSpacing: "0.2em", color: "rgba(15,18,38,0.6)", marginTop: "0.3rem" }}>{paused ? "PAUSED" : "SECONDS"}</div>
+      </div>
+      {/* locked in */}
+      <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "0.9rem 1rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.6rem" }}>
+          <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", letterSpacing: "0.12em", color: "var(--muted)" }}>LOCKED IN</span>
+          <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.1rem", color: "var(--leaf)" }}>{ansCount}<span style={{ color: "var(--muted)", fontSize: "0.85rem" }}>/{pCount}</span></span>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {Object.keys(players).map(n => (
+            <div key={n} style={{ opacity: answeredNames.has(n) ? 1 : 0.32, transition: "opacity 0.2s" }} className={answeredNames.has(n) ? "sa-anim-pop" : ""}>
+              <SABlob name={n} size={26} color={mode === "teams" ? (teams.find(t => t.id === players[n]?.team)?.color) : undefined} />
+            </div>
+          ))}
+          {pCount === 0 && <span style={{ fontSize: "0.78rem", color: "var(--muted)", opacity: 0.6 }}>Waiting for players…</span>}
+        </div>
+      </div>
+      {/* teacher panel */}
+      <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "0.9rem 1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "var(--muted)" }}>TEACHER</span>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
+          {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
+        </div>
+        {onReveal && <button className="btn btn-coral btn-full" style={{ padding: "0.8rem" }} onClick={onReveal}><SAIcon name="reveal" size={15} color="var(--on-dark)" /> Reveal answer</button>}
+        {onSkip && <TeacherBtn icon="skip" label="Skip question" onClick={onSkip} variant="ghost" />}
+        {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
+        {onToggleFont && <TeacherBtn label={bigText ? "A− Text" : "A+ Text"} onClick={onToggleFont} />}
+      </div>
+    </div>
+  );
 
-      <div className="flex justify-between items-center mb-2">
+  const main = (
+    <div>
+      <div className="flex justify-between items-center mb-2 wrap gap-1">
         <div className="flex gap-2 items-center">
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px 3px 6px", background: tc, color: "var(--on-dark)", borderRadius: 999, fontSize: 11, fontWeight: 700 }}>
-            <SAIcon name={q.type} size={12} color="var(--on-dark)" />
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px 5px 8px", background: tc, color: "var(--on-dark)", borderRadius: 999, fontSize: 13, fontWeight: 700 }}>
+            <SAIcon name={q.type} size={14} color="var(--on-dark)" />
             <span>{q.type.replace(/_/g, " ")}</span>
           </div>
+          {topic && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.08em", color: "var(--muted)", textTransform: "uppercase" }}>{topic}</span>}
           {q._warmup && <span className="badge" style={{ background: "rgba(255,206,71,0.15)", color: "var(--sun)", border: "1px solid rgba(255,206,71,0.3)" }}>WARM UP</span>}
         </div>
-        <div className="flex gap-2 items-center">
-          {paused && <span style={{ fontSize: "0.68rem", color: "var(--tomato)", fontWeight: 700, letterSpacing: "0.05em" }}>PAUSED</span>}
-          <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", color: "var(--muted)" }}>Q{qIndex + 1}/{total}</span>
-        </div>
+      </div>
+
+      <div style={{ display: "flex", gap: 4, marginBottom: "1.2rem" }}>
+        {Array.from({ length: total }).map((_, i) => (
+          <div key={i} style={{ flex: 1, height: 6, borderRadius: 99, background: i < qIndex ? "var(--leaf)" : i === qIndex ? "var(--sun)" : "var(--line)", transition: "background 0.3s" }} />
+        ))}
       </div>
 
       {mode === "teams" && (
@@ -128,11 +126,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
 
-      <div className="flex justify-center mb-3">
-        <SATimerRing value={timeLeft} max={getTimeLimit(q)} size={110} />
-      </div>
-
-      <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.1rem,2.6vw,1.55rem)", lineHeight: 1.4, textAlign: "center", marginBottom: "1.2rem", maxWidth: 680, margin: "0 auto 1.2rem", fontFamily: "'Fraunces',serif" }}>{q.question}</h2>
+      <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.6rem,3.2vw,2.8rem)", lineHeight: 1.15, marginBottom: "1.6rem", fontFamily: "'Fraunces',serif", fontWeight: 900, letterSpacing: "-0.01em" }}>{q.question}</h2>
 
       {q.type === "rearrange" && (
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
@@ -144,15 +138,19 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
       {q.type === "multiple_choice" && q.options && (
-        <div className="opt-grid">{q.options.map((o, i) => <div key={i} className={`opt-btn opt-${i}`}><span className="opt-icon">{OPT_ICONS[i]}</span>{o}</div>)}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_ROW_COLORS[i % 4]} />)}
+        </div>
       )}
       {q.type === "odd_one_out" && q.options && (
-        <div className="opt-grid">{q.options.map((o, i) => <div key={i} className={`opt-btn opt-${i % 4}`} style={{ fontFamily: "'Fraunces',serif", fontStyle: "italic", color: `var(--${["tomato", "cobalt", "leaf", "plum"][i % 4]})` }}>{o}</div>)}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_ROW_COLORS[i % 4]} italic />)}
+        </div>
       )}
       {q.type === "true_false" && (
-        <div className="flex gap-2 mt-2">
-          <div className="opt-btn opt-2" style={{ justifyContent: "center", flex: 1, fontWeight: 700, fontFamily: "'Fraunces',serif", fontSize: "1.4rem" }}>✓ True</div>
-          <div className="opt-btn opt-0" style={{ justifyContent: "center", flex: 1, fontWeight: 700, fontFamily: "'Fraunces',serif", fontSize: "1.4rem" }}>✕ False</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          <OptionRow letter="✓" text="True" color="var(--leaf)" />
+          <OptionRow letter="✕" text="False" color="var(--tomato)" />
         </div>
       )}
       {q.type === "story_builder" && q.sentences && <div className="mt-2">{q.sentences.slice(0, 3).map((s, i) => <div key={i} className="story-card" style={{ cursor: "default" }}><span className="story-num">{i + 1}</span>{s}</div>)}</div>}
@@ -208,8 +206,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.2rem", fontStyle: "italic", color: "var(--ink-soft)", marginBottom: "1rem" }}>
             {q.question.replace("___", "______")}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", maxWidth: 500, margin: "0 auto" }}>
-            {q.options.map((o, i) => <div key={i} className={`opt-btn opt-${i}`} style={{ justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.1rem" }}>{o}</div>)}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: 560, margin: "0 auto", textAlign: "left" }}>
+            {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_ROW_COLORS[i % 4]} />)}
           </div>
         </div>
       )}
@@ -234,31 +232,28 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
 
-      <div className="text-center mt-3">
-        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: "0.2rem" }}>Answered</div>
-        <div style={{ fontFamily: "'Fraunces',serif", fontSize: "2.2rem", fontWeight: 900, color: "var(--leaf)", lineHeight: 1 }}>{ansCount}<span style={{ color: "var(--muted)", fontSize: "1.2rem" }}>/{pCount}</span></div>
-        <div className="flex wrap justify-center gap-1 mt-1">
-          {Object.keys(answers).map(n => (
-            <div key={n} style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "2px 9px 2px 3px", background: "rgba(122,220,90,0.12)", border: "1.5px solid var(--leaf)", borderRadius: 999 }} className="sa-anim-pop">
-              <SABlob name={n} size={18} />
-              <span style={{ fontSize: 11, fontWeight: 600 }}>{n}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+    </div>
+  );
 
-      <div style={{ marginTop: "1rem", padding: "10px 12px", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 12, display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", width: "100%", textAlign: "center", marginBottom: 4 }}>Teacher controls</div>
-        {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
-        {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
-        {onReveal && <TeacherBtn icon="reveal" label="Reveal" onClick={onReveal} variant="primary" />}
-        {onSkip && <TeacherBtn icon="skip" label="Skip" onClick={onSkip} variant="ghost" />}
-        {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
-        {onToggleFont && <TeacherBtn label={bigText ? "A−" : "A+"} onClick={onToggleFont} />}
-      </div>
+  return (
+    <div className="host-game-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 340px", gap: "1.6rem", alignItems: "start", marginTop: "0.5rem" }}>
+      {main}
+      {sidebar}
     </div>
   );
 }
+
+// full-width coloured answer row (projector)
+function OptionRow({ letter, text, color, italic }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.55rem 1.1rem 0.55rem 0.55rem", border: `2.5px solid ${color}`, borderRadius: 16, background: "var(--paper)", boxShadow: `4px 4px 0 ${color}33` }}>
+      <span style={{ width: 54, height: 54, borderRadius: 12, background: color, color: "var(--on-light)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.5rem", flexShrink: 0 }}>{letter}</span>
+      <span style={{ fontSize: "clamp(1.05rem,1.8vw,1.5rem)", fontWeight: 600, lineHeight: 1.25, fontStyle: italic ? "italic" : "normal", fontFamily: italic ? "'Fraunces',serif" : "inherit", color: italic ? color : "var(--ink)" }}>{text}</span>
+    </div>
+  );
+}
+
+const OPT_ROW_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 
 // ─── HostView ──────────────────────────────────────────────────────────────────
 export default function HostView({ onBack }) {
@@ -516,8 +511,9 @@ export default function HostView({ onBack }) {
   const activeTeams = TEAMS.slice(0, room.teamCount);
   const qrUrl = typeof window !== "undefined" ? `${window.location.origin}${window.location.pathname}?join=${room.code}` : "";
 
+  const wideProjector = ["question", "reveal", "leaderboard", "end"].includes(room.phase);
   return (
-    <div className="panel">
+    <div className="panel" style={wideProjector ? { maxWidth: 1200 } : undefined}>
       {/* Top bar */}
       <div className="flex justify-between items-center mb-2 wrap gap-1">
         <SALogo size={24} />
@@ -568,9 +564,11 @@ export default function HostView({ onBack }) {
       {/* In-game fixed overlays */}
       {room.phase !== "lobby" && (
         <>
-          <div style={{ position: "fixed", bottom: "1rem", left: "1rem", zIndex: 50 }}>
-            <SARoomChip code={room.code} playerCount={players.length} />
-          </div>
+          {!["question", "reveal"].includes(room.phase) && (
+            <div style={{ position: "fixed", bottom: "1rem", left: "1rem", zIndex: 50 }}>
+              <SARoomChip code={room.code} playerCount={players.length} />
+            </div>
+          )}
           {(room.phase === "question" || room.phase === "reveal") && <InGameQR url={qrUrl} />}
         </>
       )}
@@ -717,6 +715,7 @@ export default function HostView({ onBack }) {
             <HostQuestion q={room.currentQ} timeLeft={room.timeLeft} answers={room.answers || {}}
               players={room.players || {}} qIndex={room.qIndex} total={room.questions.length}
               mode={room.mode} teams={activeTeams} teamScores={teamScores} paused={room.paused}
+              code={room.code} topic={room.topic}
               onPause={() => upd(p => ({ ...p, paused: !p.paused }))}
               onRepeat={() => upd(p => ({ ...p, timeLeft: getTimeLimit(p.currentQ) }))}
               onReveal={() => endEarly()}
@@ -729,19 +728,14 @@ export default function HostView({ onBack }) {
         </>
       )}
 
-      {/* Reveal phase */}
+      {/* Reveal phase — coral takeover */}
       {room.phase === "reveal" && room.currentQ && (
-        <div className="mt-3">
-          <HostReveal q={room.currentQ} answers={room.answers || {}} players={room.players || {}} />
-          <div className="flex gap-2 mt-3 wrap">
-            <button className="btn btn-gold" style={{ flex: 1, color: "var(--on-light)", borderColor: "var(--on-light)" }} onClick={advance}>
-              {room.currentQ?._warmup ? "Next →" : room.qIndex + 1 >= room.questions.length ? "Final Results →" : "Show Scores →"}
-            </button>
-            <button className="btn btn-ghost btn-sm" onClick={replayQuestion} title="Show this question again">Replay</button>
-            {room.currentQ?._warmup && <button className="btn btn-ghost btn-sm" onClick={skipWarmup} title="Skip the rest of the warm-up">Skip Warm-Up</button>}
-          </div>
-          <PlayersFooter players={players} mode={room.mode} />
-        </div>
+        <HostReveal q={room.currentQ} answers={room.answers || {}} players={room.players || {}}
+          onNext={advance}
+          nextLabel={room.currentQ?._warmup ? "Next" : room.qIndex + 1 >= room.questions.length ? "Final results" : "See leaderboard"}
+          onReplay={replayQuestion}
+          warmup={!!room.currentQ?._warmup}
+          onSkipWarmup={skipWarmup} />
       )}
 
       {/* Warm-up done */}
