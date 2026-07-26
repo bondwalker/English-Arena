@@ -182,13 +182,11 @@ export default function StudentView({ onBack, initialCode = "" }) {
       {phase === "leaderboard" || phase === "end" ? (
         <StudentLeaderboard room={room} name={name} showReview={showReview} setShowReview={setShowReview} />
       ) : phase === "warmup_done" ? (
-        <div style={{ textAlign: "center", padding: "3rem 1rem" }} className="sa-anim-pop">
-          <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(91,139,255,0.18)", border: "2px solid var(--cobalt)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
-            <SAIcon name="hourglass" size={32} color="var(--cobalt)" />
-          </div>
-          <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.4rem", marginBottom: "0.4rem" }}>Get ready!</h2>
-          <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>Main game starting soon…</p>
-          <div className="dots mt-3"><span /><span /><span /></div>
+        <div style={{ position: "fixed", inset: 0, background: "var(--leaf)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "2rem", gap: "0.9rem" }}>
+          <div className="sa-anim-pop"><SAIcon name="sparkle" size={54} color="var(--on-light)" /></div>
+          <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "2.4rem", lineHeight: 1 }}>Get ready!</h2>
+          <p style={{ color: "var(--on-light)", opacity: 0.8, fontSize: "1.05rem" }}>The main game is about to start.</p>
+          <div className="dots mt-2"><span /><span /><span /></div>
         </div>
       ) : phase === "question" && q ? (
         <div style={{ zoom: bigText ? 1.3 : 1 }}>

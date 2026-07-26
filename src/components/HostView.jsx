@@ -705,13 +705,13 @@ export default function HostView({ onBack }) {
           onSkipWarmup={skipWarmup} />
       )}
 
-      {/* Warm-up done */}
+      {/* Warm-up done — green full-bleed takeover */}
       {room.phase === "warmup_done" && (
-        <div className="card mt-4" style={{ textAlign: "center", padding: "2rem 1.5rem" }}>
-          <SAIcon name="sparkle" size={40} color="var(--sun)" />
-          <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: "1.4rem", margin: "0.6rem 0 0.4rem", fontStyle: "italic" }}>Warm-Up Complete!</h2>
-          <p style={{ fontSize: "0.85rem", color: "var(--muted)", marginBottom: "1.5rem" }}>Students are warmed up and ready.</p>
-          <button className="btn btn-green btn-full" style={{ fontSize: "1rem", color: "var(--on-light)", borderColor: "var(--on-light)" }} onClick={goNextQuestion}>Start Main Game →</button>
+        <div style={{ position: "fixed", inset: 0, background: "var(--leaf)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "clamp(1.5rem,4vw,3.5rem)", gap: "1rem" }}>
+          <div className="sa-anim-pop"><SAIcon name="sparkle" size={64} color="var(--on-light)" /></div>
+          <h1 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.4rem,6vw,4.5rem)", lineHeight: 1, letterSpacing: "-0.01em" }}>Warm-up complete!</h1>
+          <p style={{ fontSize: "clamp(1rem,1.8vw,1.4rem)", color: "var(--on-light)", opacity: 0.8, marginBottom: "1.4rem" }}>Everyone's warmed up — time for the real thing.</p>
+          <button className="btn" onClick={goNextQuestion} style={{ background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", fontSize: "1.15rem", padding: "1.1rem 2.6rem", boxShadow: "5px 5px 0 rgba(15,18,38,0.25)" }}>Start Main Game →</button>
         </div>
       )}
 
