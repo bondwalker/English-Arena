@@ -225,6 +225,10 @@ export default function StudentView({ onBack, initialCode = "" }) {
       {phase === "reveal" && (() => {
         const answered = myAnswer !== null;
         const streak = myData.streak || 0;
+        const win = answered && wasCorrect;
+        const bg = win ? "var(--leaf)" : "var(--tomato)";
+        const fg = win ? "var(--on-light)" : "var(--ink)";
+        const accent = win ? "var(--leaf)" : "var(--tomato)";
         const headline = !answered ? "Time's up!" : wasCorrect ? "Correct!" : "Missed!";
         const sub = !answered ? "No answer this round." : wasCorrect ? `+${(streak >= 2 ? 1250 : 1000).toLocaleString()} points${streak >= 2 ? " · on a streak!" : ""}` : "Streak ended.";
         const ansText = q ? (
@@ -235,10 +239,10 @@ export default function StudentView({ onBack, initialCode = "" }) {
                   : q.answer
         ) : "";
         return (
-          <div style={{ position: "fixed", inset: 0, background: "var(--tomato)", zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1.4rem", overflowY: "auto", textAlign: "center", gap: "0.5rem" }}>
-            <div className="sa-anim-float"><SAIcon name="hourglass" size={54} color="var(--ink)" /></div>
-            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "3rem", color: "var(--ink)", lineHeight: 1, margin: "0.4rem 0 0.2rem" }}>{headline}</h1>
-            <p style={{ color: "var(--ink)", opacity: 0.85, fontSize: "1.05rem", fontWeight: 600, marginBottom: "1.4rem" }}>{sub}</p>
+          <div style={{ position: "fixed", inset: 0, background: bg, zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1.4rem", overflowY: "auto", textAlign: "center", gap: "0.5rem" }}>
+            <div className={win ? "sa-anim-pop" : "sa-anim-float"}><SAIcon name={win ? "sparkle" : "hourglass"} size={54} color={fg} /></div>
+            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "3rem", color: fg, lineHeight: 1, margin: "0.4rem 0 0.2rem" }}>{headline}</h1>
+            <p style={{ color: fg, opacity: 0.85, fontSize: "1.05rem", fontWeight: 600, marginBottom: "1.4rem" }}>{sub}</p>
             {q && (
               <div style={{ width: "100%", maxWidth: 340 }}>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.18em", color: "rgba(15,18,38,0.6)", marginBottom: "0.6rem" }}>CORRECT ANSWER</div>
@@ -250,20 +254,20 @@ export default function StudentView({ onBack, initialCode = "" }) {
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
                         <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--sun)" }}>{q.word}</div>
                         <StressDots syllables={n} stressAt={st} size="lg" />
-                        {Array.isArray(q.syllables) && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.4rem", color: "var(--tomato)" }}>{stressBreakdown(q.syllables, st)}</div>}
+                        {Array.isArray(q.syllables) && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.4rem", color: accent }}>{stressBreakdown(q.syllables, st)}</div>}
                         <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ink-soft)" }}>stress on {ordinal(st)} syllable</div>
                       </div>
                     );
                   })() : (
-                    <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", color: "var(--tomato)", lineHeight: 1.25 }}>{ansText}</div>
+                    <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", color: accent, lineHeight: 1.25 }}>{ansText}</div>
                   )}
                 </div>
-                {q.explanation && <p style={{ color: "var(--ink)", opacity: 0.8, fontSize: "0.85rem", lineHeight: 1.45, marginTop: "0.9rem" }}>{q.explanation}</p>}
+                {q.explanation && <p style={{ color: fg, opacity: 0.8, fontSize: "0.85rem", lineHeight: 1.45, marginTop: "0.9rem" }}>{q.explanation}</p>}
               </div>
             )}
             <div style={{ marginTop: "1.6rem", background: "var(--cream)", borderRadius: 16, padding: "0.9rem 2rem", minWidth: 200, boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
-              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.14em", color: "var(--tomato)", textTransform: "uppercase", marginBottom: "0.15rem" }}>Your score</div>
-              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.4rem", color: "var(--tomato)", lineHeight: 1 }}>{myScore.toLocaleString()}</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.14em", color: accent, textTransform: "uppercase", marginBottom: "0.15rem" }}>Your score</div>
+              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.4rem", color: accent, lineHeight: 1 }}>{myScore.toLocaleString()}</div>
             </div>
           </div>
         );
