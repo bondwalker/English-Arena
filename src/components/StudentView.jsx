@@ -170,7 +170,12 @@ export default function StudentView({ onBack, initialCode = "" }) {
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", flexShrink: 0 }}>
-          <button onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} style={{ background: "transparent", border: "1.5px solid var(--line)", borderRadius: 8, color: "var(--ink-soft)", fontSize: "0.78rem", fontWeight: 700, padding: "0.35rem 0.55rem", cursor: "pointer", lineHeight: 1 }} title="Toggle text size">{bigText ? "A−" : "A+"}</button>
+          <button onClick={() => { const n = !bigText; setBigText(n); writeFont(n); }} title="Tap to change text size"
+            style={{ background: "var(--cobalt)", border: "none", borderRadius: 12, color: "var(--on-light)", fontWeight: 900, padding: "0.45rem 0.75rem", cursor: "pointer", lineHeight: 1, display: "flex", alignItems: "center", gap: 3, boxShadow: "0 0 0 3px rgba(91,139,255,0.3)" }}>
+            <span style={{ fontFamily: "'Fraunces',serif", fontSize: "0.85rem" }}>A</span>
+            <span style={{ fontFamily: "'Fraunces',serif", fontSize: "1.25rem" }}>A</span>
+            <span style={{ fontSize: "1rem", fontWeight: 900, marginLeft: 1 }}>{bigText ? "−" : "+"}</span>
+          </button>
           <div style={{ background: "var(--sun)", color: "var(--on-light)", borderRadius: 12, padding: "0.4rem 0.9rem", textAlign: "right", lineHeight: 1 }}>
             <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.55rem", letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.7, marginBottom: "0.15rem" }}>Score</div>
             <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.35rem" }}><SARollingNumber value={myScore} /></div>
