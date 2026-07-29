@@ -4279,3 +4279,9 @@ export const QUESTION_BANK = {
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"CONNECTION",syllables:3,stressed:2,answer:"B"},
   ]},
 };
+
+// Idioms pack — all fill_idiom questions pooled from every topic, offered as its own topic
+QUESTION_BANK.idioms = {
+  label: "🎭 Idioms",
+  questions: Object.values(QUESTION_BANK).flatMap(t => t.questions || []).filter(q => q.type === "fill_idiom"),
+};

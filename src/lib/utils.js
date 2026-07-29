@@ -41,7 +41,6 @@ export const GAME_MODES = [
   { v: "type_answer",    label: "✏️ Type Answer",      desc: "Short text response" },
   { v: "rearrange",      label: "🔀 Word Order",       desc: "Build sentences" },
   { v: "story_builder",  label: "📖 Story Builder",    desc: "Arrange a story" },
-  { v: "fill_idiom",     label: "🎭 Idioms",           desc: "Complete expressions" },
   { v: "word_match",     label: "🃏 Word Match",       desc: "Vocab matching" },
   { v: "odd_one_out",    label: "🎯 Odd One Out",      desc: "Spot the wrong one" },
   { v: "stress_battle",  label: "⚡ Stress Battle",   desc: "Word stress A/B" },
