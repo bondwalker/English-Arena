@@ -82,12 +82,12 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       )}
 
       {q.type === "true_false" && (
-        <div style={{ display: "flex", gap: "0.8rem", marginTop: "0.5rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", marginTop: "0.5rem" }}>
           {[{ v: "True", c: "var(--leaf)", icon: "bolt" }, { v: "False", c: "var(--tomato)", icon: "skip" }].map(({ v, c, icon }) => (
             <button key={v} disabled={answered}
-              style={{ flex: 1, padding: "1.4rem 1rem", border: `2px solid ${myAnswer === v ? c : "var(--line)"}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: myAnswer === v ? c : "var(--ink-soft)", borderRadius: 12, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.2rem", fontStyle: "italic" }}
+              style={{ width: "100%", padding: "1.6rem 1.4rem", border: `2.5px solid ${myAnswer === v ? c : "var(--line)"}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: myAnswer === v ? c : "var(--ink-soft)", borderRadius: 16, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.9rem", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.9rem", fontStyle: "italic" }}
               onClick={() => onAnswer(v)}>
-              <SAIcon name={icon} size={26} color={myAnswer === v ? c : "var(--muted)"} />
+              <SAIcon name={icon} size={34} color={myAnswer === v ? c : "var(--muted)"} />
               {v}
             </button>
           ))}

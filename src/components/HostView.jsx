@@ -169,9 +169,13 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
       {q.type === "true_false" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-          <OptionRow letter="✓" text="True" color="var(--leaf)" />
-          <OptionRow letter="✕" text="False" color="var(--tomato)" />
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          {[{ v: "True", c: "var(--leaf)", icon: "✓" }, { v: "False", c: "var(--tomato)", icon: "✕" }].map(({ v, c, icon }) => (
+            <div key={v} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.2rem", padding: "1.6rem", border: `2.5px solid ${c}`, borderRadius: 18, background: "var(--paper)", boxShadow: `4px 4px 0 ${c}33` }}>
+              <span style={{ fontSize: "2.4rem", fontWeight: 900, color: c, lineHeight: 1 }}>{icon}</span>
+              <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", color: c }}>{v}</span>
+            </div>
+          ))}
         </div>
       )}
       {q.type === "story_builder" && q.sentences && <div className="mt-2">{q.sentences.slice(0, 3).map((s, i) => <div key={i} className="story-card" style={{ cursor: "default" }}><span className="story-num">{i + 1}</span>{s}</div>)}</div>}
