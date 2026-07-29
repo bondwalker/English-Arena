@@ -151,7 +151,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
 
       {q.type === "rearrange" && (
         <div style={{ maxWidth: 620, margin: "0 auto" }}>
-          <div style={{ background: "linear-gradient(180deg,#6b4a2a 0%,#4a3320 100%)", borderRadius: 14, padding: "18px 16px 22px", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 0 4px 8px rgba(0,0,0,0.35), inset 0 -3px 0 rgba(0,0,0,0.3)" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {shuffledRearrange.map((w, i) => (
               <WoodenTile key={i} word={w} size="lg" block />
             ))}

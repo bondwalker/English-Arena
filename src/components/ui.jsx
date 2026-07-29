@@ -360,15 +360,12 @@ export function WoodenTile({ word, size = "md", angle = 0, placed = false, onCli
   return (
     <span onClick={onClick} className={onClick ? "sa-pressable" : ""}
       style={{
-        position: "relative", display: block ? "flex" : "inline-flex", alignItems: "center", justifyContent: block ? "center" : "flex-start", width: block ? "100%" : undefined, padding: s.p, borderRadius: s.r,
-        background: placed
-          ? "linear-gradient(180deg,#7addc0 0%,#42b090 100%)"
-          : "linear-gradient(180deg,#f6e3a8 0%,#f0d99a 30%,#c4a26a 100%)",
-        boxShadow: placed
-          ? "0 2px 0 #2e8a6e,inset 0 1px 0 #a8ffe8"
-          : "0 4px 0 #8c6e44,0 6px 0 rgba(0,0,0,0.22),inset 0 1px 0 #fff1c0",
-        fontFamily: "'Fraunces',Georgia,serif", fontSize: s.fs, fontWeight: 700,
-        color: placed ? "#0d3328" : "#3a2a18", letterSpacing: "0.01em",
+        position: "relative", display: block ? "flex" : "inline-flex", alignItems: "center", justifyContent: block ? "center" : "flex-start", width: block ? "100%" : undefined, padding: s.p, borderRadius: block ? 14 : Math.max(s.r, 10),
+        background: placed ? "var(--cobalt)" : "var(--paper)",
+        border: "2.5px solid var(--cobalt)",
+        boxShadow: placed ? "none" : "3px 3px 0 rgba(91,139,255,0.22)",
+        fontFamily: "'Fraunces',Georgia,serif", fontSize: s.fs, fontWeight: 800,
+        color: placed ? "var(--on-light)" : "var(--ink)", letterSpacing: "0.01em",
         transform: block ? "none" : `rotate(${angle}deg)`, cursor: onClick ? "pointer" : "default",
         userSelect: "none", whiteSpace: "nowrap",
       }}>

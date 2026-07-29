@@ -148,10 +148,10 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "rearrange" && (
         <div>
           <div style={{ fontSize: "0.76rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>YOUR SENTENCE</div>
-          <div style={{ background: "linear-gradient(180deg,#6b4a2a 0%,#4a3320 100%)", borderRadius: 12, padding: "14px 12px 18px", minHeight: 84, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", boxShadow: "inset 0 3px 6px rgba(0,0,0,0.3),0 2px 0 rgba(0,0,0,0.15)" }}>
-            {rearranged.length === 0 && <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", fontFamily: "'JetBrains Mono',monospace" }}>Tap words below…</span>}
+          <div style={{ background: "var(--cream)", border: "1.5px dashed var(--line)", borderRadius: 14, padding: "14px 12px", minHeight: 84, display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+            {rearranged.length === 0 && <span style={{ fontSize: "0.9rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace" }}>Tap words below…</span>}
             {rearranged.map((w, i) => (
-              <WoodenTile key={i} word={w} size="lg" angle={(i % 2 === 0 ? -1 : 1)} placed
+              <WoodenTile key={i} word={w} size="md" placed
                 onClick={() => { if (answered) return; setRearranged(p => p.filter((_, pi) => pi !== i)); setUsedIdx(p => p.filter((_, pi) => pi !== i)); }} />
             ))}
           </div>
