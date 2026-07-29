@@ -150,10 +150,10 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.6rem,3.2vw,2.8rem)", lineHeight: 1.15, marginBottom: "1.6rem", fontFamily: "'Fraunces',serif", fontWeight: 900, letterSpacing: "-0.01em" }}>{q.question}</h2>
 
       {q.type === "rearrange" && (
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <div style={{ background: "linear-gradient(180deg,#6b4a2a 0%,#4a3320 100%)", borderRadius: 14, padding: "18px 16px 22px", display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", boxShadow: "inset 0 4px 8px rgba(0,0,0,0.35), inset 0 -3px 0 rgba(0,0,0,0.3)" }}>
+        <div style={{ maxWidth: 620, margin: "0 auto" }}>
+          <div style={{ background: "linear-gradient(180deg,#6b4a2a 0%,#4a3320 100%)", borderRadius: 14, padding: "18px 16px 22px", display: "flex", flexDirection: "column", gap: 12, boxShadow: "inset 0 4px 8px rgba(0,0,0,0.35), inset 0 -3px 0 rgba(0,0,0,0.3)" }}>
             {shuffledRearrange.map((w, i) => (
-              <WoodenTile key={i} word={w} size="lg" angle={(i % 2 === 0 ? -1.2 : 1.4)} valueNum={Math.max(1, Math.min(8, w.length - 1))} />
+              <WoodenTile key={i} word={w} size="lg" block />
             ))}
           </div>
         </div>

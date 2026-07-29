@@ -156,9 +156,9 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
             ))}
           </div>
           <div style={{ fontSize: "0.76rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.05em", marginTop: "0.9rem", marginBottom: "0.4rem" }}>WORD BANK</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {(shuffledWords.length ? shuffledWords : q.words || []).map((w, i) => (
-              <WoodenTile key={i} word={w} size="lg" angle={((i % 3) - 1) * 1.5}
+              <WoodenTile key={i} word={w} size="lg" block
                 onClick={() => { if (answered || usedIdx.includes(i)) return; setRearranged(p => [...p, w]); setUsedIdx(p => [...p, i]); }}
                 {...(usedIdx.includes(i) ? { placed: true } : {})} />
             ))}
