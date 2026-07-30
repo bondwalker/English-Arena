@@ -91,17 +91,18 @@ export default function SoloView({ onBack }) {
   const restart = () => { setPhase("setup"); setQuestions([]); setQIndex(0); setResults([]); setStreak(0); setBestStreak(0); };
 
   const noStressBattle = new Set(["verb_tenses","present_perfect"]);
+  const cleanLabel = (l) => l.replace(/^[^\w]+\s*/, "");
 
   // ── SETUP ──────────────────────────────────────────────────────────────────
   if (phase === "setup") {
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.2rem"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
-        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.4rem",marginBottom:"0.2rem"}}>Practise on your own.</h2>
-        <p style={{color:"var(--muted)",fontSize:"0.85rem",marginBottom:"1rem"}}>Pick a topic — no teacher needed.</p>
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.7rem,7vw,2.2rem)",lineHeight:1.1,marginBottom:"0.5rem",color:"var(--sun)"}}>Practise on your own — no teacher needed!</h2>
+        <p style={{color:"var(--ink-soft)",fontSize:"1rem",marginBottom:"1.3rem"}}>Pick a topic, question type and number of questions.</p>
 
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.4rem"}}>
-          <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace"}}>Topic</div>
+          <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Topic</div>
           <div className="flex gap-1">
             <button className={`btn btn-sm ${topicFilter==="all"?"btn-teal":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={() => setTopicFilter("all")}>All</button>
             <button className={`btn btn-sm ${topicFilter==="saved"?"btn-gold":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={() => setTopicFilter("saved")}>★ Saved{faves.length>0?` (${faves.length})`:""}</button>
@@ -111,7 +112,7 @@ export default function SoloView({ onBack }) {
           <p style={{fontSize:"0.78rem",color:"var(--muted)",marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:8}}>
-          {Object.entries(QUESTION_BANK).filter(([k]) => topicFilter==="all" || faves.includes(k)).map(([key,{label}]) => {
+          {Object.entries(QUESTION_BANK).filter(([k]) => topicFilter==="all" || faves.includes(k)).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}]) => {
             const disabled = gameType==="stress_battle" && noStressBattle.has(key);
             const sel = selectedTopic === key;
             return (
@@ -126,14 +127,14 @@ export default function SoloView({ onBack }) {
           })}
         </div>
 
-        <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:"0.4rem"}}>Question type</div>
+        <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["fill_idiom","Idioms"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l]) => (
+          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l]) => (
             <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={() => setGameType(v)}>{l}</button>
           ))}
         </div>
 
-        <div style={{fontSize:"0.68rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:"0.4rem"}}>Number of questions</div>
+        <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Number of questions</div>
         <div className="flex gap-1 mb-1">
           {[5,8,10,12,15].map(n => (
             <button key={n} className={`btn btn-sm ${qCount===n?"btn-gold":"btn-ghost"}`} onClick={() => setQCount(n)}>{n}</button>
