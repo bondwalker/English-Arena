@@ -97,11 +97,13 @@ export default function SoloView({ onBack }) {
   // ── SETUP ──────────────────────────────────────────────────────────────────
   if (phase === "setup") {
     return (
-      <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.2rem"}}>
+      <div style={{minHeight:"100vh",maxWidth:1040,margin:"0 auto",padding:"clamp(1.2rem,3vw,2rem)"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
-        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.7rem,7vw,2.2rem)",lineHeight:1.1,marginBottom:"0.5rem",color:"var(--sun)"}}>Practise on your own — no teacher needed!</h2>
-        <p style={{color:"var(--ink-soft)",fontSize:"1rem",marginBottom:"1.3rem"}}>Pick a topic, question type and number of questions.</p>
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.7rem,5vw,2.6rem)",lineHeight:1.1,marginBottom:"0.5rem",color:"var(--sun)"}}>Practise on your own — no teacher needed!</h2>
+        <p style={{color:"var(--ink-soft)",fontSize:"clamp(1rem,1.5vw,1.15rem)",marginBottom:"1.6rem"}}>Pick a topic, question type and number of questions.</p>
 
+        <div className="solo-grid">
+        <div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.4rem"}}>
           <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Topic</div>
           <div className="flex gap-1">
@@ -112,7 +114,7 @@ export default function SoloView({ onBack }) {
         {topicFilter==="saved" && faves.length===0 && (
           <p style={{fontSize:"0.78rem",color:"var(--muted)",marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:8}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:"0.5rem",maxHeight:"min(58vh,520px)",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:10}}>
           {Object.entries(QUESTION_BANK).filter(([k]) => topicFilter==="all" || faves.includes(k)).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}],i) => {
             const disabled = gameType==="stress_battle" && noStressBattle.has(key);
             const sel = selectedTopic === key;
@@ -129,7 +131,8 @@ export default function SoloView({ onBack }) {
             );
           })}
         </div>
-
+        </div>
+        <div>
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
           {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l]) => (
@@ -155,6 +158,8 @@ export default function SoloView({ onBack }) {
         })()}
         {!selectedTopic && <div style={{marginBottom:"1rem"}}/>}
         <button className="btn btn-teal btn-full" disabled={!selectedTopic||(gameType==="stress_battle"&&noStressBattle.has(selectedTopic))} onClick={loadQuestions}>Start Practising →</button>
+        </div>
+        </div>
       </div>
     );
   }

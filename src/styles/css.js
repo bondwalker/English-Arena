@@ -139,10 +139,12 @@ const css = `
   .text-center{text-align:center}.text-gold{color:var(--gold)}.text-teal{color:var(--teal)}.text-green{color:var(--green)}.text-coral{color:var(--coral)}
   .op50{opacity:0.5}.op30{opacity:0.3}.w100{width:100%}
 
+  .solo-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1.6rem;align-items:start}
   @media(max-width:600px){
     .opt-grid{grid-template-columns:1fr}
     .opt-btn{min-height:72px;font-size:1.05rem;padding:1.1rem 1.1rem}
     .hero-btns{flex-direction:column;align-items:stretch}
+    .solo-grid{grid-template-columns:1fr}
   }
 
   .sa-pressable{transition:transform 0.12s,box-shadow 0.12s;cursor:pointer;user-select:none}
