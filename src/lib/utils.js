@@ -29,7 +29,7 @@ export const reviewAnswer = (q) =>
   q.type === "stress_battle"
     ? `stress on ${ordinal(q.stressed)} syllable${Array.isArray(q.syllables) ? ` (${stressBreakdown(q.syllables, q.stressed)})` : ""}`
     : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
-      : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).join(", ")}`
+      : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
         : q.type === "word_match" ? "Match all pairs correctly"
           : q.answer;
 

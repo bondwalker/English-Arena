@@ -19,7 +19,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const ansText =
     q.type === "word_match" ? "Match all pairs correctly"
       : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
-        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).join(", ")}`
+        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
           : q.answer;
   return (
     <div style={{ position: "fixed", inset: 0, background: "var(--sun)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
