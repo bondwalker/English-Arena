@@ -202,6 +202,26 @@ export default function SoloView({ onBack }) {
     const pct     = Math.round((correct / total) * 100);
     const gradeLabel = pct>=90?"Outstanding!":pct>=70?"Well done!":pct>=50?"Keep practising!":"Review and try again!";
     const gradeColor = pct>=70?"var(--leaf)":pct>=50?"var(--sun)":"var(--tomato)";
+    const topicLabel = QUESTION_BANK[selectedTopic]?.label || "Practice";
+    const summary = [`=== English Arena · Practice · ${topicLabel} · ${pct}% (${correct}/${total}) ===\n`]
+      .concat(results.map((r, i) => [
+        `Q${i+1}. ${reviewPrompt(r.q)}`,
+        `Answer: ${reviewAnswer(r.q)}`,
+        r.q.explanation ? `Note: ${r.q.explanation}` : null,
+        `You got it: ${r.correct ? "✓ correct" : "✗ missed"}`,
+        "",
+      ].filter(Boolean).join("\n"))).join("\n");
+    const downloadSummary = () => {
+      try {
+        const blob = new Blob([summary], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `english-arena-${topicLabel.replace(/[^a-z0-9]+/gi, "-").toLowerCase().replace(/^-|-$/g, "")}.txt`;
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+      } catch {}
+    };
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.5rem"}}>
         <div className="card sa-anim-pop" style={{textAlign:"center",marginBottom:"1.2rem",border:"1.5px solid var(--line)",boxShadow:`4px 4px 0 ${gradeColor}`}}>
@@ -217,6 +237,13 @@ export default function SoloView({ onBack }) {
           )}
         </div>
 
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"0.6rem",marginBottom:"0.5rem",flexWrap:"wrap"}}>
+          <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Your questions & answers</div>
+          <div className="flex gap-1">
+            <button className="btn btn-sm btn-ghost" onClick={() => navigator.clipboard?.writeText(summary)}>📋 Copy</button>
+            <button className="btn btn-sm btn-gold" style={{color:"var(--on-light)",borderColor:"var(--on-light)"}} onClick={downloadSummary}>⬇ Download</button>
+          </div>
+        </div>
         <div style={{marginBottom:"1.2rem"}}>
           {results.map((r, i) => (
             <div key={i} style={{display:"flex",gap:"0.6rem",alignItems:"flex-start",padding:"0.5rem 0",borderBottom:"1px solid var(--line)"}}>
@@ -225,9 +252,7 @@ export default function SoloView({ onBack }) {
               </div>
               <div>
                 <div style={{fontSize:"0.83rem",color:"var(--ink-soft)",lineHeight:1.4}}>{reviewPrompt(r.q)}</div>
-                {!r.correct && <div style={{fontSize:"0.78rem",color:"var(--sun)",marginTop:"0.2rem"}}>
-                  {reviewAnswer(r.q)}
-                </div>}
+                <div style={{fontSize:"0.78rem",color:r.correct?"var(--aqua)":"var(--sun)",marginTop:"0.2rem"}}>✔ {reviewAnswer(r.q)}</div>
               </div>
             </div>
           ))}
