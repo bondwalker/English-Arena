@@ -65,7 +65,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
 function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont, code, topic, qrUrl }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
-  const shuffledRearrange = useMemo(() => q.type === "rearrange" ? [...(q.words || [])].sort(() => Math.random() - 0.5) : [], [q.question]);
+  const shuffledRearrange = useMemo(() => q.type === "rearrange" ? (q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean).sort(() => Math.random() - 0.5) : [], [q.question]);
   const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", type_answer: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
   const urgent = timeLeft <= 5 && !paused;

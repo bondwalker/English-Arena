@@ -18,8 +18,12 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
   const [shuffledWords, setShuffledWords] = useState([]);
   useEffect(() => {
-    if (q.type === "rearrange" && q.words) setShuffledWords([...q.words].sort(() => Math.random() - 0.5));
-  }, [q.words?.join("|")]);
+    if (q.type === "rearrange") {
+      // Build the word bank from the answer itself so it never contains extra/distractor words
+      const bank = (q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean);
+      setShuffledWords([...bank].sort(() => Math.random() - 0.5));
+    }
+  }, [q.answer]);
 
   const [twoOptions, setTwoOptions] = useState([]);
   useEffect(() => {
@@ -157,7 +161,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
           </div>
           <div style={{ fontSize: "0.76rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.05em", marginTop: "0.9rem", marginBottom: "0.4rem" }}>WORD BANK</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {(shuffledWords.length ? shuffledWords : q.words || []).map((w, i) => (
+            {shuffledWords.map((w, i) => (
               <WoodenTile key={i} word={w} size="lg" block
                 onClick={() => { if (answered || usedIdx.includes(i)) return; setRearranged(p => [...p, w]); setUsedIdx(p => [...p, i]); }}
                 {...(usedIdx.includes(i) ? { placed: true } : {})} />
