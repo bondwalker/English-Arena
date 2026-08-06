@@ -37,7 +37,7 @@ const SA_ICONS = {
   multiple_choice: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="4" width="8" height="6" rx="1.5" /><rect x="13" y="4" width="8" height="6" rx="1.5" fill={c} stroke={c} /><rect x="3" y="14" width="8" height="6" rx="1.5" /><rect x="13" y="14" width="8" height="6" rx="1.5" /></SAIconWrap>,
   true_false: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 12 L8 16 L14 8" /><path d="M16 8 L22 16 M22 8 L16 16" /></SAIconWrap>,
   error_spotter: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="11" cy="11" r="7" /><path d="M16 16 L21 21" /><path d="M9 11 L13 11" /></SAIconWrap>,
-  type_answer: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 7 L4 17 L20 17" /><path d="M4 7 L20 7" /><path d="M8 12 L16 12" /></SAIconWrap>,
+  hangman: ({s,c}) => <SAIconWrap size={s} color={c}><path d="M4 7 L4 17 L20 17" /><path d="M4 7 L20 7" /><path d="M8 12 L16 12" /></SAIconWrap>,
   rearrange: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="3" y="6" width="6" height="5" rx="1" /><rect x="11" y="6" width="6" height="5" rx="1" fill={c} stroke={c} /><rect x="7" y="13" width="6" height="5" rx="1" /><rect x="15" y="13" width="6" height="5" rx="1" /></SAIconWrap>,
   word_match: ({s,c}) => <SAIconWrap size={s} color={c}><rect x="2" y="5" width="7" height="6" rx="1.5" /><rect x="15" y="13" width="7" height="6" rx="1.5" /><path d="M9 8 Q12 8 12 12 Q12 16 15 16" strokeDasharray="2 2" /></SAIconWrap>,
   odd_one_out: ({s,c}) => <SAIconWrap size={s} color={c}><circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="6" cy="18" r="2.5" /><circle cx="18" cy="18" r="2.5" fill={c} stroke={c} /><path d="M14.5 14.5 L21.5 21.5" stroke="white" strokeWidth="1.5" /></SAIconWrap>,

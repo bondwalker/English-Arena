@@ -21,16 +21,16 @@ export default function SoloView({ onBack }) {
 
   const [rearranged, setRearranged]   = useState([]);
   const [usedIdx, setUsedIdx]         = useState([]);
-  const [typeVal, setTypeVal]         = useState("");
   const [storyOrder, setStoryOrder]   = useState([]);
   const [matchState, setMatchState]   = useState({ sel:null, matched:{} });
+  const [guessed, setGuessed]         = useState([]);
 
   const q = questions[qIndex] || null;
 
   useEffect(() => {
     if (phase !== "question" || !q) return;
     setMyAnswer(null);
-    setRearranged([]); setUsedIdx([]); setTypeVal(""); setStoryOrder([]); setMatchState({sel:null,matched:{}});
+    setRearranged([]); setUsedIdx([]); setStoryOrder([]); setMatchState({sel:null,matched:{}}); setGuessed([]);
   }, [qIndex, phase]);
 
   const handleAnswer = (ans) => {
@@ -135,7 +135,7 @@ export default function SoloView({ onBack }) {
         <div>
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Find the Mistake"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l]) => (
+          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Find the Mistake"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["hangman","Hangman"],["stress_battle","Stress Battle"]].map(([v,l]) => (
             <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={() => setGameType(v)}>{l}</button>
           ))}
         </div>
@@ -299,7 +299,8 @@ export default function SoloView({ onBack }) {
             {pendingStreak >= 2 && <SAStreakMeter count={pendingStreak} size="sm" />}
             {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"0.82rem",color:"var(--muted)",lineHeight:1.4,textAlign:"center"}}>✓ <strong style={{color:"var(--leaf)"}}>{correctedSentence(q)}</strong></div>}
             {!isCorrect && q.type==="stress_battle" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — stressed on syllable {q.stressed}</div>}
-            {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle"].includes(q.type) && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Answer: <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
+            {!isCorrect && q.type==="hangman" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>The word was <strong style={{color:"var(--sun)"}}>{q.word}</strong></div>}
+            {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle","hangman"].includes(q.type) && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Answer: <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
             {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).map(i=>i+1).join(",")}</strong></div>}
             {q.explanation && <div style={{fontSize:"0.78rem",color:"var(--muted)",marginTop:"0.1rem",lineHeight:1.4,textAlign:"center"}}>{q.explanation}</div>}
           </div>
@@ -309,9 +310,9 @@ export default function SoloView({ onBack }) {
       <StudentAnswer q={q} myAnswer={myAnswer} onAnswer={handleAnswer}
         rearranged={rearranged} setRearranged={setRearranged}
         usedIdx={usedIdx} setUsedIdx={setUsedIdx}
-        typeVal={typeVal} setTypeVal={setTypeVal}
         storyOrder={storyOrder} setStoryOrder={setStoryOrder}
         matchState={matchState} setMatchState={setMatchState}
+        guessed={guessed} setGuessed={setGuessed}
         room={fakeRoom} />
 
       {phase === "reveal" && (

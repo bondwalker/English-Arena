@@ -18,9 +18,10 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
   const ansText =
     q.type === "word_match" ? "Match all pairs correctly"
-      : q.type === "error_spotter" ? correctedSentence(q)
-        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
-          : q.answer;
+      : q.type === "hangman" ? q.word
+        : q.type === "error_spotter" ? correctedSentence(q)
+          : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
+            : q.answer;
   return (
     <div style={{ position: "fixed", inset: 0, background: "var(--sun)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
       {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(15,18,38,0.09)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
@@ -66,7 +67,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? (q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean).sort(() => Math.random() - 0.5) : [], [q.question]);
-  const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", type_answer: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
+  const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", hangman: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
   const urgent = timeLeft <= 5 && !paused;
   const answeredNames = new Set(Object.keys(answers));
@@ -147,7 +148,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
 
-      <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.6rem,3.2vw,2.8rem)", lineHeight: 1.15, marginBottom: "1.6rem", fontFamily: "'Fraunces',serif", fontWeight: 900, letterSpacing: "-0.01em" }}>{q.question}</h2>
+      <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.6rem,3.2vw,2.8rem)", lineHeight: 1.15, marginBottom: "1.6rem", fontFamily: "'Fraunces',serif", fontWeight: 900, letterSpacing: "-0.01em" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "rearrange" && (
         <div style={{ maxWidth: 620, margin: "0 auto" }}>
@@ -173,6 +174,16 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type === "spot_sentence" && q.options && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
           {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} italic />)}
+        </div>
+      )}
+      {q.type === "hangman" && q.word && (
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.6rem", maxWidth: 920, margin: "0 auto" }}>
+          {String(q.word).toUpperCase().split("").map((c, i) => {
+            const isLetter = /[A-Z]/.test(c);
+            return (
+              <div key={i} style={{ minWidth: isLetter ? "clamp(2.2rem,4vw,3.4rem)" : "1.1rem", height: "clamp(3rem,6vw,4.6rem)", display: "flex", alignItems: "flex-end", justifyContent: "center", borderBottom: isLetter ? "6px solid var(--cobalt)" : "none", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(1.8rem,4vw,3rem)", color: "var(--ink)" }}>{isLetter ? "" : c}</div>
+            );
+          })}
         </div>
       )}
       {q.type === "true_false" && (

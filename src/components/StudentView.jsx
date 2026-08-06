@@ -19,9 +19,9 @@ export default function StudentView({ onBack, initialCode = "" }) {
   const [showReview, setShowReview] = useState(false);
   const [rearranged, setRearranged] = useState([]);
   const [usedIdx, setUsedIdx] = useState([]);
-  const [typeVal, setTypeVal] = useState("");
   const [storyOrder, setStoryOrder] = useState([]);
   const [matchState, setMatchState] = useState({ sel: null, matched: {} });
+  const [guessed, setGuessed] = useState([]);
   const [joining, setJoining] = useState(false);
   const lastQRef = useRef(-1);
   const lastPhaseRef = useRef("");
@@ -63,8 +63,8 @@ export default function StudentView({ onBack, initialCode = "" }) {
       if (s.phase === "question" && s.qIndex !== lastQRef.current) {
         lastQRef.current = s.qIndex;
         setMyAnswer(null); setShowResult(false);
-        setRearranged([]); setUsedIdx([]); setTypeVal("");
-        setStoryOrder([]); setMatchState({ sel: null, matched: {} });
+        setRearranged([]); setUsedIdx([]);
+        setStoryOrder([]); setMatchState({ sel: null, matched: {} }); setGuessed([]);
       }
       if (s.phase === "reveal" && lastPhaseRef.current !== "reveal") {
         setShowResult(true);
@@ -219,9 +219,9 @@ export default function StudentView({ onBack, initialCode = "" }) {
           <StudentAnswer q={q} myAnswer={myAnswer} onAnswer={submitAnswer}
             rearranged={rearranged} setRearranged={setRearranged}
             usedIdx={usedIdx} setUsedIdx={setUsedIdx}
-            typeVal={typeVal} setTypeVal={setTypeVal}
             storyOrder={storyOrder} setStoryOrder={setStoryOrder}
             matchState={matchState} setMatchState={setMatchState}
+            guessed={guessed} setGuessed={setGuessed}
             room={room} />
         </div>
       ) : null}
