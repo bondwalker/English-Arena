@@ -127,8 +127,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       <div className="flex justify-between items-center mb-2 wrap gap-1">
         <div className="flex gap-2 items-center">
           <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px 5px 8px", background: tc, color: "var(--on-dark)", borderRadius: 999, fontSize: 13, fontWeight: 700 }}>
-            <SAIcon name={q.type} size={14} color="var(--on-dark)" />
-            <span>{q.type.replace(/_/g, " ")}</span>
+            <SAIcon name={q.type === "spot_sentence" ? "error_spotter" : q.type} size={14} color="var(--on-dark)" />
+            <span>{({ error_spotter: "find the mistake", spot_sentence: "find the mistake" }[q.type]) || q.type.replace(/_/g, " ")}</span>
           </div>
           {topic && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.08em", color: "var(--muted)", textTransform: "uppercase" }}>{topic}</span>}
           {q._warmup && <span className="badge" style={{ background: "rgba(255,206,71,0.15)", color: "var(--sun)", border: "1px solid rgba(255,206,71,0.3)" }}>WARM UP</span>}
