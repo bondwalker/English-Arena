@@ -25,14 +25,13 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
     }
   }, [q.answer]);
 
-  const [twoOptions, setTwoOptions] = useState([]);
+  // Shuffled options for odd_one_out (word tiles) and spot_sentence (sentence picker).
+  // Keyed on the options themselves so it always refreshes between questions.
+  const [shuffledOptions, setShuffledOptions] = useState([]);
   useEffect(() => {
-    if (q.type === "odd_one_out" && q.options) {
-      const wrong = q.answer;
-      const right = q.options.find(o => o !== wrong);
-      setTwoOptions([wrong, right].sort(() => Math.random() - 0.5));
-    }
-  }, [q.question]);
+    if ((q.type === "odd_one_out" || q.type === "spot_sentence") && q.options)
+      setShuffledOptions([...q.options].sort(() => Math.random() - 0.5));
+  }, [(q.options || []).join("|")]);
 
   const submitTyped = () => { if (typeVal.trim()) onAnswer(typeVal.trim()); };
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
@@ -72,12 +71,24 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
         </div>
       )}
 
-      {q.type === "odd_one_out" && twoOptions.length === 2 && (
+      {q.type === "odd_one_out" && (
         <div className="opt-grid">
-          {twoOptions.map((opt, i) => (
+          {shuffledOptions.map((opt, i) => (
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", fontSize: "0.9rem", fontWeight: 600 }}
+              style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", justifyContent: "center", textAlign: "center", fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.35rem" }}
+              onClick={() => onAnswer(opt)}>
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {q.type === "spot_sentence" && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          {shuffledOptions.map((opt, i) => (
+            <button key={i} disabled={answered}
+              style={{ width: "100%", padding: "1.1rem 1.2rem", border: `2.5px solid ${answered && myAnswer === opt ? "var(--tomato)" : "var(--line)"}`, background: answered && myAnswer === opt ? "rgba(255,92,66,0.12)" : "var(--paper)", color: "var(--ink)", borderRadius: 14, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== opt ? 0.28 : 1, transition: "all 0.15s", textAlign: "left", fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "1.05rem", lineHeight: 1.35 }}
               onClick={() => onAnswer(opt)}>
               {opt}
             </button>

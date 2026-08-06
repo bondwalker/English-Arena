@@ -20,6 +20,21 @@ export const ordinal = (n) => {
 export const stressBreakdown = (syllables, stressed) =>
   (Array.isArray(syllables) ? syllables : []).map((s, i) => (i + 1 === stressed ? s.toUpperCase() : s)).join("-");
 
+// The full corrected sentence for a "mistake" question:
+//  - error_spotter: q.sentence with the wrong word swapped for the right one
+//  - spot_sentence: the sentence that contains the mistake (correction is in the explanation)
+export const correctedSentence = (q) => {
+  if (q.type === "spot_sentence") return q.answer || "";
+  if (q.type !== "error_spotter" || !q.sentence) return q.answer || "";
+  let done = false;
+  return q.sentence.split(/(\s+)/).map(tok => {
+    if (done) return tok;
+    const clean = tok.replace(/[.,!?;:]/g, "");
+    if (clean && clean === q.errorWord) { done = true; return tok.replace(clean, q.answer); }
+    return tok;
+  }).join("");
+};
+
 // Review/summary line for a question — the prompt shown as the title
 export const reviewPrompt = (q) =>
   q.type === "stress_battle" ? q.word : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
@@ -28,21 +43,26 @@ export const reviewPrompt = (q) =>
 export const reviewAnswer = (q) =>
   q.type === "stress_battle"
     ? `stress on ${ordinal(q.stressed)} syllable${Array.isArray(q.syllables) ? ` (${stressBreakdown(q.syllables, q.stressed)})` : ""}`
-    : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
+    : q.type === "error_spotter" ? correctedSentence(q)
       : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
         : q.type === "word_match" ? "Match all pairs correctly"
           : q.answer;
+
+// A selectable game mode can serve more than one underlying question type.
+// "Find the Mistake" (error_spotter) also serves the sentence-picker (spot_sentence).
+export const MODE_TYPES = { error_spotter: ["error_spotter", "spot_sentence"] };
+export const typesForMode = (mode) => MODE_TYPES[mode] || [mode];
 
 export const GAME_MODES = [
   { v: "mixed",          label: "🎲 Mixed",           desc: "All types" },
   { v: "multiple_choice",label: "📋 Multiple Choice",  desc: "Choose the answer" },
   { v: "true_false",     label: "✅ True / False",     desc: "Grammar judge" },
-  { v: "error_spotter",  label: "🔍 Error Spotter",    desc: "Find the mistake" },
+  { v: "error_spotter",  label: "🔍 Find the Mistake", desc: "Spot the wrong word or sentence" },
   { v: "type_answer",    label: "✏️ Type Answer",      desc: "Short text response" },
   { v: "rearrange",      label: "🔀 Word Order",       desc: "Build sentences" },
   { v: "story_builder",  label: "📖 Story Builder",    desc: "Arrange a story" },
   { v: "word_match",     label: "🃏 Word Match",       desc: "Vocab matching" },
-  { v: "odd_one_out",    label: "🎯 Odd One Out",      desc: "Spot the wrong one" },
+  { v: "odd_one_out",    label: "🎯 Odd One Out",      desc: "The word that doesn't fit" },
   { v: "stress_battle",  label: "⚡ Stress Battle",   desc: "Word stress A/B" },
 ];
 
@@ -64,7 +84,8 @@ export function getTimeLimit(q) {
   if (q.type === "stress_battle") return 15;
   if (q.type === "story_builder") return 50;
   if (q.type === "rearrange") return 40;
-  if (q.type === "odd_one_out") return 35;
+  if (q.type === "spot_sentence") return 35;
+  if (q.type === "odd_one_out") return 20;
   return 25;
 }
 

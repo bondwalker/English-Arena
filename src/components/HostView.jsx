@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, RedInkUnderline, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -18,7 +18,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
   const ansText =
     q.type === "word_match" ? "Match all pairs correctly"
-      : q.type === "error_spotter" ? `${q.errorWord} → ${q.answer}`
+      : q.type === "error_spotter" ? correctedSentence(q)
         : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
           : q.answer;
   return (
@@ -164,6 +164,13 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
       {q.type === "odd_one_out" && q.options && (
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", maxWidth: 820, margin: "0 auto" }}>
+          {q.options.map((o, i) => (
+            <div key={i} style={{ padding: "1.4rem 1rem", border: `2.5px solid ${OPT_COLORS[i % 4]}`, borderRadius: 18, background: "var(--paper)", boxShadow: `4px 4px 0 ${OPT_COLORS[i % 4]}33`, fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(1.6rem,3vw,2.4rem)", color: OPT_COLORS[i % 4], textAlign: "center" }}>{o}</div>
+          ))}
+        </div>
+      )}
+      {q.type === "spot_sentence" && q.options && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
           {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} italic />)}
         </div>
@@ -397,7 +404,7 @@ export default function HostView({ onBack }) {
     // Stress Battle type always draws from the full dedicated word bank, regardless of topic
     let pool = gameType === "stress_battle"
       ? QUESTION_BANK.stress_battle.questions
-      : (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => q.type === gameType);
+      : (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
     const qs = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(qCount, pool.length));
     setError("");

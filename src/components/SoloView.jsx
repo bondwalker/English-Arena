@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode } from "../lib/utils.js";
 import { readFaves, writeFaves } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -59,7 +59,7 @@ export default function SoloView({ onBack }) {
     // Stress Battle type always draws from the full dedicated word bank, regardless of topic
     const pool = gameType === "stress_battle"
       ? QUESTION_BANK.stress_battle.questions
-      : gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
+      : gameType === "mixed" ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) return;
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
@@ -297,7 +297,7 @@ export default function SoloView({ onBack }) {
             </div>
             <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.1rem",color:isCorrect?"var(--leaf)":"var(--tomato)"}}>{isCorrect?"Correct!":"Not quite."}</div>
             {pendingStreak >= 2 && <SAStreakMeter count={pendingStreak} size="sm" />}
-            {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Error: <strong style={{color:"var(--tomato)"}}>{q.errorWord}</strong> → <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
+            {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"0.82rem",color:"var(--muted)",lineHeight:1.4,textAlign:"center"}}>✓ <strong style={{color:"var(--leaf)"}}>{correctedSentence(q)}</strong></div>}
             {!isCorrect && q.type==="stress_battle" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — stressed on syllable {q.stressed}</div>}
             {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle"].includes(q.type) && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Answer: <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
             {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).map(i=>i+1).join(",")}</strong></div>}
