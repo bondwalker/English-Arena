@@ -241,7 +241,8 @@ export default function StudentView({ onBack, initialCode = "" }) {
             : q.type === "error_spotter" ? correctedSentence(q)
               : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
                 : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
-                  : q.answer
+                  : q.type === "hangman" ? q.word
+                    : q.answer
         ) : "";
         return (
           <div style={{ position: "fixed", inset: 0, background: bg, zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1.4rem", overflowY: "auto", textAlign: "center", gap: "0.5rem" }}>
@@ -267,7 +268,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
                     <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", color: accent, lineHeight: 1.25 }}>{ansText}</div>
                   )}
                 </div>
-                {q.explanation && <p style={{ color: fg, opacity: 0.8, fontSize: "0.85rem", lineHeight: 1.45, marginTop: "0.9rem" }}>{q.explanation}</p>}
+                {q.explanation && q.type !== "hangman" && <p style={{ color: fg, opacity: 0.85, fontSize: "1.02rem", lineHeight: 1.5, marginTop: "1rem" }}>{q.explanation}</p>}
               </div>
             )}
             <div style={{ marginTop: "1.6rem", background: "var(--cream)", borderRadius: 16, padding: "0.9rem 2rem", minWidth: 200, boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>

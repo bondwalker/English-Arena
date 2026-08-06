@@ -279,7 +279,7 @@ export default function SoloView({ onBack }) {
   const fakeRoom = { qIndex, questions, phase: phase === "question" ? "question" : "reveal" };
 
   return (
-    <div style={{minHeight:"100vh",maxWidth:460,margin:"0 auto",padding:"1.2rem"}}>
+    <div style={{minHeight:"100vh",maxWidth:540,margin:"0 auto",padding:"1.2rem"}}>
       <div style={{display:"flex",alignItems:"center",gap:"0.6rem",marginBottom:"1rem"}}>
         <button className="btn btn-ghost btn-sm" onClick={onBack} style={{padding:"0.3rem 0.7rem",fontSize:"0.75rem"}}>✕</button>
         <div style={{flex:1,height:5,background:"var(--line)",borderRadius:3}}>
@@ -291,18 +291,18 @@ export default function SoloView({ onBack }) {
       {phase === "reveal" && (
         <div style={{position:"relative",overflow:"hidden"}}>
           <SAConfetti active={isCorrect} count={35} />
-          <div className="sa-anim-pop" style={{padding:"0.8rem 1rem",marginBottom:"0.9rem",borderRadius:10,background:isCorrect?"rgba(122,220,90,0.1)":"rgba(255,92,66,0.1)",border:`1.5px solid ${isCorrect?"var(--leaf)":"var(--tomato)"}`,display:"flex",flexDirection:"column",alignItems:"center",gap:"0.3rem"}}>
-            <div style={{width:40,height:40,borderRadius:"50%",background:isCorrect?"rgba(122,220,90,0.2)":"rgba(255,92,66,0.2)",display:"flex",alignItems:"center",justifyContent:"center"}}>
-              <SAIcon name={isCorrect?"bolt":"skip"} size={20} color={isCorrect?"var(--leaf)":"var(--tomato)"} />
+          <div className="sa-anim-pop" style={{padding:"1.8rem 1.5rem",marginBottom:"1.1rem",borderRadius:18,background:isCorrect?"rgba(122,220,90,0.12)":"rgba(255,92,66,0.12)",border:`2.5px solid ${isCorrect?"var(--leaf)":"var(--tomato)"}`,display:"flex",flexDirection:"column",alignItems:"center",gap:"0.9rem"}}>
+            <div style={{width:64,height:64,borderRadius:"50%",background:isCorrect?"rgba(122,220,90,0.2)":"rgba(255,92,66,0.2)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <SAIcon name={isCorrect?"bolt":"skip"} size={34} color={isCorrect?"var(--leaf)":"var(--tomato)"} />
             </div>
-            <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.1rem",color:isCorrect?"var(--leaf)":"var(--tomato)"}}>{isCorrect?"Correct!":"Not quite."}</div>
+            <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.9rem,7vw,2.6rem)",lineHeight:1,color:isCorrect?"var(--leaf)":"var(--tomato)"}}>{isCorrect?"Correct!":"Not quite."}</div>
             {pendingStreak >= 2 && <SAStreakMeter count={pendingStreak} size="sm" />}
-            {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"0.82rem",color:"var(--muted)",lineHeight:1.4,textAlign:"center"}}>✓ <strong style={{color:"var(--leaf)"}}>{correctedSentence(q)}</strong></div>}
-            {!isCorrect && q.type==="stress_battle" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — stressed on syllable {q.stressed}</div>}
-            {!isCorrect && q.type==="hangman" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>The word was <strong style={{color:"var(--sun)"}}>{q.word}</strong></div>}
-            {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle","hangman"].includes(q.type) && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Answer: <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
-            {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).map(i=>i+1).join(",")}</strong></div>}
-            {q.explanation && <div style={{fontSize:"0.78rem",color:"var(--muted)",marginTop:"0.1rem",lineHeight:1.4,textAlign:"center"}}>{q.explanation}</div>}
+            {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.5,textAlign:"center"}}>✓ <strong style={{color:"var(--leaf)"}}>{correctedSentence(q)}</strong></div>}
+            {!isCorrect && q.type==="stress_battle" && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.5,textAlign:"center"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — stressed on syllable {q.stressed}</div>}
+            {q.type==="hangman" && <div style={{fontSize:"1.2rem",color:"var(--ink)",textAlign:"center"}}>The word was <strong style={{color:"var(--sun)",fontSize:"1.5rem"}}>{q.word}</strong></div>}
+            {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle","hangman"].includes(q.type) && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.4,textAlign:"center"}}>Answer: <strong style={{color:"var(--sun)",fontSize:"1.5rem"}}>{q.answer}</strong></div>}
+            {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"1.2rem",color:"var(--ink)",textAlign:"center"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).map(i=>i+1).join(",")}</strong></div>}
+            {q.explanation && q.type!=="hangman" && <div style={{fontSize:"1.05rem",color:"var(--ink-soft)",marginTop:"0.2rem",lineHeight:1.55,textAlign:"center",maxWidth:"36ch"}}>{q.explanation}</div>}
           </div>
         </div>
       )}
