@@ -44,7 +44,7 @@ export const QUESTION_BANK = {
     {type:"error_spotter",question:"Find the mistake:",sentence:"She didn't had enough local currency to pay for the taxi.",errorWord:"had",answer:"have",explanation:"After 'didn't', use the bare infinitive: 'didn't have'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The hotel room was to small for a family of four.",errorWord:"to",answer:"too",explanation:"'Too' means excessively; 'to' is a preposition. Use 'too small'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"They have been travelling since three weeks now.",errorWord:"since",answer:"for",explanation:"Use 'for' with a period of time ('three weeks'). 'Since' is used with a specific point in time."},
-    {type:"error_spotter",question:"Find the mistake:",sentence:"We must to show our passports at the border.",errorWord:"to",answer:"show",explanation:"Modal verbs like 'must' are followed directly by the bare infinitive: 'must show', not 'must to show'."},
+    {type:"error_spotter",question:"Find the mistake:",sentence:"We must showed our passports at the border.",errorWord:"showed",answer:"show",explanation:"After 'must', use the base form: 'must show'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The excursion was well-worth the expensive.",errorWord:"expensive",answer:"expense",explanation:"'Worth the expense' uses the noun 'expense'. 'Expensive' is an adjective and cannot follow 'the' in this structure."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"Can you recommends a good restaurant near the harbour?",errorWord:"recommends",answer:"recommend",explanation:"After 'Can you', use the base form: 'Can you recommend'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"We taked lots of photos during the sightseeing tour.",errorWord:"taked",answer:"took",explanation:"The past tense of 'take' is 'took'."},
@@ -163,7 +163,7 @@ export const QUESTION_BANK = {
     {type:"error_spotter",question:"Find the mistake:",sentence:"We need to discuss the budget before the meeting begin.",errorWord:"begin",answer:"begins",explanation:"Third person singular: 'the meeting begins'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"He work in this company as a project manager.",errorWord:"work",answer:"works",explanation:"Third person singular: 'He works'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The client want to reschedule the meeting to next Tuesday.",errorWord:"want",answer:"wants",explanation:"Third person singular: 'The client wants'."},
-    {type:"error_spotter",question:"Find the mistake:",sentence:"Could you to review the contract before tomorrow morning?",errorWord:"to",answer:"review",explanation:"'Could you' is followed by the bare infinitive: 'Could you review', not 'Could you to review'."},
+    {type:"error_spotter",question:"Find the mistake:",sentence:"Could you reviews the contract before tomorrow morning?",errorWord:"reviews",answer:"review",explanation:"After 'Could you', use the base form: 'Could you review'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"She applied for the job, but she didn't met the requirements.",errorWord:"met",answer:"meet",explanation:"After 'didn't', use the base form: 'didn't meet'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The team has worked very hardly on this project all month.",errorWord:"hardly",answer:"hard",explanation:"'Hard' is the adverb meaning 'with great effort'. 'Hardly' means 'almost not at all', which is the opposite meaning."},
 
@@ -280,7 +280,7 @@ export const QUESTION_BANK = {
 
     // error_spotter ×9
     {type:"error_spotter",question:"Find the mistake:",sentence:"Stir the sauce regular to prevent it from sticking.",errorWord:"regular",answer:"regularly",explanation:"An adverb modifies a verb. The adverb form is 'regularly', not the adjective 'regular'."},
-    {type:"error_spotter",question:"Find the mistake:",sentence:"You should let the soup to simmer for at least twenty minutes.",errorWord:"to",answer:"simmer",explanation:"'Let + object + bare infinitive': 'let the soup simmer'. 'To' is not used after 'let'."},
+    {type:"error_spotter",question:"Find the mistake:",sentence:"You should lets the soup simmer for twenty minutes.",errorWord:"lets",answer:"let",explanation:"After 'should', use the base form: 'should let'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"Bake the cake for a hour at 180 degrees.",errorWord:"a",answer:"an",explanation:"Use 'an' before a vowel sound: 'an hour'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"Add the onions in the pan and fry them until golden.",errorWord:"in",answer:"to",explanation:"'Add something to something' is the correct preposition. 'Add the onions to the pan.'"},
     {type:"error_spotter",question:"Find the mistake:",sentence:"She has never ate sushi before visiting Japan last year.",errorWord:"ate",answer:"eaten",explanation:"Present perfect requires the past participle: 'has never eaten'."},
@@ -2327,7 +2327,7 @@ export const QUESTION_BANK = {
 
     // error_spotter ×9
     {type:"error_spotter",question:"Find the mistake:",sentence:"We arrived to Paris late at night after a long journey.",errorWord:"to",answer:"in",explanation:"We 'arrive in' a city or country: 'We arrived in Paris late at night.' Use 'arrive at' for specific places like airports."},
-    {type:"error_spotter",question:"Find the mistake:",sentence:"The flight was delayed due to a strong winds.",errorWord:"a",answer:"strong",explanation:"'Winds' is plural, so the article 'a' is incorrect. The correct sentence is: 'The flight was delayed due to strong winds.'"},
+    {type:"error_spotter",question:"Find the mistake:",sentence:"The flight was delayed due to a strong winds.",errorWord:"winds",answer:"wind",explanation:"Use the singular after 'a': 'a strong wind'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"This city has many beautiful old building to see.",errorWord:"building",answer:"buildings",explanation:"After 'many', use the plural: 'many buildings'."},
     {type:"error_spotter",question:"Find the mistake:",sentence:"She has been travelling since three weeks.",errorWord:"since",answer:"for",explanation:"'Since' is used with a point in time (since Monday). 'For' is used with a duration: 'She has been travelling for three weeks.'"},
     {type:"error_spotter",question:"Find the mistake:",sentence:"The tourists was impressed by the city's historic architecture.",errorWord:"was",answer:"were",explanation:"'Tourists' is plural, so the verb should be 'were': 'The tourists were impressed by the city's historic architecture.'"},
@@ -4285,3 +4285,167 @@ QUESTION_BANK.idioms = {
   label: "🎭 Idioms",
   questions: Object.values(QUESTION_BANK).flatMap(t => t.questions || []).filter(q => q.type === "fill_idiom"),
 };
+
+// Odd One Out — single-word category questions (which word does not belong), added per topic
+;[
+  ["travel_holidays", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["passport","suitcase","boarding pass","saucepan"],answer:"saucepan",explanation:"A saucepan is used for cooking; the others are things you use when travelling."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["hotel","hostel","campsite","library"],answer:"library",explanation:"A library is a place to read; the others are places to stay on holiday."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["beach","mountain","island","hospital"],answer:"hospital",explanation:"A hospital is for medical care; the others are holiday destinations."},
+  ]],
+  ["work_office", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["meeting","deadline","colleague","seagull"],answer:"seagull",explanation:"A seagull is a bird; the others are about work."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["email","report","printer","banana"],answer:"banana",explanation:"A banana is a food; the others are found in an office."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["manager","employee","client","dolphin"],answer:"dolphin",explanation:"A dolphin is an animal; the others are people you deal with at work."},
+  ]],
+  ["cooking_recipes", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["boil","fry","bake","sing"],answer:"sing",explanation:"'Sing' is about music; the others are ways to cook."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["oven","saucepan","knife","umbrella"],answer:"umbrella",explanation:"An umbrella keeps off the rain; the others are kitchen items."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["flour","sugar","butter","pencil"],answer:"pencil",explanation:"A pencil is for writing; the others are baking ingredients."},
+  ]],
+  ["health_wellbeing", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["doctor","nurse","dentist","plumber"],answer:"plumber",explanation:"A plumber fixes pipes; the others work in healthcare."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["exercise","sleep","healthy diet","traffic"],answer:"traffic",explanation:"Traffic is about roads; the others help you stay healthy."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["headache","fever","cough","balcony"],answer:"balcony",explanation:"A balcony is part of a building; the others are symptoms of illness."},
+  ]],
+  ["technology_gadgets", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["laptop","tablet","smartphone","sandwich"],answer:"sandwich",explanation:"A sandwich is food; the others are electronic devices."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["download","upload","install","swim"],answer:"swim",explanation:"'Swim' is a sport; the others are things you do with software."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["screen","keyboard","mouse","carrot"],answer:"carrot",explanation:"A carrot is a vegetable; the others are computer parts."},
+  ]],
+  ["the_environment", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["recycling","pollution","solar power","football"],answer:"football",explanation:"Football is a sport; the others relate to the environment."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["river","forest","ocean","sofa"],answer:"sofa",explanation:"A sofa is furniture; the others are parts of nature."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["wind","solar","coal","piano"],answer:"piano",explanation:"A piano is a musical instrument; the others are energy sources."},
+  ]],
+  ["sports_fitness", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["football","tennis","swimming","cooking"],answer:"cooking",explanation:"Cooking is a kitchen activity; the others are sports."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["run","jump","throw","read"],answer:"read",explanation:"'Read' is a quiet activity; the others are physical actions in sport."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["stadium","gym","pitch","bakery"],answer:"bakery",explanation:"A bakery sells bread; the others are places for sport."},
+  ]],
+  ["family_life", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["mother","father","sister","teacher"],answer:"teacher",explanation:"A teacher works at school; the others are family members."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["uncle","aunt","cousin","dentist"],answer:"dentist",explanation:"A dentist is a job; the others are relatives."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["grandmother","grandfather","grandson","postman"],answer:"postman",explanation:"A postman delivers letters; the others are family members."},
+  ]],
+  ["education_studying", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["teacher","student","classroom","kitchen"],answer:"kitchen",explanation:"A kitchen is for cooking; the others are about school."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["exam","homework","lesson","football"],answer:"football",explanation:"Football is a sport; the others are part of studying."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["pen","notebook","ruler","hammer"],answer:"hammer",explanation:"A hammer is a tool for building; the others are for studying."},
+  ]],
+  ["money_banking", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["bank","cash","credit card","elephant"],answer:"elephant",explanation:"An elephant is an animal; the others relate to money."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["save","spend","borrow","dance"],answer:"dance",explanation:"'Dance' is about music; the others are things you do with money."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["coin","note","cheque","cloud"],answer:"cloud",explanation:"A cloud is in the sky; the others are forms of money."},
+  ]],
+  ["shopping_fashion", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["dress","jacket","shoes","spoon"],answer:"spoon",explanation:"A spoon is for eating; the others are clothes."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["shirt","trousers","hat","window"],answer:"window",explanation:"A window is part of a building; the others are clothes."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["shop","market","mall","hospital"],answer:"hospital",explanation:"A hospital is for medical care; the others are places to shop."},
+  ]],
+  ["music", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["guitar","piano","violin","hammer"],answer:"hammer",explanation:"A hammer is a tool; the others are musical instruments."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["singer","drummer","pianist","farmer"],answer:"farmer",explanation:"A farmer works on a farm; the others are musicians."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["concert","album","song","recipe"],answer:"recipe",explanation:"A recipe is for cooking; the others relate to music."},
+  ]],
+  ["social_media_internet", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["post","comment","share","swim"],answer:"swim",explanation:"'Swim' is a sport; the others are things you do online."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["website","app","browser","banana"],answer:"banana",explanation:"A banana is food; the others are digital things."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["follower","hashtag","profile","mountain"],answer:"mountain",explanation:"A mountain is part of nature; the others relate to social media."},
+  ]],
+  ["ambitions_goals", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["dream","goal","plan","carrot"],answer:"carrot",explanation:"A carrot is a vegetable; the others relate to ambitions."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["succeed","achieve","aim","sleep"],answer:"sleep",explanation:"'Sleep' is a rest activity; the others are about reaching goals."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["career","promotion","success","umbrella"],answer:"umbrella",explanation:"An umbrella keeps off the rain; the others relate to your career."},
+  ]],
+  ["culture_traditions", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["festival","ceremony","custom","refrigerator"],answer:"refrigerator",explanation:"A refrigerator is a kitchen appliance; the others relate to culture."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["dance","music","costume","invoice"],answer:"invoice",explanation:"An invoice is a business bill; the others are part of a celebration."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["tradition","heritage","ritual","bicycle"],answer:"bicycle",explanation:"A bicycle is a vehicle; the others relate to culture."},
+  ]],
+  ["films_tv", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["actor","director","camera","kettle"],answer:"kettle",explanation:"A kettle boils water; the others relate to films."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["comedy","drama","horror","breakfast"],answer:"breakfast",explanation:"Breakfast is a meal; the others are film genres."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["cinema","screen","ticket","garden"],answer:"garden",explanation:"A garden is outside a house; the others relate to going to the cinema."},
+  ]],
+  ["books_reading", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["novel","chapter","author","onion"],answer:"onion",explanation:"An onion is a vegetable; the others relate to books."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["library","bookshop","bookshelf","swimming pool"],answer:"swimming pool",explanation:"A swimming pool is for swimming; the others are for books."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["read","write","publish","fry"],answer:"fry",explanation:"'Fry' is a cooking action; the others relate to books."},
+  ]],
+  ["home_housing", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["kitchen","bedroom","bathroom","stadium"],answer:"stadium",explanation:"A stadium is for sport; the others are rooms in a home."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["sofa","table","chair","rainbow"],answer:"rainbow",explanation:"A rainbow is in the sky; the others are furniture."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["rent","landlord","tenant","penguin"],answer:"penguin",explanation:"A penguin is an animal; the others relate to housing."},
+  ]],
+  ["food_restaurants", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["waiter","chef","menu","astronaut"],answer:"astronaut",explanation:"An astronaut works in space; the others are found in a restaurant."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["starter","main course","dessert","umbrella"],answer:"umbrella",explanation:"An umbrella keeps off the rain; the others are parts of a meal."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["fork","knife","plate","hammer"],answer:"hammer",explanation:"A hammer is a tool; the others are used for eating."},
+  ]],
+  ["cities_travel", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["bus","train","tram","banana"],answer:"banana",explanation:"A banana is food; the others are types of public transport."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["museum","park","station","kitchen"],answer:"kitchen",explanation:"A kitchen is a room at home; the others are places in a city."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["traffic","pedestrian","crossing","seashell"],answer:"seashell",explanation:"A seashell is found on a beach; the others relate to city streets."},
+  ]],
+  ["science_discovery", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["experiment","laboratory","scientist","sandwich"],answer:"sandwich",explanation:"A sandwich is food; the others relate to science."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["oxygen","hydrogen","carbon","guitar"],answer:"guitar",explanation:"A guitar is a musical instrument; the others are chemical elements."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["telescope","microscope","magnet","pillow"],answer:"pillow",explanation:"A pillow is for sleeping; the others are scientific tools."},
+  ]],
+  ["friendship", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["trust","loyalty","kindness","furniture"],answer:"furniture",explanation:"Furniture is objects in a home; the others are qualities of friendship."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["friend","neighbour","classmate","kettle"],answer:"kettle",explanation:"A kettle is a kitchen item; the others are people you know."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["support","share","help","boil"],answer:"boil",explanation:"'Boil' is a cooking action; the others are things good friends do."},
+  ]],
+  ["celebrations_parties", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["birthday","wedding","anniversary","toothache"],answer:"toothache",explanation:"A toothache is a health problem; the others are celebrations."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["balloon","cake","present","calculator"],answer:"calculator",explanation:"A calculator is for maths; the others are party items."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["guest","host","invitation","volcano"],answer:"volcano",explanation:"A volcano is a natural feature; the others relate to a party."},
+  ]],
+  ["emotions_feelings", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["happy","sad","angry","purple"],answer:"purple",explanation:"Purple is a colour; the others are feelings."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["joy","fear","surprise","spoon"],answer:"spoon",explanation:"A spoon is for eating; the others are emotions."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["excited","nervous","calm","wooden"],answer:"wooden",explanation:"'Wooden' describes a material; the others describe feelings."},
+  ]],
+  ["language_communication", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["speak","listen","write","cook"],answer:"cook",explanation:"'Cook' is a kitchen activity; the others are communication skills."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["English","Spanish","French","tennis"],answer:"tennis",explanation:"Tennis is a sport; the others are languages."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["word","sentence","grammar","potato"],answer:"potato",explanation:"A potato is a vegetable; the others relate to language."},
+  ]],
+  ["news_current_affairs", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["journalist","reporter","editor","gardener"],answer:"gardener",explanation:"A gardener works with plants; the others work in the news."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["newspaper","headline","article","sausage"],answer:"sausage",explanation:"A sausage is food; the others relate to the news."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["election","government","politics","seashell"],answer:"seashell",explanation:"A seashell is found on a beach; the others relate to current affairs."},
+  ]],
+  ["hobbies_free_time", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["painting","gardening","photography","toothache"],answer:"toothache",explanation:"A toothache is a health problem; the others are hobbies."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["chess","puzzle","knitting","thunderstorm"],answer:"thunderstorm",explanation:"A thunderstorm is weather; the others are hobbies."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["relax","enjoy","unwind","argue"],answer:"argue",explanation:"'Argue' means to have a disagreement; the others are about enjoying your free time."},
+  ]],
+  ["nature_animals", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["elephant","tiger","rhino","banana"],answer:"banana",explanation:"A banana is a fruit; the others are animals."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["oak","pine","rose","hammer"],answer:"hammer",explanation:"A hammer is a tool; the others are plants."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["lion","eagle","shark","table"],answer:"table",explanation:"A table is furniture; the others are animals."},
+  ]],
+  ["jobs_interviews", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["doctor","teacher","engineer","rainbow"],answer:"rainbow",explanation:"A rainbow is in the sky; the others are jobs."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["CV","interview","salary","seagull"],answer:"seagull",explanation:"A seagull is a bird; the others relate to getting a job."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["apply","hire","employ","swim"],answer:"swim",explanation:"'Swim' is a sport; the others relate to jobs."},
+  ]],
+  ["past_memories", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["childhood","memory","nostalgia","refrigerator"],answer:"refrigerator",explanation:"A refrigerator is a kitchen appliance; the others relate to the past."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["remember","forget","recall","cook"],answer:"cook",explanation:"'Cook' is a kitchen activity; the others are about memory."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["yesterday","last year","long ago","tomorrow"],answer:"tomorrow",explanation:"'Tomorrow' is in the future; the others are in the past."},
+  ]],
+  ["verb_tenses", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["always","usually","often","suddenly"],answer:"suddenly",explanation:"'Suddenly' describes a one-time event; the others say how often something happens."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["every day","once a week","twice a month","right now"],answer:"right now",explanation:"'Right now' is this moment; the others describe regular habits."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["walk","eat","sleep","chair"],answer:"chair",explanation:"A chair is an object; the others are everyday actions."},
+  ]],
+  ["present_perfect", [
+      {type:"odd_one_out",question:"Which word does not belong?",options:["already","yet","just","banana"],answer:"banana",explanation:"A banana is food; the others are words used with the present perfect."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["since","for","ever","spoon"],answer:"spoon",explanation:"A spoon is for eating; the others are words used with the present perfect."},
+      {type:"odd_one_out",question:"Which word does not belong?",options:["gone","done","seen","green"],answer:"green",explanation:"'Green' is a colour; the others are past participles."},
+  ]],
+].forEach(([k, qs]) => { if (QUESTION_BANK[k]) QUESTION_BANK[k].questions.push(...qs); });
