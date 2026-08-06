@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode } from "../lib/utils.js";
 import { readFaves, writeFaves } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -59,7 +59,7 @@ export default function SoloView({ onBack }) {
     // Stress Battle type always draws from the full dedicated word bank, regardless of topic
     const pool = gameType === "stress_battle"
       ? QUESTION_BANK.stress_battle.questions
-      : gameType === "mixed" ? bank : bank.filter(q => q.type === gameType);
+      : gameType === "mixed" ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) return;
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
@@ -97,11 +97,13 @@ export default function SoloView({ onBack }) {
   // ── SETUP ──────────────────────────────────────────────────────────────────
   if (phase === "setup") {
     return (
-      <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.2rem"}}>
+      <div style={{minHeight:"100vh",maxWidth:1040,margin:"0 auto",padding:"clamp(1.2rem,3vw,2rem)"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
-        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.7rem,7vw,2.2rem)",lineHeight:1.1,marginBottom:"0.5rem",color:"var(--sun)"}}>Practise on your own — no teacher needed!</h2>
-        <p style={{color:"var(--ink-soft)",fontSize:"1rem",marginBottom:"1.3rem"}}>Pick a topic, question type and number of questions.</p>
+        <h2 style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.7rem,5vw,2.6rem)",lineHeight:1.1,marginBottom:"0.5rem",color:"var(--sun)"}}>Practise on your own — no teacher needed!</h2>
+        <p style={{color:"var(--ink-soft)",fontSize:"clamp(1rem,1.5vw,1.15rem)",marginBottom:"1.6rem"}}>Pick a topic, question type and number of questions.</p>
 
+        <div className="solo-grid">
+        <div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.4rem"}}>
           <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Topic</div>
           <div className="flex gap-1">
@@ -112,7 +114,7 @@ export default function SoloView({ onBack }) {
         {topicFilter==="saved" && faves.length===0 && (
           <p style={{fontSize:"0.78rem",color:"var(--muted)",marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:"0.4rem",marginBottom:"0.9rem",maxHeight:"260px",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:8}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:"0.5rem",maxHeight:"min(58vh,520px)",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:10}}>
           {Object.entries(QUESTION_BANK).filter(([k]) => topicFilter==="all" || faves.includes(k)).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}],i) => {
             const disabled = gameType==="stress_battle" && noStressBattle.has(key);
             const sel = selectedTopic === key;
@@ -129,10 +131,11 @@ export default function SoloView({ onBack }) {
             );
           })}
         </div>
-
+        </div>
+        <div>
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Error Spotter"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l]) => (
+          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Find the Mistake"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["type_answer","Type Answer"],["stress_battle","Stress Battle"]].map(([v,l]) => (
             <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={() => setGameType(v)}>{l}</button>
           ))}
         </div>
@@ -155,6 +158,8 @@ export default function SoloView({ onBack }) {
         })()}
         {!selectedTopic && <div style={{marginBottom:"1rem"}}/>}
         <button className="btn btn-teal btn-full" disabled={!selectedTopic||(gameType==="stress_battle"&&noStressBattle.has(selectedTopic))} onClick={loadQuestions}>Start Practising →</button>
+        </div>
+        </div>
       </div>
     );
   }
@@ -197,6 +202,26 @@ export default function SoloView({ onBack }) {
     const pct     = Math.round((correct / total) * 100);
     const gradeLabel = pct>=90?"Outstanding!":pct>=70?"Well done!":pct>=50?"Keep practising!":"Review and try again!";
     const gradeColor = pct>=70?"var(--leaf)":pct>=50?"var(--sun)":"var(--tomato)";
+    const topicLabel = QUESTION_BANK[selectedTopic]?.label || "Practice";
+    const summary = [`=== English Arena · Practice · ${topicLabel} · ${pct}% (${correct}/${total}) ===\n`]
+      .concat(results.map((r, i) => [
+        `Q${i+1}. ${reviewPrompt(r.q)}`,
+        `Answer: ${reviewAnswer(r.q)}`,
+        r.q.explanation ? `Note: ${r.q.explanation}` : null,
+        `You got it: ${r.correct ? "✓ correct" : "✗ missed"}`,
+        "",
+      ].filter(Boolean).join("\n"))).join("\n");
+    const downloadSummary = () => {
+      try {
+        const blob = new Blob([summary], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `english-arena-${topicLabel.replace(/[^a-z0-9]+/gi, "-").toLowerCase().replace(/^-|-$/g, "")}.txt`;
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+      } catch {}
+    };
     return (
       <div style={{minHeight:"100vh",maxWidth:520,margin:"0 auto",padding:"1.5rem"}}>
         <div className="card sa-anim-pop" style={{textAlign:"center",marginBottom:"1.2rem",border:"1.5px solid var(--line)",boxShadow:`4px 4px 0 ${gradeColor}`}}>
@@ -212,6 +237,13 @@ export default function SoloView({ onBack }) {
           )}
         </div>
 
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"0.6rem",marginBottom:"0.5rem",flexWrap:"wrap"}}>
+          <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Your questions & answers</div>
+          <div className="flex gap-1">
+            <button className="btn btn-sm btn-ghost" onClick={() => navigator.clipboard?.writeText(summary)}>📋 Copy</button>
+            <button className="btn btn-sm btn-gold" style={{color:"var(--on-light)",borderColor:"var(--on-light)"}} onClick={downloadSummary}>⬇ Download</button>
+          </div>
+        </div>
         <div style={{marginBottom:"1.2rem"}}>
           {results.map((r, i) => (
             <div key={i} style={{display:"flex",gap:"0.6rem",alignItems:"flex-start",padding:"0.5rem 0",borderBottom:"1px solid var(--line)"}}>
@@ -220,9 +252,7 @@ export default function SoloView({ onBack }) {
               </div>
               <div>
                 <div style={{fontSize:"0.83rem",color:"var(--ink-soft)",lineHeight:1.4}}>{reviewPrompt(r.q)}</div>
-                {!r.correct && <div style={{fontSize:"0.78rem",color:"var(--sun)",marginTop:"0.2rem"}}>
-                  {reviewAnswer(r.q)}
-                </div>}
+                <div style={{fontSize:"0.78rem",color:r.correct?"var(--aqua)":"var(--sun)",marginTop:"0.2rem"}}>✔ {reviewAnswer(r.q)}</div>
               </div>
             </div>
           ))}
@@ -267,10 +297,10 @@ export default function SoloView({ onBack }) {
             </div>
             <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"1.1rem",color:isCorrect?"var(--leaf)":"var(--tomato)"}}>{isCorrect?"Correct!":"Not quite."}</div>
             {pendingStreak >= 2 && <SAStreakMeter count={pendingStreak} size="sm" />}
-            {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Error: <strong style={{color:"var(--tomato)"}}>{q.errorWord}</strong> → <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
+            {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"0.82rem",color:"var(--muted)",lineHeight:1.4,textAlign:"center"}}>✓ <strong style={{color:"var(--leaf)"}}>{correctedSentence(q)}</strong></div>}
             {!isCorrect && q.type==="stress_battle" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — stressed on syllable {q.stressed}</div>}
             {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle"].includes(q.type) && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Answer: <strong style={{color:"var(--sun)"}}>{q.answer}</strong></div>}
-            {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).join(",")}</strong></div>}
+            {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"0.82rem",color:"var(--muted)"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).map(i=>i+1).join(",")}</strong></div>}
             {q.explanation && <div style={{fontSize:"0.78rem",color:"var(--muted)",marginTop:"0.1rem",lineHeight:1.4,textAlign:"center"}}>{q.explanation}</div>}
           </div>
         </div>
