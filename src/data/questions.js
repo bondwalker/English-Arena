@@ -135,6 +135,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"holiday",hint:"Time off work spent relaxing or travelling",explanation:"The word was “holiday”."},
     {type:"hangman",word:"resort",hint:"Place people visit to relax, often near a beach",explanation:"The word was “resort”."},
     {type:"hangman",word:"backpack",hint:"Bag you carry on your shoulders",explanation:"The word was “backpack”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["kitchen","airport","station","harbour"],answer:"kitchen",explanation:"A kitchen is a room at home; the others are places you pass through when travelling."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["ticket","kettle","map","guidebook"],answer:"kettle",explanation:"A kettle is for making tea; the others help you plan a journey."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["tourist","traveller","chef","guide"],answer:"chef",explanation:"A chef cooks in a restaurant; the others are connected with travel."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["sunbathe","explore","relax","iron"],answer:"iron",explanation:"Ironing is a chore; the others are things you do on holiday."},
   ]},
   "work_office": { label: "Work & the Office", questions: [
     {type:"multiple_choice",question:"Which sentence correctly describes an ongoing project?",options:["I work on this report since Monday.","I am working on this report since Monday.","I have been working on this report since Monday."],answer:"I have been working on this report since Monday.",explanation:"Present perfect continuous + 'since' for ongoing actions that started in the past."},
@@ -264,6 +269,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"printer",hint:"Machine that puts documents onto paper",explanation:"The word was “printer”."},
     {type:"hangman",word:"schedule",hint:"Plan showing when tasks happen",explanation:"The word was “schedule”."},
     {type:"hangman",word:"employee",hint:"Person who works for a company",explanation:"The word was “employee”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["rabbit","stapler","folder","desk"],answer:"rabbit",explanation:"A rabbit is an animal; the others are office items."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["schedule","cabbage","project","task"],answer:"cabbage",explanation:"A cabbage is a vegetable; the others are parts of office work."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["salary","wage","kangaroo","bonus"],answer:"kangaroo",explanation:"A kangaroo is an animal; the others are types of pay."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["photocopier","keyboard","monitor","cloud"],answer:"cloud",explanation:"A cloud is in the sky; the others are office equipment."},
   ]},
   "cooking_recipes": { label: "Cooking & Recipes", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'used to' correctly?",options:["I used to eating meat, but now I'm vegetarian.","I used to eat meat, but now I'm vegetarian.","I use to eat meat, but now I'm vegetarian."],answer:"I used to eat meat, but now I'm vegetarian.",explanation:"'Used to + bare infinitive' describes a past habit that no longer happens."},
@@ -400,6 +410,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"grater",hint:"Tool for shredding cheese into small pieces",explanation:"The word was “grater”."},
     {type:"hangman",word:"mixture",hint:"Combination of things stirred together",explanation:"The word was “mixture”."},
     {type:"hangman",word:"chopping",hint:"Cutting food into small pieces with a knife",explanation:"The word was “chopping”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["laugh","chop","stir","mix"],answer:"laugh",explanation:"Laughing is not cooking; the others are things you do when preparing food."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["whisk","hammer","grater","spatula"],answer:"hammer",explanation:"A hammer is a tool for building; the others are kitchen utensils."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["salt","pepper","brick","spice"],answer:"brick",explanation:"A brick is a building material; the others add flavour to food."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["grill","roast","steam","sneeze"],answer:"sneeze",explanation:"Sneezing is a bodily action; the others are ways of cooking."},
   ]},
   "health_wellbeing": { label: "Health & Wellbeing", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'should' correctly?",options:["You should to exercise more regularly.","You should exercising more regularly.","You should exercise more regularly."],answer:"You should exercise more regularly.",explanation:"Modal verbs like 'should' are followed by the bare infinitive."},
@@ -527,6 +542,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"sleeping",hint:"Resting with your eyes closed at night",explanation:"The word was “sleeping”."},
     {type:"hangman",word:"doctor",hint:"Person who treats you when you are sick",explanation:"The word was “doctor”."},
     {type:"hangman",word:"recovery",hint:"Getting well again after being unwell",explanation:"The word was “recovery”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["curtain","vitamin","medicine","bandage"],answer:"curtain",explanation:"A curtain hangs at a window; the others help keep you healthy."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["hospital","clinic","pharmacy","bakery"],answer:"bakery",explanation:"A bakery sells bread; the others are places for medical care."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["stress","anxiety","wardrobe","fatigue"],answer:"wardrobe",explanation:"A wardrobe is furniture; the others are things that can affect your wellbeing."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["rest","relax","recover","argue"],answer:"argue",explanation:"Arguing is stressful; the others help your body feel better."},
   ]},
   "technology_gadgets": { label: "Technology & Gadgets", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses the present perfect?",options:["Smartphones have become essential in the last decade.","Smartphones became essential in the last decade.","Smartphones are becoming essential in the last decade."],answer:"Smartphones have become essential in the last decade.",explanation:"Present perfect with 'in the last decade' for a recent ongoing trend."},
@@ -654,6 +674,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"software",hint:"Programmes that run on a computer",explanation:"The word was “software”."},
     {type:"hangman",word:"monitor",hint:"Display connected to a desktop computer",explanation:"The word was “monitor”."},
     {type:"hangman",word:"gadget",hint:"Small clever electronic tool or device",explanation:"The word was “gadget”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["pillow","charger","cable","battery"],answer:"pillow",explanation:"A pillow is for sleeping; the others power or connect devices."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["click","dance","type","scroll"],answer:"dance",explanation:"Dancing is not using a computer; the others are actions on a device."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["camera","printer","teapot","monitor"],answer:"teapot",explanation:"A teapot is kitchenware; the others are electronic devices."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["app","software","program","onion"],answer:"onion",explanation:"An onion is a vegetable; the others are types of computer software."},
   ]},
   "the_environment": { label: "The Environment", questions: [
     {type:"multiple_choice",question:"Which word correctly completes: 'Carbon dioxide is one of the main gases responsible ___ climate change.'?",options:["of","for","about"],answer:"for",explanation:"'Responsible for' is the correct collocation."},
@@ -781,6 +806,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"drought",hint:"A long period with very little rain",explanation:"The word was “drought”."},
     {type:"hangman",word:"rubbish",hint:"Waste material you throw away",explanation:"The word was “rubbish”."},
     {type:"hangman",word:"greenhouse",hint:"Glass building for growing plants warmly",explanation:"The word was “greenhouse”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["shout","reduce","reuse","recycle"],answer:"shout",explanation:"Shouting does not help nature; the others protect the environment."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["desert","jungle","curtain","mountain"],answer:"curtain",explanation:"A curtain is made by people; the others are natural landscapes."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["drought","biscuit","flood","storm"],answer:"biscuit",explanation:"A biscuit is food; the others are natural events linked to climate."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["climate","weather","atmosphere","spoon"],answer:"spoon",explanation:"A spoon is cutlery; the others describe the air and conditions around us."},
   ]},
   "sports_fitness": { label: "Sports & Fitness", questions: [
     {type:"multiple_choice",question:"Which sentence correctly talks about a past score?",options:["The team wins 3-1 yesterday.","The team won 3-1 yesterday.","The team has won 3-1 yesterday."],answer:"The team won 3-1 yesterday.",explanation:"'Yesterday' is a finished time reference, so use past simple."},
@@ -917,6 +947,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"swimming",hint:"Moving through water using your body",explanation:"The word was “swimming”."},
     {type:"hangman",word:"tournament",hint:"A competition with many matches",explanation:"The word was “tournament”."},
     {type:"hangman",word:"champion",hint:"Winner of a sporting competition",explanation:"The word was “champion”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["painting","basketball","cricket","rugby"],answer:"painting",explanation:"Painting is an art; the others are sports."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["stretch","sleep","sprint","lift"],answer:"sleep",explanation:"Sleeping is resting; the others are exercises."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["racket","ball","kettle","net"],answer:"kettle",explanation:"A kettle is kitchenware; the others are used in sports."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["athlete","coach","referee","baker"],answer:"baker",explanation:"A baker makes bread; the others take part in sport."},
   ]},
   "family_life": { label: "Family Life", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'be used to' correctly?",options:["We are used to live in a smaller flat.","We are used to living in a smaller flat.","We used to living in a smaller flat."],answer:"We are used to living in a smaller flat.",explanation:"'Be used to + gerund (-ing)' means to be accustomed to something."},
@@ -1053,6 +1088,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"daughter",hint:"A female child of your parents",explanation:"The word was “daughter”."},
     {type:"hangman",word:"married",hint:"Joined together as husband and wife",explanation:"The word was “married”."},
     {type:"hangman",word:"toddler",hint:"A very young child learning to walk",explanation:"The word was “toddler”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["doctor","brother","son","daughter"],answer:"doctor",explanation:"A doctor is a job; the others are family members."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["nephew","pilot","niece","twin"],answer:"pilot",explanation:"A pilot is a job; the others are relatives."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["parent","child","engineer","sibling"],answer:"engineer",explanation:"An engineer is a job; the others are family roles."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["wife","husband","partner","waiter"],answer:"waiter",explanation:"A waiter is a job; the others describe someone you are married to."},
   ]},
   "education_studying": { label: "Education & Studying", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'by' correctly?",options:["You need to submit the essay until Friday.","You need to submit the essay by Friday.","You need to submit the essay before to Friday."],answer:"You need to submit the essay by Friday.",explanation:"'By' means no later than. 'Until' means up to a point in time and then it stops."},
@@ -1182,6 +1222,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"revision",hint:"Going over material again before an exam",explanation:"The word was “revision”."},
     {type:"hangman",word:"knowledge",hint:"Information and understanding you have",explanation:"The word was “knowledge”."},
     {type:"hangman",word:"textbook",hint:"Book used for studying a subject",explanation:"The word was “textbook”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["swim","study","learn","revise"],answer:"swim",explanation:"Swimming is a sport; the others are things you do to learn."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["textbook","frying pan","dictionary","calculator"],answer:"frying pan",explanation:"A frying pan is for cooking; the others help you study."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["university","college","hospital","school"],answer:"hospital",explanation:"A hospital treats patients; the others are places of learning."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["degree","diploma","certificate","banana"],answer:"banana",explanation:"A banana is a fruit; the others are qualifications."},
   ]},
   "money_banking": { label: "Money & Banking", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'afford' correctly?",options:["We can't afford buying a new car right now.","We can't afford to buy a new car right now.","We can't afford buy a new car right now."],answer:"We can't afford to buy a new car right now.",explanation:"'Afford' is followed by 'to + infinitive'."},
@@ -1311,6 +1356,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"currency",hint:"System of money used in a country",explanation:"The word was “currency”."},
     {type:"hangman",word:"account",hint:"Personal record held at a bank",explanation:"The word was “account”."},
     {type:"hangman",word:"withdraw",hint:"Take money out of a bank",explanation:"The word was “withdraw”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["jump","deposit","withdraw","transfer"],answer:"jump",explanation:"Jumping is a movement; the others are things you do with money."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["account","carrot","loan","interest"],answer:"carrot",explanation:"A carrot is a vegetable; the others are banking words."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["wallet","purse","umbrella","piggy bank"],answer:"umbrella",explanation:"An umbrella keeps off rain; the others hold money."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["debt","budget","savings","rainbow"],answer:"rainbow",explanation:"A rainbow is in the sky; the others are about money."},
   ]},
   "shopping_fashion": { label: "Shopping & Fashion", questions: [
     {type:"multiple_choice",question:"Which question would you ask in a shop if you need a different size?",options:["Do you have this on a smaller?","Do you have this in a smaller size?","Have you got this with a smaller?"],answer:"Do you have this in a smaller size?",explanation:"The correct preposition is 'in' when talking about size or colour options."},
@@ -1447,6 +1497,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"blouse",hint:"A loose shirt usually worn by women",explanation:"The word was “blouse”."},
     {type:"hangman",word:"receipt",hint:"Paper showing what you paid for",explanation:"The word was “receipt”."},
     {type:"hangman",word:"shopper",hint:"Person who buys things in stores",explanation:"The word was “shopper”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["fork","skirt","coat","scarf"],answer:"fork",explanation:"A fork is cutlery; the others are clothes."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["boots","teapot","sandals","trainers"],answer:"teapot",explanation:"A teapot is kitchenware; the others are footwear."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["cotton","wool","brick","silk"],answer:"brick",explanation:"A brick is a building material; the others are fabrics."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["customer","cashier","shopper","dentist"],answer:"dentist",explanation:"A dentist works with teeth; the others are found in a shop."},
   ]},
   "music": { label: "Music", questions: [
     {type:"multiple_choice",question:"Which sentence uses the past perfect correctly?",options:["By the time the concert started, we had already found our seats.","By the time the concert started, we already found our seats.","By the time the concert started, we have already found our seats."],answer:"By the time the concert started, we had already found our seats.",explanation:"Past perfect shows an action completed before another past action."},
@@ -1583,6 +1638,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"trumpet",hint:"Brass instrument you blow into",explanation:"The word was “trumpet”."},
     {type:"hangman",word:"lyrics",hint:"The words of a song",explanation:"The word was “lyrics”."},
     {type:"hangman",word:"musician",hint:"Person who plays an instrument",explanation:"The word was “musician”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["spanner","drums","flute","trumpet"],answer:"spanner",explanation:"A spanner is a tool; the others are musical instruments."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["melody","potato","rhythm","harmony"],answer:"potato",explanation:"A potato is a vegetable; the others are parts of music."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["guitarist","violinist","gardener","saxophonist"],answer:"gardener",explanation:"A gardener grows plants; the others are musicians."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["orchestra","band","choir","market"],answer:"market",explanation:"A market sells goods; the others are groups that perform music."},
   ]},
   "social_media_internet": { label: "Social Media & the Internet", questions: [
     {type:"multiple_choice",question:"Which sentence is correct?",options:["She's been using social media for ten years.","She's using social media since ten years.","She uses social media since ten years."],answer:"She's been using social media for ten years.",explanation:"Present perfect continuous + 'for' for an ongoing activity."},
@@ -1712,6 +1772,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"website",hint:"Collection of pages on the internet",explanation:"The word was “website”."},
     {type:"hangman",word:"browser",hint:"Program used to view web pages",explanation:"The word was “browser”."},
     {type:"hangman",word:"download",hint:"Copy a file from the internet to your device",explanation:"The word was “download”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["cook","like","upload","message"],answer:"cook",explanation:"Cooking is done in a kitchen; the others are online actions."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["password","carrot","username","login"],answer:"carrot",explanation:"A carrot is a vegetable; the others are used to sign in online."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["video","photo","hammer","status"],answer:"hammer",explanation:"A hammer is a tool; the others are things you post online."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["network","feed","notification","spoon"],answer:"spoon",explanation:"A spoon is cutlery; the others are parts of social media."},
   ]},
   "ambitions_goals": { label: "Ambitions & Goals", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'hope to' correctly?",options:["She hopes to becoming a doctor one day.","She hopes becoming a doctor one day.","She hopes to become a doctor one day."],answer:"She hopes to become a doctor one day.",explanation:"'Hope to' is followed by the bare infinitive."},
@@ -1841,6 +1906,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"purpose",hint:"The reason you do something",explanation:"The word was “purpose”."},
     {type:"hangman",word:"determined",hint:"Firmly decided to succeed",explanation:"The word was “determined”."},
     {type:"hangman",word:"aspiration",hint:"A strong desire to accomplish something",explanation:"The word was “aspiration”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["table","hope","wish","ambition"],answer:"table",explanation:"A table is furniture; the others are things you want for the future."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["target","banana","objective","aim"],answer:"banana",explanation:"A banana is a fruit; the others mean a goal."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["motivate","strive","eat","pursue"],answer:"eat",explanation:"Eating is a daily need; the others are about working towards a goal."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["future","potential","progress","spoon"],answer:"spoon",explanation:"A spoon is cutlery; the others describe growth and possibility."},
   ]},
   "culture_traditions": { label: "Culture & Traditions", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'although' correctly?",options:["Although the food was unfamiliar, but she enjoyed it.","Although the food was unfamiliar, she enjoyed it.","Although the food was unfamiliar but she enjoyed it."],answer:"Although the food was unfamiliar, she enjoyed it.",explanation:"'Although' introduces a contrast without needing 'but'. Use one or the other, not both."},
@@ -1970,6 +2040,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"ancestor",hint:"Family member from long ago",explanation:"The word was “ancestor”."},
     {type:"hangman",word:"ceremony",hint:"Formal event marking an occasion",explanation:"The word was “ceremony”."},
     {type:"hangman",word:"ritual",hint:"Set of actions performed regularly",explanation:"The word was “ritual”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["laptop","celebration","parade","carnival"],answer:"laptop",explanation:"A laptop is a device; the others are cultural events."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["folklore","spanner","legend","myth"],answer:"spanner",explanation:"A spanner is a tool; the others are traditional stories."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["language","religion","kettle","art"],answer:"kettle",explanation:"A kettle is kitchenware; the others are parts of a culture."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["national dress","folk dance","feast","printer"],answer:"printer",explanation:"A printer is office equipment; the others are cultural traditions."},
   ]},
   "films_tv": { label: "Films & TV", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'just' correctly in the present perfect?",options:["I just saw the new film — it was amazing!","I have just seen the new film — it was amazing!","I have just saw the new film — it was amazing!"],answer:"I have just seen the new film — it was amazing!",explanation:"Present perfect with 'just': 'have + just + past participle' for a very recent action."},
@@ -2106,6 +2181,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"actress",hint:"A woman who performs in films",explanation:"The word was “actress”."},
     {type:"hangman",word:"romance",hint:"A love story genre",explanation:"The word was “romance”."},
     {type:"hangman",word:"audience",hint:"People watching a show or film",explanation:"The word was “audience”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["sausage","thriller","romance","documentary"],answer:"sausage",explanation:"A sausage is food; the others are types of film."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["scene","carrot","script","plot"],answer:"carrot",explanation:"A carrot is a vegetable; the others are parts of a film."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["producer","editor","plumber","actress"],answer:"plumber",explanation:"A plumber fixes pipes; the others work in film and television."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["episode","series","season","spoon"],answer:"spoon",explanation:"A spoon is cutlery; the others are parts of a TV show."},
   ]},
   "books_reading": { label: "Books & Reading", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses the passive voice?",options:["The novel was wrote by a first-time author.","The novel was written by a first-time author.","The novel written by a first-time author."],answer:"The novel was written by a first-time author.",explanation:"Passive past simple: 'was + past participle' (written, not wrote)."},
@@ -2242,6 +2322,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"magazine",hint:"Thin publication with articles and pictures",explanation:"The word was “magazine”."},
     {type:"hangman",word:"bookshop",hint:"Store that sells things you read",explanation:"The word was “bookshop”."},
     {type:"hangman",word:"storybook",hint:"Collection of children's tales",explanation:"The word was “storybook”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["hammer","poem","story","essay"],answer:"hammer",explanation:"A hammer is a tool; the others are pieces of writing."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["writer","butcher","poet","novelist"],answer:"butcher",explanation:"A butcher sells meat; the others create books."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["page","cover","carrot","title"],answer:"carrot",explanation:"A carrot is a vegetable; the others are parts of a book."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["fiction","biography","poetry","spanner"],answer:"spanner",explanation:"A spanner is a tool; the others are kinds of book."},
   ]},
   "home_housing": { label: "Home & Housing", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'too' and 'enough' correctly?",options:["The flat is too small for us to living comfortably.","The flat is too small for us to live comfortably.","The flat is not big enough for us to living."],answer:"The flat is too small for us to live comfortably.",explanation:"'Too + adjective + for + object + to + infinitive' is the correct structure."},
@@ -2378,6 +2463,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"apartment",hint:"A flat within a larger building",explanation:"The word was “apartment”."},
     {type:"hangman",word:"staircase",hint:"Set of steps between floors",explanation:"The word was “staircase”."},
     {type:"hangman",word:"doorway",hint:"The opening you walk through into a room",explanation:"The word was “doorway”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["banana","garage","hallway","attic"],answer:"banana",explanation:"A banana is a fruit; the others are parts of a house."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["bed","carrot","wardrobe","lamp"],answer:"carrot",explanation:"A carrot is a vegetable; the others are furniture in a home."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["flat","cottage","hospital","apartment"],answer:"hospital",explanation:"A hospital treats patients; the others are places people live."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["curtain","cushion","carpet","kangaroo"],answer:"kangaroo",explanation:"A kangaroo is an animal; the others make a home comfortable."},
   ]},
   "food_restaurants": { label: "Food & Restaurants", questions: [
     {type:"multiple_choice",question:"Which question is correct to ask a waiter?",options:["Could I have the menu, please?","Can I having the menu, please?","I would like having the menu, please?"],answer:"Could I have the menu, please?",explanation:"'Could I have...?' is the correct polite structure for requesting something."},
@@ -2514,6 +2604,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"napkin",hint:"Cloth or paper for wiping your mouth",explanation:"The word was “napkin”."},
     {type:"hangman",word:"pancake",hint:"Flat food fried and eaten with syrup",explanation:"The word was “pancake”."},
     {type:"hangman",word:"takeaway",hint:"Food bought to eat at home",explanation:"The word was “takeaway”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["dolphin","bill","tip","reservation"],answer:"dolphin",explanation:"A dolphin is a sea animal; the others happen at a restaurant."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["spoon","brick","napkin","glass"],answer:"brick",explanation:"A brick is a building material; the others are on a dinner table."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["soup","salad","pillow","steak"],answer:"pillow",explanation:"A pillow is for sleeping; the others are dishes you can order."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["cafe","restaurant","bistro","library"],answer:"library",explanation:"A library lends books; the others serve food."},
   ]},
   "cities_travel": { label: "Cities & Travel", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses 'used to'?",options:["This area used to be a factory district, but now it's full of restaurants.","This area use to be a factory district, but now it's full of restaurants.","This area was used to be a factory district."],answer:"This area used to be a factory district, but now it's full of restaurants.",explanation:"'Used to + bare infinitive' describes a past state no longer true."},
@@ -2650,6 +2745,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"crossing",hint:"Place where you can walk over a road",explanation:"The word was “crossing”."},
     {type:"hangman",word:"terminal",hint:"Building where you catch flights or buses",explanation:"The word was “terminal”."},
     {type:"hangman",word:"district",hint:"A particular area of a city",explanation:"The word was “district”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["spoon","taxi","underground","ferry"],answer:"spoon",explanation:"A spoon is cutlery; the others carry people around a city."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["skyscraper","carrot","bridge","tower"],answer:"carrot",explanation:"A carrot is a vegetable; the others are large city structures."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["pavement","road","apple","junction"],answer:"apple",explanation:"An apple is a fruit; the others are parts of a street."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["suburb","district","neighbourhood","kettle"],answer:"kettle",explanation:"A kettle is kitchenware; the others are areas of a city."},
   ]},
   "science_discovery": { label: "Science & Discovery", questions: [
     {type:"multiple_choice",question:"Which sentence uses the passive correctly?",options:["Penicillin was discover by Alexander Fleming in 1928.","Penicillin was discovered by Alexander Fleming in 1928.","Penicillin discovered by Alexander Fleming in 1928."],answer:"Penicillin was discovered by Alexander Fleming in 1928.",explanation:"Passive past simple: 'was + past participle'."},
@@ -2779,6 +2879,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"research",hint:"Careful study to find new facts",explanation:"The word was “research”."},
     {type:"hangman",word:"telescope",hint:"Instrument for viewing distant stars",explanation:"The word was “telescope”."},
     {type:"hangman",word:"chemistry",hint:"Science of substances and reactions",explanation:"The word was “chemistry”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["biscuit","theory","research","discovery"],answer:"biscuit",explanation:"A biscuit is food; the others belong to science."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["atom","sofa","molecule","cell"],answer:"sofa",explanation:"A sofa is furniture; the others are tiny building blocks of matter and life."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["chemistry","biology","breakfast","physics"],answer:"breakfast",explanation:"Breakfast is a meal; the others are branches of science."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["test tube","beaker","flask","umbrella"],answer:"umbrella",explanation:"An umbrella keeps off rain; the others are laboratory glassware."},
   ]},
   "friendship": { label: "Friendship", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'get on with' correctly?",options:["She gets on with her colleagues very well at work.","She gets on with very well her colleagues at work.","She gets well on with her colleagues at work."],answer:"She gets on with her colleagues very well at work.",explanation:"'Get on with someone' means to have a good relationship. Adverbs come after the object."},
@@ -2915,6 +3020,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"laughter",hint:"The sound you make when something is funny",explanation:"The word was “laughter”."},
     {type:"hangman",word:"together",hint:"Being with others, not alone",explanation:"The word was “together”."},
     {type:"hangman",word:"secret",hint:"Something you keep private between friends",explanation:"The word was “secret”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["table","honesty","respect","care"],answer:"table",explanation:"A table is furniture; the others are qualities of a good friend."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["companion","dentist","mate","buddy"],answer:"dentist",explanation:"A dentist is a job; the others mean a friend."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["listen","comfort","fry","encourage"],answer:"fry",explanation:"Frying is cooking; the others are ways to support a friend."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["bond","friendship","closeness","spoon"],answer:"spoon",explanation:"A spoon is cutlery; the others describe a close relationship."},
   ]},
   "celebrations_parties": { label: "Celebrations & Parties", questions: [
     {type:"multiple_choice",question:"Which sentence is correct?",options:["They are throwing a surprise party for her last Saturday.","They threw a surprise party for her last Saturday.","They have thrown a surprise party for her last Saturday."],answer:"They threw a surprise party for her last Saturday.",explanation:"'Last Saturday' is a finished time reference, so use past simple."},
@@ -3051,6 +3161,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"celebrate",hint:"To do something enjoyable for an occasion",explanation:"The word was “celebrate”."},
     {type:"hangman",word:"greeting",hint:"Words said to welcome someone",explanation:"The word was “greeting”."},
     {type:"hangman",word:"confetti",hint:"Small pieces of coloured paper thrown at parties",explanation:"The word was “confetti”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["headache","party","feast","celebration"],answer:"headache",explanation:"A headache is a pain; the others are happy events."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["candle","spanner","banner","decoration"],answer:"spanner",explanation:"A spanner is a tool; the others decorate a party."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["graduation","reunion","printer","festival"],answer:"printer",explanation:"A printer is office equipment; the others are occasions to celebrate."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["gift","card","confetti","carrot"],answer:"carrot",explanation:"A carrot is a vegetable; the others are part of a celebration."},
   ]},
   "emotions_feelings": { label: "Emotions & Feelings", questions: [
     {type:"multiple_choice",question:"Which sentence correctly describes an emotion?",options:["She was so boring at the party that she left early.","She was so bored at the party that she left early.","She was so bore at the party that she left early."],answer:"She was so bored at the party that she left early.",explanation:"'Bored' describes how a person feels; 'boring' describes the thing that causes the feeling."},
@@ -3187,6 +3302,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"surprised",hint:"Feeling shock at something unexpected",explanation:"The word was “surprised”."},
     {type:"hangman",word:"grateful",hint:"Feeling thankful for something",explanation:"The word was “grateful”."},
     {type:"hangman",word:"confused",hint:"Not able to understand clearly",explanation:"The word was “confused”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["plastic","proud","jealous","lonely"],answer:"plastic",explanation:"Plastic is a material; the others are feelings."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["anger","metal","sadness","happiness"],answer:"metal",explanation:"Metal is a material; the others are emotions."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["worried","scared","square","cheerful"],answer:"square",explanation:"Square is a shape; the others describe how you feel."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["love","hate","hope","brick"],answer:"brick",explanation:"A brick is a building material; the others are strong feelings."},
   ]},
   "language_communication": {
     label: "Language & Communication",
@@ -3350,6 +3470,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"spelling",hint:"Putting letters in the correct order",explanation:"The word was “spelling”."},
     {type:"hangman",word:"accent",hint:"The way people from a place pronounce words",explanation:"The word was “accent”."},
     {type:"hangman",word:"message",hint:"Information sent from one person to another",explanation:"The word was “message”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["swim","talk","chat","discuss"],answer:"swim",explanation:"Swimming is a sport; the others mean to communicate."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["German","football","Italian","Japanese"],answer:"football",explanation:"Football is a sport; the others are languages."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["vocabulary","spelling","carrot","pronunciation"],answer:"carrot",explanation:"A carrot is a vegetable; the others are parts of learning a language."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["translate","explain","describe","fry"],answer:"fry",explanation:"Frying is cooking; the others are ways of using language."},
   ]},
   "news_current_affairs": { label: "News & Current Affairs", questions: [
     {type:"multiple_choice",question:"Which sentence uses the passive correctly?",options:["The new law was announce yesterday by the government.","The new law was announced yesterday by the government.","The new law announced yesterday by the government."],answer:"The new law was announced yesterday by the government.",explanation:"Passive past simple: 'was + past participle'."},
@@ -3483,6 +3608,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"article",hint:"A written news piece",explanation:"The word was “article”."},
     {type:"hangman",word:"broadcast",hint:"Transmit a programme on TV or radio",explanation:"The word was “broadcast”."},
     {type:"hangman",word:"politics",hint:"Activities related to governing a country",explanation:"The word was “politics”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["bake","broadcast","report","interview"],answer:"bake",explanation:"Baking is cooking; the others are ways news is made."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["magazine","carrot","bulletin","column"],answer:"carrot",explanation:"A carrot is a vegetable; the others carry news."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["president","minister","banana","parliament"],answer:"banana",explanation:"A banana is a fruit; the others belong to politics."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["news","media","press","spoon"],answer:"spoon",explanation:"A spoon is cutlery; the others are about reporting information."},
   ]},
   "hobbies_free_time": { label: "Hobbies & Free Time", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'have been to' correctly?",options:["I have been to that pottery class before — it's great!","I have been at that pottery class before — it's great!","I have been in that pottery class before — it's great!"],answer:"I have been to that pottery class before — it's great!",explanation:"'Have been to' means you visited a place and came back."},
@@ -3623,6 +3753,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"camping",hint:"Staying outdoors in a tent",explanation:"The word was “camping”."},
     {type:"hangman",word:"fishing",hint:"Trying to catch creatures from water as a hobby",explanation:"The word was “fishing”."},
     {type:"hangman",word:"pottery",hint:"Making bowls and cups from clay",explanation:"The word was “pottery”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["earthquake","drawing","sewing","baking"],answer:"earthquake",explanation:"An earthquake is a natural disaster; the others are hobbies."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["fishing","invoice","hiking","camping"],answer:"invoice",explanation:"An invoice is a bill; the others are outdoor pastimes."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["collecting","dancing","fever","reading"],answer:"fever",explanation:"A fever is an illness; the others are free-time activities."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["hobby","pastime","leisure","hammer"],answer:"hammer",explanation:"A hammer is a tool; the others describe free time."},
   ]},
   "nature_animals": { label: "Nature & Animals", questions: [
     {type:"multiple_choice",question:"Which sentence uses the present perfect correctly?",options:["Many species of animals has become extinct in recent years.","Many species of animals have become extinct in recent years.","Many species of animals became extinct in recent years."],answer:"Many species of animals have become extinct in recent years.",explanation:"'Many species' is plural, so use 'have'. Present perfect with 'in recent years' for a current trend."},
@@ -3763,6 +3898,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"jungle",hint:"Thick tropical forest full of animals",explanation:"The word was “jungle”."},
     {type:"hangman",word:"penguin",hint:"Black and white bird that cannot fly",explanation:"The word was “penguin”."},
     {type:"hangman",word:"giraffe",hint:"Tall African animal with a long neck",explanation:"The word was “giraffe”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["chair","wolf","bear","fox"],answer:"chair",explanation:"A chair is furniture; the others are wild animals."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["daisy","spoon","tulip","lily"],answer:"spoon",explanation:"A spoon is cutlery; the others are flowers."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["whale","dolphin","kettle","seal"],answer:"kettle",explanation:"A kettle is kitchenware; the others are sea animals."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["sparrow","owl","parrot","carrot"],answer:"carrot",explanation:"A carrot is a vegetable; the others are birds."},
   ]},
   "jobs_interviews": { label: "Jobs & Interviews", questions: [
     {type:"multiple_choice",question:"Which phrase correctly completes a job interview answer?",options:["I am interest in this role because I enjoy working in teams.","I am interested in this role because I enjoy working in teams.","I have interest in this role because I enjoy working in teams."],answer:"I am interested in this role because I enjoy working in teams.",explanation:"'Interested in' is the correct adjective. 'Interesting' describes the thing that causes interest."},
@@ -3896,6 +4036,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"candidate",hint:"Person being considered for a job",explanation:"The word was “candidate”."},
     {type:"hangman",word:"experience",hint:"Skills gained from doing a job",explanation:"The word was “experience”."},
     {type:"hangman",word:"reference",hint:"Recommendation from a former boss",explanation:"The word was “reference”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["cloud","nurse","lawyer","architect"],answer:"cloud",explanation:"A cloud is in the sky; the others are jobs."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["candidate","banana","applicant","employer"],answer:"banana",explanation:"A banana is a fruit; the others are people in a job interview."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["resume","reference","potato","qualification"],answer:"potato",explanation:"A potato is a vegetable; the others help you get a job."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["recruit","train","promote","sleep"],answer:"sleep",explanation:"Sleeping is resting; the others are things employers do with staff."},
   ]},
   "past_memories": {
     label: "Past & Memories",
@@ -4063,6 +4208,11 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"reunion",hint:"A gathering of people who meet again",explanation:"The word was “reunion”."},
     {type:"hangman",word:"vintage",hint:"Old and of good quality from an earlier time",explanation:"The word was “vintage”."},
     {type:"hangman",word:"flashback",hint:"A sudden memory of an earlier event",explanation:"The word was “flashback”."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["fry","recollect","reminisce","remind"],answer:"fry",explanation:"Frying is cooking; the others are about remembering."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["memory","carrot","souvenir","keepsake"],answer:"carrot",explanation:"A carrot is a vegetable; the others help you remember the past."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["once","previously","soon","formerly"],answer:"soon",explanation:"Soon points to the future; the others point to the past."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["last week","an hour ago","in the past","next month"],answer:"next month",explanation:"Next month is in the future; the others refer to the past."},
   ]},
   "verb_tenses": {
     label: "Verb Tenses & Habits",
@@ -4252,6 +4402,11 @@ export const QUESTION_BANK = {
     {type:"spot_sentence",question:"Which sentence has a grammar mistake?",options:["She is getting used to driving on the left.","He wasn't used to eating so late.","I am getting used to live in a big city.","They have been used to cold winters for years."],answer:"I am getting used to live in a big city.",explanation:"'Get used to' must be followed by a gerund: 'I am getting used to living in a big city.'"},
     {type:"spot_sentence",question:"Which sentence has a grammar mistake?",options:["He will be landing in Tokyo at 6 a.m. tomorrow.","She was smiling when she heard the news.","By the time we got there, the shop had already closed.","She is knowing five languages, which is very rare."],answer:"She is knowing five languages, which is very rare.",explanation:"'Know' is a stative verb. Use present simple: 'She knows five languages.'"},
     {type:"spot_sentence",question:"Which sentence has a grammar mistake?",options:["She didn't use to like seafood, but now she loves it.","He would always tidy his room before his parents returned.","We are used to work long hours in this industry.","By lunchtime, they had already finished the presentation."],answer:"We are used to work long hours in this industry.",explanation:"'Be used to' must be followed by a gerund: 'We are used to working long hours in this industry.'"},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["spoon","run","jump","read"],answer:"spoon",explanation:"A spoon is a noun; the others are verbs."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["yesterday","now","last night","two days ago"],answer:"now",explanation:"Now is the present; the others are past time markers."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["never","rarely","banana","sometimes"],answer:"banana",explanation:"A banana is a fruit; the others are adverbs of frequency."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["tomorrow","next week","soon","last year"],answer:"last year",explanation:"Last year is past; the others point to the future."},
   ]},
   "present_perfect": {
     label: "Present Perfect & Continuous",
@@ -4421,6 +4576,11 @@ export const QUESTION_BANK = {
     {type:"spot_sentence",question:"Which sentence has a grammar mistake?",options:["He has just sent his application.","She hasn't finished the project yet.","I have never try sushi before.","They have been together for three years."],answer:"I have never try sushi before.",explanation:"Present perfect uses the past participle: 'I have never tried sushi before.' 'Try' is the base form, not the past participle."},
     {type:"spot_sentence",question:"Which sentence has a grammar mistake?",options:["She has worked as a nurse for fifteen years.","Have they decided yet?","I have been waiting since an hour.","He has just finished his presentation."],answer:"I have been waiting since an hour.",explanation:"Use 'for' with a period of time: 'I have been waiting for an hour.' 'Since' is used with a specific starting point like 'one o'clock'."},
     {type:"spot_sentence",question:"Which sentence has a grammar mistake?",options:["She has already left — you just missed her.","He has been training for the marathon since January.","They have went to the museum this afternoon.","I haven't eaten since breakfast."],answer:"They have went to the museum this afternoon.",explanation:"Present perfect uses the past participle: 'They have gone to the museum this afternoon.' 'Went' is the past simple form."},
+  
+    {type:"odd_one_out",question:"Which word does not belong?",options:["yellow","been","eaten","taken"],answer:"yellow",explanation:"Yellow is a colour; the others are past participles used in the present perfect."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["written","table","broken","spoken"],answer:"table",explanation:"A table is a noun; the others are past participles."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["recently","lately","carrot","so far"],answer:"carrot",explanation:"A carrot is a vegetable; the others are time expressions used with the present perfect."},
+    {type:"odd_one_out",question:"Which word does not belong?",options:["never","ever","yet","chair"],answer:"chair",explanation:"A chair is a noun; the others are words often used with the present perfect."},
   ]
   },
   "stress_battle": { label: "⚡ Stress Battle", questions: [
