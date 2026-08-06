@@ -441,12 +441,31 @@ export default function HostView({ onBack }) {
       let qs = prev.questions;
       let warmupCount = 0;
       if (prev.warmup && selectedTopic && QUESTION_BANK[selectedTopic]) {
-        const pool = QUESTION_BANK[selectedTopic].questions;
-        const fastPool = pool.filter(q => ["multiple_choice", "true_false"].includes(q.type));
-        const warmupPool = fastPool.length >= 3 ? fastPool : pool;
-        const warmupQs = [...warmupPool].sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({ ...q, _warmup: true }));
-        qs = [...warmupQs, ...prev.questions];
-        warmupCount = 3;
+        const bank = QUESTION_BANK[selectedTopic].questions;
+        const fastPool = bank.filter(q => ["multiple_choice", "true_false"].includes(q.type));
+        // Warm-up mirrors the chosen mode so it feels consistent (e.g. Hangman → Hangman),
+        // but only when there are enough of that type to also leave a scored round.
+        // "Mixed"/Stress Battle, and sparse modes (e.g. Word Order), keep the quick
+        // multiple-choice / true-false ease-in so the scored round isn't starved.
+        const isMixedish = gameType === "mixed" || selectedTopic === "stress_battle";
+        const modePool = isMixedish ? [] : bank.filter(q => typesForMode(gameType).includes(q.type));
+        const basePool = modePool.length >= 6 ? modePool : (fastPool.length >= 3 ? fastPool : bank);
+        // Canonical, order-stable identity — many types share a fixed `question` string
+        // (e.g. Word Order), and state may round-trip through Firebase, so key on content.
+        const qKey = q => [q.type, q.question, q.word, q.hint, q.answer, q.errorWord, q.sentence,
+          (q.words || []).join(" "), (q.options || []).join("|"),
+          (q.sentences || []).join("|"), (q.correctOrder || []).join(","),
+          (q.pairs || []).map(p => p.word).join("|")].join("¦");
+        // Prefer warm-up questions that aren't already in the scored deck, so nothing repeats.
+        const mainKeys = new Set(prev.questions.map(qKey));
+        const spare = basePool.filter(q => !mainKeys.has(qKey(q)));
+        const warmSource = spare.length >= 3 ? spare : basePool;
+        const warmOriginals = [...warmSource].sort(() => Math.random() - 0.5).slice(0, 3);
+        const warmKeys = new Set(warmOriginals.map(qKey));
+        const warmupQs = warmOriginals.map(q => ({ ...q, _warmup: true }));
+        const mainQs = prev.questions.filter(q => !warmKeys.has(qKey(q)));
+        qs = [...warmupQs, ...mainQs];
+        warmupCount = warmupQs.length;
       }
       const q = qs[0];
       if (!q) return prev;
