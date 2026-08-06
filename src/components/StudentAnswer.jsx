@@ -5,7 +5,7 @@ import { OPT_COLORS, ordinal } from "../lib/utils.js";
 
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
-export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedIdx, setUsedIdx, typeVal, setTypeVal, storyOrder, setStoryOrder, matchState, setMatchState, room }) {
+export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged, usedIdx, setUsedIdx, storyOrder, setStoryOrder, matchState, setMatchState, guessed, setGuessed, room }) {
   const answered = myAnswer !== null;
   const [bigText, setBigText] = useState(() => readFont());
   const toggleFont = () => { const n = !bigText; setBigText(n); writeFont(n); };
@@ -33,7 +33,20 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       setShuffledOptions([...q.options].sort(() => Math.random() - 0.5));
   }, [(q.options || []).join("|")]);
 
-  const submitTyped = () => { if (typeVal.trim()) onAnswer(typeVal.trim()); };
+  // Hangman: resolve win/loss locally, then submit once. 6 wrong letters = out.
+  const HANGMAN_LIVES = 6;
+  useEffect(() => {
+    if (q.type !== "hangman" || myAnswer !== null) return;
+    const upper = String(q.word || "").toUpperCase();
+    const letters = upper.replace(/[^A-Z]/g, "");
+    if (!letters) return;
+    const g = guessed || [];
+    const solved = [...new Set(letters.split(""))].every(L => g.includes(L));
+    const wrong = g.filter(L => !upper.includes(L)).length;
+    if (solved) onAnswer(q.word);
+    else if (wrong >= HANGMAN_LIVES) onAnswer("");
+  }, [guessed, q, myAnswer]);
+
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
   const submitStory = () => { if (storyOrder.length === 3) onAnswer(storyOrder.join(",")); };
 
@@ -55,7 +68,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
   return (
     <div>
-      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.35rem", lineHeight: 1.35, marginBottom: "1.1rem", color: "var(--ink)" }}>{q.question}</h2>
+      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.35rem", lineHeight: 1.35, marginBottom: "1.1rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "multiple_choice" && q.options && (
         <div className="opt-grid">
@@ -149,16 +162,64 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
         </div>
       )}
 
-      {q.type === "type_answer" && (
-        <div>
-          <input className="input" placeholder="Type your answer…" value={typeVal} disabled={answered}
-            style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1.1rem", letterSpacing: "0.05em" }}
-            onChange={e => setTypeVal(e.target.value)} onKeyDown={e => e.key === "Enter" && !answered && submitTyped()} />
-          <button className="btn btn-teal btn-full mt-2" disabled={answered || !typeVal.trim()} onClick={submitTyped}>
-            {answered ? "Submitted" : "Submit →"}
-          </button>
-        </div>
-      )}
+      {q.type === "hangman" && (() => {
+        const upper = String(q.word || "").toUpperCase();
+        const chars = upper.split("");
+        const has = L => (guessed || []).includes(L);
+        const wrong = (guessed || []).filter(L => !upper.includes(L));
+        const livesLeft = Math.max(0, HANGMAN_LIVES - wrong.length);
+        const solved = chars.every(c => !/[A-Z]/.test(c) || has(c));
+        const done = answered || solved || wrong.length >= HANGMAN_LIVES;
+        const guess = L => { if (done || has(L)) return; setGuessed(g => [...(g || []), L]); };
+        return (
+          <div>
+            {/* remaining lives */}
+            <div style={{ display: "flex", justifyContent: "center", gap: "0.3rem", marginBottom: "0.9rem", fontSize: "1.3rem" }}>
+              {Array.from({ length: HANGMAN_LIVES }).map((_, i) => (
+                <span key={i} style={{ opacity: i < livesLeft ? 1 : 0.22, filter: i < livesLeft ? "none" : "grayscale(1)" }}>{i < livesLeft ? "❤️" : "🖤"}</span>
+              ))}
+            </div>
+            {/* word slots */}
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.4rem", marginBottom: "1.1rem" }}>
+              {chars.map((c, i) => {
+                const isLetter = /[A-Z]/.test(c);
+                const show = !isLetter || has(c) || answered;
+                return (
+                  <div key={i} style={{
+                    minWidth: isLetter ? "2.1rem" : "0.9rem", height: "2.8rem",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    borderBottom: isLetter ? "4px solid var(--line)" : "none",
+                    fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem",
+                    color: show && isLetter ? (answered && !has(c) ? "var(--tomato)" : "var(--ink)") : "transparent",
+                  }}>{isLetter ? (show ? c : "") : c}</div>
+                );
+              })}
+            </div>
+            {/* keyboard */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", alignItems: "center" }}>
+              {["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"].map((row, r) => (
+                <div key={r} style={{ display: "flex", gap: "0.35rem", justifyContent: "center" }}>
+                  {row.split("").map(L => {
+                    const used = has(L);
+                    const right = used && upper.includes(L);
+                    return (
+                      <button key={L} disabled={done || used} onClick={() => guess(L)}
+                        className="sa-pressable"
+                        style={{
+                          width: "min(9vw,2.3rem)", height: "2.8rem", borderRadius: 8, fontWeight: 800,
+                          fontFamily: "'JetBrains Mono',monospace", fontSize: "1rem", cursor: done || used ? "default" : "pointer",
+                          border: `2px solid ${used ? (right ? "var(--leaf)" : "var(--tomato)") : "var(--line)"}`,
+                          background: used ? (right ? "var(--leaf)" : "var(--tomato)") : "var(--paper)",
+                          color: used ? "#fff" : "var(--ink)", opacity: used && !right ? 0.5 : 1,
+                        }}>{L}</button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
 
       {q.type === "rearrange" && (
         <div>

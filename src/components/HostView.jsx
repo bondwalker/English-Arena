@@ -18,9 +18,10 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
   const ansText =
     q.type === "word_match" ? "Match all pairs correctly"
-      : q.type === "error_spotter" ? correctedSentence(q)
-        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
-          : q.answer;
+      : q.type === "hangman" ? q.word
+        : q.type === "error_spotter" ? correctedSentence(q)
+          : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
+            : q.answer;
   return (
     <div style={{ position: "fixed", inset: 0, background: "var(--sun)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
       {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(15,18,38,0.09)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
@@ -66,7 +67,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? (q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean).sort(() => Math.random() - 0.5) : [], [q.question]);
-  const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", type_answer: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
+  const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", hangman: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
   const urgent = timeLeft <= 5 && !paused;
   const answeredNames = new Set(Object.keys(answers));
@@ -147,7 +148,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
 
-      <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.6rem,3.2vw,2.8rem)", lineHeight: 1.15, marginBottom: "1.6rem", fontFamily: "'Fraunces',serif", fontWeight: 900, letterSpacing: "-0.01em" }}>{q.question}</h2>
+      <h2 className="sa-anim-slide" style={{ fontSize: "clamp(1.6rem,3.2vw,2.8rem)", lineHeight: 1.15, marginBottom: "1.6rem", fontFamily: "'Fraunces',serif", fontWeight: 900, letterSpacing: "-0.01em" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "rearrange" && (
         <div style={{ maxWidth: 620, margin: "0 auto" }}>
@@ -173,6 +174,16 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type === "spot_sentence" && q.options && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
           {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} italic />)}
+        </div>
+      )}
+      {q.type === "hangman" && q.word && (
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.6rem", maxWidth: 920, margin: "0 auto" }}>
+          {String(q.word).toUpperCase().split("").map((c, i) => {
+            const isLetter = /[A-Z]/.test(c);
+            return (
+              <div key={i} style={{ minWidth: isLetter ? "clamp(2.2rem,4vw,3.4rem)" : "1.1rem", height: "clamp(3rem,6vw,4.6rem)", display: "flex", alignItems: "flex-end", justifyContent: "center", borderBottom: isLetter ? "6px solid var(--cobalt)" : "none", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(1.8rem,4vw,3rem)", color: "var(--ink)" }}>{isLetter ? "" : c}</div>
+            );
+          })}
         </div>
       )}
       {q.type === "true_false" && (
@@ -430,12 +441,31 @@ export default function HostView({ onBack }) {
       let qs = prev.questions;
       let warmupCount = 0;
       if (prev.warmup && selectedTopic && QUESTION_BANK[selectedTopic]) {
-        const pool = QUESTION_BANK[selectedTopic].questions;
-        const fastPool = pool.filter(q => ["multiple_choice", "true_false"].includes(q.type));
-        const warmupPool = fastPool.length >= 3 ? fastPool : pool;
-        const warmupQs = [...warmupPool].sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({ ...q, _warmup: true }));
-        qs = [...warmupQs, ...prev.questions];
-        warmupCount = 3;
+        const bank = QUESTION_BANK[selectedTopic].questions;
+        const fastPool = bank.filter(q => ["multiple_choice", "true_false"].includes(q.type));
+        // Warm-up mirrors the chosen mode so it feels consistent (e.g. Hangman → Hangman),
+        // but only when there are enough of that type to also leave a scored round.
+        // "Mixed"/Stress Battle, and sparse modes (e.g. Word Order), keep the quick
+        // multiple-choice / true-false ease-in so the scored round isn't starved.
+        const isMixedish = gameType === "mixed" || selectedTopic === "stress_battle";
+        const modePool = isMixedish ? [] : bank.filter(q => typesForMode(gameType).includes(q.type));
+        const basePool = modePool.length >= 6 ? modePool : (fastPool.length >= 3 ? fastPool : bank);
+        // Canonical, order-stable identity — many types share a fixed `question` string
+        // (e.g. Word Order), and state may round-trip through Firebase, so key on content.
+        const qKey = q => [q.type, q.question, q.word, q.hint, q.answer, q.errorWord, q.sentence,
+          (q.words || []).join(" "), (q.options || []).join("|"),
+          (q.sentences || []).join("|"), (q.correctOrder || []).join(","),
+          (q.pairs || []).map(p => p.word).join("|")].join("¦");
+        // Prefer warm-up questions that aren't already in the scored deck, so nothing repeats.
+        const mainKeys = new Set(prev.questions.map(qKey));
+        const spare = basePool.filter(q => !mainKeys.has(qKey(q)));
+        const warmSource = spare.length >= 3 ? spare : basePool;
+        const warmOriginals = [...warmSource].sort(() => Math.random() - 0.5).slice(0, 3);
+        const warmKeys = new Set(warmOriginals.map(qKey));
+        const warmupQs = warmOriginals.map(q => ({ ...q, _warmup: true }));
+        const mainQs = prev.questions.filter(q => !warmKeys.has(qKey(q)));
+        qs = [...warmupQs, ...mainQs];
+        warmupCount = warmupQs.length;
       }
       const q = qs[0];
       if (!q) return prev;

@@ -37,16 +37,19 @@ export const correctedSentence = (q) => {
 
 // Review/summary line for a question — the prompt shown as the title
 export const reviewPrompt = (q) =>
-  q.type === "stress_battle" ? q.word : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
+  q.type === "stress_battle" ? q.word
+    : q.type === "hangman" ? (q.hint || "Guess the word")
+      : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
 
 // Review/summary line — the correct answer, human-readable per type
 export const reviewAnswer = (q) =>
   q.type === "stress_battle"
     ? `stress on ${ordinal(q.stressed)} syllable${Array.isArray(q.syllables) ? ` (${stressBreakdown(q.syllables, q.stressed)})` : ""}`
-    : q.type === "error_spotter" ? correctedSentence(q)
-      : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
-        : q.type === "word_match" ? "Match all pairs correctly"
-          : q.answer;
+    : q.type === "hangman" ? q.word
+      : q.type === "error_spotter" ? correctedSentence(q)
+        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
+          : q.type === "word_match" ? "Match all pairs correctly"
+            : q.answer;
 
 // A selectable game mode can serve more than one underlying question type.
 // "Find the Mistake" (error_spotter) also serves the sentence-picker (spot_sentence).
@@ -58,7 +61,7 @@ export const GAME_MODES = [
   { v: "multiple_choice",label: "📋 Multiple Choice",  desc: "Choose the answer" },
   { v: "true_false",     label: "✅ True / False",     desc: "Grammar judge" },
   { v: "error_spotter",  label: "🔍 Find the Mistake", desc: "Spot the wrong word or sentence" },
-  { v: "type_answer",    label: "✏️ Type Answer",      desc: "Short text response" },
+  { v: "hangman",        label: "🔤 Hangman",          desc: "Guess the spelling" },
   { v: "rearrange",      label: "🔀 Word Order",       desc: "Build sentences" },
   { v: "story_builder",  label: "📖 Story Builder",    desc: "Arrange a story" },
   { v: "word_match",     label: "🃏 Word Match",       desc: "Vocab matching" },
@@ -76,12 +79,14 @@ export function checkAnswer(given, q) {
     return given.trim() === correct3;
   }
   if (q.type === "error_spotter") return n(given) === n(q.errorWord);
+  if (q.type === "hangman") return n(given) === n(q.word);
   return n(given) === n(q.answer);
 }
 
 export function getTimeLimit(q) {
   if (!q) return 25;
   if (q.type === "stress_battle") return 15;
+  if (q.type === "hangman") return 45;
   if (q.type === "story_builder") return 50;
   if (q.type === "rearrange") return 40;
   if (q.type === "spot_sentence") return 35;
