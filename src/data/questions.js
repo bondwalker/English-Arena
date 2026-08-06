@@ -128,6 +128,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"itinerary",hint:"Planned schedule of a trip",explanation:"The word was “itinerary”."},
     {type:"hangman",word:"tourist",hint:"Person visiting a place on holiday",explanation:"The word was “tourist”."},
     {type:"hangman",word:"sightseeing",hint:"Visiting famous places as a visitor",explanation:"The word was “sightseeing”."},
+  
+    {type:"hangman",word:"passport",hint:"Official document you need to travel between countries",explanation:"The word was “passport”."},
+    {type:"hangman",word:"suitcase",hint:"Bag with a handle for carrying clothes on trips",explanation:"The word was “suitcase”."},
+    {type:"hangman",word:"airport",hint:"Place where planes take off and land",explanation:"The word was “airport”."},
+    {type:"hangman",word:"holiday",hint:"Time off work spent relaxing or travelling",explanation:"The word was “holiday”."},
+    {type:"hangman",word:"resort",hint:"Place people visit to relax, often near a beach",explanation:"The word was “resort”."},
+    {type:"hangman",word:"backpack",hint:"Bag you carry on your shoulders",explanation:"The word was “backpack”."},
   ]},
   "work_office": { label: "Work & the Office", questions: [
     {type:"multiple_choice",question:"Which sentence correctly describes an ongoing project?",options:["I work on this report since Monday.","I am working on this report since Monday.","I have been working on this report since Monday."],answer:"I have been working on this report since Monday.",explanation:"Present perfect continuous + 'since' for ongoing actions that started in the past."},
@@ -386,6 +393,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"saucepan",hint:"Deep pot with a handle for cooking",explanation:"The word was “saucepan”."},
     {type:"hangman",word:"ingredient",hint:"One item used in a recipe",explanation:"The word was “ingredient”."},
     {type:"hangman",word:"seasoning",hint:"Salt, pepper and spices added for flavour",explanation:"The word was “seasoning”."},
+  
+    {type:"hangman",word:"recipe",hint:"Set of instructions for making a dish",explanation:"The word was “recipe”."},
+    {type:"hangman",word:"boiling",hint:"Heating liquid until it bubbles",explanation:"The word was “boiling”."},
+    {type:"hangman",word:"roasting",hint:"Cooking food in the oven with dry heat",explanation:"The word was “roasting”."},
+    {type:"hangman",word:"grater",hint:"Tool for shredding cheese into small pieces",explanation:"The word was “grater”."},
+    {type:"hangman",word:"mixture",hint:"Combination of things stirred together",explanation:"The word was “mixture”."},
+    {type:"hangman",word:"chopping",hint:"Cutting food into small pieces with a knife",explanation:"The word was “chopping”."},
   ]},
   "health_wellbeing": { label: "Health & Wellbeing", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'should' correctly?",options:["You should to exercise more regularly.","You should exercising more regularly.","You should exercise more regularly."],answer:"You should exercise more regularly.",explanation:"Modal verbs like 'should' are followed by the bare infinitive."},
@@ -506,6 +520,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"wellness",hint:"State of being in good health",explanation:"The word was “wellness”."},
     {type:"hangman",word:"balance",hint:"Keeping steady and not falling",explanation:"The word was “balance”."},
     {type:"hangman",word:"hygiene",hint:"Practices that keep you clean and healthy",explanation:"The word was “hygiene”."},
+  
+    {type:"hangman",word:"illness",hint:"A condition when your body is not well",explanation:"The word was “illness”."},
+    {type:"hangman",word:"symptom",hint:"A sign that shows you might be sick",explanation:"The word was “symptom”."},
+    {type:"hangman",word:"medicine",hint:"Something you take to feel better when ill",explanation:"The word was “medicine”."},
+    {type:"hangman",word:"sleeping",hint:"Resting with your eyes closed at night",explanation:"The word was “sleeping”."},
+    {type:"hangman",word:"doctor",hint:"Person who treats you when you are sick",explanation:"The word was “doctor”."},
+    {type:"hangman",word:"recovery",hint:"Getting well again after being unwell",explanation:"The word was “recovery”."},
   ]},
   "technology_gadgets": { label: "Technology & Gadgets", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses the present perfect?",options:["Smartphones have become essential in the last decade.","Smartphones became essential in the last decade.","Smartphones are becoming essential in the last decade."],answer:"Smartphones have become essential in the last decade.",explanation:"Present perfect with 'in the last decade' for a recent ongoing trend."},
@@ -626,6 +647,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"battery",hint:"Stores power for electronic devices",explanation:"The word was “battery”."},
     {type:"hangman",word:"headphones",hint:"Worn over ears to listen privately",explanation:"The word was “headphones”."},
     {type:"hangman",word:"smartphone",hint:"Handheld device for calls and apps",explanation:"The word was “smartphone”."},
+  
+    {type:"hangman",word:"laptop",hint:"Portable computer you can carry around",explanation:"The word was “laptop”."},
+    {type:"hangman",word:"screen",hint:"Flat surface that shows images on a device",explanation:"The word was “screen”."},
+    {type:"hangman",word:"tablet",hint:"Flat touchscreen device smaller than a laptop",explanation:"The word was “tablet”."},
+    {type:"hangman",word:"software",hint:"Programmes that run on a computer",explanation:"The word was “software”."},
+    {type:"hangman",word:"monitor",hint:"Display connected to a desktop computer",explanation:"The word was “monitor”."},
+    {type:"hangman",word:"gadget",hint:"Small clever electronic tool or device",explanation:"The word was “gadget”."},
   ]},
   "the_environment": { label: "The Environment", questions: [
     {type:"multiple_choice",question:"Which word correctly completes: 'Carbon dioxide is one of the main gases responsible ___ climate change.'?",options:["of","for","about"],answer:"for",explanation:"'Responsible for' is the correct collocation."},
@@ -746,6 +774,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"wildlife",hint:"Animals living in natural areas",explanation:"The word was “wildlife”."},
     {type:"hangman",word:"sustainable",hint:"Able to continue without harming nature",explanation:"The word was “sustainable”."},
     {type:"hangman",word:"emissions",hint:"Gases released into the air",explanation:"The word was “emissions”."},
+  
+    {type:"hangman",word:"forest",hint:"Large area covered with many trees",explanation:"The word was “forest”."},
+    {type:"hangman",word:"planet",hint:"A large body in space, like the one we live on",explanation:"The word was “planet”."},
+    {type:"hangman",word:"energy",hint:"Power used to run machines and give heat",explanation:"The word was “energy”."},
+    {type:"hangman",word:"drought",hint:"A long period with very little rain",explanation:"The word was “drought”."},
+    {type:"hangman",word:"rubbish",hint:"Waste material you throw away",explanation:"The word was “rubbish”."},
+    {type:"hangman",word:"greenhouse",hint:"Glass building for growing plants warmly",explanation:"The word was “greenhouse”."},
   ]},
   "sports_fitness": { label: "Sports & Fitness", questions: [
     {type:"multiple_choice",question:"Which sentence correctly talks about a past score?",options:["The team wins 3-1 yesterday.","The team won 3-1 yesterday.","The team has won 3-1 yesterday."],answer:"The team won 3-1 yesterday.",explanation:"'Yesterday' is a finished time reference, so use past simple."},
@@ -875,6 +910,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"muscle",hint:"Body tissue that produces movement",explanation:"The word was “muscle”."},
     {type:"hangman",word:"training",hint:"Practising to improve at a sport",explanation:"The word was “training”."},
     {type:"hangman",word:"marathon",hint:"Very long running race",explanation:"The word was “marathon”."},
+  
+    {type:"hangman",word:"fitness",hint:"Being strong and healthy through activity",explanation:"The word was “fitness”."},
+    {type:"hangman",word:"workout",hint:"A session of physical exercise",explanation:"The word was “workout”."},
+    {type:"hangman",word:"jogging",hint:"Running slowly for exercise",explanation:"The word was “jogging”."},
+    {type:"hangman",word:"swimming",hint:"Moving through water using your body",explanation:"The word was “swimming”."},
+    {type:"hangman",word:"tournament",hint:"A competition with many matches",explanation:"The word was “tournament”."},
+    {type:"hangman",word:"champion",hint:"Winner of a sporting competition",explanation:"The word was “champion”."},
   ]},
   "family_life": { label: "Family Life", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'be used to' correctly?",options:["We are used to live in a smaller flat.","We are used to living in a smaller flat.","We used to living in a smaller flat."],answer:"We are used to living in a smaller flat.",explanation:"'Be used to + gerund (-ing)' means to be accustomed to something."},
@@ -1004,6 +1046,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"grandmother",hint:"Your parent's mother",explanation:"The word was “grandmother”."},
     {type:"hangman",word:"relatives",hint:"People connected to you by blood",explanation:"The word was “relatives”."},
     {type:"hangman",word:"household",hint:"All the people living in one home",explanation:"The word was “household”."},
+  
+    {type:"hangman",word:"brother",hint:"A male child of your parents",explanation:"The word was “brother”."},
+    {type:"hangman",word:"husband",hint:"A man who is married to someone",explanation:"The word was “husband”."},
+    {type:"hangman",word:"nephew",hint:"Son of your brother or sister",explanation:"The word was “nephew”."},
+    {type:"hangman",word:"daughter",hint:"A female child of your parents",explanation:"The word was “daughter”."},
+    {type:"hangman",word:"married",hint:"Joined together as husband and wife",explanation:"The word was “married”."},
+    {type:"hangman",word:"toddler",hint:"A very young child learning to walk",explanation:"The word was “toddler”."},
   ]},
   "education_studying": { label: "Education & Studying", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'by' correctly?",options:["You need to submit the essay until Friday.","You need to submit the essay by Friday.","You need to submit the essay before to Friday."],answer:"You need to submit the essay by Friday.",explanation:"'By' means no later than. 'Until' means up to a point in time and then it stops."},
@@ -1391,6 +1440,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"trousers",hint:"Garment covering both legs",explanation:"The word was “trousers”."},
     {type:"hangman",word:"jewellery",hint:"Rings, necklaces and other ornaments",explanation:"The word was “jewellery”."},
     {type:"hangman",word:"discount",hint:"Reduction in price",explanation:"The word was “discount”."},
+  
+    {type:"hangman",word:"fashion",hint:"Popular style of clothes at a time",explanation:"The word was “fashion”."},
+    {type:"hangman",word:"jacket",hint:"Short coat you wear on your upper body",explanation:"The word was “jacket”."},
+    {type:"hangman",word:"sandals",hint:"Open summer shoes with straps",explanation:"The word was “sandals”."},
+    {type:"hangman",word:"blouse",hint:"A loose shirt usually worn by women",explanation:"The word was “blouse”."},
+    {type:"hangman",word:"receipt",hint:"Paper showing what you paid for",explanation:"The word was “receipt”."},
+    {type:"hangman",word:"shopper",hint:"Person who buys things in stores",explanation:"The word was “shopper”."},
   ]},
   "music": { label: "Music", questions: [
     {type:"multiple_choice",question:"Which sentence uses the past perfect correctly?",options:["By the time the concert started, we had already found our seats.","By the time the concert started, we already found our seats.","By the time the concert started, we have already found our seats."],answer:"By the time the concert started, we had already found our seats.",explanation:"Past perfect shows an action completed before another past action."},
@@ -1520,6 +1576,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"concert",hint:"Live musical performance",explanation:"The word was “concert”."},
     {type:"hangman",word:"orchestra",hint:"Large group of instrumental players",explanation:"The word was “orchestra”."},
     {type:"hangman",word:"chorus",hint:"Repeated part of a song",explanation:"The word was “chorus”."},
+  
+    {type:"hangman",word:"singer",hint:"Person who performs songs with their voice",explanation:"The word was “singer”."},
+    {type:"hangman",word:"drummer",hint:"Person who plays a percussion instrument",explanation:"The word was “drummer”."},
+    {type:"hangman",word:"pianist",hint:"Person who plays keys to make music",explanation:"The word was “pianist”."},
+    {type:"hangman",word:"trumpet",hint:"Brass instrument you blow into",explanation:"The word was “trumpet”."},
+    {type:"hangman",word:"lyrics",hint:"The words of a song",explanation:"The word was “lyrics”."},
+    {type:"hangman",word:"musician",hint:"Person who plays an instrument",explanation:"The word was “musician”."},
   ]},
   "social_media_internet": { label: "Social Media & the Internet", questions: [
     {type:"multiple_choice",question:"Which sentence is correct?",options:["She's been using social media for ten years.","She's using social media since ten years.","She uses social media since ten years."],answer:"She's been using social media for ten years.",explanation:"Present perfect continuous + 'for' for an ongoing activity."},
@@ -2036,6 +2099,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"episode",hint:"One part of a TV series",explanation:"The word was “episode”."},
     {type:"hangman",word:"cartoon",hint:"Animated film for children",explanation:"The word was “cartoon”."},
     {type:"hangman",word:"thriller",hint:"Exciting, suspenseful story",explanation:"The word was “thriller”."},
+  
+    {type:"hangman",word:"drama",hint:"A serious film or play",explanation:"The word was “drama”."},
+    {type:"hangman",word:"sequel",hint:"A film that continues an earlier story",explanation:"The word was “sequel”."},
+    {type:"hangman",word:"director",hint:"Person who guides how a film is made",explanation:"The word was “director”."},
+    {type:"hangman",word:"actress",hint:"A woman who performs in films",explanation:"The word was “actress”."},
+    {type:"hangman",word:"romance",hint:"A love story genre",explanation:"The word was “romance”."},
+    {type:"hangman",word:"audience",hint:"People watching a show or film",explanation:"The word was “audience”."},
   ]},
   "books_reading": { label: "Books & Reading", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses the passive voice?",options:["The novel was wrote by a first-time author.","The novel was written by a first-time author.","The novel written by a first-time author."],answer:"The novel was written by a first-time author.",explanation:"Passive past simple: 'was + past participle' (written, not wrote)."},
@@ -2165,6 +2235,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"library",hint:"Place where you borrow books",explanation:"The word was “library”."},
     {type:"hangman",word:"fiction",hint:"Stories that are invented",explanation:"The word was “fiction”."},
     {type:"hangman",word:"paragraph",hint:"Group of sentences on one idea",explanation:"The word was “paragraph”."},
+  
+    {type:"hangman",word:"reading",hint:"Looking at words to understand them",explanation:"The word was “reading”."},
+    {type:"hangman",word:"writer",hint:"Person who creates stories or articles",explanation:"The word was “writer”."},
+    {type:"hangman",word:"poetry",hint:"Writing arranged in verses with rhythm",explanation:"The word was “poetry”."},
+    {type:"hangman",word:"magazine",hint:"Thin publication with articles and pictures",explanation:"The word was “magazine”."},
+    {type:"hangman",word:"bookshop",hint:"Store that sells things you read",explanation:"The word was “bookshop”."},
+    {type:"hangman",word:"storybook",hint:"Collection of children's tales",explanation:"The word was “storybook”."},
   ]},
   "home_housing": { label: "Home & Housing", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'too' and 'enough' correctly?",options:["The flat is too small for us to living comfortably.","The flat is too small for us to live comfortably.","The flat is not big enough for us to living."],answer:"The flat is too small for us to live comfortably.",explanation:"'Too + adjective + for + object + to + infinitive' is the correct structure."},
@@ -2294,6 +2371,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"furniture",hint:"Tables, chairs and other movable items",explanation:"The word was “furniture”."},
     {type:"hangman",word:"balcony",hint:"Platform outside an upper window",explanation:"The word was “balcony”."},
     {type:"hangman",word:"cupboard",hint:"Cabinet for storing dishes or food",explanation:"The word was “cupboard”."},
+  
+    {type:"hangman",word:"bedroom",hint:"Room where you sleep",explanation:"The word was “bedroom”."},
+    {type:"hangman",word:"garden",hint:"Outdoor area for growing plants at home",explanation:"The word was “garden”."},
+    {type:"hangman",word:"garage",hint:"Building where you park a car",explanation:"The word was “garage”."},
+    {type:"hangman",word:"apartment",hint:"A flat within a larger building",explanation:"The word was “apartment”."},
+    {type:"hangman",word:"staircase",hint:"Set of steps between floors",explanation:"The word was “staircase”."},
+    {type:"hangman",word:"doorway",hint:"The opening you walk through into a room",explanation:"The word was “doorway”."},
   ]},
   "food_restaurants": { label: "Food & Restaurants", questions: [
     {type:"multiple_choice",question:"Which question is correct to ask a waiter?",options:["Could I have the menu, please?","Can I having the menu, please?","I would like having the menu, please?"],answer:"Could I have the menu, please?",explanation:"'Could I have...?' is the correct polite structure for requesting something."},
@@ -2423,6 +2507,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"delicious",hint:"Tasting very good",explanation:"The word was “delicious”."},
     {type:"hangman",word:"reservation",hint:"Booking a table in advance",explanation:"The word was “reservation”."},
     {type:"hangman",word:"appetiser",hint:"Small dish before the main course",explanation:"The word was “appetiser”."},
+  
+    {type:"hangman",word:"breakfast",hint:"The first meal of the day",explanation:"The word was “breakfast”."},
+    {type:"hangman",word:"starter",hint:"Small dish before the main meal",explanation:"The word was “starter”."},
+    {type:"hangman",word:"teaspoon",hint:"Small utensil for stirring drinks",explanation:"The word was “teaspoon”."},
+    {type:"hangman",word:"napkin",hint:"Cloth or paper for wiping your mouth",explanation:"The word was “napkin”."},
+    {type:"hangman",word:"pancake",hint:"Flat food fried and eaten with syrup",explanation:"The word was “pancake”."},
+    {type:"hangman",word:"takeaway",hint:"Food bought to eat at home",explanation:"The word was “takeaway”."},
   ]},
   "cities_travel": { label: "Cities & Travel", questions: [
     {type:"multiple_choice",question:"Which sentence correctly uses 'used to'?",options:["This area used to be a factory district, but now it's full of restaurants.","This area use to be a factory district, but now it's full of restaurants.","This area was used to be a factory district."],answer:"This area used to be a factory district, but now it's full of restaurants.",explanation:"'Used to + bare infinitive' describes a past state no longer true."},
@@ -2552,6 +2643,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"skyscraper",hint:"Very tall city building",explanation:"The word was “skyscraper”."},
     {type:"hangman",word:"avenue",hint:"Wide street often lined with trees",explanation:"The word was “avenue”."},
     {type:"hangman",word:"commuter",hint:"Person who travels to work daily",explanation:"The word was “commuter”."},
+  
+    {type:"hangman",word:"station",hint:"Place where trains stop for passengers",explanation:"The word was “station”."},
+    {type:"hangman",word:"bridge",hint:"Structure built over a river or road",explanation:"The word was “bridge”."},
+    {type:"hangman",word:"highway",hint:"A wide fast road between places",explanation:"The word was “highway”."},
+    {type:"hangman",word:"crossing",hint:"Place where you can walk over a road",explanation:"The word was “crossing”."},
+    {type:"hangman",word:"terminal",hint:"Building where you catch flights or buses",explanation:"The word was “terminal”."},
+    {type:"hangman",word:"district",hint:"A particular area of a city",explanation:"The word was “district”."},
   ]},
   "science_discovery": { label: "Science & Discovery", questions: [
     {type:"multiple_choice",question:"Which sentence uses the passive correctly?",options:["Penicillin was discover by Alexander Fleming in 1928.","Penicillin was discovered by Alexander Fleming in 1928.","Penicillin discovered by Alexander Fleming in 1928."],answer:"Penicillin was discovered by Alexander Fleming in 1928.",explanation:"Passive past simple: 'was + past participle'."},
@@ -2810,6 +2908,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"support",hint:"Help given to someone",explanation:"The word was “support”."},
     {type:"hangman",word:"friendly",hint:"Kind and pleasant to others",explanation:"The word was “friendly”."},
     {type:"hangman",word:"kindness",hint:"Being caring and generous",explanation:"The word was “kindness”."},
+  
+    {type:"hangman",word:"honest",hint:"Always telling the truth",explanation:"The word was “honest”."},
+    {type:"hangman",word:"caring",hint:"Showing you look after someone's feelings",explanation:"The word was “caring”."},
+    {type:"hangman",word:"sharing",hint:"Giving part of what you have to others",explanation:"The word was “sharing”."},
+    {type:"hangman",word:"laughter",hint:"The sound you make when something is funny",explanation:"The word was “laughter”."},
+    {type:"hangman",word:"together",hint:"Being with others, not alone",explanation:"The word was “together”."},
+    {type:"hangman",word:"secret",hint:"Something you keep private between friends",explanation:"The word was “secret”."},
   ]},
   "celebrations_parties": { label: "Celebrations & Parties", questions: [
     {type:"multiple_choice",question:"Which sentence is correct?",options:["They are throwing a surprise party for her last Saturday.","They threw a surprise party for her last Saturday.","They have thrown a surprise party for her last Saturday."],answer:"They threw a surprise party for her last Saturday.",explanation:"'Last Saturday' is a finished time reference, so use past simple."},
@@ -2939,6 +3044,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"invitation",hint:"Request to attend an event",explanation:"The word was “invitation”."},
     {type:"hangman",word:"fireworks",hint:"Colourful explosions in the night sky",explanation:"The word was “fireworks”."},
     {type:"hangman",word:"decoration",hint:"Something added to make a place festive",explanation:"The word was “decoration”."},
+  
+    {type:"hangman",word:"wedding",hint:"Ceremony when two people marry",explanation:"The word was “wedding”."},
+    {type:"hangman",word:"candles",hint:"Wax sticks you light on a cake",explanation:"The word was “candles”."},
+    {type:"hangman",word:"anniversary",hint:"Yearly date marking a special event",explanation:"The word was “anniversary”."},
+    {type:"hangman",word:"celebrate",hint:"To do something enjoyable for an occasion",explanation:"The word was “celebrate”."},
+    {type:"hangman",word:"greeting",hint:"Words said to welcome someone",explanation:"The word was “greeting”."},
+    {type:"hangman",word:"confetti",hint:"Small pieces of coloured paper thrown at parties",explanation:"The word was “confetti”."},
   ]},
   "emotions_feelings": { label: "Emotions & Feelings", questions: [
     {type:"multiple_choice",question:"Which sentence correctly describes an emotion?",options:["She was so boring at the party that she left early.","She was so bored at the party that she left early.","She was so bore at the party that she left early."],answer:"She was so bored at the party that she left early.",explanation:"'Bored' describes how a person feels; 'boring' describes the thing that causes the feeling."},
@@ -3068,6 +3180,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"nervous",hint:"Feeling worried or anxious",explanation:"The word was “nervous”."},
     {type:"hangman",word:"excited",hint:"Feeling very eager and enthusiastic",explanation:"The word was “excited”."},
     {type:"hangman",word:"lonely",hint:"Feeling sad from being alone",explanation:"The word was “lonely”."},
+  
+    {type:"hangman",word:"worried",hint:"Feeling anxious about something",explanation:"The word was “worried”."},
+    {type:"hangman",word:"cheerful",hint:"Feeling happy and full of joy",explanation:"The word was “cheerful”."},
+    {type:"hangman",word:"scared",hint:"Feeling afraid of something",explanation:"The word was “scared”."},
+    {type:"hangman",word:"surprised",hint:"Feeling shock at something unexpected",explanation:"The word was “surprised”."},
+    {type:"hangman",word:"grateful",hint:"Feeling thankful for something",explanation:"The word was “grateful”."},
+    {type:"hangman",word:"confused",hint:"Not able to understand clearly",explanation:"The word was “confused”."},
   ]},
   "language_communication": {
     label: "Language & Communication",
@@ -3224,6 +3343,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"pronounce",hint:"Say a word correctly",explanation:"The word was “pronounce”."},
     {type:"hangman",word:"translate",hint:"Change words into another language",explanation:"The word was “translate”."},
     {type:"hangman",word:"dialogue",hint:"Conversation between two people",explanation:"The word was “dialogue”."},
+  
+    {type:"hangman",word:"speaking",hint:"Using your voice to say words",explanation:"The word was “speaking”."},
+    {type:"hangman",word:"listening",hint:"Paying attention to sounds or words",explanation:"The word was “listening”."},
+    {type:"hangman",word:"meaning",hint:"What a word or sentence expresses",explanation:"The word was “meaning”."},
+    {type:"hangman",word:"spelling",hint:"Putting letters in the correct order",explanation:"The word was “spelling”."},
+    {type:"hangman",word:"accent",hint:"The way people from a place pronounce words",explanation:"The word was “accent”."},
+    {type:"hangman",word:"message",hint:"Information sent from one person to another",explanation:"The word was “message”."},
   ]},
   "news_current_affairs": { label: "News & Current Affairs", questions: [
     {type:"multiple_choice",question:"Which sentence uses the passive correctly?",options:["The new law was announce yesterday by the government.","The new law was announced yesterday by the government.","The new law announced yesterday by the government."],answer:"The new law was announced yesterday by the government.",explanation:"Passive past simple: 'was + past participle'."},
@@ -3490,6 +3616,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"photography",hint:"Taking pictures with a camera",explanation:"The word was “photography”."},
     {type:"hangman",word:"cycling",hint:"Riding a bicycle for fun",explanation:"The word was “cycling”."},
     {type:"hangman",word:"collecting",hint:"Gathering items as a hobby",explanation:"The word was “collecting”."},
+  
+    {type:"hangman",word:"drawing",hint:"Making pictures with a pencil",explanation:"The word was “drawing”."},
+    {type:"hangman",word:"baking",hint:"Cooking cakes and bread in an oven",explanation:"The word was “baking”."},
+    {type:"hangman",word:"dancing",hint:"Moving your body to music",explanation:"The word was “dancing”."},
+    {type:"hangman",word:"camping",hint:"Staying outdoors in a tent",explanation:"The word was “camping”."},
+    {type:"hangman",word:"fishing",hint:"Trying to catch creatures from water as a hobby",explanation:"The word was “fishing”."},
+    {type:"hangman",word:"pottery",hint:"Making bowls and cups from clay",explanation:"The word was “pottery”."},
   ]},
   "nature_animals": { label: "Nature & Animals", questions: [
     {type:"multiple_choice",question:"Which sentence uses the present perfect correctly?",options:["Many species of animals has become extinct in recent years.","Many species of animals have become extinct in recent years.","Many species of animals became extinct in recent years."],answer:"Many species of animals have become extinct in recent years.",explanation:"'Many species' is plural, so use 'have'. Present perfect with 'in recent years' for a current trend."},
@@ -3623,6 +3756,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"habitat",hint:"Natural home of an animal",explanation:"The word was “habitat”."},
     {type:"hangman",word:"predator",hint:"Animal that hunts others for food",explanation:"The word was “predator”."},
     {type:"hangman",word:"mammal",hint:"Warm-blooded animal that feeds milk to young",explanation:"The word was “mammal”."},
+  
+    {type:"hangman",word:"rabbit",hint:"Small animal with long ears that hops",explanation:"The word was “rabbit”."},
+    {type:"hangman",word:"monkey",hint:"Animal that climbs trees and has a tail",explanation:"The word was “monkey”."},
+    {type:"hangman",word:"insect",hint:"Small creature with six legs",explanation:"The word was “insect”."},
+    {type:"hangman",word:"jungle",hint:"Thick tropical forest full of animals",explanation:"The word was “jungle”."},
+    {type:"hangman",word:"penguin",hint:"Black and white bird that cannot fly",explanation:"The word was “penguin”."},
+    {type:"hangman",word:"giraffe",hint:"Tall African animal with a long neck",explanation:"The word was “giraffe”."},
   ]},
   "jobs_interviews": { label: "Jobs & Interviews", questions: [
     {type:"multiple_choice",question:"Which phrase correctly completes a job interview answer?",options:["I am interest in this role because I enjoy working in teams.","I am interested in this role because I enjoy working in teams.","I have interest in this role because I enjoy working in teams."],answer:"I am interested in this role because I enjoy working in teams.",explanation:"'Interested in' is the correct adjective. 'Interesting' describes the thing that causes interest."},
@@ -3916,6 +4056,13 @@ export const QUESTION_BANK = {
     {type:"hangman",word:"forgotten",hint:"No longer remembered",explanation:"The word was “forgotten”."},
     {type:"hangman",word:"remember",hint:"Bring back to mind",explanation:"The word was “remember”."},
     {type:"hangman",word:"yesterday",hint:"The day before today",explanation:"The word was “yesterday”."},
+  
+    {type:"hangman",word:"history",hint:"The study of events from the past",explanation:"The word was “history”."},
+    {type:"hangman",word:"ancient",hint:"Very old, from long ago",explanation:"The word was “ancient”."},
+    {type:"hangman",word:"previous",hint:"Coming before something else in time",explanation:"The word was “previous”."},
+    {type:"hangman",word:"reunion",hint:"A gathering of people who meet again",explanation:"The word was “reunion”."},
+    {type:"hangman",word:"vintage",hint:"Old and of good quality from an earlier time",explanation:"The word was “vintage”."},
+    {type:"hangman",word:"flashback",hint:"A sudden memory of an earlier event",explanation:"The word was “flashback”."},
   ]},
   "verb_tenses": {
     label: "Verb Tenses & Habits",
