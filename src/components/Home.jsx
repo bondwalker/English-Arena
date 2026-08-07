@@ -17,7 +17,7 @@ export default function Home({ onHost, onJoin, onSolo }) {
           </h1>
           <div style={{ display: "grid", gap: "1rem", marginTop: "2.6rem", gridTemplateColumns: "repeat(auto-fit,minmax(215px,1fr))", maxWidth: 760 }}>
             {[
-              { label: "Host a game", desc: "Start a live classroom game", cls: "opt-0", color: "var(--tomato)", icon: "🎮", onClick: onHost },
+              { label: "Host a game", desc: "Start a live classroom game", cls: "opt-0", color: "var(--tomato)", icon: "📱", onClick: onHost },
               { label: "I have a code", desc: "Join your teacher's game", cls: "opt-1", color: "var(--cobalt)", icon: "🔑", onClick: onJoin },
               { label: "Practise solo", desc: "Play on your own — no code", cls: "opt-2", color: "var(--leaf)", icon: "✏️", onClick: onSolo },
             ].map((c) => (
