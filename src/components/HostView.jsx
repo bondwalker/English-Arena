@@ -181,7 +181,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           {String(q.word).toUpperCase().split("").map((c, i) => {
             const isLetter = /[A-Z]/.test(c);
             return (
-              <div key={i} style={{ minWidth: isLetter ? "clamp(2.2rem,4vw,3.4rem)" : "1.1rem", height: "clamp(3rem,6vw,4.6rem)", display: "flex", alignItems: "flex-end", justifyContent: "center", borderBottom: isLetter ? "6px solid var(--cobalt)" : "none", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(1.8rem,4vw,3rem)", color: "var(--ink)" }}>{isLetter ? "" : c}</div>
+              <div key={i} style={{ minWidth: isLetter ? "clamp(2.2rem,4vw,3.4rem)" : "1.1rem", height: "clamp(3rem,6vw,4.6rem)", display: "flex", alignItems: "flex-end", justifyContent: "center", borderBottom: isLetter ? "6px solid var(--cobalt)" : "none", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem,4vw,3rem)", color: "var(--ink)" }}>{isLetter ? "" : c}</div>
             );
           })}
         </div>

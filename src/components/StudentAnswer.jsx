@@ -191,7 +191,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
                     minWidth: isLetter ? "2.1rem" : "0.9rem", height: "2.8rem",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     borderBottom: isLetter ? "4px solid var(--line)" : "none",
-                    fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem",
+                    fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.8rem",
                     color: show && isLetter ? (answered && !has(c) ? "var(--tomato)" : "var(--ink)") : "transparent",
                   }}>{isLetter ? (show ? c : "") : c}</div>
                 );
