@@ -44,7 +44,7 @@ export const reviewPrompt = (q) =>
 // Review/summary line — the correct answer, human-readable per type
 export const reviewAnswer = (q) =>
   q.type === "stress_battle"
-    ? `stress on ${ordinal(q.stressed)} syllable${Array.isArray(q.syllables) ? ` (${stressBreakdown(q.syllables, q.stressed)})` : ""}`
+    ? `${Array.isArray(q.parts) ? `${stressBreakdown(q.parts, q.stressed)} — ` : ""}stress on ${ordinal(q.stressed)} syllable`
     : q.type === "hangman" ? q.word
       : q.type === "error_spotter" ? correctedSentence(q)
         : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
