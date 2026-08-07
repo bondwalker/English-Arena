@@ -15,16 +15,21 @@ export default function Home({ onHost, onJoin, onSolo }) {
           <h1 style={{ fontFamily: "'Fraunces',serif", fontSize: "clamp(2.8rem,9vw,6.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 0.92, color: "var(--ink)" }}>
             English <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>Arena<span style={{ color: "var(--sun)" }}>.</span></span>
           </h1>
-          <div style={{ display: "flex", gap: "1rem", marginTop: "2.6rem", flexWrap: "wrap", alignItems: "center" }}>
-            <button className="btn" onClick={onHost} style={{ fontSize: "1.05rem", background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", padding: "1.05rem 2.4rem" }}>
-              Host a game →
-            </button>
-            <button className="btn btn-ghost" onClick={onJoin} style={{ fontSize: "1.05rem", background: "var(--paper)", color: "var(--ink)", borderColor: "var(--line)", padding: "1.05rem 2.2rem" }}>
-              I have a code
-            </button>
-            <button className="btn btn-ghost btn-sm" onClick={onSolo} style={{ color: "var(--sun)", fontWeight: 700, fontSize: "0.9rem", border: "none", padding: "0.3rem 0.4rem" }}>
-              or practise solo →
-            </button>
+          <div style={{ display: "grid", gap: "1rem", marginTop: "2.6rem", gridTemplateColumns: "repeat(auto-fit,minmax(215px,1fr))", maxWidth: 760 }}>
+            {[
+              { label: "Host a game", desc: "Start a live classroom game", cls: "opt-0", color: "var(--tomato)", icon: "🎮", onClick: onHost },
+              { label: "I have a code", desc: "Join your teacher's game", cls: "opt-1", color: "var(--cobalt)", icon: "🔑", onClick: onJoin },
+              { label: "Practise solo", desc: "Play on your own — no code", cls: "opt-2", color: "var(--leaf)", icon: "✏️", onClick: onSolo },
+            ].map((c) => (
+              <button key={c.label} onClick={c.onClick} className={`opt-btn ${c.cls}`}
+                style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.9rem", minHeight: 168, padding: "1.4rem 1.4rem 1.5rem" }}>
+                <span style={{ width: 52, height: 52, borderRadius: 14, background: c.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.55rem", flexShrink: 0, boxShadow: `4px 4px 0 ${c.color}33` }}>{c.icon}</span>
+                <span style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                  <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.4rem", color: "var(--ink)", lineHeight: 1.05 }}>{c.label} <span style={{ color: c.color }}>→</span></span>
+                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.92rem", color: "var(--ink-soft)", fontWeight: 500, lineHeight: 1.3 }}>{c.desc}</span>
+                </span>
+              </button>
+            ))}
           </div>
         </div>
       </div>
