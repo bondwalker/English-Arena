@@ -279,7 +279,7 @@ export default function SoloView({ onBack }) {
   const fakeRoom = { qIndex, questions, phase: phase === "question" ? "question" : "reveal" };
 
   return (
-    <div style={{minHeight:"100vh",maxWidth:540,margin:"0 auto",padding:"1.2rem"}}>
+    <div style={{minHeight:"100vh",maxWidth:640,margin:"0 auto",padding:"1.2rem 1.4rem",display:"flex",flexDirection:"column"}}>
       <div style={{display:"flex",alignItems:"center",gap:"0.6rem",marginBottom:"1rem"}}>
         <button className="btn btn-ghost btn-sm" onClick={onBack} style={{padding:"0.3rem 0.7rem",fontSize:"0.75rem"}}>✕</button>
         <div style={{flex:1,height:5,background:"var(--line)",borderRadius:3}}>
@@ -288,6 +288,7 @@ export default function SoloView({ onBack }) {
         <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.72rem",color:"var(--muted)"}}>{qIndex+1}/{questions.length}</span>
       </div>
 
+      <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",paddingBottom:"1.5rem"}}>
       {phase === "reveal" && (
         <div style={{position:"relative",overflow:"hidden"}}>
           <SAConfetti active={isCorrect} count={35} />
@@ -320,6 +321,7 @@ export default function SoloView({ onBack }) {
           {qIndex + 1 >= questions.length ? "See Results →" : "Next →"}
         </button>
       )}
+      </div>
     </div>
   );
 }
