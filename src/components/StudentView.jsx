@@ -158,7 +158,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
   const myPos = sorted.findIndex(([n]) => n === name);
 
   return (
-    <div style={{ minHeight: "100vh", maxWidth: 460, margin: "0 auto", padding: "1.2rem" }}>
+    <div style={{ minHeight: "100vh", maxWidth: 460, margin: "0 auto", padding: "1.2rem", display: "flex", flexDirection: "column" }}>
       {/* Header — hidden on leaderboard/end (those stand alone) */}
       {!["leaderboard", "end"].includes(phase) && (
       <div className="flex justify-between items-center mb-3" style={{ gap: "0.6rem" }}>
@@ -194,7 +194,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
           <div className="dots mt-2"><span /><span /><span /></div>
         </div>
       ) : phase === "question" && q ? (
-        <div style={{ zoom: bigText ? 1.3 : 1 }}>
+        <div style={{ zoom: bigText ? 1.3 : 1, flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
           {(() => {
             const total = getTimeLimit(q);
             const urgent = room.timeLeft <= 5 && !room.paused;
@@ -258,9 +258,9 @@ export default function StudentView({ onBack, initialCode = "" }) {
                     const st = q.stressed || 1;
                     return (
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
-                        <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--sun)" }}>{q.word}</div>
+                        <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--sun)" }}>{q.word}</div>
                         <StressDots syllables={n} stressAt={st} size="lg" />
-                        {Array.isArray(q.syllables) && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.4rem", color: accent }}>{stressBreakdown(q.syllables, st)}</div>}
+                        {Array.isArray(q.syllables) && <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.4rem", color: accent }}>{stressBreakdown(q.syllables, st)}</div>}
                         <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ink-soft)" }}>stress on {ordinal(st)} syllable</div>
                       </div>
                     );
