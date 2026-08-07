@@ -364,7 +364,7 @@ export function WoodenTile({ word, size = "md", angle = 0, placed = false, onCli
         background: placed ? "var(--cobalt)" : "var(--paper)",
         border: "2.5px solid var(--cobalt)",
         boxShadow: placed ? "none" : "3px 3px 0 rgba(91,139,255,0.22)",
-        fontFamily: "'Fraunces',Georgia,serif", fontSize: s.fs, fontWeight: 800,
+        fontFamily: "'DM Sans',sans-serif", fontSize: s.fs, fontWeight: 800,
         color: placed ? "var(--on-light)" : "var(--ink)", letterSpacing: "0.01em",
         transform: block ? "none" : `rotate(${angle}deg)`, cursor: onClick ? "pointer" : "default",
         userSelect: "none", whiteSpace: "nowrap",

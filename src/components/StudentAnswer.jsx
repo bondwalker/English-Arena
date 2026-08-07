@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SAIcon, StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
+import { StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
 import { OPT_COLORS, ordinal } from "../lib/utils.js";
 
@@ -78,7 +78,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
               onClick={() => onAnswer(opt)}>
               <span style={{ width: 34, height: 34, borderRadius: 9, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-              <span style={{ textAlign: "left", fontSize: "1rem", fontWeight: 600 }}>{opt}</span>
+              <span style={{ textAlign: "left", fontSize: "clamp(1.05rem,1.5vw,1.3rem)", fontWeight: 600 }}>{opt}</span>
             </button>
           ))}
         </div>
@@ -89,7 +89,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
           {shuffledOptions.map((opt, i) => (
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", justifyContent: "center", textAlign: "center", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "1.35rem" }}
+              style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", justifyContent: "center", textAlign: "center", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "clamp(1.35rem,2.2vw,1.9rem)" }}
               onClick={() => onAnswer(opt)}>
               {opt}
             </button>
@@ -105,19 +105,19 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               style={{ width: "100%", alignItems: "center", gap: "0.8rem", opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none" }}
               onClick={() => onAnswer(opt)}>
               <span style={{ width: 40, height: 40, borderRadius: 11, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1.2rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-              <span style={{ textAlign: "left", fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "1.2rem", lineHeight: 1.4 }}>{opt}</span>
+              <span style={{ textAlign: "left", fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "clamp(1.2rem,1.7vw,1.5rem)", lineHeight: 1.4 }}>{opt}</span>
             </button>
           ))}
         </div>
       )}
 
       {q.type === "true_false" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", marginTop: "0.5rem" }}>
-          {[{ v: "True", c: "var(--leaf)", icon: "bolt" }, { v: "False", c: "var(--tomato)", icon: "skip" }].map(({ v, c, icon }) => (
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem", marginTop: "0.5rem" }}>
+          {[{ v: "True", c: "var(--leaf)", icon: "✓" }, { v: "False", c: "var(--tomato)", icon: "✕" }].map(({ v, c, icon }) => (
             <button key={v} disabled={answered}
-              style={{ width: "100%", padding: "1.6rem 1.4rem", border: `2.5px solid ${myAnswer === v ? c : "var(--line)"}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: myAnswer === v ? c : "var(--ink-soft)", borderRadius: 16, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.9rem", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.7rem" }}
+              style={{ width: "100%", padding: "clamp(1.6rem,4vw,2.4rem) 1.4rem", border: `2.5px solid ${c}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: c, borderRadius: 18, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(1.7rem,4vw,2.4rem)", boxShadow: myAnswer === v ? `4px 4px 0 ${c}33` : "none", outline: myAnswer === v ? `3px solid ${c}` : "none" }}
               onClick={() => onAnswer(v)}>
-              <SAIcon name={icon} size={34} color={myAnswer === v ? c : "var(--muted)"} />
+              <span style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 900, lineHeight: 1 }}>{icon}</span>
               {v}
             </button>
           ))}
@@ -258,7 +258,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               <div style={{ marginBottom: "0.6rem" }}>
                 {storyOrder.map((idx, pos) => (
                   <div key={pos} className="story-card placed" onClick={() => { if (!answered) setStoryOrder(p => p.filter((_, pi) => pi !== pos)); }}>
-                    <span className="story-num" style={{ background: "var(--cobalt)", color: "var(--on-light)" }}>{pos + 1}</span>{q.sentences[idx]}
+                    <span className="story-num">{pos + 1}</span>{q.sentences[idx]}
                   </div>
                 ))}
               </div>

@@ -146,6 +146,14 @@ const css = `
     .hero-btns{flex-direction:column;align-items:stretch}
     .solo-grid{grid-template-columns:1fr}
   }
+  /* Larger, roomier controls on desktop so activities fill the wider column */
+  @media(min-width:700px){
+    .opt-grid{gap:0.9rem}
+    .opt-btn{min-height:112px;font-size:1.25rem;padding:1.5rem 1.4rem;gap:0.85rem}
+    .story-card{font-size:1.3rem;padding:1.2rem 1.35rem;gap:0.9rem;margin-bottom:0.65rem}
+    .story-num{font-size:1.05rem;width:1.7rem}
+    .match-word{font-size:1.2rem;padding:0.95rem 1.15rem}
+  }
 
   .sa-pressable{transition:transform 0.12s,box-shadow 0.12s;cursor:pointer;user-select:none}
   .sa-pressable:hover{transform:translate(-2px,-2px)}
