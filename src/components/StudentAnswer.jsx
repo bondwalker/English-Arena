@@ -335,7 +335,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "stress_battle" && (
         <div>
-          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.4rem" }}>{q.word}</div>
+          <div style={{ textAlign: "center", fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.4rem" }}>{q.word}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
             {["A", "B"].map(label => {
               const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);

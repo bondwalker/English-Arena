@@ -31,10 +31,10 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
         </div>
         {isStress ? (
           <div className="sa-anim-pop" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.4rem" }}>
-            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.4rem,6vw,4.5rem)", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--on-light)", lineHeight: 1 }}>{q.word}</div>
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(2.4rem,6vw,4.5rem)", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--on-light)", lineHeight: 1 }}>{q.word}</div>
             <StressDots syllables={sN} stressAt={sStressed} size="lg" color="var(--on-light)" dim="rgba(15,18,38,0.35)" glow={false} />
-            {Array.isArray(q.syllables) && <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(2rem,4.5vw,3.4rem)", letterSpacing: "0.02em", color: "var(--on-light)" }}>{stressBreakdown(q.syllables, sStressed)}</div>}
-            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "clamp(1.1rem,2vw,1.6rem)", color: "var(--on-light)", opacity: 0.75 }}>stress on {ordinal(sStressed)} syllable</div>
+            {Array.isArray(q.syllables) && <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(2rem,4.5vw,3.4rem)", letterSpacing: "0.02em", color: "var(--on-light)" }}>{stressBreakdown(q.syllables, sStressed)}</div>}
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "clamp(1.1rem,2vw,1.6rem)", color: "var(--on-light)", opacity: 0.75 }}>stress on {ordinal(sStressed)} syllable</div>
           </div>
         ) : (
           <>
@@ -227,7 +227,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       })()}
       {q.type === "stress_battle" && (
         <div style={{ marginTop: "0.5rem", maxWidth: 720, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", fontFamily: "'Fraunces',serif", fontSize: "clamp(2.4rem,6vw,3.8rem)", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.6rem" }}>{q.word}</div>
+          <div style={{ textAlign: "center", fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(2.4rem,6vw,3.8rem)", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.6rem" }}>{q.word}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {["A", "B"].map(label => {
               const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
