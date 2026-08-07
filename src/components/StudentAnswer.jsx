@@ -68,7 +68,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
   return (
     <div>
-      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.35rem", lineHeight: 1.35, marginBottom: "1.1rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
+      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(1.4rem,3.4vw,2rem)", lineHeight: 1.3, marginBottom: "1.2rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "multiple_choice" && q.options && (
         <div className="opt-grid">
@@ -98,12 +98,14 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       )}
 
       {q.type === "spot_sentence" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", marginTop: "0.9rem" }}>
           {shuffledOptions.map((opt, i) => (
             <button key={i} disabled={answered}
-              style={{ width: "100%", padding: "1.1rem 1.2rem", border: `2.5px solid ${answered && myAnswer === opt ? "var(--tomato)" : "var(--line)"}`, background: answered && myAnswer === opt ? "rgba(255,92,66,0.12)" : "var(--paper)", color: "var(--ink)", borderRadius: 14, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== opt ? 0.28 : 1, transition: "all 0.15s", textAlign: "left", fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "1.05rem", lineHeight: 1.35 }}
+              className={`opt-btn opt-${i}`}
+              style={{ width: "100%", alignItems: "center", gap: "0.8rem", opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none" }}
               onClick={() => onAnswer(opt)}>
-              {opt}
+              <span style={{ width: 40, height: 40, borderRadius: 11, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1.2rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
+              <span style={{ textAlign: "left", fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "1.3rem", lineHeight: 1.4 }}>{opt}</span>
             </button>
           ))}
         </div>
@@ -124,10 +126,10 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "error_spotter" && q.sentence && (
         <div>
-          <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginBottom: "0.6rem", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em" }}>Tap the word with the error:</p>
-          <div style={{ background: "var(--paper)", borderRadius: 12, padding: "14px 12px 18px 14px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 22px, var(--line) 22px 23px)`, backgroundPosition: "0 10px", border: "1.5px solid var(--line)" }}>
-            <div style={{ position: "absolute", left: 14, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
-            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "1.1rem", lineHeight: 1.8, paddingLeft: 10, display: "flex", flexWrap: "wrap", gap: "4px 8px", alignItems: "baseline" }}>
+          <p style={{ fontSize: "0.92rem", color: "var(--muted)", marginBottom: "0.7rem", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em" }}>Tap the word with the error:</p>
+          <div style={{ background: "var(--paper)", borderRadius: 14, padding: "20px 16px 24px 18px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 34px, var(--line) 34px 35px)`, backgroundPosition: "0 14px", border: "1.5px solid var(--line)" }}>
+            <div style={{ position: "absolute", left: 18, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
+            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "clamp(1.3rem,2.6vw,1.7rem)", lineHeight: 1.9, paddingLeft: 12, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline" }}>
               {q.sentence.split(" ").map((word, i) => {
                 const clean = word.replace(/[.,!?;:]/g, "");
                 const sel = myAnswer === clean;

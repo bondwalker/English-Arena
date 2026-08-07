@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, RedInkUnderline, MatchConnector, TeacherBtn } from "./ui.jsx";
+import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
 import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
@@ -263,16 +263,14 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           <div style={{ background: "var(--paper)", borderRadius: 14, padding: "22px 28px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 28px, var(--line) 28px 29px)`, backgroundPosition: "0 16px", border: "1.5px solid var(--line)" }}>
             <div style={{ position: "absolute", left: 24, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
             <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "clamp(1.1rem,2.4vw,1.6rem)", lineHeight: 1.65, letterSpacing: "-0.005em", paddingLeft: 18, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline", position: "relative" }}>
-              {q.sentence.split(" ").map((word, i) => {
-                const clean = word.replace(/[.,!?;:]/g, "");
-                const isError = clean === q.errorWord;
-                return (
-                  <span key={i} style={{ position: "relative", paddingBottom: 4, color: isError ? "var(--tomato)" : "var(--ink)", fontStyle: isError ? "italic" : "normal" }}>
-                    {word}
-                    {isError && <RedInkUnderline />}
-                  </span>
-                );
-              })}
+              {/* Show the sentence plain during the question — never mark the error
+                  word here, or the projector reveals the answer before students respond.
+                  The error is shown at reveal (HostReveal). */}
+              {q.sentence.split(" ").map((word, i) => (
+                <span key={i} style={{ paddingBottom: 4, color: "var(--ink)" }}>
+                  {word}
+                </span>
+              ))}
             </div>
           </div>
         </div>
