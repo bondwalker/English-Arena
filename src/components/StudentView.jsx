@@ -158,7 +158,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
   const myPos = sorted.findIndex(([n]) => n === name);
 
   return (
-    <div style={{ minHeight: "100vh", maxWidth: 460, margin: "0 auto", padding: "1.2rem" }}>
+    <div style={{ minHeight: "100vh", maxWidth: 460, margin: "0 auto", padding: "1.2rem", display: "flex", flexDirection: "column" }}>
       {/* Header — hidden on leaderboard/end (those stand alone) */}
       {!["leaderboard", "end"].includes(phase) && (
       <div className="flex justify-between items-center mb-3" style={{ gap: "0.6rem" }}>
@@ -194,7 +194,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
           <div className="dots mt-2"><span /><span /><span /></div>
         </div>
       ) : phase === "question" && q ? (
-        <div style={{ zoom: bigText ? 1.3 : 1 }}>
+        <div style={{ zoom: bigText ? 1.3 : 1, flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
           {(() => {
             const total = getTimeLimit(q);
             const urgent = room.timeLeft <= 5 && !room.paused;
