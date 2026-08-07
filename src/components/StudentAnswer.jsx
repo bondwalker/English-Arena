@@ -89,7 +89,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
           {shuffledOptions.map((opt, i) => (
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", justifyContent: "center", textAlign: "center", fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.35rem" }}
+              style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", justifyContent: "center", textAlign: "center", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "1.35rem" }}
               onClick={() => onAnswer(opt)}>
               {opt}
             </button>
@@ -105,7 +105,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               style={{ width: "100%", alignItems: "center", gap: "0.8rem", opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none" }}
               onClick={() => onAnswer(opt)}>
               <span style={{ width: 40, height: 40, borderRadius: 11, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1.2rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-              <span style={{ textAlign: "left", fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "1.3rem", lineHeight: 1.4 }}>{opt}</span>
+              <span style={{ textAlign: "left", fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "1.2rem", lineHeight: 1.4 }}>{opt}</span>
             </button>
           ))}
         </div>
@@ -115,7 +115,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
         <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", marginTop: "0.5rem" }}>
           {[{ v: "True", c: "var(--leaf)", icon: "bolt" }, { v: "False", c: "var(--tomato)", icon: "skip" }].map(({ v, c, icon }) => (
             <button key={v} disabled={answered}
-              style={{ width: "100%", padding: "1.6rem 1.4rem", border: `2.5px solid ${myAnswer === v ? c : "var(--line)"}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: myAnswer === v ? c : "var(--ink-soft)", borderRadius: 16, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.9rem", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.9rem", fontStyle: "italic" }}
+              style={{ width: "100%", padding: "1.6rem 1.4rem", border: `2.5px solid ${myAnswer === v ? c : "var(--line)"}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: myAnswer === v ? c : "var(--ink-soft)", borderRadius: 16, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.9rem", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.7rem" }}
               onClick={() => onAnswer(v)}>
               <SAIcon name={icon} size={34} color={myAnswer === v ? c : "var(--muted)"} />
               {v}
@@ -129,7 +129,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
           <p style={{ fontSize: "0.92rem", color: "var(--muted)", marginBottom: "0.7rem", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em" }}>Tap the word with the error:</p>
           <div style={{ background: "var(--paper)", borderRadius: 14, padding: "20px 16px 24px 18px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 34px, var(--line) 34px 35px)`, backgroundPosition: "0 14px", border: "1.5px solid var(--line)" }}>
             <div style={{ position: "absolute", left: 18, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
-            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "clamp(1.3rem,2.6vw,1.7rem)", lineHeight: 1.9, paddingLeft: 12, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline" }}>
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "clamp(1.2rem,2.4vw,1.55rem)", lineHeight: 1.9, paddingLeft: 12, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline" }}>
               {q.sentence.split(" ").map((word, i) => {
                 const clean = word.replace(/[.,!?;:]/g, "");
                 const sel = myAnswer === clean;

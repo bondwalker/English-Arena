@@ -167,13 +167,13 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {q.type === "odd_one_out" && q.options && (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", maxWidth: 820, margin: "0 auto" }}>
           {q.options.map((o, i) => (
-            <div key={i} style={{ padding: "1.4rem 1rem", border: `2.5px solid ${OPT_COLORS[i % 4]}`, borderRadius: 18, background: "var(--paper)", boxShadow: `4px 4px 0 ${OPT_COLORS[i % 4]}33`, fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(1.6rem,3vw,2.4rem)", color: OPT_COLORS[i % 4], textAlign: "center" }}>{o}</div>
+            <div key={i} style={{ padding: "1.4rem 1rem", border: `2.5px solid ${OPT_COLORS[i % 4]}`, borderRadius: 18, background: "var(--paper)", boxShadow: `4px 4px 0 ${OPT_COLORS[i % 4]}33`, fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "clamp(1.5rem,2.8vw,2.2rem)", color: OPT_COLORS[i % 4], textAlign: "center" }}>{o}</div>
           ))}
         </div>
       )}
       {q.type === "spot_sentence" && q.options && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} italic />)}
+          {q.options.map((o, i) => <OptionRow key={i} letter={OPT_ICONS[i]} text={o} color={OPT_COLORS[i % 4]} />)}
         </div>
       )}
       {q.type === "hangman" && q.word && (
@@ -191,7 +191,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           {[{ v: "True", c: "var(--leaf)", icon: "✓" }, { v: "False", c: "var(--tomato)", icon: "✕" }].map(({ v, c, icon }) => (
             <div key={v} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.2rem", padding: "1.6rem", border: `2.5px solid ${c}`, borderRadius: 18, background: "var(--paper)", boxShadow: `4px 4px 0 ${c}33` }}>
               <span style={{ fontSize: "2.4rem", fontWeight: 900, color: c, lineHeight: 1 }}>{icon}</span>
-              <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", color: c }}>{v}</span>
+              <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(1.7rem,3.2vw,2.6rem)", color: c }}>{v}</span>
             </div>
           ))}
         </div>
@@ -213,7 +213,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
             <div style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, padding: "8px 6px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {pairs2.map((p, i) => (
-                  <div key={i} style={{ background: "var(--paper)", border: `2.5px solid ${colors[i]}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: 20, color: colors[i], boxShadow: `3px 3px 0 ${colors[i]}55`, transform: `rotate(${i === 0 ? -1.5 : 1.5}deg)` }}>{p.word}</div>
+                  <div key={i} style={{ background: "var(--paper)", border: `2.5px solid ${colors[i]}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 20, color: colors[i], boxShadow: `3px 3px 0 ${colors[i]}55`, transform: `rotate(${i === 0 ? -1.5 : 1.5}deg)` }}>{p.word}</div>
                 ))}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
@@ -239,7 +239,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "1rem", color: "var(--muted)", fontWeight: 700, opacity: 0.5, flexShrink: 0 }}>{label}</span>
                   <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.7rem" }}>
                     <StressDots syllables={n} stressAt={stressAt} size="lg" />
-                    <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1.3rem" }}>stress on {ordinal(stressAt)} syllable</span>
+                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "1.2rem" }}>stress on {ordinal(stressAt)} syllable</span>
                   </div>
                 </div>
               );
@@ -249,7 +249,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       )}
       {q.type === "fill_idiom" && q.options && (
         <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
-          <div style={{ fontFamily: "'Fraunces',serif", fontSize: "1.2rem", fontStyle: "italic", color: "var(--ink-soft)", marginBottom: "1rem" }}>
+          <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "1.25rem", color: "var(--ink-soft)", marginBottom: "1rem" }}>
             {q.question.replace("___", "______")}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: 560, margin: "0 auto", textAlign: "left" }}>
@@ -262,7 +262,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
           <div style={{ background: "var(--paper)", borderRadius: 14, padding: "22px 28px", position: "relative", overflow: "hidden", backgroundImage: `repeating-linear-gradient(180deg, transparent 0 28px, var(--line) 28px 29px)`, backgroundPosition: "0 16px", border: "1.5px solid var(--line)" }}>
             <div style={{ position: "absolute", left: 24, top: 0, bottom: 0, width: 1.5, background: "rgba(255,92,66,0.5)" }} />
-            <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 600, fontSize: "clamp(1.1rem,2.4vw,1.6rem)", lineHeight: 1.65, letterSpacing: "-0.005em", paddingLeft: 18, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline", position: "relative" }}>
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "clamp(1.05rem,2.2vw,1.5rem)", lineHeight: 1.7, letterSpacing: "-0.005em", paddingLeft: 18, display: "flex", flexWrap: "wrap", gap: "4px 10px", alignItems: "baseline", position: "relative" }}>
               {/* Show the sentence plain during the question — never mark the error
                   word here, or the projector reveals the answer before students respond.
                   The error is shown at reveal (HostReveal). */}
@@ -292,7 +292,7 @@ function OptionRow({ letter, text, color, italic }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.55rem 1.1rem 0.55rem 0.55rem", border: `2.5px solid ${color}`, borderRadius: 16, background: "var(--paper)", boxShadow: `4px 4px 0 ${color}33` }}>
       <span style={{ width: 54, height: 54, borderRadius: 12, background: color, color: "var(--on-light)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.5rem", flexShrink: 0 }}>{letter}</span>
-      <span style={{ fontSize: "clamp(1.05rem,1.8vw,1.5rem)", fontWeight: 600, lineHeight: 1.25, fontStyle: italic ? "italic" : "normal", fontFamily: italic ? "'Fraunces',serif" : "inherit", color: italic ? color : "var(--ink)" }}>{text}</span>
+      <span style={{ fontSize: "clamp(1.05rem,1.8vw,1.5rem)", fontWeight: 600, lineHeight: 1.3, fontFamily: "'DM Sans',sans-serif", color: "var(--ink)" }}>{text}</span>
     </div>
   );
 }
