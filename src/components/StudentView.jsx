@@ -258,9 +258,8 @@ export default function StudentView({ onBack, initialCode = "" }) {
                     const st = q.stressed || 1;
                     return (
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
-                        <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--sun)" }}>{q.word}</div>
+                        <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.7rem", letterSpacing: "0.04em", color: "var(--sun)" }}>{Array.isArray(q.parts) ? stressBreakdown(q.parts, st) : q.word}</div>
                         <StressDots syllables={n} stressAt={st} size="lg" />
-                        {Array.isArray(q.syllables) && <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "1.4rem", color: accent }}>{stressBreakdown(q.syllables, st)}</div>}
                         <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ink-soft)" }}>stress on {ordinal(st)} syllable</div>
                       </div>
                     );

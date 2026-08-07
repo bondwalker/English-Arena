@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, stressBreakdown, ordinal } from "../lib/utils.js";
 import { readFaves, writeFaves } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -299,7 +299,7 @@ export default function SoloView({ onBack }) {
             <div style={{fontFamily:"'Fraunces',serif",fontWeight:900,fontStyle:"italic",fontSize:"clamp(1.9rem,7vw,2.6rem)",lineHeight:1,color:isCorrect?"var(--leaf)":"var(--tomato)"}}>{isCorrect?"Correct!":"Not quite."}</div>
             {pendingStreak >= 2 && <SAStreakMeter count={pendingStreak} size="sm" />}
             {!isCorrect && q.type==="error_spotter" && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.5,textAlign:"center"}}>✓ <strong style={{color:"var(--leaf)"}}>{correctedSentence(q)}</strong></div>}
-            {!isCorrect && q.type==="stress_battle" && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.5,textAlign:"center"}}>Pattern <strong style={{color:"var(--sun)"}}>{q.answer}</strong> — stressed on syllable {q.stressed}</div>}
+            {q.type==="stress_battle" && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.4,textAlign:"center"}}><strong style={{color:"var(--sun)",fontSize:"1.6rem"}}>{Array.isArray(q.parts) ? stressBreakdown(q.parts, q.stressed) : q.word}</strong><br/><span style={{color:"var(--muted)",fontSize:"0.95rem"}}>stress on {ordinal(q.stressed)} syllable</span></div>}
             {q.type==="hangman" && <div style={{fontSize:"1.2rem",color:"var(--ink)",textAlign:"center"}}>The word was <strong style={{color:"var(--sun)",fontSize:"1.5rem"}}>{q.word}</strong></div>}
             {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle","hangman"].includes(q.type) && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.4,textAlign:"center"}}>Answer: <strong style={{color:"var(--sun)",fontSize:"1.5rem"}}>{q.answer}</strong></div>}
             {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"1.2rem",color:"var(--ink)",textAlign:"center"}}>Order: <strong style={{color:"var(--sun)"}}>{(q.correctOrder||[]).filter(i=>i<3).map(i=>i+1).join(",")}</strong></div>}
