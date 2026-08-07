@@ -67,11 +67,11 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", ...(answered ? {} : { flex: 1, minHeight: 0 }) }}>
       <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(1.4rem,3.4vw,2rem)", lineHeight: 1.3, marginBottom: "1.2rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "multiple_choice" && q.options && (
-        <div className="opt-grid">
+        <div className="opt-grid" style={{ flex: 1, gridAutoRows: "1fr" }}>
           {q.options.map((opt, i) => (
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
@@ -85,7 +85,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       )}
 
       {q.type === "odd_one_out" && (
-        <div className="opt-grid">
+        <div className="opt-grid" style={{ flex: 1, gridAutoRows: "1fr" }}>
           {shuffledOptions.map((opt, i) => (
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
@@ -98,11 +98,11 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       )}
 
       {q.type === "spot_sentence" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", marginTop: "0.9rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", marginTop: "0.9rem", flex: 1 }}>
           {shuffledOptions.map((opt, i) => (
             <button key={i} disabled={answered}
               className={`opt-btn opt-${i}`}
-              style={{ width: "100%", alignItems: "center", gap: "0.8rem", opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none" }}
+              style={{ flex: 1, width: "100%", alignItems: "center", gap: "0.8rem", opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none" }}
               onClick={() => onAnswer(opt)}>
               <span style={{ width: 40, height: 40, borderRadius: 11, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1.2rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
               <span style={{ textAlign: "left", fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "clamp(1.2rem,1.7vw,1.5rem)", lineHeight: 1.4 }}>{opt}</span>
@@ -112,10 +112,10 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       )}
 
       {q.type === "true_false" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem", marginTop: "0.5rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem", marginTop: "0.5rem", flex: 1 }}>
           {[{ v: "True", c: "var(--leaf)", icon: "✓" }, { v: "False", c: "var(--tomato)", icon: "✕" }].map(({ v, c, icon }) => (
             <button key={v} disabled={answered}
-              style={{ width: "100%", padding: "clamp(1.6rem,4vw,2.4rem) 1.4rem", border: `2.5px solid ${c}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: c, borderRadius: 18, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(1.7rem,4vw,2.4rem)", boxShadow: myAnswer === v ? `4px 4px 0 ${c}33` : "none", outline: myAnswer === v ? `3px solid ${c}` : "none" }}
+              style={{ flex: 1, minHeight: "clamp(5rem,14vh,11rem)", width: "100%", padding: "clamp(1.6rem,4vw,2.4rem) 1.4rem", border: `2.5px solid ${c}`, background: myAnswer === v ? `${c}22` : "var(--paper)", color: c, borderRadius: 18, cursor: answered ? "default" : "pointer", opacity: answered && myAnswer !== v ? 0.28 : 1, transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(1.7rem,4vw,2.4rem)", boxShadow: myAnswer === v ? `4px 4px 0 ${c}33` : "none", outline: myAnswer === v ? `3px solid ${c}` : "none" }}
               onClick={() => onAnswer(v)}>
               <span style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 900, lineHeight: 1 }}>{icon}</span>
               {v}
