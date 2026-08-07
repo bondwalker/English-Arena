@@ -14,6 +14,7 @@
         --cream: #0f1226;
         --paper: #181d3a;
         --ink: #fdf3dd;
+        --ink-soft: rgba(253, 243, 221, 0.72);
         --muted: rgba(253, 243, 221, 0.45);
         --line: rgba(253, 243, 221, 0.14);
         --dot: rgba(253, 243, 221, 0.05);
@@ -46,26 +47,10 @@
 
       main {
         width: 100%;
-        max-width: 640px;
+        max-width: 780px;
         text-align: center;
         position: relative;
         z-index: 1;
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 0.5rem 1.1rem;
-        border: 1.5px solid rgba(91, 139, 255, 0.55);
-        border-radius: 999px;
-        color: var(--cobalt);
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.65rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-weight: 700;
-        margin-bottom: 1.6rem;
       }
 
       h1 {
@@ -87,16 +72,16 @@
         font-size: 1rem;
         line-height: 1.6;
         max-width: 420px;
-        margin: 0 auto 2.6rem;
+        margin: 0 auto 2.8rem;
       }
 
       .options {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        gap: 1.3rem;
       }
 
-      @media (max-width: 520px) {
+      @media (max-width: 560px) {
         .options {
           grid-template-columns: 1fr;
         }
@@ -104,11 +89,13 @@
 
       a.card {
         display: flex;
+        flex-direction: column;
         align-items: flex-start;
-        gap: 0.85rem;
+        gap: 1.1rem;
         text-align: left;
-        padding: 1.4rem 1.3rem;
-        border-radius: 14px;
+        padding: 2.2rem 1.9rem;
+        min-height: 220px;
+        border-radius: 18px;
         border: 2.5px solid transparent;
         text-decoration: none;
         color: var(--ink);
@@ -116,8 +103,8 @@
       }
 
       a.card:hover, a.card:focus-visible {
-        transform: translate(-2px, -2px);
-        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+        transform: translate(-3px, -3px);
+        box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
       }
 
       .card-cobalt { background: rgba(91, 139, 255, 0.12); border-color: var(--cobalt); }
@@ -127,35 +114,39 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
-        font-family: 'Fraunces', serif;
-        font-size: 16px;
-        font-weight: 900;
-        color: #fff;
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        font-size: 1.7rem;
         flex-shrink: 0;
       }
 
-      .card-cobalt .card-icon { background: var(--cobalt); }
-      .card-tomato .card-icon { background: var(--tomato); }
+      .card-cobalt .card-icon { background: var(--cobalt); box-shadow: 4px 4px 0 rgba(91, 139, 255, 0.2); }
+      .card-tomato .card-icon { background: var(--tomato); box-shadow: 4px 4px 0 rgba(255, 92, 66, 0.2); }
 
       .card .name {
+        display: block;
         font-family: 'Fraunces', serif;
-        font-size: 1.15rem;
+        font-size: 1.85rem;
         font-weight: 900;
-        margin-bottom: 0.2rem;
+        line-height: 1.05;
+        margin-bottom: 0.5rem;
       }
 
-      .card .desc {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.62rem;
-        letter-spacing: 0.03em;
-        color: var(--muted);
+      .card-cobalt .name .arrow { color: var(--cobalt); }
+      .card-tomato .name .arrow { color: var(--tomato); }
+
+      .card .tagline {
+        display: block;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 500;
+        line-height: 1.4;
+        color: var(--ink-soft);
       }
 
       footer {
-        margin-top: 2.6rem;
+        margin-top: 2.8rem;
         font-family: 'JetBrains Mono', monospace;
         font-size: 0.6rem;
         letter-spacing: 0.1em;
@@ -166,22 +157,21 @@
   </head>
   <body>
     <main>
-      <span class="eyebrow">◆ Two apps, one teacher</span>
       <h1>Where would you<br />like to go, <em>amigo?</em></h1>
       <p class="subtitle">This is the home of two English-learning apps. Pick one to continue.</p>
       <div class="options">
         <a class="card card-cobalt" href="https://verbmate.rebecaesquivel.com">
-          <span class="card-icon">V</span>
+          <span class="card-icon">📝</span>
           <span>
-            <span class="name" style="display:block">VerbMate</span>
-            <span class="desc">verbmate.rebecaesquivel.com</span>
+            <span class="name">VerbMate <span class="arrow">→</span></span>
+            <span class="tagline">Practise your verb tenses and conjugations.</span>
           </span>
         </a>
         <a class="card card-tomato" href="https://englisharena.rebecaesquivel.com">
-          <span class="card-icon">E</span>
+          <span class="card-icon">🎮</span>
           <span>
-            <span class="name" style="display:block">English Arena</span>
-            <span class="desc">englisharena.rebecaesquivel.com</span>
+            <span class="name">English Arena <span class="arrow">→</span></span>
+            <span class="tagline">Practise your overall English with fun games.</span>
           </span>
         </a>
       </div>
