@@ -335,6 +335,10 @@ export default function HostView({ onBack }) {
     syncState(next);
   };
 
+  // Remove a finished/abandoned room from Firebase so rooms don't pile up.
+  // (Setting the node to null deletes it in the Realtime Database.)
+  const deleteRoom = (code) => { if (db && code) set(ref(db, `rooms/${code}`), null).catch(() => {}); };
+
   // Write initial room to Firebase on mount so students can find it immediately via QR/code
   useEffect(() => { syncState(roomRef.current); }, []);
 
@@ -545,12 +549,16 @@ export default function HostView({ onBack }) {
   }, [ansCount, pCount, room.phase, room.paused]);
 
   const reset = () => {
+    deleteRoom(roomRef.current.code);   // clean up the room we're leaving before making a new one
     const r = defaultRoom();
     setRoom(r);
     syncState(r);
     setSelectedTopic("");
     setGameType("mixed");
   };
+
+  // Exit: delete the room, then hand back to the app.
+  const exit = () => { deleteRoom(roomRef.current.code); onBack(); };
 
   const buildSummary = (questions, topic) => {
     const lines = [`=== English Arena · ${topic} ===\n`];
@@ -578,7 +586,7 @@ export default function HostView({ onBack }) {
         <div className="flex gap-1 wrap">
           {room.phase !== "lobby" && <button className="btn btn-sm btn-ghost" onClick={() => upd(p => ({ ...p, phase: "leaderboard" }))}>Scores</button>}
           <button className="btn btn-sm btn-ghost" onClick={reset}>New</button>
-          <button className="btn btn-sm btn-ghost" onClick={onBack}>Exit</button>
+          <button className="btn btn-sm btn-ghost" onClick={exit}>Exit</button>
         </div>
       </div>
 
