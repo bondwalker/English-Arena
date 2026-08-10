@@ -1093,6 +1093,17 @@ export const QUESTION_BANK = {
     {type:"odd_one_out",question:"Which word does not belong?",options:["nephew","pilot","niece","twin"],answer:"pilot",explanation:"A pilot is a job; the others are relatives."},
     {type:"odd_one_out",question:"Which word does not belong?",options:["parent","child","engineer","sibling"],answer:"engineer",explanation:"An engineer is a job; the others are family roles."},
     {type:"odd_one_out",question:"Which word does not belong?",options:["wife","husband","partner","waiter"],answer:"waiter",explanation:"A waiter is a job; the others describe someone you are married to."},
+  
+    {type:"true_false",question:"Your 'cousin' is the child of your aunt or uncle.",answer:"True",explanation:"Yes — the children of your aunt or uncle are your cousins."},
+    {type:"true_false",question:"Your 'grandmother' is the mother of your mother or father.",answer:"True",explanation:"Correct — a grandmother is a parent of one of your parents."},
+    {type:"true_false",question:"Your 'great-grandmother' is the mother of your grandmother or grandfather.",answer:"True",explanation:"Correct — she is one generation above your grandparents."},
+    {type:"true_false",question:"Your 'stepson' is your brother's son.",answer:"False",explanation:"No — your brother's son is your nephew. A stepson is your husband or wife's son from another relationship."},
+    {type:"true_false",question:"Your 'niece' is the daughter of your brother or sister.",answer:"True",explanation:"Yes — your brother or sister's daughter is your niece."},
+    {type:"true_false",question:"Your 'uncle' is the sister of your mother.",answer:"False",explanation:"No — your mother's sister is your aunt. An uncle is a man, usually your parent's brother."},
+    {type:"true_false",question:"A 'stepfather' is the man who marries your mother but is not your birth father.",answer:"True",explanation:"Yes — a stepfather joins the family when he marries your mother."},
+    {type:"true_false",question:"Your 'grandparents' are the children of your parents.",answer:"False",explanation:"No — your grandparents are the parents of your parents."},
+    {type:"true_false",question:"'Twins' are two children born on the same day to the same mother.",answer:"True",explanation:"Yes — twins are born together, on the same day."},
+    {type:"true_false",question:"An 'only child' has many brothers and sisters.",answer:"False",explanation:"No — an 'only child' has no brothers or sisters."},
   ]},
   "education_studying": { label: "Education & Studying", questions: [
     {type:"multiple_choice",question:"Which sentence uses 'by' correctly?",options:["You need to submit the essay until Friday.","You need to submit the essay by Friday.","You need to submit the essay before to Friday."],answer:"You need to submit the essay by Friday.",explanation:"'By' means no later than. 'Until' means up to a point in time and then it stops."},
