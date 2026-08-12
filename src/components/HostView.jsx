@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -65,7 +65,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
 function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont, code, topic, qrUrl }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
-  const shuffledRearrange = useMemo(() => q.type === "rearrange" ? (q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean).sort(() => Math.random() - 0.5) : [], [q.question]);
+  const shuffledRearrange = useMemo(() => q.type === "rearrange" ? shuffle((q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean)) : [], [q.question]);
   const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", hangman: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
   const urgent = timeLeft <= 5 && !paused;
@@ -418,7 +418,7 @@ export default function HostView({ onBack }) {
       ? QUESTION_BANK.stress_battle.questions
       : (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
-    const qs = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(qCount, pool.length));
+    const qs = shuffle(pool).slice(0, Math.min(qCount, pool.length));
     setError("");
     const topicLabel = selectedTopic ? (QUESTION_BANK[selectedTopic]?.label ?? "Stress Battle") : "⚡ Stress Battle";
     upd(prev => ({ ...prev, questions: qs, topic: topicLabel, gameType, phase: "lobby" }));
@@ -461,7 +461,7 @@ export default function HostView({ onBack }) {
         const mainKeys = new Set(prev.questions.map(qKey));
         const spare = basePool.filter(q => !mainKeys.has(qKey(q)));
         const warmSource = spare.length >= 3 ? spare : basePool;
-        const warmOriginals = [...warmSource].sort(() => Math.random() - 0.5).slice(0, 3);
+        const warmOriginals = shuffle(warmSource).slice(0, 3);
         const warmKeys = new Set(warmOriginals.map(qKey));
         const warmupQs = warmOriginals.map(q => ({ ...q, _warmup: true }));
         const mainQs = prev.questions.filter(q => !warmKeys.has(qKey(q)));
