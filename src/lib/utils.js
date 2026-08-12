@@ -7,6 +7,18 @@ export const TEAMS = [
 
 export const OPT_ICONS = ["A", "B", "C", "D"];
 
+// Fair Fisher-Yates shuffle. Returns a new array; does not mutate the input.
+// (Array.prototype.sort(() => Math.random() - 0.5) is NOT a uniform shuffle —
+// it heavily over-selects early items, which made the same questions recur.)
+export const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
 // Shared answer-box colours (A/B/C/D) — used identically on host + student
 export const OPT_COLORS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)"];
 

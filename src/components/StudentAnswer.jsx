@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
-import { OPT_COLORS, ordinal } from "../lib/utils.js";
+import { OPT_COLORS, ordinal, shuffle } from "../lib/utils.js";
 
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
@@ -13,7 +13,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   const pairsKey = q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => p.word).join("|") : "";
   const [shuffledMeanings, setShuffledMeanings] = useState([]);
   useEffect(() => {
-    if (q.type === "word_match" && q.pairs) setShuffledMeanings([...q.pairs.slice(0, 2)].sort(() => Math.random() - 0.5));
+    if (q.type === "word_match" && q.pairs) setShuffledMeanings(shuffle(q.pairs.slice(0, 2)));
   }, [pairsKey]);
 
   const [shuffledWords, setShuffledWords] = useState([]);
@@ -21,7 +21,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
     if (q.type === "rearrange") {
       // Build the word bank from the answer itself so it never contains extra/distractor words
       const bank = (q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean);
-      setShuffledWords([...bank].sort(() => Math.random() - 0.5));
+      setShuffledWords(shuffle(bank));
     }
   }, [q.answer]);
 
@@ -30,7 +30,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   const [shuffledOptions, setShuffledOptions] = useState([]);
   useEffect(() => {
     if ((q.type === "odd_one_out" || q.type === "spot_sentence") && q.options)
-      setShuffledOptions([...q.options].sort(() => Math.random() - 0.5));
+      setShuffledOptions(shuffle(q.options));
   }, [(q.options || []).join("|")]);
 
   // Hangman: resolve win/loss locally, then submit once. 6 wrong letters = out.

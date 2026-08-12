@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, stressBreakdown, ordinal } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle } from "../lib/utils.js";
 import { readFaves, writeFaves } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -61,7 +61,7 @@ export default function SoloView({ onBack }) {
       ? QUESTION_BANK.stress_battle.questions
       : gameType === "mixed" ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) return;
-    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const shuffled = shuffle(pool);
     setQuestions(shuffled.slice(0, Math.min(qCount, shuffled.length)));
     setQIndex(0);
     setResults([]);
@@ -73,7 +73,7 @@ export default function SoloView({ onBack }) {
   const retryMissed = () => {
     const missed = results.filter(r => !r.correct).map(r => r.q);
     if (!missed.length) return;
-    const shuffled = [...missed].sort(() => Math.random() - 0.5);
+    const shuffled = shuffle(missed);
     setQuestions(shuffled);
     setQIndex(0);
     setResults([]);
