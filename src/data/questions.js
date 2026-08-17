@@ -4482,8 +4482,6 @@ export const QUESTION_BANK = {
     {type:"odd_one_out",question:"Which word does not belong?",options:["worried","scared","square","cheerful"],answer:"square",explanation:"Square is a shape; the others describe how you feel."},
     {type:"odd_one_out",question:"Which word does not belong?",options:["love","hate","hope","brick"],answer:"brick",explanation:"A brick is a building material; the others are strong feelings."},
   
-    {type:"true_false",question:"When you feel 'happy', you feel good and often smile.",answer:"True",explanation:"Yes — happy is a good, positive feeling."},
-    {type:"true_false",question:"When you are 'sad', you might cry.",answer:"True",explanation:"Yes — sad is an unhappy feeling, and people sometimes cry."},
     {type:"true_false",question:"When you are 'excited', you feel very happy about something that is going to happen.",answer:"True",explanation:"Yes — excited is a strong, happy feeling about something coming."},
     {type:"true_false",question:"You might feel 'nervous' before an exam or a test.",answer:"True",explanation:"Yes — nervous means a little worried or uneasy."},
     {type:"true_false",question:"When you are 'tired', you want to rest or sleep.",answer:"True",explanation:"Yes — tired means you need rest."},
@@ -4513,7 +4511,6 @@ export const QUESTION_BANK = {
     {type:"true_false",question:"Feeling 'thankful' means you are angry with someone.",answer:"False",explanation:"No — thankful means grateful."},
     {type:"true_false",question:"Feeling 'joyful' means feeling very sad.",answer:"False",explanation:"No — joyful means very happy."},
     {type:"true_false",question:"A 'brave' person is very afraid and runs away from danger.",answer:"False",explanation:"No — a brave person faces danger and is not afraid."},
-    {type:"true_false",question:"'Happy' and 'sad' are the same feeling.",answer:"False",explanation:"No — happy and sad are opposites."},
     {type:"true_false",question:"Feeling 'nervous' means you feel completely calm.",answer:"False",explanation:"No — nervous means a little worried or uneasy."},
     {type:"true_false",question:"When you are 'angry', you feel calm and peaceful.",answer:"False",explanation:"No — angry means upset or annoyed."},
     {type:"true_false",question:"A 'shy' person loves speaking loudly to lots of strangers.",answer:"False",explanation:"No — a shy person feels nervous with new people."},
@@ -4523,8 +4520,6 @@ export const QUESTION_BANK = {
     {type:"true_false",question:"'Upset' means very happy and pleased.",answer:"False",explanation:"No — upset means unhappy or worried."},
     {type:"true_false",question:"When you feel 'excited', you feel bored and sleepy.",answer:"False",explanation:"No — excited is an energetic, happy feeling."},
   
-    {type:"true_false",question:"When you are 'happy', you feel good and you smile.",answer:"True",explanation:"Happy people feel good and smile."},
-    {type:"true_false",question:"When you are 'sad', you feel good and you laugh.",answer:"False",explanation:"Sad people feel bad, they do not laugh."},
     {type:"true_false",question:"When you are 'tired', you want to sleep or rest.",answer:"True",explanation:"Tired people want to rest or sleep."},
     {type:"true_false",question:"When you are 'angry', you feel calm and quiet.",answer:"False",explanation:"Angry people feel cross, not calm."},
     {type:"true_false",question:"When you are 'scared', you feel afraid of something.",answer:"True",explanation:"Scared means feeling afraid."},
@@ -4533,6 +4528,13 @@ export const QUESTION_BANK = {
     {type:"true_false",question:"When you are 'bored', you have nothing fun to do.",answer:"True",explanation:"Bored people have nothing interesting to do."},
     {type:"true_false",question:"When you feel 'proud', you are sad about something you did.",answer:"False",explanation:"Proud people feel happy about their work."},
     {type:"true_false",question:"When you are 'surprised', you did not expect what happened.",answer:"True",explanation:"Surprised means something happens you did not expect."},
+  
+    {type:"true_false",question:"When you feel 'anxious', you feel very worried and uneasy about something.",answer:"True",explanation:"Yes — anxious means worried and uneasy."},
+    {type:"true_false",question:"When you are 'stressed', you feel under pressure because you have too much to do.",answer:"True",explanation:"Yes — stress comes from too much pressure or work."},
+    {type:"true_false",question:"When you feel 'guilty', you feel bad because you did something wrong.",answer:"True",explanation:"Yes — guilt is the bad feeling after doing something wrong."},
+    {type:"true_false",question:"Feeling 'anxious' means you feel calm and completely relaxed.",answer:"False",explanation:"No — anxious means worried and nervous, not calm."},
+    {type:"true_false",question:"Feeling 'embarrassed' means you feel proud and very confident.",answer:"False",explanation:"No — embarrassed means shy or uncomfortable, often after a mistake."},
+    {type:"true_false",question:"Feeling 'jealous' means you are very happy about someone else's success.",answer:"False",explanation:"No — jealous means you want what someone else has."},
   ]},
   "language_communication": {
     label: "Language & Communication",
