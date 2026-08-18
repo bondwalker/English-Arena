@@ -13,6 +13,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const missed = Math.max(0, pCount - correct);
   const pill = pCount === 0 ? "The answer" : correct === 0 ? "Not this time" : correct === pCount ? "Everyone got it!" : "Answer revealed";
   const isStress = q.type === "stress_battle";
+  const isWordMatch = q.type === "word_match" && Array.isArray(q.pairs);
   const sN = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
   const sStressed = q.stressed || 1;
   const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
@@ -29,7 +30,18 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.4rem" }}>
           <span style={{ border: "1.5px solid rgba(15,18,38,0.5)", borderRadius: 999, padding: "0.5rem 1.3rem", fontWeight: 700, fontSize: "1rem", color: "var(--on-light)" }}>{pill}</span>
         </div>
-        {isStress ? (
+        {isWordMatch ? (
+          <div className="sa-anim-pop" style={{ display: "flex", flexDirection: "column", gap: "0.7rem", maxWidth: 900, margin: "0 auto", width: "100%" }}>
+            {q.pairs.map((p, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "baseline", gap: "0.9rem", background: "var(--cream)", borderRadius: 14, padding: "0.85rem 1.3rem", textAlign: "left" }}>
+                <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.2rem,2.6vw,2.1rem)", color: "var(--ink)", whiteSpace: "nowrap" }}>{p.word}</span>
+                <span style={{ color: "var(--ink)", opacity: 0.4, fontSize: "1.3rem" }}>→</span>
+                <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "clamp(1rem,1.9vw,1.5rem)", color: "var(--ink)", opacity: 0.85 }}>{p.meaning}</span>
+              </div>
+            ))}
+            {q.explanation && <p style={{ color: "var(--on-light)", opacity: 0.8, fontSize: "clamp(1rem,1.7vw,1.35rem)", lineHeight: 1.5, marginTop: "0.9rem", textAlign: "center" }}>{q.explanation}</p>}
+          </div>
+        ) : isStress ? (
           <div className="sa-anim-pop" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.4rem" }}>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 800, fontSize: "clamp(2.4rem,6vw,4.5rem)", letterSpacing: "0.04em", color: "var(--on-light)", lineHeight: 1 }}>{Array.isArray(q.parts) ? stressBreakdown(q.parts, sStressed) : q.word}</div>
             <StressDots syllables={sN} stressAt={sStressed} size="lg" color="var(--on-light)" dim="rgba(15,18,38,0.35)" glow={false} />

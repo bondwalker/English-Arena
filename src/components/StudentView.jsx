@@ -253,7 +253,16 @@ export default function StudentView({ onBack, initialCode = "" }) {
               <div style={{ width: "100%", maxWidth: 340 }}>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.18em", color: "rgba(15,18,38,0.6)", marginBottom: "0.6rem" }}>CORRECT ANSWER</div>
                 <div style={{ background: "var(--cream)", borderRadius: 16, padding: "1.3rem 1.2rem", boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
-                  {q.type === "stress_battle" ? (() => {
+                  {q.type === "word_match" && Array.isArray(q.pairs) ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", textAlign: "left" }}>
+                      {q.pairs.map((p, i) => (
+                        <div key={i} style={{ fontSize: "0.95rem", lineHeight: 1.3 }}>
+                          <span style={{ fontWeight: 800, color: accent }}>{p.word}</span>
+                          <span style={{ color: "var(--ink-soft)" }}> — {p.meaning}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : q.type === "stress_battle" ? (() => {
                     const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
                     const st = q.stressed || 1;
                     return (
