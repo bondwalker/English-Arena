@@ -255,7 +255,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
                 <div style={{ background: "var(--cream)", borderRadius: 16, padding: "1.3rem 1.2rem", boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
                   {q.type === "word_match" && Array.isArray(q.pairs) ? (
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", textAlign: "left" }}>
-                      {q.pairs.map((p, i) => (
+                      {q.pairs.slice(0, 2).map((p, i) => (
                         <div key={i} style={{ fontSize: "0.95rem", lineHeight: 1.3 }}>
                           <span style={{ fontWeight: 800, color: accent }}>{p.word}</span>
                           <span style={{ color: "var(--ink-soft)" }}> — {p.meaning}</span>
