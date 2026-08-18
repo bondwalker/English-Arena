@@ -32,7 +32,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
         </div>
         {isWordMatch ? (
           <div className="sa-anim-pop" style={{ display: "flex", flexDirection: "column", gap: "0.7rem", maxWidth: 900, margin: "0 auto", width: "100%" }}>
-            {q.pairs.map((p, i) => (
+            {q.pairs.slice(0, 2).map((p, i) => (
               <div key={i} style={{ display: "flex", alignItems: "baseline", gap: "0.9rem", background: "var(--cream)", borderRadius: 14, padding: "0.85rem 1.3rem", textAlign: "left" }}>
                 <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(1.2rem,2.6vw,2.1rem)", color: "var(--ink)", whiteSpace: "nowrap" }}>{p.word}</span>
                 <span style={{ color: "var(--ink)", opacity: 0.4, fontSize: "1.3rem" }}>→</span>

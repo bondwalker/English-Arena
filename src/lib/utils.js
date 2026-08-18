@@ -60,7 +60,7 @@ export const reviewAnswer = (q) =>
     : q.type === "hangman" ? q.word
       : q.type === "error_spotter" ? correctedSentence(q)
         : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
-          : q.type === "word_match" ? (q.pairs || []).map(p => `${p.word} = ${p.meaning}`).join(" · ")
+          : q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => `${p.word} = ${p.meaning}`).join(" · ")
             : q.answer;
 
 // A selectable game mode can serve more than one underlying question type.
