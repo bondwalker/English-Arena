@@ -43,6 +43,32 @@ export const TOPIC_THEME = {
   news_current_affairs:  { accent: "var(--aqua)",   emoji: "📰", label: "News & Current Affairs" },
   present_perfect:       { accent: "var(--aqua)",   emoji: "✅", label: "Present Perfect & Continuous" },
 };
+// End-game awards: fun badges derived from per-player stats tracked during
+// scoring (score / maxStreak / firstCount / nCorrect / nAnswered). Spreads
+// recognition — prefers a different winner for each badge when possible.
+export function computeAwards(playersObj) {
+  const players = Object.entries(playersObj || {}).map(([name, p]) => ({ name, ...p }));
+  if (!players.length) return [];
+  const used = new Set();
+  const take = (val, threshold) => {
+    const cands = players.map(p => ({ name: p.name, v: val(p) })).filter(c => c.v > threshold).sort((a, b) => b.v - a.v);
+    if (!cands.length) return null;
+    const chosen = cands.find(c => !used.has(c.name)) || cands[0];
+    used.add(chosen.name);
+    return chosen;
+  };
+  const awards = [];
+  const champ = take(p => p.score || 0, 0);
+  if (champ) awards.push({ key: "champion", emoji: "🏆", label: "Champion", winner: champ.name, detail: `${champ.v.toLocaleString()} pts` });
+  const fire = take(p => (p.maxStreak || 0) >= 3 ? p.maxStreak : 0, 0);
+  if (fire) awards.push({ key: "onfire", emoji: "🔥", label: "On Fire", winner: fire.name, detail: `${fire.v} in a row` });
+  const speed = take(p => (p.firstCount || 0) >= 2 ? p.firstCount : 0, 0);
+  if (speed) awards.push({ key: "speed", emoji: "⚡", label: "Speed Demon", winner: speed.name, detail: `${speed.v} fastest answers` });
+  const sharp = take(p => (p.nAnswered || 0) >= 3 ? Math.round(100 * (p.nCorrect || 0) / p.nAnswered) : 0, 59);
+  if (sharp) awards.push({ key: "sharp", emoji: "🎯", label: "Sharpshooter", winner: sharp.name, detail: `${sharp.v}% correct` });
+  return awards;
+}
+
 const DEFAULT_THEME = { accent: "var(--sun)", emoji: "🎲", label: "" };
 // Resolve a theme from either a topic key ("travel_holidays") or a display label
 // ("Travel & Holidays", which may carry an emoji/prefix on the projector).
