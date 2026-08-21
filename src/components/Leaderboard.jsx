@@ -1,5 +1,5 @@
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, Confetti } from "./ui.jsx";
-import { TEAMS, getTeamScores, reviewPrompt, reviewAnswer } from "../lib/utils.js";
+import { TEAMS, getTeamScores, reviewPrompt, reviewAnswer, computeAwards } from "../lib/utils.js";
 import { TeamIcon } from "./ui.jsx";
 
 // ─── Leaderboard (host view) ──────────────────────────────────────────────────
@@ -50,6 +50,25 @@ export function Leaderboard({ sorted, mode, teams, teamScores, isEnd, room, onPl
             );
           })}
         </div>
+        {(() => {
+          const awards = computeAwards(room?.players);
+          if (awards.length < 2) return null; // only show the panel when there's more than just the champion
+          return (
+            <div style={{ maxWidth: 820, margin: "2rem auto 0" }}>
+              <div style={{ textAlign: "center", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.2em", color: "var(--muted)", marginBottom: "0.9rem" }}>ROUND AWARDS</div>
+              <div style={{ display: "grid", gridTemplateColumns: `repeat(${awards.length}, minmax(0,1fr))`, gap: "0.8rem" }}>
+                {awards.map(a => (
+                  <div key={a.key} style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "1rem 0.8rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                    <span style={{ fontSize: "2rem", lineHeight: 1 }}>{a.emoji}</span>
+                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>{a.label}</span>
+                    <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.15rem", color: "var(--ink)", lineHeight: 1.1 }}>{a.winner}</span>
+                    <span style={{ fontSize: "0.8rem", color: "var(--ink-soft)" }}>{a.detail}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
         <div style={{ display: "flex", justifyContent: "center", gap: "0.8rem", marginTop: "1.6rem" }}>
           {onPlayAgain && <button className="btn" onClick={onPlayAgain} style={{ background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", boxShadow: "4px 4px 0 var(--sun)" }}>Play again →</button>}
           {onShareRecap && <button className="btn btn-ghost" onClick={onShareRecap} style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--line)" }}>Share recap</button>}

@@ -501,7 +501,16 @@ export default function HostView({ onBack }) {
           const val = ans?.v ?? ans;
           const correct = checkAnswer(val, q);
           const bonus = correct && (players[name].streak || 0) >= 1 ? 250 : 0;
-          players[name] = { ...players[name], score: (players[name].score || 0) + (correct ? 1000 + bonus : 0), streak: correct ? (players[name].streak || 0) + 1 : 0, correct, lastAnswer: val };
+          const newStreak = correct ? (players[name].streak || 0) + 1 : 0;
+          players[name] = {
+            ...players[name],
+            score: (players[name].score || 0) + (correct ? 1000 + bonus : 0),
+            streak: newStreak, correct, lastAnswer: val,
+            // cumulative stats for end-game awards
+            nAnswered: (players[name].nAnswered || 0) + 1,
+            nCorrect: (players[name].nCorrect || 0) + (correct ? 1 : 0),
+            maxStreak: Math.max(players[name].maxStreak || 0, newStreak),
+          };
         });
         Object.keys(players).forEach(name => {
           if (!answered[name]) players[name] = { ...players[name], streak: 0, correct: false };
@@ -509,6 +518,7 @@ export default function HostView({ onBack }) {
         const correctEntries = Object.entries(answered).filter(([, a]) => checkAnswer(a?.v ?? a, q));
         if (correctEntries.length > 0) {
           firstCorrect = correctEntries.sort(([, a], [, b]) => (a?.ts || 0) - (b?.ts || 0))[0][0];
+          players[firstCorrect] = { ...players[firstCorrect], firstCount: (players[firstCorrect].firstCount || 0) + 1 };
         }
       }
       const nextIdx = prev.qIndex + 1;
