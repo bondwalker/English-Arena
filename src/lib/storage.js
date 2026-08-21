@@ -15,3 +15,8 @@ export const readFaves  = () => { try { return JSON.parse(localStorage.getItem(F
 export const writeFaves = (v) => { try { localStorage.setItem(FAVES_KEY, JSON.stringify(v)); } catch {} };
 export const readFont   = () => { try { return localStorage.getItem(FONT_KEY) === "large"; } catch { return false; } };
 export const writeFont  = (v) => { try { localStorage.setItem(FONT_KEY, v ? "large" : "normal"); } catch {} };
+
+// Solo personal bests, per topic: { [topicKey]: { pct, streak } }
+const SOLO_BEST_KEY = "englishgame_solo_best";
+export const readSoloBest  = () => { try { return JSON.parse(localStorage.getItem(SOLO_BEST_KEY) || "{}"); } catch { return {}; } };
+export const writeSoloBest = (v) => { try { localStorage.setItem(SOLO_BEST_KEY, JSON.stringify(v)); } catch {} };
