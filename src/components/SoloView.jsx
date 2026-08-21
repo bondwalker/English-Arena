@@ -66,10 +66,11 @@ export default function SoloView({ onBack }) {
   };
 
   const loadQuestions = () => {
-    if (!selectedTopic) return;
-    const bank = QUESTION_BANK[selectedTopic].questions;
-    // Stress Battle type always draws from the full dedicated word bank, regardless of topic
-    const pool = gameType === "stress_battle"
+    const stress = gameType === "stress_battle";
+    if (!selectedTopic && !stress) return;
+    const bank = selectedTopic ? QUESTION_BANK[selectedTopic].questions : [];
+    // Stress Battle draws from the full dedicated word bank — no topic needed
+    const pool = stress
       ? QUESTION_BANK.stress_battle.questions
       : gameType === "mixed" ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) return;
@@ -79,7 +80,7 @@ export default function SoloView({ onBack }) {
     setResults([]);
     setStreak(0);
     setBestStreak(0);
-    setPhase(QUESTION_BANK[selectedTopic].intro ? "intro" : "question");
+    setPhase(selectedTopic && QUESTION_BANK[selectedTopic]?.intro ? "intro" : "question");
   };
 
   const retryMissed = () => {
@@ -108,6 +109,7 @@ export default function SoloView({ onBack }) {
 
   // ── SETUP ──────────────────────────────────────────────────────────────────
   if (phase === "setup") {
+    const stressMode = gameType === "stress_battle";
     return (
       <div style={{minHeight:"100vh",maxWidth:1040,margin:"0 auto",padding:"clamp(1.2rem,3vw,2rem)"}}>
         <button className="btn btn-ghost btn-sm mb-3" onClick={onBack}>← Back</button>
@@ -116,8 +118,20 @@ export default function SoloView({ onBack }) {
 
         <div className="solo-grid">
         <div>
+        <button onClick={() => setGameType(stressMode ? "mixed" : "stress_battle")}
+          style={{display:"flex",alignItems:"center",gap:"0.7rem",width:"100%",padding:"0.7rem 0.9rem",borderRadius:12,marginBottom:"0.8rem",border:`2px solid ${stressMode?"var(--cobalt)":"var(--line)"}`,background:stressMode?"rgba(91,139,255,0.12)":"var(--paper)",cursor:"pointer",textAlign:"left"}}>
+          <span style={{fontSize:"1.2rem"}}>⚡</span>
+          <span style={{flex:1}}>
+            <span style={{display:"block",fontFamily:"'Fraunces',serif",fontWeight:800,fontSize:"1rem",color:stressMode?"var(--cobalt)":"var(--ink)"}}>Stress Battle</span>
+            <span style={{fontSize:"0.75rem",color:"var(--muted)"}}>Word-stress mode · dedicated word bank</span>
+          </span>
+          {stressMode && <span style={{color:"var(--cobalt)",fontWeight:800}}>✓</span>}
+        </button>
+        {stressMode ? (
+          <div style={{padding:"1rem",borderRadius:12,border:"1px solid rgba(91,139,255,0.3)",background:"rgba(91,139,255,0.07)",fontSize:"0.88rem",color:"var(--cobalt)",lineHeight:1.5}}>Stress Battle uses its own word bank — no topic needed. Tap it again to choose a topic instead.</div>
+        ) : (<>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"0.4rem"}}>
-          <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Topic</div>
+          <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Or choose a topic</div>
           <div className="flex gap-1">
             <button className={`btn btn-sm ${topicFilter==="all"?"btn-teal":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={() => setTopicFilter("all")}>All</button>
             <button className={`btn btn-sm ${topicFilter==="saved"?"btn-gold":"btn-ghost"}`} style={{fontSize:"0.72rem",padding:"0.18rem 0.55rem"}} onClick={() => setTopicFilter("saved")}>★ Saved{faves.length>0?` (${faves.length})`:""}</button>
@@ -127,16 +141,14 @@ export default function SoloView({ onBack }) {
           <p style={{fontSize:"0.78rem",color:"var(--muted)",marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:"0.5rem",maxHeight:"min(58vh,520px)",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:10}}>
-          {Object.entries(QUESTION_BANK).filter(([k]) => topicFilter==="all" || faves.includes(k)).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}],i) => {
-            const disabled = gameType==="stress_battle" && noStressBattle.has(key);
+          {Object.entries(QUESTION_BANK).filter(([k]) => k !== "stress_battle" && (topicFilter==="all" || faves.includes(k))).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}],i) => {
             const sel = selectedTopic === key;
             const th = themeFor(key);
             return (
               <div key={key} style={{position:"relative",display:"flex"}}>
                 <button
-                  disabled={disabled}
-                  onClick={() => !disabled && setSelectedTopic(key)}
-                  style={{flex:1,display:"flex",alignItems:"center",gap:"0.5rem",padding:"0.55rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.82rem",fontWeight:sel?700:600,border:`2px solid ${sel?th.accent:"var(--line)"}`,background:sel?"color-mix(in srgb, var(--paper) 82%, "+th.accent+")":"var(--paper)",color:sel?th.accent:disabled?"var(--muted)":"var(--ink)",cursor:disabled?"not-allowed":"pointer",textAlign:"left",transition:"all 0.12s",opacity:disabled?0.35:1,borderRadius:10}}>
+                  onClick={() => setSelectedTopic(key)}
+                  style={{flex:1,display:"flex",alignItems:"center",gap:"0.5rem",padding:"0.55rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.82rem",fontWeight:sel?700:600,border:`2px solid ${sel?th.accent:"var(--line)"}`,background:sel?"color-mix(in srgb, var(--paper) 82%, "+th.accent+")":"var(--paper)",color:sel?th.accent:"var(--ink)",cursor:"pointer",textAlign:"left",transition:"all 0.12s",borderRadius:10}}>
                   <span style={{fontSize:"1.05rem",flexShrink:0,lineHeight:1}}>{th.emoji}</span>
                   {cleanLabel(label)}</button>
                 <button onClick={(e) => { e.stopPropagation(); toggleFave(key); }} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--sun)":"var(--muted)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
@@ -144,14 +156,17 @@ export default function SoloView({ onBack }) {
             );
           })}
         </div>
+        </>)}
         </div>
         <div>
+        {!stressMode && <>
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Find the Mistake"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["hangman","Hangman"],["stress_battle","Stress Battle"]].map(([v,l]) => (
+          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Find the Mistake"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["hangman","Hangman"]].map(([v,l]) => (
             <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={() => setGameType(v)}>{l}</button>
           ))}
         </div>
+        </>}
 
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Number of questions</div>
         <div className="flex gap-1 mb-1">
@@ -159,9 +174,9 @@ export default function SoloView({ onBack }) {
             <button key={n} className={`btn btn-sm ${qCount===n?"btn-gold":"btn-ghost"}`} onClick={() => setQCount(n)}>{n}</button>
           ))}
         </div>
-        {selectedTopic && (() => {
-          const bank = QUESTION_BANK[selectedTopic].questions;
-          const available = gameType === "stress_battle"
+        {(selectedTopic || stressMode) && (() => {
+          const bank = selectedTopic ? QUESTION_BANK[selectedTopic].questions : [];
+          const available = stressMode
             ? QUESTION_BANK.stress_battle.questions.length
             : gameType === "mixed" ? bank.length : bank.filter(q => q.type === gameType).length;
           const actual = Math.min(qCount, available);
@@ -169,8 +184,8 @@ export default function SoloView({ onBack }) {
             ? <p style={{fontSize:"0.78rem",color:"var(--sun)",marginBottom:"1rem",marginTop:"0.3rem"}}>Only {available} question{available!==1?"s":""} available — you'll get {actual}.</p>
             : <p style={{fontSize:"0.75rem",color:"var(--muted)",marginBottom:"1rem",marginTop:"0.3rem"}}>{actual} questions ready</p>;
         })()}
-        {!selectedTopic && <div style={{marginBottom:"1rem"}}/>}
-        <button className="btn btn-teal btn-full" disabled={!selectedTopic||(gameType==="stress_battle"&&noStressBattle.has(selectedTopic))} onClick={loadQuestions}>Start Practising →</button>
+        {!selectedTopic && !stressMode && <div style={{marginBottom:"1rem"}}/>}
+        <button className="btn btn-teal btn-full" disabled={!selectedTopic && !stressMode} onClick={loadQuestions}>Start Practising →</button>
         </div>
         </div>
       </div>
