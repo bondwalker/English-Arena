@@ -3,7 +3,7 @@ import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
 import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle, themeFor } from "../lib/utils.js";
-import { readFaves, writeFaves } from "../lib/storage.js";
+import { readFaves, writeFaves, readSoloBest, writeSoloBest } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
   const [phase, setPhase]           = useState("setup");
@@ -18,6 +18,18 @@ export default function SoloView({ onBack }) {
   const [bestStreak, setBestStreak] = useState(0);
   const [faves, setFaves]           = useState(() => readFaves());
   const [topicFilter, setTopicFilter] = useState("all");
+  const [soloBest, setSoloBest]     = useState(null); // {prevPct, prevStreak, best, newPct, newStreak, firstTime}
+
+  // On finishing a solo run, compare against the stored per-topic best, then save the new best.
+  useEffect(() => {
+    if (phase !== "done" || !selectedTopic || !results.length) { setSoloBest(null); return; }
+    const curPct = Math.round(100 * results.filter(r => r.correct).length / results.length);
+    const all = readSoloBest();
+    const prev = all[selectedTopic] || { pct: 0, streak: 0 };
+    const best = { pct: Math.max(prev.pct || 0, curPct), streak: Math.max(prev.streak || 0, bestStreak) };
+    setSoloBest({ prevPct: prev.pct || 0, prevStreak: prev.streak || 0, best, newPct: curPct > (prev.pct || 0), newStreak: bestStreak > (prev.streak || 0), firstTime: !all[selectedTopic] });
+    writeSoloBest({ ...all, [selectedTopic]: best });
+  }, [phase, selectedTopic]);
 
   const [rearranged, setRearranged]   = useState([]);
   const [usedIdx, setUsedIdx]         = useState([]);
@@ -201,8 +213,9 @@ export default function SoloView({ onBack }) {
     const total   = results.length;
     const correct = results.filter(r => r.correct).length;
     const pct     = Math.round((correct / total) * 100);
-    const gradeLabel = pct>=90?"Outstanding!":pct>=70?"Well done!":pct>=50?"Keep practising!":"Review and try again!";
-    const gradeColor = pct>=70?"var(--leaf)":pct>=50?"var(--sun)":"var(--tomato)";
+    const gradeLabel = pct>=90?"Outstanding! 🌟":pct>=70?"Great job! 👏":pct>=50?"Nice work! 💪":"Keep going! 🚀";
+    const gradeColor = pct>=70?"var(--leaf)":pct>=50?"var(--sun)":"var(--cobalt)";
+    const cheer = pct>=90?"You've really mastered this one.":pct>=70?"You're getting stronger every round.":pct>=50?"Solid progress — keep it up!":"Every mistake is a step forward — try again and watch your score climb!";
     const topicLabel = QUESTION_BANK[selectedTopic]?.label || "Practice";
     const summary = [`=== English Arena · Practice · ${topicLabel} · ${pct}% (${correct}/${total}) ===\n`]
       .concat(results.map((r, i) => [
@@ -230,6 +243,7 @@ export default function SoloView({ onBack }) {
           <div style={{fontFamily:"'Fraunces',serif",fontSize:"3rem",fontWeight:900,fontStyle:"italic",color:gradeColor,lineHeight:1,margin:"0.3rem 0"}}>{pct}%</div>
           <div style={{fontFamily:"'Fraunces',serif",fontWeight:700,fontStyle:"italic",fontSize:"1.1rem",marginBottom:"0.2rem",color:"var(--ink)"}}>{gradeLabel}</div>
           <div style={{color:"var(--muted)",fontSize:"0.85rem"}}>{correct} / {total} correct · {QUESTION_BANK[selectedTopic]?.label}</div>
+          <div style={{color:"var(--ink-soft)",fontSize:"0.92rem",lineHeight:1.5,marginTop:"0.7rem",maxWidth:"32ch",marginLeft:"auto",marginRight:"auto"}}>{cheer}</div>
           {bestStreak >= 2 && (
             <div style={{marginTop:"0.6rem",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
               <SAStreakMeter count={bestStreak} size="sm" />
@@ -237,6 +251,22 @@ export default function SoloView({ onBack }) {
             </div>
           )}
         </div>
+
+        {soloBest && (
+          <div className="sa-anim-pop" style={{background:"var(--paper)",border:`1.5px solid ${(soloBest.newPct||soloBest.newStreak)?"var(--leaf)":"var(--line)"}`,borderRadius:16,padding:"0.9rem 1.1rem",marginBottom:"1.2rem",display:"flex",alignItems:"center",gap:"0.9rem"}}>
+            <span style={{fontSize:"1.7rem",lineHeight:1}}>{(soloBest.newPct||soloBest.newStreak)?"🎉":"🏅"}</span>
+            <div style={{flex:1}}>
+              <div style={{fontFamily:"'Fraunces',serif",fontWeight:800,fontSize:"1.02rem",color:"var(--ink)"}}>
+                {soloBest.firstTime ? "First result saved!" : (soloBest.newPct||soloBest.newStreak) ? "New personal best!" : "Your best so far"}
+              </div>
+              <div style={{fontSize:"0.82rem",color:"var(--ink-soft)",marginTop:"0.15rem"}}>
+                Best score <strong style={{color:"var(--leaf)"}}>{soloBest.best.pct}%</strong>
+                {soloBest.best.streak>=2 && <> · Best streak <strong style={{color:"var(--sun)"}}>{soloBest.best.streak}</strong></>}
+                {" · "}{QUESTION_BANK[selectedTopic]?.label}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"0.6rem",marginBottom:"0.5rem",flexWrap:"wrap"}}>
           <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700}}>Your questions & answers</div>
