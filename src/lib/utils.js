@@ -7,6 +7,52 @@ export const TEAMS = [
 
 export const OPT_ICONS = ["A", "B", "C", "D"];
 
+// ── Per-topic visual theme: an accent (one of the 6 palette tokens) + an emoji.
+// One table drives topic cards, the projector question/reveal accents, and badges.
+export const TOPIC_THEME = {
+  travel_holidays:       { accent: "var(--cobalt)", emoji: "✈️", label: "Travel & Holidays" },
+  cities_travel:         { accent: "var(--cobalt)", emoji: "🏙️", label: "Cities & Travel" },
+  technology_gadgets:    { accent: "var(--cobalt)", emoji: "📱", label: "Technology & Gadgets" },
+  education_studying:    { accent: "var(--cobalt)", emoji: "🎓", label: "Education & Studying" },
+  language_communication:{ accent: "var(--cobalt)", emoji: "💬", label: "Language & Communication" },
+  jobs_interviews:       { accent: "var(--cobalt)", emoji: "🧑‍💼", label: "Jobs & Interviews" },
+  cooking_recipes:       { accent: "var(--tomato)", emoji: "🍳", label: "Cooking & Recipes" },
+  sports_fitness:        { accent: "var(--tomato)", emoji: "⚽", label: "Sports & Fitness" },
+  films_tv:              { accent: "var(--tomato)", emoji: "🎬", label: "Films & TV" },
+  food_restaurants:      { accent: "var(--tomato)", emoji: "🍽️", label: "Food & Restaurants" },
+  emotions_feelings:     { accent: "var(--tomato)", emoji: "😊", label: "Emotions & Feelings" },
+  health_wellbeing:      { accent: "var(--leaf)",   emoji: "🩺", label: "Health & Wellbeing" },
+  the_environment:       { accent: "var(--leaf)",   emoji: "🌍", label: "The Environment" },
+  money_banking:         { accent: "var(--leaf)",   emoji: "💰", label: "Money & Banking" },
+  hobbies_free_time:     { accent: "var(--leaf)",   emoji: "🎨", label: "Hobbies & Free Time" },
+  nature_animals:        { accent: "var(--leaf)",   emoji: "🦊", label: "Nature & Animals" },
+  work_office:           { accent: "var(--plum)",   emoji: "💼", label: "Work & the Office" },
+  family_life:           { accent: "var(--plum)",   emoji: "👪", label: "Family Life" },
+  shopping_fashion:      { accent: "var(--plum)",   emoji: "🛍️", label: "Shopping & Fashion" },
+  music:                 { accent: "var(--plum)",   emoji: "🎵", label: "Music" },
+  celebrations_parties:  { accent: "var(--plum)",   emoji: "🎉", label: "Celebrations & Parties" },
+  past_memories:         { accent: "var(--plum)",   emoji: "📸", label: "Past & Memories" },
+  ambitions_goals:       { accent: "var(--sun)",    emoji: "🎯", label: "Ambitions & Goals" },
+  culture_traditions:    { accent: "var(--sun)",    emoji: "🎭", label: "Culture & Traditions" },
+  books_reading:         { accent: "var(--sun)",    emoji: "📚", label: "Books & Reading" },
+  friendship:            { accent: "var(--sun)",    emoji: "🤝", label: "Friendship" },
+  verb_tenses:           { accent: "var(--sun)",    emoji: "⏳", label: "Verb Tenses & Habits" },
+  social_media_internet: { accent: "var(--aqua)",   emoji: "📲", label: "Social Media & the Internet" },
+  home_housing:          { accent: "var(--aqua)",   emoji: "🏠", label: "Home & Housing" },
+  science_discovery:     { accent: "var(--aqua)",   emoji: "🔬", label: "Science & Discovery" },
+  news_current_affairs:  { accent: "var(--aqua)",   emoji: "📰", label: "News & Current Affairs" },
+  present_perfect:       { accent: "var(--aqua)",   emoji: "✅", label: "Present Perfect & Continuous" },
+};
+const DEFAULT_THEME = { accent: "var(--sun)", emoji: "🎲", label: "" };
+// Resolve a theme from either a topic key ("travel_holidays") or a display label
+// ("Travel & Holidays", which may carry an emoji/prefix on the projector).
+export function themeFor(keyOrLabel) {
+  if (!keyOrLabel) return DEFAULT_THEME;
+  if (TOPIC_THEME[keyOrLabel]) return TOPIC_THEME[keyOrLabel];
+  const hit = Object.values(TOPIC_THEME).find(t => t.label && keyOrLabel.includes(t.label));
+  return hit || DEFAULT_THEME;
+}
+
 // Fair Fisher-Yates shuffle. Returns a new array; does not mutate the input.
 // (Array.prototype.sort(() => Math.random() - 0.5) is NOT a uniform shuffle —
 // it heavily over-selects early items, which made the same questions recur.)
