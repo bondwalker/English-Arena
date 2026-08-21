@@ -2,12 +2,13 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, MatchConnector, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
 // ─── HostReveal — coral takeover ─────────────────────────────────────────────────
-function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, onSkipWarmup }) {
+function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, onSkipWarmup, topic }) {
+  const th = themeFor(topic);
   const correct = Object.entries(answers).filter(([, a]) => checkAnswer(a?.v ?? a, q)).length;
   const pCount = Object.keys(players).length;
   const missed = Math.max(0, pCount - correct);
@@ -28,7 +29,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
       {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(15,18,38,0.09)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
       <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", height: "100%", maxWidth: 1100, margin: "0 auto", width: "100%", justifyContent: "center", textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.4rem" }}>
-          <span style={{ border: "1.5px solid rgba(15,18,38,0.5)", borderRadius: 999, padding: "0.5rem 1.3rem", fontWeight: 700, fontSize: "1rem", color: "var(--on-light)" }}>{pill}</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", border: "1.5px solid rgba(15,18,38,0.5)", borderRadius: 999, padding: "0.5rem 1.3rem", fontWeight: 700, fontSize: "1rem", color: "var(--on-light)" }}><span style={{ fontSize: "1.1rem" }}>{th.emoji}</span>{pill}</span>
         </div>
         {isWordMatch ? (
           <div className="sa-anim-pop" style={{ display: "flex", flexDirection: "column", gap: "0.7rem", maxWidth: 900, margin: "0 auto", width: "100%" }}>
@@ -134,6 +135,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
     </div>
   );
 
+  const th = themeFor(topic);
   const main = (
     <div>
       <div className="flex justify-between items-center mb-2 wrap gap-1">
@@ -142,14 +144,14 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
             <SAIcon name={q.type === "spot_sentence" ? "error_spotter" : q.type} size={14} color="var(--on-dark)" />
             <span>{({ error_spotter: "find the mistake", spot_sentence: "find the mistake" }[q.type]) || q.type.replace(/_/g, " ")}</span>
           </div>
-          {topic && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.08em", color: "var(--muted)", textTransform: "uppercase" }}>{topic}</span>}
+          {topic && <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.08em", color: th.accent, textTransform: "uppercase", fontWeight: 700 }}><span style={{ fontSize: "1rem" }}>{th.emoji}</span>{topic}</span>}
           {q._warmup && <span className="badge" style={{ background: "rgba(255,206,71,0.15)", color: "var(--sun)", border: "1px solid rgba(255,206,71,0.3)" }}>WARM UP</span>}
         </div>
       </div>
 
       <div style={{ display: "flex", gap: 4, marginBottom: "1.2rem" }}>
         {Array.from({ length: total }).map((_, i) => (
-          <div key={i} style={{ flex: 1, height: 6, borderRadius: 99, background: i < qIndex ? "var(--leaf)" : i === qIndex ? "var(--sun)" : "var(--line)", transition: "background 0.3s" }} />
+          <div key={i} style={{ flex: 1, height: 6, borderRadius: 99, background: i < qIndex ? "var(--leaf)" : i === qIndex ? th.accent : "var(--line)", transition: "background 0.3s" }} />
         ))}
       </div>
 
@@ -657,11 +659,12 @@ export default function HostView({ onBack }) {
                       {topicEntries.map(([key, { label }], i) => {
                         const dis = noSB.has(key);
                         const sel = selectedTopic === key;
+                        const th = themeFor(key);
                         return (
                           <button key={key} disabled={dis} onClick={() => !dis && pickTopic(key)}
-                            style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? "var(--sun)" : "var(--line)"}`, background: sel ? "rgba(255,206,71,0.1)" : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
-                            <span style={{ width: 12, height: 12, borderRadius: "50%", background: DOTS[i % DOTS.length], flexShrink: 0 }} />
-                            <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? "var(--sun)" : "var(--ink)" }}>{cleanLabel(label)}</span>
+                            style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? th.accent : "var(--line)"}`, background: sel ? `color-mix(in srgb, var(--paper) 85%, ${th.accent})` : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
+                            <span style={{ fontSize: "1.4rem", flexShrink: 0, lineHeight: 1 }}>{th.emoji}</span>
+                            <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? th.accent : "var(--ink)" }}>{cleanLabel(label)}</span>
                           </button>
                         );
                       })}
@@ -752,7 +755,7 @@ export default function HostView({ onBack }) {
 
       {/* Reveal phase — coral takeover */}
       {room.phase === "reveal" && room.currentQ && (
-        <HostReveal q={room.currentQ} answers={room.answers || {}} players={room.players || {}}
+        <HostReveal q={room.currentQ} answers={room.answers || {}} players={room.players || {}} topic={room.topic}
           onNext={advance}
           nextLabel={room.currentQ?._warmup ? "Next" : room.qIndex + 1 >= room.questions.length ? "Final results" : "See leaderboard"}
           onReplay={replayQuestion}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle, themeFor } from "../lib/utils.js";
 import { readFaves, writeFaves } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -118,13 +118,14 @@ export default function SoloView({ onBack }) {
           {Object.entries(QUESTION_BANK).filter(([k]) => topicFilter==="all" || faves.includes(k)).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}],i) => {
             const disabled = gameType==="stress_battle" && noStressBattle.has(key);
             const sel = selectedTopic === key;
+            const th = themeFor(key);
             return (
               <div key={key} style={{position:"relative",display:"flex"}}>
                 <button
                   disabled={disabled}
                   onClick={() => !disabled && setSelectedTopic(key)}
-                  style={{flex:1,display:"flex",alignItems:"center",gap:"0.5rem",padding:"0.55rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.82rem",fontWeight:sel?700:600,border:`2px solid ${sel?"var(--sun)":"var(--line)"}`,background:sel?"rgba(255,206,71,0.12)":"var(--paper)",color:sel?"var(--sun)":disabled?"var(--muted)":"var(--ink)",cursor:disabled?"not-allowed":"pointer",textAlign:"left",transition:"all 0.12s",opacity:disabled?0.35:1,borderRadius:10}}>
-                  <span style={{width:10,height:10,borderRadius:"50%",background:DOTS[i%DOTS.length],flexShrink:0}} />
+                  style={{flex:1,display:"flex",alignItems:"center",gap:"0.5rem",padding:"0.55rem 0.6rem",paddingRight:"1.6rem",fontSize:"0.82rem",fontWeight:sel?700:600,border:`2px solid ${sel?th.accent:"var(--line)"}`,background:sel?"color-mix(in srgb, var(--paper) 82%, "+th.accent+")":"var(--paper)",color:sel?th.accent:disabled?"var(--muted)":"var(--ink)",cursor:disabled?"not-allowed":"pointer",textAlign:"left",transition:"all 0.12s",opacity:disabled?0.35:1,borderRadius:10}}>
+                  <span style={{fontSize:"1.05rem",flexShrink:0,lineHeight:1}}>{th.emoji}</span>
                   {cleanLabel(label)}</button>
                 <button onClick={(e) => { e.stopPropagation(); toggleFave(key); }} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--sun)":"var(--muted)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
               </div>
