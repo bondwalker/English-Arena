@@ -171,8 +171,8 @@ export default function SoloView({ onBack }) {
         {!stressMode && <>
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
-          {[["mixed","Mixed"],["multiple_choice","Multiple Choice"],["true_false","True / False"],["error_spotter","Find the Mistake"],["rearrange","Word Order"],["story_builder","Story Builder"],["word_match","Word Match"],["odd_one_out","Odd One Out"],["hangman","Hangman"]].map(([v,l]) => (
-            <button key={v} className={`btn btn-sm ${gameType===v?"btn-teal":"btn-ghost"}`} onClick={() => setGameType(v)}>{l}</button>
+          {[["mixed","Mixed","var(--sun)"],["multiple_choice","Multiple Choice","var(--tomato)"],["true_false","True / False","var(--leaf)"],["error_spotter","Find the Mistake","var(--cobalt)"],["rearrange","Word Order","var(--plum)"],["story_builder","Story Builder","var(--aqua)"],["word_match","Word Match","var(--sun)"],["odd_one_out","Odd One Out","var(--tomato)"],["hangman","Hangman","var(--cobalt)"]].map(([v,l,acc]) => (
+            <button key={v} className={"qchip"+(gameType===v?" sel":"")} style={{"--acc":acc}} onClick={() => setGameType(v)}><span className="qchip-dot"/>{l}</button>
           ))}
         </div>
         </>}
@@ -180,7 +180,7 @@ export default function SoloView({ onBack }) {
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Number of questions</div>
         <div className="flex gap-1 mb-1">
           {[5,8,10,12,15].map(n => (
-            <button key={n} className={`btn btn-sm ${qCount===n?"btn-gold":"btn-ghost"}`} onClick={() => setQCount(n)}>{n}</button>
+            <button key={n} className={"qpill"+(qCount===n?" sel":"")} onClick={() => setQCount(n)}>{n}</button>
           ))}
         </div>
         {(selectedTopic || stressMode) && (() => {
