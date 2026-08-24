@@ -87,11 +87,12 @@ const css = `
   .story-card.placed{border-color:var(--aqua);background:rgba(66,218,195,0.08)}
   .story-num{font-family:'Fraunces',serif;font-size:0.85rem;font-weight:700;color:var(--aqua);width:1.4rem;flex-shrink:0;margin-top:0.1rem}
 
-  .match-word{padding:0.65rem 0.9rem;border:2px solid var(--line);font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.13s;text-align:center;margin-bottom:0.4rem;border-radius:10px;background:var(--paper);color:var(--ink)}
-  .match-word:hover{border-color:var(--muted)}
-  .match-word.selected{border-color:var(--sun);background:rgba(255,206,71,0.12)}
-  .match-word.matched-correct{border-color:var(--leaf);background:rgba(122,220,90,0.1);cursor:default}
-  .match-word.matched-wrong{border-color:var(--tomato);background:rgba(255,92,66,0.1);cursor:default}
+  .match-word{padding:0.95rem 1rem;border:2px solid var(--line);font-size:1rem;font-weight:600;cursor:pointer;transition:transform 0.14s cubic-bezier(0.2,0.8,0.3,1.3),box-shadow 0.14s,border-color 0.14s,background 0.14s;text-align:center;margin-bottom:0.5rem;border-radius:16px;background:var(--paper);color:var(--ink);box-shadow:0 3px 0 -1px rgba(0,0,0,0.28)}
+  .match-word:hover{transform:translateY(-2px);border-color:var(--muted);box-shadow:0 6px 0 -1px rgba(0,0,0,0.32)}
+  .match-word:active{transform:translateY(1px);box-shadow:0 2px 0 -1px rgba(0,0,0,0.25)}
+  .match-word.selected{border-color:var(--sun);background:rgba(255,206,71,0.18);box-shadow:0 0 0 3px rgba(255,206,71,0.3),0 6px 0 -1px rgba(0,0,0,0.3);transform:translateY(-2px)}
+  .match-word.matched-correct{border-color:var(--leaf);background:rgba(122,220,90,0.18);box-shadow:0 0 0 3px rgba(122,220,90,0.28);cursor:default;transform:none}
+  .match-word.matched-wrong{border-color:var(--tomato);background:rgba(255,92,66,0.18);box-shadow:0 0 0 3px rgba(255,92,66,0.28);cursor:default;transform:none}
 
   .timer-num{font-family:'Fraunces',Georgia,serif;font-size:3rem;font-weight:900;color:var(--gold);line-height:1}
   .timer-num.urgent{color:var(--coral);animation:timerPulse 0.5s ease-in-out infinite}

@@ -287,15 +287,15 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "word_match" && q.pairs && (
         <div>
           <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em", marginBottom: "0.6rem" }}>Tap a word, then its meaning.</p>
-          <div style={{ position: "relative", minHeight: 160 }}>
+          <div style={{ position: "relative", minHeight: 200 }}>
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 1 }}>
               {Object.entries(matchState.matched).map(([w, m]) => {
                 const pairs2 = q.pairs.slice(0, 2);
                 const li = pairs2.findIndex(p => p.word === w);
                 const ri = shuffledMeanings.findIndex(p => p.meaning === m.meaning);
                 if (li < 0 || ri < 0) return null;
-                const fromY = 24 + li * 52;
-                const toY = 24 + ri * 52;
+                const fromY = 30 + li * 45;
+                const toY = 30 + ri * 45;
                 return <MatchConnector key={w} from={{ x: 34, y: fromY }} to={{ x: 66, y: toY }} color={m.correct ? "var(--leaf)" : "var(--tomato)"} />;
               })}
             </svg>
@@ -307,8 +307,9 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
                   const sel = matchState.sel === p.word;
                   return (
                     <div key={i} className={`match-word ${sel ? "selected" : ""} ${m ? (m.correct ? "matched-correct" : "matched-wrong") : ""}`}
-                      style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.95rem", fontWeight: 700, cursor: m || answered ? "default" : "pointer", marginBottom: "0.4rem" }}
+                      style={{ minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", fontSize: "clamp(1.15rem,4.8vw,1.55rem)", fontWeight: 800, lineHeight: 1.15, cursor: m || answered ? "default" : "pointer" }}
                       onClick={() => !m && !answered && handleMatch("word", p.word)}>
+                      <span style={{ width: 12, height: 12, borderRadius: "50%", background: OPT_COLORS[i], flexShrink: 0, boxShadow: `0 0 0 3px ${OPT_COLORS[i]}33` }} />
                       {p.word}
                     </div>
                   );
@@ -321,7 +322,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
                   const entry = Object.entries(matchState.matched).find(([, m]) => m.meaning === p.meaning);
                   return (
                     <div key={p.meaning} className={`match-word ${isMatched ? (entry?.[1]?.correct ? "matched-correct" : "matched-wrong") : ""}`}
-                      style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", cursor: isMatched || answered ? "default" : "pointer", marginBottom: "0.4rem", textAlign: "center" }}
+                      style={{ minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(1rem,3.9vw,1.28rem)", fontWeight: 600, lineHeight: 1.25, cursor: isMatched || answered ? "default" : "pointer", textAlign: "center" }}
                       onClick={() => !isMatched && !answered && handleMatch("meaning", p.meaning)}>
                       {p.meaning}
                     </div>
