@@ -184,5 +184,27 @@ const css = `
   @keyframes sa-score-pop{0%{transform:translate(-50%,20px) scale(0.4);opacity:0}20%{transform:translate(-50%,0) scale(1.15);opacity:1}100%{transform:translate(-50%,-70px) scale(1);opacity:0}}
   @keyframes sa-spotlight-sweep{0%{transform:translateX(-100%) skewX(-20deg)}100%{transform:translateX(200%) skewX(-20deg)}}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  /* Solo setup — colourful topic cards (accent from inline --acc) */
+  .solo-topic{position:relative;display:flex;align-items:center;gap:0.55rem;width:100%;padding:0.5rem 1.6rem 0.5rem 0.5rem;border:2px solid var(--line);border-radius:12px;background:color-mix(in srgb, var(--paper) 90%, var(--acc));color:var(--ink);font-size:0.84rem;font-weight:600;cursor:pointer;text-align:left;transition:transform 0.14s cubic-bezier(0.2,0.8,0.3,1.2),box-shadow 0.14s,border-color 0.14s,background 0.14s}
+  .solo-topic:hover{transform:translateY(-3px);border-color:var(--acc);box-shadow:0 7px 0 -2px color-mix(in srgb, var(--acc) 60%, transparent)}
+  .solo-topic:active{transform:translateY(-1px)}
+  .solo-topic.sel{border-color:var(--acc);background:color-mix(in srgb, var(--paper) 74%, var(--acc));color:var(--acc);font-weight:700}
+  .solo-topic-ico{width:32px;height:32px;flex-shrink:0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;background:var(--acc);box-shadow:2px 2px 0 color-mix(in srgb, var(--acc) 45%, transparent)}
+  /* Solo setup — question-type chips (accent from inline --acc) */
+  .qchip{display:inline-flex;align-items:center;gap:0.4rem;border:2px solid var(--line);background:var(--paper);color:var(--ink-soft);font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.82rem;padding:0.45rem 0.9rem;border-radius:999px;cursor:pointer;transition:transform 0.13s cubic-bezier(0.2,0.8,0.3,1.2),box-shadow 0.13s,border-color 0.13s,background 0.13s,color 0.13s}
+  .qchip:hover{transform:translateY(-2px);border-color:var(--acc);color:var(--ink);box-shadow:0 4px 0 -1px color-mix(in srgb, var(--acc) 55%, transparent)}
+  .qchip .qchip-dot{width:9px;height:9px;border-radius:50%;background:var(--acc);flex-shrink:0}
+  .qchip.sel{background:color-mix(in srgb, var(--paper) 68%, var(--acc));border-color:var(--acc);color:var(--acc);box-shadow:0 4px 0 -1px color-mix(in srgb, var(--acc) 55%, transparent);transform:translateY(-1px)}
+  .qchip.sel .qchip-dot{box-shadow:0 0 0 3px color-mix(in srgb, var(--acc) 35%, transparent)}
+  /* Solo setup — number-of-questions pills */
+  .qpill{width:2.7rem;height:2.7rem;display:flex;align-items:center;justify-content:center;border:2px solid var(--line);background:var(--paper);color:var(--ink-soft);font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;border-radius:50%;cursor:pointer;transition:transform 0.13s cubic-bezier(0.2,0.8,0.3,1.3),box-shadow 0.13s,border-color 0.13s,background 0.13s,color 0.13s}
+  .qpill:hover{transform:translateY(-2px);border-color:var(--sun);color:var(--ink)}
+  .qpill.sel{background:var(--sun);border-color:var(--sun);color:var(--on-light);box-shadow:0 5px 0 -1px rgba(255,206,71,0.5);transform:translateY(-2px) scale(1.06)}
+  /* Solo setup — ambient drifting glows */
+  .sa-ambient{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .sa-ambient-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.16;animation:sa-drift 22s ease-in-out infinite}
+  @keyframes sa-drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(26px,-30px) scale(1.12)}}
+  @media(prefers-reduced-motion:reduce){.sa-ambient-blob{animation:none}}
 `;
 export default css;
