@@ -68,7 +68,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
   return (
     <div style={{ display: "flex", flexDirection: "column", ...(answered ? {} : { flex: 1, minHeight: 0 }) }}>
-      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(1.4rem,3.4vw,2rem)", lineHeight: 1.3, marginBottom: "1.2rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
+      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(1.6rem,5vw,2.2rem)", lineHeight: 1.25, marginBottom: "1.2rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "multiple_choice" && q.options && (
         <div className="opt-grid" style={{ flex: 1, gridAutoRows: "1fr" }}>
@@ -78,7 +78,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
               onClick={() => onAnswer(opt)}>
               <span style={{ width: 34, height: 34, borderRadius: 9, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-              <span style={{ textAlign: "left", fontSize: "clamp(1.05rem,1.5vw,1.3rem)", fontWeight: 600 }}>{opt}</span>
+              <span style={{ textAlign: "left", fontSize: "clamp(1.2rem,4.4vw,1.45rem)", fontWeight: 700, lineHeight: 1.3 }}>{opt}</span>
             </button>
           ))}
         </div>
@@ -149,15 +149,15 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "fill_idiom" && (
         <div>
-          {q.hint && <p style={{ fontSize: "0.82rem", color: "var(--muted)", fontStyle: "italic", marginBottom: "0.5rem", borderLeft: "2px solid var(--cobalt)", paddingLeft: "0.5rem" }}>{q.hint}</p>}
+          {q.hint && <p style={{ fontSize: "1rem", color: "var(--ink-soft)", fontStyle: "italic", marginBottom: "0.7rem", borderLeft: "3px solid var(--cobalt)", paddingLeft: "0.6rem", lineHeight: 1.4 }}>{q.hint}</p>}
           <div className="opt-grid">
             {(q.options || []).map((opt, i) => (
               <button key={i} disabled={answered}
                 className={`opt-btn opt-${i}`}
-                style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", transition: "opacity 0.18s", display: "flex", alignItems: "center", gap: "0.5rem" }}
+                style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
                 onClick={() => onAnswer(opt)}>
-                <span style={{ width: 22, height: 22, borderRadius: 6, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "0.7rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-                <span style={{ textAlign: "left", fontSize: "0.88rem" }}>{opt}</span>
+                <span style={{ width: 34, height: 34, borderRadius: 9, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
+                <span style={{ textAlign: "left", fontSize: "clamp(1.2rem,4.4vw,1.45rem)", fontWeight: 700 }}>{opt}</span>
               </button>
             ))}
           </div>
@@ -287,15 +287,15 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
       {q.type === "word_match" && q.pairs && (
         <div>
           <p style={{ fontSize: "0.8rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em", marginBottom: "0.6rem" }}>Tap a word, then its meaning.</p>
-          <div style={{ position: "relative", minHeight: 160 }}>
+          <div style={{ position: "relative", minHeight: 200 }}>
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 1 }}>
               {Object.entries(matchState.matched).map(([w, m]) => {
                 const pairs2 = q.pairs.slice(0, 2);
                 const li = pairs2.findIndex(p => p.word === w);
                 const ri = shuffledMeanings.findIndex(p => p.meaning === m.meaning);
                 if (li < 0 || ri < 0) return null;
-                const fromY = 24 + li * 52;
-                const toY = 24 + ri * 52;
+                const fromY = 30 + li * 45;
+                const toY = 30 + ri * 45;
                 return <MatchConnector key={w} from={{ x: 34, y: fromY }} to={{ x: 66, y: toY }} color={m.correct ? "var(--leaf)" : "var(--tomato)"} />;
               })}
             </svg>
@@ -307,8 +307,9 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
                   const sel = matchState.sel === p.word;
                   return (
                     <div key={i} className={`match-word ${sel ? "selected" : ""} ${m ? (m.correct ? "matched-correct" : "matched-wrong") : ""}`}
-                      style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.95rem", fontWeight: 700, cursor: m || answered ? "default" : "pointer", marginBottom: "0.4rem" }}
+                      style={{ minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", fontSize: "clamp(1.15rem,4.8vw,1.55rem)", fontWeight: 800, lineHeight: 1.15, cursor: m || answered ? "default" : "pointer" }}
                       onClick={() => !m && !answered && handleMatch("word", p.word)}>
+                      <span style={{ width: 12, height: 12, borderRadius: "50%", background: OPT_COLORS[i], flexShrink: 0, boxShadow: `0 0 0 3px ${OPT_COLORS[i]}33` }} />
                       {p.word}
                     </div>
                   );
@@ -321,7 +322,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
                   const entry = Object.entries(matchState.matched).find(([, m]) => m.meaning === p.meaning);
                   return (
                     <div key={p.meaning} className={`match-word ${isMatched ? (entry?.[1]?.correct ? "matched-correct" : "matched-wrong") : ""}`}
-                      style={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", cursor: isMatched || answered ? "default" : "pointer", marginBottom: "0.4rem", textAlign: "center" }}
+                      style={{ minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(1rem,3.9vw,1.28rem)", fontWeight: 600, lineHeight: 1.25, cursor: isMatched || answered ? "default" : "pointer", textAlign: "center" }}
                       onClick={() => !isMatched && !answered && handleMatch("meaning", p.meaning)}>
                       {p.meaning}
                     </div>
