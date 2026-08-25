@@ -68,7 +68,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
   return (
     <div style={{ display: "flex", flexDirection: "column", ...(answered ? {} : { flex: 1, minHeight: 0 }) }}>
-      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(1.4rem,3.4vw,2rem)", lineHeight: 1.3, marginBottom: "1.2rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
+      <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(1.6rem,5vw,2.2rem)", lineHeight: 1.25, marginBottom: "1.2rem", color: "var(--ink)" }}>{q.type === "hangman" ? q.hint : q.question}</h2>
 
       {q.type === "multiple_choice" && q.options && (
         <div className="opt-grid" style={{ flex: 1, gridAutoRows: "1fr" }}>
@@ -78,7 +78,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
               style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", transition: "opacity 0.18s", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
               onClick={() => onAnswer(opt)}>
               <span style={{ width: 34, height: 34, borderRadius: 9, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-              <span style={{ textAlign: "left", fontSize: "clamp(1.05rem,1.5vw,1.3rem)", fontWeight: 600 }}>{opt}</span>
+              <span style={{ textAlign: "left", fontSize: "clamp(1.2rem,4.4vw,1.45rem)", fontWeight: 700, lineHeight: 1.3 }}>{opt}</span>
             </button>
           ))}
         </div>
@@ -149,15 +149,15 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "fill_idiom" && (
         <div>
-          {q.hint && <p style={{ fontSize: "0.82rem", color: "var(--muted)", fontStyle: "italic", marginBottom: "0.5rem", borderLeft: "2px solid var(--cobalt)", paddingLeft: "0.5rem" }}>{q.hint}</p>}
+          {q.hint && <p style={{ fontSize: "1rem", color: "var(--ink-soft)", fontStyle: "italic", marginBottom: "0.7rem", borderLeft: "3px solid var(--cobalt)", paddingLeft: "0.6rem", lineHeight: 1.4 }}>{q.hint}</p>}
           <div className="opt-grid">
             {(q.options || []).map((opt, i) => (
               <button key={i} disabled={answered}
                 className={`opt-btn opt-${i}`}
-                style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", transition: "opacity 0.18s", display: "flex", alignItems: "center", gap: "0.5rem" }}
+                style={{ opacity: answered && myAnswer !== opt ? 0.28 : 1, outline: answered && myAnswer === opt ? `3px solid ${OPT_COLORS[i]}` : "none", animation: answered && myAnswer === opt ? "lockIn 0.38s ease" : "none", display: "flex", alignItems: "center", gap: "0.5rem" }}
                 onClick={() => onAnswer(opt)}>
-                <span style={{ width: 22, height: 22, borderRadius: 6, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "0.7rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
-                <span style={{ textAlign: "left", fontSize: "0.88rem" }}>{opt}</span>
+                <span style={{ width: 34, height: 34, borderRadius: 9, background: OPT_COLORS[i], color: "var(--on-light)", fontSize: "1rem", fontFamily: "'Fraunces',serif", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{OPT_LETTERS[i]}</span>
+                <span style={{ textAlign: "left", fontSize: "clamp(1.2rem,4.4vw,1.45rem)", fontWeight: 700 }}>{opt}</span>
               </button>
             ))}
           </div>

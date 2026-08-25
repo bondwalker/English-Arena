@@ -62,8 +62,9 @@ const css = `
   .team-members{font-size:0.72rem;margin-top:0.4rem;opacity:0.6;line-height:1.7}
 
   .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:0.9rem}
-  .opt-btn{padding:1.1rem 1rem;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;border:2.5px solid transparent;cursor:pointer;transition:all 0.13s;text-align:left;display:flex;align-items:flex-start;gap:0.55rem;min-height:76px;line-height:1.45;color:var(--ink);border-radius:14px}
-  .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(0,0,0,0.25)}
+  .opt-btn{padding:1.1rem 1rem;font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:600;border:2.5px solid transparent;cursor:pointer;transition:transform 0.13s cubic-bezier(0.2,0.8,0.3,1.2),box-shadow 0.13s;text-align:left;display:flex;align-items:flex-start;gap:0.55rem;min-height:80px;line-height:1.45;color:var(--ink);border-radius:16px;box-shadow:0 3px 0 -1px rgba(0,0,0,0.28)}
+  .opt-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 6px 0 -1px rgba(0,0,0,0.34)}
+  .opt-btn:active:not(:disabled){transform:translateY(1px);box-shadow:0 2px 0 -1px rgba(0,0,0,0.25)}
   .opt-btn:disabled{cursor:not-allowed}
   .opt-0{background:rgba(255,92,66,0.12);border-color:var(--tomato)}
   .opt-1{background:rgba(91,139,255,0.12);border-color:var(--cobalt)}
@@ -77,13 +78,15 @@ const css = `
   .opt-3 .opt-icon{background:var(--plum)}
 
   .tiles{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.65rem;border:2px dashed var(--line);min-height:50px;border-radius:10px}
-  .tile{padding:0.38rem 0.85rem;background:var(--gold);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.11s;user-select:none;border-radius:8px;border:2px solid var(--ink)}
-  .tile:hover{transform:translateY(-2px);box-shadow:2px 2px 0 var(--ink)}
+  .tile{padding:0.55rem 1rem;background:var(--gold);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:800;cursor:pointer;transition:transform 0.12s cubic-bezier(0.2,0.8,0.3,1.3),box-shadow 0.12s;user-select:none;border-radius:12px;border:2px solid var(--ink);box-shadow:0 3px 0 -1px var(--ink)}
+  .tile:hover{transform:translateY(-2px);box-shadow:0 5px 0 -1px var(--ink)}
+  .tile:active{transform:translateY(1px);box-shadow:0 2px 0 -1px var(--ink)}
   .tile.used{background:rgba(253,243,221,0.06);color:rgba(253,243,221,0.2);cursor:default;transform:none;border-color:transparent}
   .tile.placed{background:var(--aqua);color:var(--on-light);border-color:var(--ink)}
 
-  .story-card{padding:0.8rem 1rem;border:2px solid var(--line);margin-bottom:0.4rem;cursor:pointer;transition:all 0.13s;display:flex;align-items:flex-start;gap:0.65rem;font-size:1.05rem;line-height:1.55;border-radius:10px;background:var(--paper)}
-  .story-card:hover:not(.placed){border-color:var(--sun);background:rgba(255,206,71,0.08)}
+  .story-card{padding:0.95rem 1.1rem;border:2px solid var(--line);margin-bottom:0.5rem;cursor:pointer;transition:transform 0.13s cubic-bezier(0.2,0.8,0.3,1.2),box-shadow 0.13s,border-color 0.13s,background 0.13s;display:flex;align-items:flex-start;gap:0.65rem;font-size:1.18rem;line-height:1.5;border-radius:14px;background:var(--paper);box-shadow:0 3px 0 -1px rgba(0,0,0,0.26)}
+  .story-card:hover:not(.placed){transform:translateY(-2px);border-color:var(--sun);background:rgba(255,206,71,0.08);box-shadow:0 5px 0 -1px rgba(0,0,0,0.3)}
+  .story-card:active:not(.placed){transform:translateY(1px)}
   .story-card.placed{border-color:var(--aqua);background:rgba(66,218,195,0.08)}
   .story-num{font-family:'Fraunces',serif;font-size:0.85rem;font-weight:700;color:var(--aqua);width:1.4rem;flex-shrink:0;margin-top:0.1rem}
 
@@ -143,7 +146,7 @@ const css = `
   .solo-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1.6rem;align-items:start}
   @media(max-width:600px){
     .opt-grid{grid-template-columns:1fr}
-    .opt-btn{min-height:72px;font-size:1.05rem;padding:1.1rem 1.1rem}
+    .opt-btn{min-height:78px;font-size:1.18rem;padding:1.1rem 1.1rem}
     .hero-btns{flex-direction:column;align-items:stretch}
     .solo-grid{grid-template-columns:1fr}
   }
