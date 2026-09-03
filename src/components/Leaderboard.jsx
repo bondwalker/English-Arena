@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, Confetti } from "./ui.jsx";
 import { TEAMS, getTeamScores, reviewPrompt, reviewAnswer, computeAwards } from "../lib/utils.js";
 import { TeamIcon } from "./ui.jsx";
@@ -10,6 +11,16 @@ export function Leaderboard({ sorted, mode, teams, teamScores, isEnd, room, onPl
   const scoreOf = (e) => e[1].score || 0;
   const rankAt = (i) => 1 + sorted.filter(e => scoreOf(e) > scoreOf(sorted[i])).length;
 
+  // Staged podium reveal (end screen): count in the top three one at a time —
+  // 3rd, then 2nd, then 1st — building suspense before the winner is shown.
+  const steps = Math.min(3, sorted.length);
+  const [revealStep, setRevealStep] = useState(0);
+  useEffect(() => {
+    if (!isEnd || revealStep >= steps) return;
+    const t = setTimeout(() => setRevealStep(s => s + 1), revealStep === 0 ? 1400 : 2400);
+    return () => clearTimeout(t);
+  }, [isEnd, revealStep, steps]);
+
   // ── End: winner podium (screen 11) ──
   if (isEnd) {
     const top3 = sorted.slice(0, 3);
@@ -18,18 +29,34 @@ export function Leaderboard({ sorted, mode, teams, teamScores, isEnd, room, onPl
     const isTie = sorted.length > 1 && winners.length > 1;
     const order = [1, 0, 2]; // display left, center, right
     const heightByRank = { 1: 210, 2: 150, 3: 120 };
+    const fullyRevealed = revealStep >= steps;
+    const isRevealed = (idx) => revealStep >= steps - idx; // idx: 0=1st … 2=3rd
+    const placeWord = ["first", "second", "third"];
+    const nextIdx = steps - revealStep - 1; // sorted index revealed at the next step
+    const topWord = steps >= 3 ? "three" : steps === 2 ? "two" : "one";
+    const opener = steps === 1 ? "And the winner is…" : `Counting down the top ${topWord}…`;
+    const countingLabel = !fullyRevealed && steps > 0
+      ? (revealStep === 0 ? opener : `And in ${placeWord[nextIdx] || ""} place…`)
+      : "";
     return (
-      <div style={{ position: "relative", paddingTop: "0.5rem" }}>
-        <Confetti />
+      <div style={{ position: "relative", paddingTop: "0.5rem", cursor: fullyRevealed ? "default" : "pointer" }}
+        onClick={fullyRevealed ? undefined : () => setRevealStep(steps)}
+        title={fullyRevealed ? undefined : "Click to reveal all"}>
+        {fullyRevealed && <Confetti />}
         <div style={{ position: "absolute", top: -60, right: -40, width: 300, height: 300, borderRadius: "50%", background: "var(--sun)", opacity: 0.16, pointerEvents: "none" }} />
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, border: "1.5px solid rgba(255,206,71,0.5)", borderRadius: 999, padding: "0.45rem 1.2rem", color: "var(--sun)", fontWeight: 700, fontSize: "0.95rem", marginBottom: "1.2rem" }}>✦ Game complete</span>
-          <h1 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(2.2rem,5vw,4rem)", letterSpacing: "-0.01em", lineHeight: 1.05 }}>
-            {isTie
-              ? <>It's a <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>tie<span style={{ color: "var(--sun)" }}>!</span></span></>
-              : <>And the winner is <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>{winners[0] || ""}<span style={{ color: "var(--sun)" }}>.</span></span></>}
-          </h1>
-          {isTie && <p style={{ color: "var(--muted)", fontSize: "1.05rem", marginTop: "0.6rem" }}>{winners.join(" & ")} — joint first!</p>}
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, border: "1.5px solid rgba(255,206,71,0.5)", borderRadius: 999, padding: "0.45rem 1.2rem", color: "var(--sun)", fontWeight: 700, fontSize: "0.95rem", marginBottom: "1.2rem" }}>{fullyRevealed ? "✦ Game complete" : "🥁 Drum roll…"}</span>
+          {fullyRevealed ? (
+            <h1 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(2.2rem,5vw,4rem)", letterSpacing: "-0.01em", lineHeight: 1.05 }}>
+              {isTie
+                ? <>It's a <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>tie<span style={{ color: "var(--sun)" }}>!</span></span></>
+                : <>And the winner is <span style={{ color: "var(--tomato)", fontStyle: "italic" }}>{winners[0] || ""}<span style={{ color: "var(--sun)" }}>.</span></span></>}
+            </h1>
+          ) : (
+            <h1 key={revealStep} className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "clamp(2.2rem,5vw,4rem)", letterSpacing: "-0.01em", lineHeight: 1.05 }}>{countingLabel}</h1>
+          )}
+          {fullyRevealed && isTie && <p style={{ color: "var(--muted)", fontSize: "1.05rem", marginTop: "0.6rem" }}>{winners.join(" & ")} — joint first!</p>}
+          {!fullyRevealed && <p style={{ color: "var(--muted)", fontSize: "0.9rem", marginTop: "0.6rem" }}>click to reveal all</p>}
         </div>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-end", gap: "1.2rem", maxWidth: 800, margin: "0 auto" }}>
           {order.map(idx => {
@@ -38,19 +65,33 @@ export function Leaderboard({ sorted, mode, teams, teamScores, isEnd, room, onPl
             const [name, p] = entry;
             const rank = rankAt(idx);
             const team = mode === "teams" ? teams.find(t => t.id === p.team) : null;
+            const shown = isRevealed(idx);
+            if (!shown) {
+              // placeholder so the layout stays put while this place is still hidden
+              return (
+                <div key={idx} style={{ flex: rank === 1 ? 1.2 : 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", opacity: 0.5 }}>
+                  <div style={{ width: rank === 1 ? 40 : 30, height: rank === 1 ? 40 : 30 }} />
+                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: rank === 1 ? "1.5rem" : "1.2rem", color: "var(--muted)" }}>?</div>
+                  <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: rank === 1 ? "1.6rem" : "1.3rem", color: "var(--line)" }}>—</div>
+                  <div style={{ width: "100%", height: heightByRank[rank] || 110, borderRadius: "14px 14px 0 0", background: "var(--line)", opacity: 0.4, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3rem", color: "var(--muted)" }}>?</span>
+                  </div>
+                </div>
+              );
+            }
             return (
-              <div key={idx} style={{ flex: rank === 1 ? 1.2 : 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
+              <div key={idx} className="sa-anim-pop" style={{ flex: rank === 1 ? 1.2 : 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
                 <SAIcon name={rank === 1 ? "trophy" : "medal"} size={rank === 1 ? 40 : 30} color={RANK[rank - 1] || "var(--muted)"} />
                 <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: rank === 1 ? "1.5rem" : "1.2rem" }}>{name}</div>
                 <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: rank === 1 ? "1.6rem" : "1.3rem", color: rank === 1 ? "var(--sun)" : (RANK[rank - 1] || "var(--muted)") }}>{(p.score || 0).toLocaleString()}</div>
-                <div style={{ width: "100%", height: heightByRank[rank] || 110, borderRadius: "14px 14px 0 0", background: rank === 1 ? "var(--sun)" : team ? team.color : (RANK[rank - 1] || "var(--line)"), display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 0 3px rgba(253,243,221,0.25)", animation: "podiumDrop 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both", animationDelay: `${(2 - idx) * 0.15}s` }}>
+                <div style={{ width: "100%", height: heightByRank[rank] || 110, borderRadius: "14px 14px 0 0", background: rank === 1 ? "var(--sun)" : team ? team.color : (RANK[rank - 1] || "var(--line)"), display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 0 3px rgba(253,243,221,0.25)", animation: "podiumDrop 0.6s cubic-bezier(0.175,0.885,0.32,1.275) both" }}>
                   <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3rem", color: "var(--on-light)" }}>#{rank}</span>
                 </div>
               </div>
             );
           })}
         </div>
-        {(() => {
+        {fullyRevealed && (() => {
           const awards = computeAwards(room?.players);
           if (awards.length < 2) return null; // only show the panel when there's more than just the champion
           return (
@@ -69,10 +110,12 @@ export function Leaderboard({ sorted, mode, teams, teamScores, isEnd, room, onPl
             </div>
           );
         })()}
-        <div style={{ display: "flex", justifyContent: "center", gap: "0.8rem", marginTop: "1.6rem" }}>
-          {onPlayAgain && <button className="btn" onClick={onPlayAgain} style={{ background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", boxShadow: "4px 4px 0 var(--sun)" }}>Play again →</button>}
-          {onShareRecap && <button className="btn btn-ghost" onClick={onShareRecap} style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--line)" }}>Share recap</button>}
-        </div>
+        {fullyRevealed && (
+          <div style={{ display: "flex", justifyContent: "center", gap: "0.8rem", marginTop: "1.6rem" }}>
+            {onPlayAgain && <button className="btn" onClick={onPlayAgain} style={{ background: "var(--ink)", color: "var(--on-light)", borderColor: "var(--ink)", boxShadow: "4px 4px 0 var(--sun)" }}>Play again →</button>}
+            {onShareRecap && <button className="btn btn-ghost" onClick={onShareRecap} style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--line)" }}>Share recap</button>}
+          </div>
+        )}
       </div>
     );
   }
