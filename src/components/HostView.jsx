@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, MatchConnector, TeacherBtn } from "./ui.jsx";
+import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
 import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor } from "../lib/utils.js";
@@ -211,27 +211,24 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       )}
       {q.type === "story_builder" && q.sentences && <div className="mt-2">{q.sentences.slice(0, 3).map((s, i) => <div key={i} className="story-card" style={{ cursor: "default" }}><span className="story-num">{i + 1}</span>{s}</div>)}</div>}
       {q.type === "word_match" && q.pairs && (() => {
-        const colors = ["var(--tomato)", "var(--cobalt)"];
+        // Words are all one colour and meanings all another, with NO connector
+        // lines — otherwise the projector would reveal which word goes with which
+        // meaning before students answer. Meanings are shown in a shuffled order.
+        const WORD = "var(--tomato)";   // red on the word boxes
+        const DEF = "var(--cobalt)";    // blue on every meaning box
         const pairs2 = q.pairs.slice(0, 2);
         const rOrder = [1, 0];
-        const rowY = (i) => 28 + i * 44;
         return (
           <div style={{ position: "relative", maxWidth: 720, margin: "0 auto", minHeight: 200 }}>
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
-              {pairs2.map((_, i) => {
-                const rIdx = rOrder.indexOf(i);
-                return <MatchConnector key={i} from={{ x: 36, y: rowY(i) }} to={{ x: 64, y: rowY(rIdx) }} color={colors[i]} dashed />;
-              })}
-            </svg>
             <div style={{ position: "relative", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, padding: "8px 6px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {pairs2.map((p, i) => (
-                  <div key={i} style={{ background: "var(--paper)", border: `2.5px solid ${colors[i]}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 20, color: colors[i], boxShadow: `3px 3px 0 ${colors[i]}55`, transform: `rotate(${i === 0 ? -1.5 : 1.5}deg)` }}>{p.word}</div>
+                  <div key={i} style={{ background: "var(--paper)", border: `2.5px solid ${WORD}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 20, color: WORD, boxShadow: `3px 3px 0 ${WORD}55`, transform: `rotate(${i === 0 ? -1.5 : 1.5}deg)` }}>{p.word}</div>
                 ))}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                 {rOrder.map((origIdx, displayIdx) => (
-                  <div key={displayIdx} style={{ background: "var(--cream)", border: `2px dashed ${colors[origIdx]}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "var(--ink-soft)", fontWeight: 500, transform: `rotate(${displayIdx === 0 ? 1 : -1}deg)` }}>{pairs2[origIdx].meaning}</div>
+                  <div key={displayIdx} style={{ background: "var(--cream)", border: `2px dashed ${DEF}`, borderRadius: 12, padding: "12px 16px", fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "var(--ink-soft)", fontWeight: 500, transform: `rotate(${displayIdx === 0 ? 1 : -1}deg)` }}>{pairs2[origIdx].meaning}</div>
                 ))}
               </div>
             </div>
