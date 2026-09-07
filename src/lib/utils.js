@@ -36,7 +36,7 @@ export const TOPIC_THEME = {
   culture_traditions:    { accent: "var(--sun)",    emoji: "🎭", label: "Culture & Traditions" },
   books_reading:         { accent: "var(--sun)",    emoji: "📚", label: "Books & Reading" },
   friendship:            { accent: "var(--sun)",    emoji: "🤝", label: "Friendship" },
-  verb_tenses:           { accent: "var(--sun)",    emoji: "⏳", label: "Verb Tenses & Habits" },
+  verb_tenses:           { accent: "var(--sun)",    emoji: "⏳", label: "Past & Present Habits" },
   social_media_internet: { accent: "var(--aqua)",   emoji: "📲", label: "Social Media & the Internet" },
   home_housing:          { accent: "var(--aqua)",   emoji: "🏠", label: "Home & Housing" },
   science_discovery:     { accent: "var(--aqua)",   emoji: "🔬", label: "Science & Discovery" },

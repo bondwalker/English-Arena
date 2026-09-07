@@ -7831,7 +7831,7 @@ export const QUESTION_BANK = {
     {type:"true_false",question:"'In the past' means in the future.",answer:"False",explanation:"'In the past' means before now."},
   ]},
   "verb_tenses": {
-    label: "Verb Tenses & Habits",
+    label: "Past & Present Habits",
     intro: {
       sections: [
         {
