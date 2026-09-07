@@ -620,7 +620,24 @@ export default function HostView({ onBack }) {
         const topicEntries = Object.entries(QUESTION_BANK)
           .filter(([key]) => key !== "stress_battle")
           .sort((a, b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
+        // Grammar-practice topics are shown in their own group, apart from the vocabulary themes.
+        const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect"]);
+        const grammarEntries = topicEntries.filter(([k]) => GRAMMAR_KEYS.has(k));
+        const themeEntries = topicEntries.filter(([k]) => !GRAMMAR_KEYS.has(k));
         const pickTopic = (key) => { setSelectedTopic(key); if (gameType === "stress_battle") setGameType("mixed"); };
+        const subLabel = (t) => <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.66rem", letterSpacing: "0.14em", color: "var(--muted)", margin: "0 0 0.5rem" }}>{t}</div>;
+        const topicBtn = ([key, { label }]) => {
+          const dis = noSB.has(key);
+          const sel = selectedTopic === key;
+          const th = themeFor(key);
+          return (
+            <button key={key} disabled={dis} onClick={() => !dis && pickTopic(key)}
+              style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? th.accent : "var(--line)"}`, background: sel ? `color-mix(in srgb, var(--paper) 85%, ${th.accent})` : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
+              <span style={{ fontSize: "1.4rem", flexShrink: 0, lineHeight: 1 }}>{th.emoji}</span>
+              <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? th.accent : "var(--ink)" }}>{cleanLabel(label)}</span>
+            </button>
+          );
+        };
         const canStart = !!selectedTopic || stressMode;
         const startNow = () => { loadQuestions(); startGame(); };
         return (
@@ -660,23 +677,20 @@ export default function HostView({ onBack }) {
                     Stress Battle uses its own word bank — no topic needed. Tap it again to pick a topic instead.
                   </div>
                 ) : (
-                  <>
-                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.66rem", letterSpacing: "0.14em", color: "var(--muted)", marginBottom: "0.5rem" }}>OR CHOOSE A TOPIC</div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", maxHeight: 400, overflowY: "auto" }}>
-                      {topicEntries.map(([key, { label }], i) => {
-                        const dis = noSB.has(key);
-                        const sel = selectedTopic === key;
-                        const th = themeFor(key);
-                        return (
-                          <button key={key} disabled={dis} onClick={() => !dis && pickTopic(key)}
-                            style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.85rem 1rem", borderRadius: 12, border: `2px solid ${sel ? th.accent : "var(--line)"}`, background: sel ? `color-mix(in srgb, var(--paper) 85%, ${th.accent})` : "var(--paper)", cursor: dis ? "not-allowed" : "pointer", textAlign: "left", opacity: dis ? 0.3 : 1, transition: "all 0.12s" }}>
-                            <span style={{ fontSize: "1.4rem", flexShrink: 0, lineHeight: 1 }}>{th.emoji}</span>
-                            <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 700, fontSize: "1rem", color: sel ? th.accent : "var(--ink)" }}>{cleanLabel(label)}</span>
-                          </button>
-                        );
-                      })}
+                  <div style={{ maxHeight: 400, overflowY: "auto", paddingRight: "0.2rem" }}>
+                    {grammarEntries.length > 0 && (
+                      <>
+                        {subLabel("GRAMMAR")}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", marginBottom: "1.1rem" }}>
+                          {grammarEntries.map(topicBtn)}
+                        </div>
+                      </>
+                    )}
+                    {subLabel("TOPICS")}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
+                      {themeEntries.map(topicBtn)}
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
 
