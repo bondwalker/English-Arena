@@ -149,21 +149,35 @@ export default function SoloView({ onBack }) {
           <p style={{fontSize:"0.78rem",color:"var(--muted)",marginBottom:"0.6rem"}}>No saved topics yet — tap ★ on any topic to save it.</p>
         )}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:"0.5rem",maxHeight:"min(58vh,520px)",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:10}}>
-          {Object.entries(QUESTION_BANK).filter(([k]) => k !== "stress_battle" && (topicFilter==="all" || faves.includes(k))).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label))).map(([key,{label}],i) => {
-            const sel = selectedTopic === key;
-            const th = themeFor(key);
-            return (
-              <div key={key} style={{position:"relative",display:"flex"}}>
-                <button
-                  className={"solo-topic"+(sel?" sel":"")}
-                  style={{"--acc":th.accent}}
-                  onClick={() => setSelectedTopic(key)}>
-                  <span className="solo-topic-ico">{th.emoji}</span>
-                  <span style={{flex:1}}>{cleanLabel(label)}</span></button>
-                <button onClick={(e) => { e.stopPropagation(); toggleFave(key); }} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--sun)":"var(--muted)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
-              </div>
-            );
-          })}
+          {(() => {
+            // Grammar-practice topics get their own labelled group, above the vocabulary themes.
+            const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect"]);
+            const entries = Object.entries(QUESTION_BANK).filter(([k]) => k !== "stress_battle" && (topicFilter==="all" || faves.includes(k))).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
+            const gram = entries.filter(([k]) => GRAMMAR_KEYS.has(k));
+            const rest = entries.filter(([k]) => !GRAMMAR_KEYS.has(k));
+            const hdr = (t) => <div key={"hdr-"+t} style={{gridColumn:"1 / -1",fontSize:"0.72rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,margin:"0.15rem 0 0"}}>{t}</div>;
+            const item = ([key,{label}]) => {
+              const sel = selectedTopic === key;
+              const th = themeFor(key);
+              return (
+                <div key={key} style={{position:"relative",display:"flex"}}>
+                  <button
+                    className={"solo-topic"+(sel?" sel":"")}
+                    style={{"--acc":th.accent}}
+                    onClick={() => setSelectedTopic(key)}>
+                    <span className="solo-topic-ico">{th.emoji}</span>
+                    <span style={{flex:1}}>{cleanLabel(label)}</span></button>
+                  <button onClick={(e) => { e.stopPropagation(); toggleFave(key); }} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--sun)":"var(--muted)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
+                </div>
+              );
+            };
+            return <>
+              {gram.length > 0 && hdr("Grammar")}
+              {gram.map(item)}
+              {rest.length > 0 && hdr("Topics")}
+              {rest.map(item)}
+            </>;
+          })()}
         </div>
         </>)}
         </div>
