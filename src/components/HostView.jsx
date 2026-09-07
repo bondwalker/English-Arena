@@ -614,7 +614,7 @@ export default function HostView({ onBack }) {
       {/* Lobby — two-column projector layout */}
       {room.phase === "lobby" && (() => {
         const DOTS = ["var(--tomato)", "var(--cobalt)", "var(--leaf)", "var(--plum)", "var(--sun)", "var(--aqua)"];
-        const noSB = new Set(["verb_tenses", "present_perfect"]);
+        const noSB = new Set(); // no topics disabled — every topic now has a full question bank
         const cleanLabel = (l) => l.replace(/^[^\w]+\s*/, "");
         const stressMode = gameType === "stress_battle";
         const topicEntries = Object.entries(QUESTION_BANK)
