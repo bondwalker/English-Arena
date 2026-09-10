@@ -167,6 +167,22 @@ export function checkAnswer(given, q) {
   return n(given) === n(q.answer);
 }
 
+// "Find the mistake" (spot_sentence) shows only THREE options — the sentence
+// with the mistake plus two correct sentences — rather than four, so it's less
+// to read. Deterministic (pure function of the question) so the host projector
+// and every student device always display the same set; each side may then
+// shuffle the display order independently.
+export function spotOptions(q) {
+  if (q.type !== "spot_sentence" || !Array.isArray(q.options) || q.options.length <= 3) return q.options || [];
+  const kept = [];
+  let corrects = 0;
+  for (const o of q.options) {
+    if (o === q.answer) kept.push(o);          // always keep the sentence with the mistake
+    else if (corrects < 2) { kept.push(o); corrects++; } // keep the first two correct sentences
+  }
+  return kept;
+}
+
 export function getTimeLimit(q) {
   if (!q) return 25;
   if (q.type === "stress_battle") return 15;
