@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
-import { OPT_COLORS, ordinal, shuffle } from "../lib/utils.js";
+import { OPT_COLORS, ordinal, shuffle, spotOptions } from "../lib/utils.js";
 
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
@@ -29,8 +29,9 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   // Keyed on the options themselves so it always refreshes between questions.
   const [shuffledOptions, setShuffledOptions] = useState([]);
   useEffect(() => {
-    if ((q.type === "odd_one_out" || q.type === "spot_sentence") && q.options)
-      setShuffledOptions(shuffle(q.options));
+    // spot_sentence shows only 3 options (via spotOptions); odd_one_out keeps all.
+    if (q.type === "spot_sentence" && q.options) setShuffledOptions(shuffle(spotOptions(q)));
+    else if (q.type === "odd_one_out" && q.options) setShuffledOptions(shuffle(q.options));
   }, [(q.options || []).join("|")]);
 
   // Hangman: resolve win/loss locally, then submit once. 6 wrong letters = out.
