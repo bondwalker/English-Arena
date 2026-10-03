@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rebeca Esquivel</title>
-    <meta name="description" content="Choose between VerbMate and English Arena." />
+    <meta name="description" content="Choose between VerbMate, English Arena and Word Pop." />
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
@@ -47,7 +47,7 @@
 
       main {
         width: 100%;
-        max-width: 780px;
+        max-width: 1000px;
         text-align: center;
         position: relative;
         z-index: 1;
@@ -77,11 +77,11 @@
 
       .options {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 1.3rem;
       }
 
-      @media (max-width: 560px) {
+      @media (max-width: 860px) {
         .options {
           grid-template-columns: 1fr;
         }
@@ -109,6 +109,7 @@
 
       .card-cobalt { background: rgba(91, 139, 255, 0.12); border-color: var(--cobalt); }
       .card-tomato { background: rgba(255, 92, 66, 0.12); border-color: var(--tomato); }
+      .card-sun { background: rgba(255, 206, 71, 0.12); border-color: var(--sun); }
 
       .card-icon {
         display: inline-flex;
@@ -123,6 +124,7 @@
 
       .card-cobalt .card-icon { background: var(--cobalt); box-shadow: 4px 4px 0 rgba(91, 139, 255, 0.2); }
       .card-tomato .card-icon { background: var(--tomato); box-shadow: 4px 4px 0 rgba(255, 92, 66, 0.2); }
+      .card-sun .card-icon { background: var(--sun); box-shadow: 4px 4px 0 rgba(255, 206, 71, 0.2); }
 
       .card .name {
         display: block;
@@ -135,6 +137,7 @@
 
       .card-cobalt .name .arrow { color: var(--cobalt); }
       .card-tomato .name .arrow { color: var(--tomato); }
+      .card-sun .name .arrow { color: var(--sun); }
 
       .card .tagline {
         display: block;
@@ -158,7 +161,7 @@
   <body>
     <main>
       <h1>Where would you<br />like to go, <em>amigo?</em></h1>
-      <p class="subtitle">This is the home of two English-learning apps. Pick one to continue.</p>
+      <p class="subtitle">This is the home of three English-learning apps. Pick one to continue.</p>
       <div class="options">
         <a class="card card-cobalt" href="https://verbmate.rebecaesquivel.com">
           <span class="card-icon">📝</span>
@@ -172,6 +175,13 @@
           <span>
             <span class="name">English Arena <span class="arrow">→</span></span>
             <span class="tagline">Practise your overall English with fun games.</span>
+          </span>
+        </a>
+        <a class="card card-sun" href="https://wordpop.rebecaesquivel.com">
+          <span class="card-icon">🎈</span>
+          <span>
+            <span class="name">Word Pop <span class="arrow">→</span></span>
+            <span class="tagline">Improve your English with quick tapping games.</span>
           </span>
         </a>
       </div>

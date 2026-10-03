@@ -1,10 +1,11 @@
 # Landing page for the rebecaesquivel.com apex
 
 A tiny, dependency-free static page that lets someone who lands on the bare
-`rebecaesquivel.com` (no subdomain) pick between the two apps:
+`rebecaesquivel.com` (no subdomain) pick between the three apps:
 
 - VerbMate → https://verbmate.rebecaesquivel.com
 - English Arena → https://englisharena.rebecaesquivel.com
+- Word Pop → https://wordpop.rebecaesquivel.com
 
 It's a single `index.html` with no build step, so it can be deployed as its
 own Vercel project independent of the English Arena app in this repo.
@@ -29,6 +30,6 @@ step 5 above — typically:
 - `CNAME` for `www` → `cname.vercel-dns.com`
 
 In Hover, go to the domain's **DNS** tab and add/update those records.
-This only changes the root (`@`) record — leave the existing `verbmate`
-and `englisharena` CNAME records alone, since those are what keep the two
-subdomains working. DNS changes can take up to a few hours to propagate.
+This only changes the root (`@`) record — leave the existing `verbmate`,
+`englisharena` and `wordpop` CNAME records alone, since those are what keep
+the subdomains working. DNS changes can take up to a few hours to propagate.
