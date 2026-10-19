@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -242,7 +242,8 @@ export default function StudentView({ onBack, initialCode = "" }) {
               : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
                 : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
                   : q.type === "hangman" ? q.word
-                    : q.answer
+                    : q.type === "rearrange" ? rearrangeAnswer(q)
+                      : q.answer
         ) : "";
         return (
           <div style={{ position: "fixed", inset: 0, background: bg, zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1.4rem", overflowY: "auto", textAlign: "center", gap: "0.5rem" }}>

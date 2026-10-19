@@ -126,6 +126,14 @@ export const reviewPrompt = (q) =>
     : q.type === "hangman" ? (q.hint || "Guess the word")
       : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
 
+// Word Order answer as shown to people: starts with a capital letter. The data
+// keeps the original case because the word tiles are built from it, and a
+// capitalised tile would give away which word goes first.
+export const rearrangeAnswer = (q) => {
+  const a = q.answer || "";
+  return a.charAt(0).toUpperCase() + a.slice(1);
+};
+
 // Review/summary line — the correct answer, human-readable per type
 export const reviewAnswer = (q) =>
   q.type === "stress_battle"
@@ -134,7 +142,8 @@ export const reviewAnswer = (q) =>
       : q.type === "error_spotter" ? correctedSentence(q)
         : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
           : q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => `${p.word} = ${p.meaning}`).join(" · ")
-            : q.answer;
+            : q.type === "rearrange" ? rearrangeAnswer(q)
+              : q.answer;
 
 // A selectable game mode can serve more than one underlying question type.
 // "Find the Mistake" (error_spotter) also serves the sentence-picker (spot_sentence).

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -23,7 +23,8 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
       : q.type === "hangman" ? q.word
         : q.type === "error_spotter" ? correctedSentence(q)
           : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
-            : q.answer;
+            : q.type === "rearrange" ? rearrangeAnswer(q)
+              : q.answer;
   return (
     <div style={{ position: "fixed", inset: 0, background: "var(--sun)", color: "var(--on-light)", zIndex: 60, display: "flex", flexDirection: "column", padding: "clamp(1.5rem,4vw,3.5rem)", overflow: "hidden" }}>
       {letter && <div style={{ position: "absolute", left: "-2vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "50vh", color: "rgba(15,18,38,0.09)", lineHeight: 0.8, pointerEvents: "none", fontStyle: "italic" }}>{letter}</div>}
