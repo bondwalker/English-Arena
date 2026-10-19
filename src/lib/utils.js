@@ -167,22 +167,15 @@ export function checkAnswer(given, q) {
   return n(given) === n(q.answer);
 }
 
-// "Find the mistake" (spot_sentence) shows only THREE options — the sentence
-// with the mistake plus two correct sentences — rather than four, so it's less
-// to read. Some topics set q.spotCount to show fewer (see questions.js).
-// Deterministic (pure function of the question) so the host projector
-// and every student device always display the same set; each side may then
+// "Find the mistake" (spot_sentence) shows only TWO options — the sentence
+// with the mistake plus one correct sentence — rather than four, so it's less
+// to read. Deterministic (pure function of the question) so the host projector
+// and every student device always display the same pair; each side may then
 // shuffle the display order independently.
 export function spotOptions(q) {
-  const count = q.spotCount || 3;
-  if (q.type !== "spot_sentence" || !Array.isArray(q.options) || q.options.length <= count) return q.options || [];
-  const kept = [];
-  let corrects = 0;
-  for (const o of q.options) {
-    if (o === q.answer) kept.push(o);          // always keep the sentence with the mistake
-    else if (corrects < count - 1) { kept.push(o); corrects++; } // keep the first correct sentences
-  }
-  return kept;
+  if (q.type !== "spot_sentence" || !Array.isArray(q.options) || q.options.length <= 2) return q.options || [];
+  const correct = q.options.find(o => o !== q.answer);
+  return q.options.filter(o => o === q.answer || o === correct); // keep original order
 }
 
 export function getTimeLimit(q) {
