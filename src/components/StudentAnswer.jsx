@@ -29,7 +29,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   // Keyed on the options themselves so it always refreshes between questions.
   const [shuffledOptions, setShuffledOptions] = useState([]);
   useEffect(() => {
-    // spot_sentence shows only 3 options (via spotOptions); odd_one_out keeps all.
+    // spot_sentence shows only 2 options (via spotOptions); odd_one_out keeps all.
     if (q.type === "spot_sentence" && q.options) setShuffledOptions(shuffle(spotOptions(q)));
     else if (q.type === "odd_one_out" && q.options) setShuffledOptions(shuffle(q.options));
   }, [(q.options || []).join("|")]);
