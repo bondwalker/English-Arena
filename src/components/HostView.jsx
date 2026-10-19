@@ -621,7 +621,7 @@ export default function HostView({ onBack }) {
           .filter(([key]) => key !== "stress_battle")
           .sort((a, b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
         // Grammar-practice topics are shown in their own group, apart from the vocabulary themes.
-        const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect"]);
+        const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
         const grammarEntries = topicEntries.filter(([k]) => GRAMMAR_KEYS.has(k));
         const themeEntries = topicEntries.filter(([k]) => !GRAMMAR_KEYS.has(k));
         const pickTopic = (key) => { setSelectedTopic(key); if (gameType === "stress_battle") setGameType("mixed"); };
