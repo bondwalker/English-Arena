@@ -151,7 +151,7 @@ export default function SoloView({ onBack }) {
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:"0.5rem",maxHeight:"min(58vh,520px)",overflowY:"auto",padding:"0.5rem",border:"1px solid var(--line)",borderRadius:10}}>
           {(() => {
             // Grammar-practice topics get their own labelled group, above the vocabulary themes.
-            const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect"]);
+            const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
             const entries = Object.entries(QUESTION_BANK).filter(([k]) => k !== "stress_battle" && (topicFilter==="all" || faves.includes(k))).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
             const gram = entries.filter(([k]) => GRAMMAR_KEYS.has(k));
             const rest = entries.filter(([k]) => !GRAMMAR_KEYS.has(k));

@@ -42,6 +42,7 @@ export const TOPIC_THEME = {
   science_discovery:     { accent: "var(--aqua)",   emoji: "🔬", label: "Science & Discovery" },
   news_current_affairs:  { accent: "var(--aqua)",   emoji: "📰", label: "News & Current Affairs" },
   present_perfect:       { accent: "var(--aqua)",   emoji: "✅", label: "Present Perfect & Continuous" },
+  past_continuous:       { accent: "var(--cobalt)", emoji: "🌧️", label: "Simple Past & Past Continuous" },
 };
 // End-game awards: fun badges derived from per-player stats tracked during
 // scoring (score / maxStreak / firstCount / nCorrect / nAnswered). Spreads
