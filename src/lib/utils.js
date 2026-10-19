@@ -126,6 +126,42 @@ export const reviewPrompt = (q) =>
     : q.type === "hangman" ? (q.hint || "Guess the word")
       : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
 
+// "Find the mistake" answer screen: which words to highlight.
+//  - sentence: the sentence shown big (corrected for error_spotter, the wrong one for spot_sentence)
+//  - marks:    indexes of the words in `sentence` (split on spaces) to underline
+//  - words:    lowercase words to bold inside the explanation's quotes
+// spot_sentence compares the wrong sentence (q.answer) with its corrected version (q.fix).
+// Anything else, or a question without the data, returns no marks.
+const cleanWord = (w) => w.toLowerCase().replace(/^[^\w']+|[^\w']+$/g, "");
+export function mistakeHighlight(q) {
+  if (q.type === "error_spotter" && q.sentence) {
+    const sentence = correctedSentence(q);
+    const i = q.sentence.split(" ").findIndex(w => w.replace(/[.,!?;:]/g, "") === q.errorWord);
+    return { sentence, marks: i >= 0 ? [i] : [], words: [q.errorWord, q.answer].map(cleanWord) };
+  }
+  if (q.type === "spot_sentence" && q.answer && q.fix) {
+    const a = q.answer.split(" "), b = q.fix.split(" ");
+    const an = a.map(cleanWord), bn = b.map(cleanWord);
+    // longest common subsequence of the two word lists
+    const d = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+    for (let i = a.length - 1; i >= 0; i--)
+      for (let j = b.length - 1; j >= 0; j--)
+        d[i][j] = an[i] === bn[j] ? d[i + 1][j + 1] + 1 : Math.max(d[i + 1][j], d[i][j + 1]);
+    const inA = new Set(), inB = new Set(), gaps = [];
+    for (let i = 0, j = 0; i < a.length || j < b.length;) {
+      if (i < a.length && j < b.length && an[i] === bn[j]) { inA.add(i); inB.add(j); i++; j++; }
+      else if (j >= b.length || (i < a.length && d[i + 1][j] >= d[i][j + 1])) i++;
+      else { gaps.push(i); j++; } // a word the wrong sentence is missing, just before a[i]
+    }
+    const marks = a.map((_, i) => i).filter(i => !inA.has(i));
+    // a missing word has nothing to underline, so mark the words either side of the gap
+    if (!marks.length) gaps.forEach(i => [i - 1, i].forEach(k => k >= 0 && k < a.length && !marks.includes(k) && marks.push(k)));
+    const words = [...a.filter((_, i) => !inA.has(i)), ...b.filter((_, j) => !inB.has(j))].map(cleanWord).filter(Boolean);
+    return { sentence: q.answer, marks: marks.sort((x, y) => x - y), words };
+  }
+  return { sentence: null, marks: [], words: [] };
+}
+
 // Word Order answer as shown to people: starts with a capital letter. The data
 // keeps the original case because the word tiles are built from it, and a
 // capitalised tile would give away which word goes first.
