@@ -9051,3 +9051,12 @@ QUESTION_BANK.idioms = {
       {type:"odd_one_out",question:"Which word does not belong?",options:["gone","done","seen","green"],answer:"green",explanation:"'Green' is a colour; the others are past participles."},
   ]],
 ].forEach(([k, qs]) => { if (QUESTION_BANK[k]) QUESTION_BANK[k].questions.push(...qs); });
+
+// "Which sentence has a grammar mistake?" (spot_sentence) normally shows three
+// sentences. These topics show only two: the one with the mistake plus one
+// correct sentence. The count is stamped onto each question (not looked up by
+// topic) because the question object is what gets sent to students' devices.
+const SPOT_OPTION_COUNT = { verb_tenses: 2, present_perfect: 2 };
+for (const [k, n] of Object.entries(SPOT_OPTION_COUNT)) {
+  for (const q of QUESTION_BANK[k]?.questions || []) if (q.type === "spot_sentence") q.spotCount = n;
+}
