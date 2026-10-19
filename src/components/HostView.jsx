@@ -2,9 +2,40 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
+
+// "Find the mistake" answer screen: underline the key words in the big sentence…
+function MarkedSentence({ text, marks }) {
+  return text.split(" ").map((w, i) => (
+    <span key={i}>
+      {i > 0 && " "}
+      {marks.includes(i)
+        ? <span style={{ textDecoration: "underline", textDecorationColor: "var(--tomato)", textDecorationThickness: "0.09em", textUnderlineOffset: "0.14em" }}>{w}</span>
+        : w}
+    </span>
+  ));
+}
+
+// …and bold the same words where the explanation quotes them ('…').
+function BoldQuoted({ text, words }) {
+  if (!words.length) return text;
+  const set = new Set(words);
+  const re = /'((?:[^']|'(?=[a-z]))+)'(?=[\s.,;:!?)]|$)/g;
+  const out = [];
+  let last = 0, m, k = 0;
+  while ((m = re.exec(text))) {
+    out.push(text.slice(last, m.index));
+    m[0].split(/(\s+)/).forEach(p => {
+      const w = p.replace(/^'+|'+$/g, "").toLowerCase().replace(/^[^\w']+|[^\w']+$/g, "");
+      out.push(set.has(w) ? <strong key={k++}>{p}</strong> : p);
+    });
+    last = m.index + m[0].length;
+  }
+  out.push(text.slice(last));
+  return out;
+}
 
 // ─── HostReveal — coral takeover ─────────────────────────────────────────────────
 function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, onSkipWarmup, topic }) {
@@ -18,6 +49,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const sN = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
   const sStressed = q.stressed || 1;
   const letter = q.type === "multiple_choice" && q.options ? OPT_ICONS[q.options.indexOf(q.answer)] : null;
+  const hl = mistakeHighlight(q);
   const ansText =
     q.type === "word_match" ? "Match all pairs correctly"
       : q.type === "hangman" ? q.word
@@ -51,8 +83,8 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
           </div>
         ) : (
           <>
-            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{ansText}"</h1>
-            {q.explanation && <p style={{ color: "var(--on-light)", opacity: 0.8, fontSize: "clamp(1rem,1.9vw,1.5rem)", lineHeight: 1.5, marginTop: "1.4rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}>{q.explanation}</p>}
+            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>
+            {q.explanation && <p style={{ color: "var(--on-light)", opacity: 0.8, fontSize: "clamp(1rem,1.9vw,1.5rem)", lineHeight: 1.5, marginTop: "1.4rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}><BoldQuoted text={q.explanation} words={hl.words} /></p>}
           </>
         )}
       </div>
