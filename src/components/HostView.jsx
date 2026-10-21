@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyInOrder, hasQuestionsFor, songTiles, songTally, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyInOrder, hasQuestionsFor, songTiles, songTally, songSections, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -84,9 +84,17 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
           <>
             {q.type !== "story_builder" && q.type !== "song_words" && <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>}
             {q.type === "song_words" && (
-              <div className="sa-anim-pop" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.6rem", maxWidth: 900, margin: "0 auto" }}>
-                {(q.real || []).map(w => <span key={"r" + w} style={{ padding: "0.55rem 1.1rem", borderRadius: 12, background: "var(--leaf)", color: "var(--on-light)", fontWeight: 800, fontSize: "clamp(1.1rem,2.2vw,1.7rem)" }}>✓ {w}</span>)}
-                {(q.fake || []).map(w => <span key={"f" + w} style={{ padding: "0.55rem 1.1rem", borderRadius: 12, border: "2px solid rgba(15,18,38,0.35)", color: "rgba(15,18,38,0.55)", textDecoration: "line-through", fontWeight: 700, fontSize: "clamp(1.1rem,2.2vw,1.7rem)" }}>{w}</span>)}
+              <div className="sa-anim-pop" style={{ maxWidth: 1000, margin: "0 auto", width: "100%", maxHeight: "62vh", overflowY: "auto", textAlign: "left", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                {songSections(q).map((sec, si) => (
+                  <div key={si}>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "0.4rem" }}>🎵 {sec.verse}</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
+                      {(sec.real || []).map(w => <span key={"r" + w} style={{ padding: "0.35rem 0.85rem", borderRadius: 10, background: "var(--leaf)", color: "var(--on-light)", fontWeight: 800, fontSize: "clamp(0.95rem,1.6vw,1.3rem)" }}>✓ {w}</span>)}
+                      {(sec.fake || []).map(w => <span key={"f" + w} style={{ padding: "0.35rem 0.85rem", borderRadius: 10, border: "2px solid rgba(15,18,38,0.35)", color: "rgba(15,18,38,0.55)", textDecoration: "line-through", fontWeight: 700, fontSize: "clamp(0.95rem,1.6vw,1.3rem)" }}>{w}</span>)}
+                    </div>
+                    {sec.explanation && <div style={{ fontSize: "clamp(0.85rem,1.3vw,1.05rem)", opacity: 0.8, marginTop: "0.35rem", lineHeight: 1.4 }}>{sec.explanation}</div>}
+                  </div>
+                ))}
               </div>
             )}
             {q.type === "story_builder" && (
@@ -123,11 +131,12 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
   // Song Words: the projector shows the same words as the phones, mixed up, with no answers
-  const songGrid = useMemo(() => q.type === "song_words" ? shuffle(songTiles(q)) : [], [q.verse, (q.real || []).join("|")]);
+  const songKey = q.type === "song_words" ? songSections(q).map(sec => sec.verse + ":" + (sec.real || []).join("|")).join("¦") : "";
+  const songGrids = useMemo(() => songSections(q).map(sec => shuffle(songTiles(sec))), [songKey]);
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? shuffle((q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean)) : [], [q.question]);
   const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", hangman: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
-  const isSong = q.type === "song_words"; // songs have no timer: the teacher reveals each verse
+  const isSong = q.type === "song_words"; // songs have no timer: the teacher reveals at the end of the song
   const urgent = !isSong && timeLeft <= 5 && !paused;
   const answeredNames = new Set(Object.keys(answers));
 
@@ -174,7 +183,7 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           {onPause && !isSong && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
           {onRepeat && !isSong && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
         </div>
-        {onReveal && <button className="btn btn-coral btn-full" style={{ padding: "0.8rem" }} onClick={onReveal}><SAIcon name="reveal" size={15} color="var(--on-dark)" /> {isSong ? "Reveal — end of verse" : "Reveal answer"}</button>}
+        {onReveal && <button className="btn btn-coral btn-full" style={{ padding: "0.8rem" }} onClick={onReveal}><SAIcon name="reveal" size={15} color="var(--on-dark)" /> {isSong ? "Reveal — end of song" : "Reveal answer"}</button>}
         {onSkip && <TeacherBtn icon="skip" label="Skip question" onClick={onSkip} variant="ghost" />}
         {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
         {onToggleFont && <TeacherBtn label={bigText ? "A− Text" : "A+ Text"} onClick={onToggleFont} />}
@@ -220,13 +229,17 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
         </div>
       )}
       {q.type === "song_words" && (
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", letterSpacing: "0.14em", color: "var(--sun)", textTransform: "uppercase", marginBottom: "0.9rem" }}>🎵 {q.verse} · listen and tap</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.7rem" }}>
-            {songGrid.map((w, i) => (
-              <span key={i} style={{ padding: "0.7rem 1.2rem", border: "2px solid var(--line)", borderRadius: 14, background: "var(--paper)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "clamp(1.1rem,2vw,1.6rem)" }}>{w}</span>
-            ))}
-          </div>
+        <div style={{ maxWidth: 1000, margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+          {songSections(q).map((sec, si) => (
+            <div key={si}>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", letterSpacing: "0.14em", color: "var(--sun)", textTransform: "uppercase", marginBottom: "0.5rem" }}>🎵 {sec.verse}</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                {(songGrids[si] || []).map((w, i) => (
+                  <span key={i} style={{ padding: "0.45rem 0.9rem", border: "2px solid var(--line)", borderRadius: 12, background: "var(--paper)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "clamp(1rem,1.6vw,1.3rem)" }}>{w}</span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
       {q.type === "multiple_choice" && q.options && (
@@ -587,8 +600,6 @@ export default function HostView({ onBack }) {
         if (nextIdx < prev.warmupCount) return { ...prev, players, phase: "question", timeLeft: 15, qIndex: nextIdx, currentQ: nextQ, answers: {}, paused: false, firstCorrect: null };
         return { ...prev, players, phase: "warmup_done", qIndex: nextIdx, currentQ: nextQ, answers: {}, firstCorrect: null };
       }
-      // Songs go straight to the next verse; the leaderboard waits until the end of the song
-      if (q?.type === "song_words") return { ...prev, players, phase: "question", qIndex: nextIdx, currentQ: nextQ, timeLeft: getTimeLimit(nextQ), answers: {}, paused: false, firstCorrect: null };
       return { ...prev, players, phase: "leaderboard", qIndex: nextIdx, currentQ: nextQ, answers: {}, firstCorrect };
     });
   };
@@ -733,7 +744,7 @@ export default function HostView({ onBack }) {
               <div style={{ border: "1.5px solid var(--line)", borderRadius: 18, padding: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
                   <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem" }}>Pick a game</h2>
-                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.1em", color: "var(--muted)" }}>{songPicked ? `${topicBank.length} VERSES` : `${qCount} ROUNDS`}</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.1em", color: "var(--muted)" }}>{songPicked ? `${songSections(topicBank[0]).length} SECTIONS` : `${qCount} ROUNDS`}</span>
                 </div>
                 {/* Stress Battle — game mode */}
                 <button onClick={() => setGameType(stressMode ? "mixed" : "stress_battle")}
@@ -820,7 +831,7 @@ export default function HostView({ onBack }) {
                 )}
 
                 {songPicked ? (
-                  <p style={{ fontSize: "0.85rem", color: "var(--ink-soft)", lineHeight: 1.45 }}>🎵 Play the song on your device. Press <strong>Reveal answer</strong> at the end of each verse.</p>
+                  <p style={{ fontSize: "0.85rem", color: "var(--ink-soft)", lineHeight: 1.45 }}>🎵 Play the song on your device. Students scroll down the page as the song plays. Press <strong>Reveal</strong> at the end of the song.</p>
                 ) : <label style={{ fontSize: "0.85rem", color: "var(--ink-soft)", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                   <input type="checkbox" checked={room.warmup} onChange={e => upd(p => ({ ...p, warmup: e.target.checked }))} style={{ accentColor: "var(--sun)", cursor: "pointer" }} />
                   Warm-up round (3 quick questions)
@@ -828,7 +839,7 @@ export default function HostView({ onBack }) {
 
                 {error && <p className="text-coral" style={{ fontSize: "0.85rem" }}>{error}</p>}
                 <button className="btn btn-coral btn-full" disabled={!canStart} onClick={startNow} style={{ fontSize: "1.1rem", padding: "1.1rem", opacity: canStart ? 1 : 0.5 }}>
-                  ▶ Start the game — {songPicked ? `${topicBank.length} verses` : `${qCount} questions`}
+                  ▶ Start the game — {songPicked ? `whole song (${songSections(topicBank[0]).length} sections)` : `${qCount} questions`}
                 </button>
               </div>
             </div>
@@ -861,7 +872,7 @@ export default function HostView({ onBack }) {
       {room.phase === "reveal" && room.currentQ && (
         <HostReveal q={room.currentQ} answers={room.answers || {}} players={room.players || {}} topic={room.topic}
           onNext={advance}
-          nextLabel={room.currentQ?._warmup ? "Next" : room.qIndex + 1 >= room.questions.length ? "Final results" : room.currentQ?.type === "song_words" ? "Next verse" : "See leaderboard"}
+          nextLabel={room.currentQ?._warmup ? "Next" : room.qIndex + 1 >= room.questions.length ? "Final results" : "See leaderboard"}
           onReplay={replayQuestion}
           warmup={!!room.currentQ?._warmup}
           onSkipWarmup={skipWarmup} />
