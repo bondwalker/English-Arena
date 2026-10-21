@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyOrderText, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyOrderText, hasQuestionsFor, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -662,7 +662,12 @@ export default function HostView({ onBack }) {
         const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
         const grammarEntries = topicEntries.filter(([k]) => GRAMMAR_KEYS.has(k));
         const themeEntries = topicEntries.filter(([k]) => !GRAMMAR_KEYS.has(k));
-        const pickTopic = (key) => { setSelectedTopic(key); if (gameType === "stress_battle") setGameType("mixed"); };
+        const pickTopic = (key) => {
+          setSelectedTopic(key);
+          // Stress Battle, or a question type this topic doesn't have, falls back to Mixed
+          if (gameType === "stress_battle" || !hasQuestionsFor(QUESTION_BANK[key].questions, gameType)) setGameType("mixed");
+        };
+        const topicBank = selectedTopic ? QUESTION_BANK[selectedTopic]?.questions : null;
         const subLabel = (t) => <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.66rem", letterSpacing: "0.14em", color: "var(--muted)", margin: "0 0 0.5rem" }}>{t}</div>;
         const topicBtn = ([key, { label }]) => {
           const dis = noSB.has(key);
@@ -751,7 +756,7 @@ export default function HostView({ onBack }) {
                 <div>
                   <span className="label">Question type</span>
                   <select className="select" value={stressMode ? "mixed" : gameType} onChange={e => setGameType(e.target.value)} disabled={stressMode}>
-                    {GAME_MODES.filter(g => g.v !== "stress_battle").map(g => <option key={g.v} value={g.v}>{g.label} — {g.desc}</option>)}
+                    {GAME_MODES.filter(g => g.v !== "stress_battle").map(g => <option key={g.v} value={g.v} disabled={!!topicBank && !hasQuestionsFor(topicBank, g.v)}>{g.label} — {g.desc}</option>)}
                   </select>
                 </div>
                 <div className="flex gap-2">
