@@ -47,6 +47,7 @@ export const TOPIC_THEME = {
   reports:               { accent: "var(--plum)",   emoji: "📝", label: "Reports" },
   song_waltzing_matilda: { accent: "var(--sun)",    emoji: "🎵", label: "Waltzing Matilda — Banjo Paterson" },
   song_fix_you:          { accent: "var(--cobalt)", emoji: "🎵", label: "Fix You — Coldplay" },
+  song_pretty_amazing_grace: { accent: "var(--plum)", emoji: "🎵", label: "Pretty Amazing Grace — Neil Diamond" },
 };
 // End-game awards: fun badges derived from per-player stats tracked during
 // scoring (score / maxStreak / firstCount / nCorrect / nAnswered). Spreads
