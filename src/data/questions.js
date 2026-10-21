@@ -9200,6 +9200,15 @@ export const QUESTION_BANK = {
       {type:"true_false",question:"The body paragraphs come before the introduction.",answer:"False",explanation:"The introduction always comes first."},
       {type:"true_false",question:"'In addition' shows a result.",answer:"False",explanation:"'In addition' adds another point. Use 'so' to show a result."},
   ]},
+  // Songs: only the title, artist and short word lists are stored, never the lyrics.
+  // Waltzing Matilda (Banjo Paterson, 1895) is in the public domain.
+  "song_waltzing_matilda": { label: "Waltzing Matilda — Banjo Paterson", song: true, questions: [
+      {type:"song_words",question:"Tap the words you hear:",verse:"Verse 1",real:["swagman", "camped", "billabong", "shade", "tree", "sang", "waited", "boiled"],fake:["cramped", "shed", "three", "sung", "bowled", "waded"],explanation:"A swagman is a travelling worker, a billabong is a small lake, and a billy is a tin pot for boiling water. Tricky pairs: shade / shed, sang / sung, boiled / bowled."},
+      {type:"song_words",question:"Tap the words you hear:",verse:"Chorus",real:["waltzing", "Matilda", "come", "with", "sang", "watched", "billy", "boiled"],fake:["walking", "came", "washed", "belly", "sing"],explanation:"'Waltzing Matilda' means walking around the country with your swag (a bedroll). Tricky pairs: waltzing / walking, come / came, watched / washed."},
+      {type:"song_words",question:"Tap the words you hear:",verse:"Verse 2",real:["jumbuck", "drink", "jumped", "grabbed", "glee", "shoved", "tucker", "bag"],fake:["drank", "dumped", "back", "showed", "free"],explanation:"A jumbuck is a sheep, and a tucker bag is a bag for food. Tricky pairs: drink / drank, jumped / dumped, bag / back."},
+      {type:"song_words",question:"Tap the words you hear:",verse:"Verse 3",real:["rode", "squatter", "mounted", "thoroughbred", "troopers", "three", "whose", "got"],fake:["mountain", "tree", "shoes", "god", "ride"],explanation:"A squatter is a rich farmer, a thoroughbred is a fine horse, and troopers are police. Tricky pairs: three / tree, whose / shoes, got / god."},
+      {type:"song_words",question:"Tap the words you hear:",verse:"Verse 4",real:["sprang", "catch", "alive", "said", "ghost", "heard", "pass", "billabong"],fake:["spring", "cash", "goats", "hard", "alone"],explanation:"The swagman jumps into the billabong to escape, and people say you can still hear his ghost. Tricky pairs: sprang / spring, heard / hard, ghost / goats."},
+  ]},
   "stress_battle": { label: "⚡ Stress Battle", questions: [
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"APPLE",parts:["ap","ple"],syllables:2,stressed:1,answer:"A"},
     {type:"stress_battle",question:"Which stress pattern is correct?",word:"TABLE",parts:["ta","ble"],syllables:2,stressed:1,answer:"A"},

@@ -45,6 +45,7 @@ export const TOPIC_THEME = {
   past_continuous:       { accent: "var(--cobalt)", emoji: "🌧️", label: "Simple Past & Past Continuous" },
   emails:                { accent: "var(--aqua)",   emoji: "✉️", label: "Emails" },
   reports:               { accent: "var(--plum)",   emoji: "📝", label: "Reports" },
+  song_waltzing_matilda: { accent: "var(--sun)",    emoji: "🎵", label: "Waltzing Matilda — Banjo Paterson" },
 };
 // End-game awards: fun badges derived from per-player stats tracked during
 // scoring (score / maxStreak / firstCount / nCorrect / nAnswered). Spreads
@@ -125,6 +126,7 @@ export const correctedSentence = (q) => {
 // Review/summary line for a question — the prompt shown as the title
 export const reviewPrompt = (q) =>
   q.type === "stress_battle" ? q.word
+    : q.type === "song_words" ? `${q.verse}: tap the words you hear`
     : q.type === "hangman" ? (q.hint || "Guess the word")
       : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
 
@@ -189,7 +191,8 @@ export const reviewAnswer = (q) =>
         : q.type === "story_builder" ? storyInOrder(q).join(" ")
           : q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => `${p.word} = ${p.meaning}`).join(" · ")
             : q.type === "rearrange" ? rearrangeAnswer(q)
-              : q.answer;
+              : q.type === "song_words" ? (q.real || []).join(" · ")
+                : q.answer;
 
 // A selectable game mode can serve more than one underlying question type.
 // "Find the Mistake" (error_spotter) also serves the sentence-picker (spot_sentence).
@@ -211,11 +214,23 @@ export const GAME_MODES = [
   { v: "story_builder",  label: "📖 Story Builder",    desc: "Arrange a story" },
   { v: "word_match",     label: "🃏 Word Match",       desc: "Vocab matching" },
   { v: "odd_one_out",    label: "🎯 Odd One Out",      desc: "The word that doesn't fit" },
+  { v: "song_words",     label: "🎵 Song Words",       desc: "Tap the words you hear" },
   { v: "stress_battle",  label: "⚡ Stress Battle",   desc: "Word stress A/B" },
 ];
 
+// Song Words: each verse shows real words from the song plus sound-alike fakes.
+// Students tap what they hear: +100 per real word, -50 per fake, never below 0.
+export const songTiles = (q) => [...(q.real || []), ...(q.fake || [])];
+export function songTally(q, tapped) {
+  const t = new Set(Array.isArray(tapped) ? tapped : []);
+  const real = (q.real || []).filter(w => t.has(w)).length;
+  const fake = (q.fake || []).filter(w => t.has(w)).length;
+  return { real, fake, points: Math.max(0, real * 100 - fake * 50) };
+}
+
 export function checkAnswer(given, q) {
   if (given === null || given === undefined) return false;
+  if (q.type === "song_words") { const t = songTally(q, given); return t.real === (q.real || []).length && t.fake === 0; }
   const n = s => String(s).toLowerCase().trim().replace(/[.,!?'"]/g, "");
   if (q.type === "word_match") return given === "match_all_correct";
   if (q.type === "story_builder") {
@@ -242,6 +257,7 @@ export function spotOptions(q) {
 export function getTimeLimit(q) {
   if (!q) return 25;
   if (q.type === "stress_battle") return 15;
+  if (q.type === "song_words") return 180; // the teacher usually presses Reveal when the verse ends
   if (q.type === "hangman") return 45;
   if (q.type === "story_builder") return q.fullStory ? (storyCardCount(q) >= 6 ? 90 : 60) : 50;
   if (q.type === "rearrange") return 40;
