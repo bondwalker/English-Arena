@@ -43,6 +43,7 @@ export const TOPIC_THEME = {
   news_current_affairs:  { accent: "var(--aqua)",   emoji: "📰", label: "News & Current Affairs" },
   present_perfect:       { accent: "var(--aqua)",   emoji: "✅", label: "Present Perfect & Continuous" },
   past_continuous:       { accent: "var(--cobalt)", emoji: "🌧️", label: "Simple Past & Past Continuous" },
+  emails:                { accent: "var(--aqua)",   emoji: "✉️", label: "Emails" },
 };
 // End-game awards: fun badges derived from per-player stats tracked during
 // scoring (score / maxStreak / firstCount / nCorrect / nAnswered). Spreads
@@ -170,13 +171,20 @@ export const rearrangeAnswer = (q) => {
   return a.charAt(0).toUpperCase() + a.slice(1);
 };
 
+// Story Builder normally shows only the first 3 sentences of a story. Questions
+// marked fullStory (the Emails topic) show every sentence as a card.
+export const storyCardCount = (q) =>
+  q.fullStory ? (q.sentences || []).length : Math.min((q.sentences || []).length, 3);
+export const storyOrderText = (q) =>
+  `Order: ${(q.correctOrder || []).filter(x => x < storyCardCount(q)).map(x => x + 1).join(", ")}`;
+
 // Review/summary line — the correct answer, human-readable per type
 export const reviewAnswer = (q) =>
   q.type === "stress_battle"
     ? `${Array.isArray(q.parts) ? `${stressBreakdown(q.parts, q.stressed)} — ` : ""}stress on ${ordinal(q.stressed)} syllable`
     : q.type === "hangman" ? q.word
       : q.type === "error_spotter" ? correctedSentence(q)
-        : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(x => x < 3).map(x => x + 1).join(", ")}`
+        : q.type === "story_builder" ? storyOrderText(q)
           : q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => `${p.word} = ${p.meaning}`).join(" · ")
             : q.type === "rearrange" ? rearrangeAnswer(q)
               : q.answer;
@@ -204,7 +212,7 @@ export function checkAnswer(given, q) {
   const n = s => String(s).toLowerCase().trim().replace(/[.,!?'"]/g, "");
   if (q.type === "word_match") return given === "match_all_correct";
   if (q.type === "story_builder") {
-    const count = Math.min((q.sentences || []).length, 3);
+    const count = storyCardCount(q);
     const correct3 = (q.correctOrder || []).filter(i => i < count).join(",");
     return given.trim() === correct3;
   }
@@ -228,7 +236,7 @@ export function getTimeLimit(q) {
   if (!q) return 25;
   if (q.type === "stress_battle") return 15;
   if (q.type === "hangman") return 45;
-  if (q.type === "story_builder") return 50;
+  if (q.type === "story_builder") return q.fullStory ? 90 : 50;
   if (q.type === "rearrange") return 40;
   if (q.type === "spot_sentence") return 35;
   if (q.type === "odd_one_out") return 20;

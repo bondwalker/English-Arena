@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyOrderText } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -239,7 +239,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
         const ansText = q ? (
           q.type === "word_match" ? "Match all pairs correctly"
             : q.type === "error_spotter" ? correctedSentence(q)
-              : q.type === "story_builder" ? `Order: ${(q.correctOrder || []).filter(i => i < 3).map(i => i + 1).join(", ")}`
+              : q.type === "story_builder" ? storyOrderText(q)
                 : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
                   : q.type === "hangman" ? q.word
                     : q.type === "rearrange" ? rearrangeAnswer(q)
