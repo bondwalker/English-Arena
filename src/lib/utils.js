@@ -176,8 +176,9 @@ export const rearrangeAnswer = (q) => {
 // marked fullStory (the Emails topic) show every sentence as a card.
 export const storyCardCount = (q) =>
   q.fullStory ? (q.sentences || []).length : Math.min((q.sentences || []).length, 3);
-export const storyOrderText = (q) =>
-  `Order: ${(q.correctOrder || []).filter(x => x < storyCardCount(q)).map(x => x + 1).join(", ")}`;
+// The story's sentences in the correct order (only the cards that are shown).
+export const storyInOrder = (q) =>
+  (q.correctOrder || []).filter(x => x < storyCardCount(q)).map(x => (q.sentences || [])[x]);
 
 // Review/summary line — the correct answer, human-readable per type
 export const reviewAnswer = (q) =>
@@ -185,7 +186,7 @@ export const reviewAnswer = (q) =>
     ? `${Array.isArray(q.parts) ? `${stressBreakdown(q.parts, q.stressed)} — ` : ""}stress on ${ordinal(q.stressed)} syllable`
     : q.type === "hangman" ? q.word
       : q.type === "error_spotter" ? correctedSentence(q)
-        : q.type === "story_builder" ? storyOrderText(q)
+        : q.type === "story_builder" ? storyInOrder(q).join(" ")
           : q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => `${p.word} = ${p.meaning}`).join(" · ")
             : q.type === "rearrange" ? rearrangeAnswer(q)
               : q.answer;

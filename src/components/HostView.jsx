@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyOrderText, hasQuestionsFor, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyInOrder, hasQuestionsFor, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -54,7 +54,6 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
     q.type === "word_match" ? "Match all pairs correctly"
       : q.type === "hangman" ? q.word
         : q.type === "error_spotter" ? correctedSentence(q)
-          : q.type === "story_builder" ? storyOrderText(q)
             : q.type === "rearrange" ? rearrangeAnswer(q)
               : q.answer;
   return (
@@ -83,10 +82,11 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
           </div>
         ) : (
           <>
-            <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: q.fullStory ? "clamp(1.6rem,3.6vw,3rem)" : "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>
-            {q.type === "story_builder" && q.fullStory && (
-              <div style={{ background: "var(--cream)", color: "var(--ink)", borderRadius: 14, padding: "1rem 1.5rem", marginTop: "1.2rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto", textAlign: "left", fontSize: "clamp(0.95rem,1.6vw,1.3rem)", lineHeight: 1.45 }}>
-                {(q.correctOrder || []).map(i => <div key={i}>{q.sentences[i]}</div>)}
+            {q.type !== "story_builder" && <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>}
+            {q.type === "story_builder" && (
+              // the full answer: the sentences in the right order
+              <div className="sa-anim-pop" style={{ background: "var(--cream)", color: "var(--ink)", borderRadius: 14, padding: "1.1rem 1.6rem", maxWidth: 860, marginLeft: "auto", marginRight: "auto", textAlign: "left", fontSize: q.fullStory ? "clamp(1rem,1.8vw,1.45rem)" : "clamp(1.15rem,2.2vw,1.8rem)", lineHeight: 1.45 }}>
+                {storyInOrder(q).map((s, i) => <div key={i}>{s}</div>)}
               </div>
             )}
             {q.explanation && <p style={{ color: "var(--on-light)", opacity: 0.8, fontSize: "clamp(1rem,1.9vw,1.5rem)", lineHeight: 1.5, marginTop: "1.4rem", maxWidth: 820, marginLeft: "auto", marginRight: "auto" }}><BoldQuoted text={q.explanation} words={hl.words} /></p>}

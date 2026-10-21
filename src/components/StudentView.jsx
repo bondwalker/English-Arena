@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyOrderText } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -239,7 +239,6 @@ export default function StudentView({ onBack, initialCode = "" }) {
         const ansText = q ? (
           q.type === "word_match" ? "Match all pairs correctly"
             : q.type === "error_spotter" ? correctedSentence(q)
-              : q.type === "story_builder" ? storyOrderText(q)
                 : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
                   : q.type === "hangman" ? q.word
                     : q.type === "rearrange" ? rearrangeAnswer(q)
@@ -262,6 +261,10 @@ export default function StudentView({ onBack, initialCode = "" }) {
                           <span style={{ color: "var(--ink-soft)" }}> — {p.meaning}</span>
                         </div>
                       ))}
+                    </div>
+                  ) : q.type === "story_builder" ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.35, color: "var(--ink)" }}>
+                      {storyInOrder(q).map((s, i) => <div key={i}>{s}</div>)}
                     </div>
                   ) : q.type === "stress_battle" ? (() => {
                     const n = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);

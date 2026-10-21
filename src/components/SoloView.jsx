@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer, rearrangeAnswer, storyOrderText, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle, themeFor, hasQuestionsFor } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, rearrangeAnswer, storyInOrder, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle, themeFor, hasQuestionsFor } from "../lib/utils.js";
 import { readFaves, writeFaves, readSoloBest, writeSoloBest } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -377,7 +377,7 @@ export default function SoloView({ onBack }) {
             {q.type==="hangman" && <div style={{fontSize:"1.2rem",color:"var(--ink)",textAlign:"center"}}>The word was <strong style={{color:"var(--sun)",fontSize:"1.5rem"}}>{q.word}</strong></div>}
             {q.type==="word_match" && Array.isArray(q.pairs) && <div style={{width:"100%",display:"flex",flexDirection:"column",gap:"0.4rem"}}>{q.pairs.slice(0,2).map((p,i)=>(<div key={i} style={{fontSize:"1rem",lineHeight:1.35,textAlign:"left"}}><strong style={{color:"var(--sun)"}}>{p.word}</strong> <span style={{color:"var(--ink-soft)"}}>— {p.meaning}</span></div>))}</div>}
             {!isCorrect && !["error_spotter","word_match","story_builder","stress_battle","hangman"].includes(q.type) && <div style={{fontSize:"1.2rem",color:"var(--ink)",lineHeight:1.4,textAlign:"center"}}>Answer: <strong style={{color:"var(--sun)",fontSize:"1.5rem"}}>{q.type==="rearrange" ? rearrangeAnswer(q) : q.answer}</strong></div>}
-            {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"1.2rem",color:"var(--ink)",textAlign:"center"}}>Order: <strong style={{color:"var(--sun)"}}>{storyOrderText(q).replace("Order: ", "")}</strong></div>}
+            {!isCorrect && q.type==="story_builder" && <div style={{fontSize:"1.1rem",color:"var(--ink)",textAlign:"left",lineHeight:1.45,maxWidth:640,margin:"0 auto"}}><div style={{textAlign:"center",marginBottom:"0.3rem"}}>Answer:</div>{storyInOrder(q).map((s,i) => <div key={i} style={{color:"var(--sun)",fontWeight:600}}>{s}</div>)}</div>}
             {q.explanation && q.type!=="hangman" && <div style={{fontSize:"1.05rem",color:"var(--ink-soft)",marginTop:"0.2rem",lineHeight:1.55,textAlign:"center",maxWidth:"36ch"}}>{q.explanation}</div>}
           </div>
         </div>
