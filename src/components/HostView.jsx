@@ -43,7 +43,8 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
   const correct = Object.entries(answers).filter(([, a]) => checkAnswer(a?.v ?? a, q)).length;
   const pCount = Object.keys(players).length;
   const missed = Math.max(0, pCount - correct);
-  const pill = pCount === 0 ? "The answer" : correct === 0 ? "Not this time" : correct === pCount ? "Everyone got it!" : "Answer revealed";
+  // songs: "correct" would mean every word with no fakes, so just show the answer (scores are on the leaderboard)
+  const pill = pCount === 0 || q.type === "song_words" ? "The answer" : correct === 0 ? "Not this time" : correct === pCount ? "Everyone got it!" : "Answer revealed";
   const isStress = q.type === "stress_battle";
   const isWordMatch = q.type === "word_match" && Array.isArray(q.pairs);
   const sN = Array.isArray(q.syllables) ? q.syllables.length : (q.syllables || 2);
@@ -84,15 +85,14 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
           <>
             {q.type !== "story_builder" && q.type !== "song_words" && <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>}
             {q.type === "song_words" && (
-              <div className="sa-anim-pop" style={{ maxWidth: 1000, margin: "0 auto", width: "100%", maxHeight: "62vh", overflowY: "auto", textAlign: "left", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+              // just the correct words, section by section
+              <div className="sa-anim-pop" style={{ maxWidth: 1000, margin: "0 auto", width: "100%", maxHeight: "62vh", overflowY: "auto", textAlign: "left", display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {songSections(q).map((sec, si) => (
                   <div key={si}>
-                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "0.4rem" }}>🎵 {sec.verse}</div>
+                    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "0.4rem", opacity: 0.75 }}>🎵 {sec.verse}</div>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
-                      {(sec.real || []).map(w => <span key={"r" + w} style={{ padding: "0.35rem 0.85rem", borderRadius: 10, background: "var(--leaf)", color: "var(--on-light)", fontWeight: 800, fontSize: "clamp(0.95rem,1.6vw,1.3rem)" }}>✓ {w}</span>)}
-                      {(sec.fake || []).map(w => <span key={"f" + w} style={{ padding: "0.35rem 0.85rem", borderRadius: 10, border: "2px solid rgba(15,18,38,0.35)", color: "rgba(15,18,38,0.55)", textDecoration: "line-through", fontWeight: 700, fontSize: "clamp(0.95rem,1.6vw,1.3rem)" }}>{w}</span>)}
+                      {(sec.real || []).map(w => <span key={w} style={{ padding: "0.35rem 0.85rem", borderRadius: 10, background: "var(--leaf)", color: "var(--on-light)", fontWeight: 800, fontSize: "clamp(1rem,1.7vw,1.4rem)" }}>✓ {w}</span>)}
                     </div>
-                    {sec.explanation && <div style={{ fontSize: "clamp(0.85rem,1.3vw,1.05rem)", opacity: 0.8, marginTop: "0.35rem", lineHeight: 1.4 }}>{sec.explanation}</div>}
                   </div>
                 ))}
               </div>
@@ -109,7 +109,7 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
       </div>
       <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: "0.8rem" }}>
-          {[{ k: "Correct", v: correct }, { k: "Missed", v: missed }].map(s => (
+          {(q.type === "song_words" ? [] : [{ k: "Correct", v: correct }, { k: "Missed", v: missed }]).map(s => (
             <div key={s.k} style={{ background: "var(--cream)", borderRadius: 14, padding: "0.8rem 1.4rem", textAlign: "center", minWidth: 96 }}>
               <div style={{ color: "var(--sun)", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.1rem" }}>{s.k}</div>
               <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2rem", color: "var(--ink)", lineHeight: 1 }}>{s.v}</div>
