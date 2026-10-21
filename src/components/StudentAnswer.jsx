@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
-import { OPT_COLORS, ordinal, shuffle, spotOptions } from "../lib/utils.js";
+import { OPT_COLORS, ordinal, shuffle, spotOptions, storyCardCount } from "../lib/utils.js";
 
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
@@ -49,7 +49,8 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   }, [guessed, q, myAnswer]);
 
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
-  const submitStory = () => { if (storyOrder.length === 3) onAnswer(storyOrder.join(",")); };
+  const storyCount = q.type === "story_builder" ? storyCardCount(q) : 0;
+  const submitStory = () => { if (storyOrder.length === storyCount) onAnswer(storyOrder.join(",")); };
 
   const handleMatch = (type, val) => {
     if (answered) return;
@@ -266,7 +267,9 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
             </>
           )}
           <div style={{ fontSize: "0.76rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>TAP IN ORDER</div>
-          {q.sentences.slice(0, 3).map((s, i) => (
+          {q.sentences.slice(0, storyCount).map((s, i) => (
+            // long stories (Emails): placed cards move up to "your order", so they aren't shown twice
+            q.fullStory && storyOrder.includes(i) ? null :
             <div key={i} className={`story-card ${storyOrder.includes(i) ? "placed" : ""}`}
               onClick={() => {
                 if (answered) return;
@@ -278,7 +281,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
           ))}
           <div className="flex gap-2 mt-2">
             <button className="btn btn-sm btn-ghost" disabled={answered} onClick={() => setStoryOrder([])}>Clear</button>
-            <button className="btn btn-teal" disabled={answered || storyOrder.length !== 3} onClick={submitStory}>
+            <button className="btn btn-teal" disabled={answered || storyOrder.length !== storyCount} onClick={submitStory}>
               {answered ? "Submitted" : "Submit Order →"}
             </button>
           </div>
