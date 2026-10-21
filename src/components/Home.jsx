@@ -9,6 +9,11 @@ export default function Home({ onHost, onJoin, onSolo }) {
       <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", justifyContent: "center", minHeight: "min(100vh,880px)" }}>
         {/* hero content */}
         <div className="sa-anim-slide" style={{ textAlign: "left", maxWidth: 900 }}>
+          {/* back to the landing page with all the apps */}
+          <a href="https://rebecaesquivel.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: "1.4rem", padding: "0.45rem 1rem", border: "1.5px solid var(--line)", borderRadius: 999, color: "var(--ink-soft)", fontSize: "0.9rem", fontWeight: 600, textDecoration: "none" }}>
+            ← All apps
+          </a>
+          <br />
           <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "0.5rem 1.1rem", border: "1.5px solid rgba(91,139,255,0.55)", borderRadius: 999, color: "var(--cobalt)", fontSize: "0.95rem", fontWeight: 700, marginBottom: "1.6rem" }}>
             <span style={{ fontSize: "0.7rem" }}>◆</span> Live classroom games
           </span>
