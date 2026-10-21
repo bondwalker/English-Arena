@@ -252,8 +252,14 @@ export function getTeamScores(room) {
   return scores;
 }
 
+// Room codes use letters only, leaving out ones that are easy to misread when
+// typing the code from the screen: no O (0), I (1) or L, and no numbers at all.
+const CODE_LETTERS = "ABCDEFGHJKMNPQRSTUVWXYZ";
+export const makeRoomCode = () =>
+  Array.from({ length: 4 }, () => CODE_LETTERS[Math.floor(Math.random() * CODE_LETTERS.length)]).join("");
+
 export const defaultRoom = () => ({
-  code: Math.random().toString(36).slice(2, 6).toUpperCase(),
+  code: makeRoomCode(),
   phase: "lobby",
   mode: "solo",
   players: {},
