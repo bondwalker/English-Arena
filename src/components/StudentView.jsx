@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder, songTally, songSections } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder, songTally, songSections, songTapKey } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -260,7 +260,26 @@ export default function StudentView({ onBack, initialCode = "" }) {
               <div style={{ width: "100%", maxWidth: 340 }}>
                 <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.7rem", letterSpacing: "0.18em", color: "rgba(15,18,38,0.6)", marginBottom: "0.6rem" }}>CORRECT ANSWER</div>
                 <div style={{ background: "var(--cream)", borderRadius: 16, padding: "1.3rem 1.2rem", boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
-                  {q.type === "word_match" && Array.isArray(q.pairs) ? (
+                  {isSong ? (
+                    // each section: green = heard it, grey = missed it, red crossed out = tapped a fake
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", textAlign: "left", maxHeight: "42vh", overflowY: "auto" }}>
+                      {songSections(q).map((sec, si) => {
+                        const mine = new Set(Array.isArray(myAnswer) ? myAnswer : []);
+                        const fakesTapped = (sec.fake || []).filter(w => mine.has(songTapKey(si, w)));
+                        return (
+                          <div key={si}>
+                            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: "0.35rem" }}>🎵 {sec.verse}</div>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                              {(sec.real || []).map(w => mine.has(songTapKey(si, w))
+                                ? <span key={"r" + w} style={{ padding: "0.2rem 0.6rem", borderRadius: 8, background: "var(--leaf)", color: "var(--on-light)", fontWeight: 800, fontSize: "0.9rem" }}>✓ {w}</span>
+                                : <span key={"r" + w} style={{ padding: "0.2rem 0.6rem", borderRadius: 8, border: "1.5px solid var(--line)", color: "var(--muted)", fontWeight: 600, fontSize: "0.9rem" }}>{w}</span>)}
+                              {fakesTapped.map(w => <span key={"f" + w} style={{ padding: "0.2rem 0.6rem", borderRadius: 8, border: "1.5px solid var(--tomato)", color: "var(--tomato)", textDecoration: "line-through", fontWeight: 700, fontSize: "0.9rem" }}>{w}</span>)}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : q.type === "word_match" && Array.isArray(q.pairs) ? (
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", textAlign: "left" }}>
                       {q.pairs.slice(0, 2).map((p, i) => (
                         <div key={i} style={{ fontSize: "0.95rem", lineHeight: 1.3 }}>
@@ -292,7 +311,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
             )}
             <div style={{ marginTop: "1.6rem", background: "var(--cream)", borderRadius: 16, padding: "0.9rem 2rem", minWidth: 200, boxShadow: "0 0 0 3px rgba(253,243,221,0.35)" }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.14em", color: accent, textTransform: "uppercase", marginBottom: "0.15rem" }}>Your score</div>
-              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.4rem", color: accent, lineHeight: 1 }}>{myScore.toLocaleString()}</div>
+              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "2.4rem", color: accent, lineHeight: 1 }}>{(isSong ? myScore + tally.points : myScore).toLocaleString()}</div>
             </div>
           </div>
         );
