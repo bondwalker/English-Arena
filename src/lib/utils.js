@@ -44,6 +44,7 @@ export const TOPIC_THEME = {
   present_perfect:       { accent: "var(--aqua)",   emoji: "✅", label: "Present Perfect & Continuous" },
   past_continuous:       { accent: "var(--cobalt)", emoji: "🌧️", label: "Simple Past & Past Continuous" },
   emails:                { accent: "var(--aqua)",   emoji: "✉️", label: "Emails" },
+  reports:               { accent: "var(--plum)",   emoji: "📝", label: "Reports" },
 };
 // End-game awards: fun badges derived from per-player stats tracked during
 // scoring (score / maxStreak / firstCount / nCorrect / nAnswered). Spreads
@@ -241,7 +242,7 @@ export function getTimeLimit(q) {
   if (!q) return 25;
   if (q.type === "stress_battle") return 15;
   if (q.type === "hangman") return 45;
-  if (q.type === "story_builder") return q.fullStory ? 90 : 50;
+  if (q.type === "story_builder") return q.fullStory ? (storyCardCount(q) >= 6 ? 90 : 60) : 50;
   if (q.type === "rearrange") return 40;
   if (q.type === "spot_sentence") return 35;
   if (q.type === "odd_one_out") return 20;
