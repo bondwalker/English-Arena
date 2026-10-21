@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { SAIcon, SAStreakMeter, SAConfetti } from "./ui.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { checkAnswer, reviewPrompt, reviewAnswer, rearrangeAnswer, storyOrderText, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle, themeFor } from "../lib/utils.js";
+import { checkAnswer, reviewPrompt, reviewAnswer, rearrangeAnswer, storyOrderText, correctedSentence, typesForMode, stressBreakdown, ordinal, shuffle, themeFor, hasQuestionsFor } from "../lib/utils.js";
 import { readFaves, writeFaves, readSoloBest, writeSoloBest } from "../lib/storage.js";
 
 export default function SoloView({ onBack }) {
@@ -164,7 +164,7 @@ export default function SoloView({ onBack }) {
                   <button
                     className={"solo-topic"+(sel?" sel":"")}
                     style={{"--acc":th.accent}}
-                    onClick={() => setSelectedTopic(key)}>
+                    onClick={() => { setSelectedTopic(key); if (!hasQuestionsFor(QUESTION_BANK[key].questions, gameType)) setGameType("mixed"); }}>
                     <span className="solo-topic-ico">{th.emoji}</span>
                     <span style={{flex:1}}>{cleanLabel(label)}</span></button>
                   <button onClick={(e) => { e.stopPropagation(); toggleFave(key); }} title={faves.includes(key)?"Remove from saved":"Save topic"} style={{position:"absolute",right:"0.3rem",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"0.85rem",color:faves.includes(key)?"var(--sun)":"var(--muted)",padding:"0.1rem",lineHeight:1}}>{faves.includes(key)?"★":"☆"}</button>
@@ -186,7 +186,11 @@ export default function SoloView({ onBack }) {
         <div style={{fontSize:"0.8rem",color:"var(--ink-soft)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,marginBottom:"0.4rem"}}>Question type</div>
         <div className="flex wrap gap-1 mb-3">
           {[["mixed","Mixed","var(--sun)"],["multiple_choice","Multiple Choice","var(--tomato)"],["true_false","True / False","var(--leaf)"],["error_spotter","Find the Mistake","var(--cobalt)"],["rearrange","Word Order","var(--plum)"],["story_builder","Story Builder","var(--aqua)"],["word_match","Word Match","var(--sun)"],["odd_one_out","Odd One Out","var(--tomato)"],["hangman","Hangman","var(--cobalt)"]].map(([v,l,acc]) => (
-            <button key={v} className={"qchip"+(gameType===v?" sel":"")} style={{"--acc":acc}} onClick={() => setGameType(v)}><span className="qchip-dot"/>{l}</button>
+            (() => {
+              // fade out question types the chosen topic has no questions for
+              const off = !!selectedTopic && !hasQuestionsFor(QUESTION_BANK[selectedTopic].questions, v);
+              return <button key={v} className={"qchip"+(gameType===v?" sel":"")} disabled={off} style={{"--acc":acc, opacity: off ? 0.3 : 1, cursor: off ? "not-allowed" : "pointer"}} onClick={() => setGameType(v)}><span className="qchip-dot"/>{l}</button>;
+            })()
           ))}
         </div>
         </>}

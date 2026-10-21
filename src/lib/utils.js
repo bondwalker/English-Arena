@@ -193,6 +193,11 @@ export const reviewAnswer = (q) =>
 // "Find the Mistake" (error_spotter) also serves the sentence-picker (spot_sentence).
 export const MODE_TYPES = { error_spotter: ["error_spotter", "spot_sentence"] };
 export const typesForMode = (mode) => MODE_TYPES[mode] || [mode];
+// Does this topic's question list have anything for the chosen game mode?
+// Used to fade out question types a topic doesn't have (e.g. Emails only has
+// Story Builder and True/False).
+export const hasQuestionsFor = (bank, mode) =>
+  mode === "mixed" ? bank.length > 0 : bank.some(q => typesForMode(mode).includes(q.type));
 
 export const GAME_MODES = [
   { v: "mixed",          label: "🎲 Mixed",           desc: "All types" },
