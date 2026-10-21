@@ -127,7 +127,7 @@ export const correctedSentence = (q) => {
 // Review/summary line for a question — the prompt shown as the title
 export const reviewPrompt = (q) =>
   q.type === "stress_battle" ? q.word
-    : q.type === "song_words" ? `${q.verse}: tap the words you hear`
+    : q.type === "song_words" ? "Song: tap the words you hear"
     : q.type === "hangman" ? (q.hint || "Guess the word")
       : `${q.question}${q.sentence ? " " + q.sentence : ""}`;
 
@@ -192,7 +192,7 @@ export const reviewAnswer = (q) =>
         : q.type === "story_builder" ? storyInOrder(q).join(" ")
           : q.type === "word_match" ? (q.pairs || []).slice(0, 2).map(p => `${p.word} = ${p.meaning}`).join(" · ")
             : q.type === "rearrange" ? rearrangeAnswer(q)
-              : q.type === "song_words" ? (q.real || []).join(" · ")
+              : q.type === "song_words" ? songSections(q).map(s => `${s.verse}: ${(s.real || []).join(" · ")}`).join(" / ")
                 : q.answer;
 
 // A selectable game mode can serve more than one underlying question type.
@@ -219,19 +219,28 @@ export const GAME_MODES = [
   { v: "stress_battle",  label: "⚡ Stress Battle",   desc: "Word stress A/B" },
 ];
 
-// Song Words: each verse shows real words from the song plus sound-alike fakes.
-// Students tap what they hear: +100 per real word, -50 per fake, never below 0.
-export const songTiles = (q) => [...(q.real || []), ...(q.fake || [])];
+// Song Words: the whole song is one page, split into sections (Verse 1, Chorus...).
+// Each section shows real words from that part of the song plus sound-alike fakes.
+// Taps are stored as "<sectionIndex>:<word>", so a word that appears in two sections
+// (e.g. "try" in Verse 1 and the Chorus) counts separately in each.
+// Scoring: +100 per real word, -50 per fake, never below 0 for the song.
+export const songSections = (q) => q.sections || [];
+export const songTiles = (section) => [...(section.real || []), ...(section.fake || [])];
+export const songTapKey = (si, word) => `${si}:${word}`;
 export function songTally(q, tapped) {
   const t = new Set(Array.isArray(tapped) ? tapped : []);
-  const real = (q.real || []).filter(w => t.has(w)).length;
-  const fake = (q.fake || []).filter(w => t.has(w)).length;
-  return { real, fake, points: Math.max(0, real * 100 - fake * 50) };
+  let real = 0, fake = 0, totalReal = 0;
+  songSections(q).forEach((sec, si) => {
+    totalReal += (sec.real || []).length;
+    real += (sec.real || []).filter(w => t.has(songTapKey(si, w))).length;
+    fake += (sec.fake || []).filter(w => t.has(songTapKey(si, w))).length;
+  });
+  return { real, fake, totalReal, points: Math.max(0, real * 100 - fake * 50) };
 }
 
 export function checkAnswer(given, q) {
   if (given === null || given === undefined) return false;
-  if (q.type === "song_words") { const t = songTally(q, given); return t.real === (q.real || []).length && t.fake === 0; }
+  if (q.type === "song_words") { const t = songTally(q, given); return t.real === t.totalReal && t.fake === 0; }
   const n = s => String(s).toLowerCase().trim().replace(/[.,!?'"]/g, "");
   if (q.type === "word_match") return given === "match_all_correct";
   if (q.type === "story_builder") {
@@ -258,7 +267,7 @@ export function spotOptions(q) {
 export function getTimeLimit(q) {
   if (!q) return 25;
   if (q.type === "stress_battle") return 15;
-  if (q.type === "song_words") return 180; // the teacher usually presses Reveal when the verse ends
+  if (q.type === "song_words") return 600; // not used: songs have no countdown, the teacher reveals at the end
   if (q.type === "hangman") return 45;
   if (q.type === "story_builder") return q.fullStory ? (storyCardCount(q) >= 6 ? 90 : 60) : 50;
   if (q.type === "rearrange") return 40;

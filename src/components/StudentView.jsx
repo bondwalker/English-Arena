@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder, songTally } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder, songTally, songSections } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -240,7 +240,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
         const accent = win ? "var(--leaf)" : "var(--tomato)";
         const headline = isSong ? (wasCorrect ? "Perfect!" : tally.points > 0 ? "Nice listening!" : "Keep listening!")
           : !answered ? "Time's up!" : wasCorrect ? "Correct!" : "Missed!";
-        const sub = isSong ? `+${tally.points} points · ${tally.real} real word${tally.real === 1 ? "" : "s"}, ${tally.fake} fake`
+        const sub = isSong ? `+${tally.points} points · ${tally.real} of ${tally.totalReal} real words, ${tally.fake} fake`
           : !answered ? "No answer this round." : wasCorrect ? `+${(streak >= 2 ? 1250 : 1000).toLocaleString()} points${streak >= 2 ? " · on a streak!" : ""}` : "Streak ended.";
         const ansText = q ? (
           q.type === "word_match" ? "Match all pairs correctly"
@@ -248,7 +248,7 @@ export default function StudentView({ onBack, initialCode = "" }) {
                 : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
                   : q.type === "hangman" ? q.word
                     : q.type === "rearrange" ? rearrangeAnswer(q)
-                      : q.type === "song_words" ? (q.real || []).join(" · ")
+                      : q.type === "song_words" ? songSections(q).map(s => `${s.verse}: ${(s.real || []).join(" · ")}`).join("  /  ")
                         : q.answer
         ) : "";
         return (

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
-import { OPT_COLORS, ordinal, shuffle, spotOptions, storyCardCount, songTiles } from "../lib/utils.js";
+import { OPT_COLORS, ordinal, shuffle, spotOptions, storyCardCount, songTiles, songSections, songTapKey } from "../lib/utils.js";
 
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
@@ -51,12 +51,13 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
   const storyCount = q.type === "story_builder" ? storyCardCount(q) : 0;
 
-  // Song Words: tiles are mixed up once per verse; every tap adds the word to the list
-  const songKey = q.type === "song_words" ? `${q.verse}|${(q.real || []).join("|")}` : "";
-  const [songGrid, setSongGrid] = useState([]);
-  useEffect(() => { if (q.type === "song_words") setSongGrid(shuffle(songTiles(q))); }, [songKey]);
+  // Song Words: one page for the whole song. Each section's tiles are mixed up once;
+  // every tap adds "<section>:<word>" to the list, which is re-sent to the teacher.
+  const songKey = q.type === "song_words" ? songSections(q).map(sec => sec.verse + ":" + (sec.real || []).join("|")).join("¦") : "";
+  const [songGrids, setSongGrids] = useState([]);
+  useEffect(() => { if (q.type === "song_words") setSongGrids(songSections(q).map(sec => shuffle(songTiles(sec)))); }, [songKey]);
   const tapped = Array.isArray(myAnswer) ? myAnswer : [];
-  const tapSong = (w) => { if (!tapped.includes(w)) onAnswer([...tapped, w]); };
+  const tapSong = (key) => { if (!tapped.includes(key)) onAnswer([...tapped, key]); };
   const submitStory = () => { if (storyOrder.length === storyCount) onAnswer(storyOrder.join(",")); };
 
   const handleMatch = (type, val) => {
@@ -347,19 +348,26 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
       {q.type === "song_words" && (
         <div>
-          <p style={{ fontSize: "0.92rem", color: "var(--muted)", marginBottom: "0.7rem", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em" }}>🎵 {q.verse} — tap a word when you hear it</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(130px,1fr))", gap: "0.6rem" }}>
-            {songGrid.map(w => {
-              const on = tapped.includes(w);
-              return (
-                <button key={w} className="sa-pressable" disabled={on} onClick={() => tapSong(w)}
-                  style={{ padding: "1rem 0.6rem", borderRadius: 14, border: `2px solid ${on ? "var(--sun)" : "var(--line)"}`, background: on ? "rgba(255,206,71,0.18)" : "var(--paper)", color: "var(--ink)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "1.15rem", cursor: on ? "default" : "pointer" }}>
-                  {on ? "✓ " : ""}{w}
-                </button>
-              );
-            })}
+          <div style={{ position: "sticky", top: 0, zIndex: 2, background: "var(--cream)", padding: "0.4rem 0", marginBottom: "0.4rem", fontSize: "0.85rem", color: "var(--muted)", fontFamily: "'JetBrains Mono',monospace" }}>
+            Tapped: {tapped.length} · real words +100, fake words −50 · scroll down as the song plays
           </div>
-          <p style={{ marginTop: "0.6rem", fontSize: "0.82rem", color: "var(--muted)" }}>Tapped: {tapped.length} · real words +100, fake words −50</p>
+          {songSections(q).map((sec, si) => (
+            <div key={si} style={{ marginBottom: "1.2rem" }}>
+              <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1.15rem", margin: "0.2rem 0 0.5rem" }}>🎵 {sec.verse}</div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(120px,1fr))", gap: "0.5rem" }}>
+                {(songGrids[si] || []).map(w => {
+                  const key = songTapKey(si, w);
+                  const on = tapped.includes(key);
+                  return (
+                    <button key={key} className="sa-pressable" disabled={on} onClick={() => tapSong(key)}
+                      style={{ padding: "0.85rem 0.5rem", borderRadius: 14, border: `2px solid ${on ? "var(--sun)" : "var(--line)"}`, background: on ? "rgba(255,206,71,0.18)" : "var(--paper)", color: "var(--ink)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "1.1rem", cursor: on ? "default" : "pointer" }}>
+                      {on ? "✓ " : ""}{w}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
