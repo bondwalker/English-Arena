@@ -699,8 +699,11 @@ export default function HostView({ onBack }) {
         // Grammar-practice topics are shown in their own group, apart from the vocabulary themes.
         const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
         const grammarEntries = topicEntries.filter(([k]) => GRAMMAR_KEYS.has(k));
+        // Writing topics (emails, reports) get their own group too.
+        const WRITING_KEYS = new Set(["emails", "reports"]);
+        const writingEntries = topicEntries.filter(([k]) => WRITING_KEYS.has(k));
         const songEntries = topicEntries.filter(([, t]) => t.song);
-        const themeEntries = topicEntries.filter(([k, t]) => !GRAMMAR_KEYS.has(k) && !t.song);
+        const themeEntries = topicEntries.filter(([k, t]) => !GRAMMAR_KEYS.has(k) && !WRITING_KEYS.has(k) && !t.song);
         const pickTopic = (key) => {
           setSelectedTopic(key);
           // Stress Battle, or a question type this topic doesn't have, falls back to Mixed
@@ -767,6 +770,14 @@ export default function HostView({ onBack }) {
                         {subLabel("GRAMMAR")}
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", marginBottom: "1.1rem" }}>
                           {grammarEntries.map(topicBtn)}
+                        </div>
+                      </>
+                    )}
+                    {writingEntries.length > 0 && (
+                      <>
+                        {subLabel("WRITING")}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", marginBottom: "1.1rem" }}>
+                          {writingEntries.map(topicBtn)}
                         </div>
                       </>
                     )}

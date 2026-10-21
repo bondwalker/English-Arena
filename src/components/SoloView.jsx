@@ -153,8 +153,10 @@ export default function SoloView({ onBack }) {
             // Grammar-practice topics get their own labelled group, above the vocabulary themes.
             const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
             const entries = Object.entries(QUESTION_BANK).filter(([k, t]) => k !== "stress_battle" && !t.song && (topicFilter==="all" || faves.includes(k))).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
+            const WRITING_KEYS = new Set(["emails", "reports"]);
             const gram = entries.filter(([k]) => GRAMMAR_KEYS.has(k));
-            const rest = entries.filter(([k]) => !GRAMMAR_KEYS.has(k));
+            const writing = entries.filter(([k]) => WRITING_KEYS.has(k));
+            const rest = entries.filter(([k]) => !GRAMMAR_KEYS.has(k) && !WRITING_KEYS.has(k));
             const hdr = (t) => <div key={"hdr-"+t} style={{gridColumn:"1 / -1",fontSize:"0.72rem",color:"var(--muted)",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",fontWeight:700,margin:"0.15rem 0 0"}}>{t}</div>;
             const item = ([key,{label}]) => {
               const sel = selectedTopic === key;
@@ -174,6 +176,8 @@ export default function SoloView({ onBack }) {
             return <>
               {gram.length > 0 && hdr("Grammar")}
               {gram.map(item)}
+              {writing.length > 0 && hdr("Writing")}
+              {writing.map(item)}
               {rest.length > 0 && hdr("Topics")}
               {rest.map(item)}
             </>;
