@@ -198,12 +198,13 @@ export default function StudentView({ onBack, initialCode = "" }) {
         <div style={{ zoom: bigText ? 1.3 : 1, flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
           {(() => {
             const total = getTimeLimit(q);
-            const urgent = room.timeLeft <= 5 && !room.paused;
+            const isSong = q.type === "song_words";
+            const urgent = !isSong && room.timeLeft <= 5 && !room.paused;
             const typeLabel = q.type.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
             const mult = (myData.streak || 0) >= 1 ? (myData.streak || 0) >= 2 ? 2 : 1 : 0;
             return (
               <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 14, padding: "0.5rem", marginBottom: "1rem" }}>
-                <div style={{ width: 56, height: 56, flexShrink: 0, borderRadius: 12, background: urgent ? "var(--tomato)" : "var(--sun)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--on-light)" }}>{room.paused ? "‖" : room.timeLeft}</div>
+                <div style={{ width: 56, height: 56, flexShrink: 0, borderRadius: 12, background: urgent ? "var(--tomato)" : "var(--sun)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--on-light)" }}>{isSong ? "🎵" : room.paused ? "‖" : room.timeLeft}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "1rem", lineHeight: 1.1 }}>Question {room.qIndex + 1} of {room.questions.length}</div>
                   <div style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{typeLabel}</div>

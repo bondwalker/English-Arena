@@ -127,7 +127,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? shuffle((q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean)) : [], [q.question]);
   const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", hangman: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
-  const urgent = timeLeft <= 5 && !paused;
+  const isSong = q.type === "song_words"; // songs have no timer: the teacher reveals each verse
+  const urgent = !isSong && timeLeft <= 5 && !paused;
   const answeredNames = new Set(Object.keys(answers));
 
   const sidebar = (
@@ -139,8 +140,8 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       {/* timer card */}
       <div style={{ background: urgent ? "var(--tomato)" : "var(--sun)", borderRadius: 20, padding: "1.6rem 1rem", textAlign: "center", position: "relative", overflow: "hidden" }} className={urgent ? "sa-anim-pulse" : ""}>
         <div style={{ position: "absolute", inset: "0.9rem", border: "3px solid rgba(15,18,38,0.15)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.4rem", color: "var(--on-light)", lineHeight: 1 }}>{paused ? "‖" : timeLeft}</div>
-        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", letterSpacing: "0.2em", color: "rgba(15,18,38,0.6)", marginTop: "0.3rem" }}>{paused ? "PAUSED" : "SECONDS"}</div>
+        <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "3.4rem", color: "var(--on-light)", lineHeight: 1 }}>{isSong ? "🎵" : paused ? "‖" : timeLeft}</div>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.65rem", letterSpacing: "0.2em", color: "rgba(15,18,38,0.6)", marginTop: "0.3rem" }}>{isSong ? "LISTENING" : paused ? "PAUSED" : "SECONDS"}</div>
       </div>
       {/* locked in + join QR */}
       <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "0.9rem 1rem" }}>
@@ -170,10 +171,10 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
       <div style={{ background: "var(--paper)", border: "1.5px solid var(--line)", borderRadius: 16, padding: "0.9rem 1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "var(--muted)" }}>TEACHER</span>
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          {onPause && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
-          {onRepeat && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
+          {onPause && !isSong && <TeacherBtn icon="pause" label={paused ? "Resume" : "Pause"} onClick={onPause} variant={paused ? "active" : "default"} />}
+          {onRepeat && !isSong && <TeacherBtn icon="repeat" label="Repeat" onClick={onRepeat} />}
         </div>
-        {onReveal && <button className="btn btn-coral btn-full" style={{ padding: "0.8rem" }} onClick={onReveal}><SAIcon name="reveal" size={15} color="var(--on-dark)" /> Reveal answer</button>}
+        {onReveal && <button className="btn btn-coral btn-full" style={{ padding: "0.8rem" }} onClick={onReveal}><SAIcon name="reveal" size={15} color="var(--on-dark)" /> {isSong ? "Reveal — end of verse" : "Reveal answer"}</button>}
         {onSkip && <TeacherBtn icon="skip" label="Skip question" onClick={onSkip} variant="ghost" />}
         {onSkipWarmup && <TeacherBtn icon="skip" label="Skip Warm-Up" onClick={onSkipWarmup} variant="ghost" />}
         {onToggleFont && <TeacherBtn label={bigText ? "A− Text" : "A+ Text"} onClick={onToggleFont} />}
@@ -453,6 +454,7 @@ export default function HostView({ onBack }) {
   useEffect(() => {
     clearInterval(timerRef.current);
     if (room.phase !== "question") return;
+    if (room.currentQ?.type === "song_words") return; // songs wait for the teacher to press Reveal
     timerRef.current = setInterval(() => {
       const prev = roomRef.current;
       if (prev.phase !== "question") { clearInterval(timerRef.current); return; }
@@ -585,6 +587,8 @@ export default function HostView({ onBack }) {
         if (nextIdx < prev.warmupCount) return { ...prev, players, phase: "question", timeLeft: 15, qIndex: nextIdx, currentQ: nextQ, answers: {}, paused: false, firstCorrect: null };
         return { ...prev, players, phase: "warmup_done", qIndex: nextIdx, currentQ: nextQ, answers: {}, firstCorrect: null };
       }
+      // Songs go straight to the next verse; the leaderboard waits until the end of the song
+      if (q?.type === "song_words") return { ...prev, players, phase: "question", qIndex: nextIdx, currentQ: nextQ, timeLeft: getTimeLimit(nextQ), answers: {}, paused: false, firstCorrect: null };
       return { ...prev, players, phase: "leaderboard", qIndex: nextIdx, currentQ: nextQ, answers: {}, firstCorrect };
     });
   };
@@ -625,6 +629,7 @@ export default function HostView({ onBack }) {
   const pCount = Object.keys(room.players || {}).length;
   useEffect(() => {
     if (room.phase !== "question" || pCount === 0 || ansCount < pCount || room.paused) return;
+    if (room.currentQ?.type === "song_words") return; // students keep tapping until the teacher reveals
     const t = setTimeout(endEarly, 700);
     return () => clearTimeout(t);
   }, [ansCount, pCount, room.phase, room.paused]);
@@ -856,7 +861,7 @@ export default function HostView({ onBack }) {
       {room.phase === "reveal" && room.currentQ && (
         <HostReveal q={room.currentQ} answers={room.answers || {}} players={room.players || {}} topic={room.topic}
           onNext={advance}
-          nextLabel={room.currentQ?._warmup ? "Next" : room.qIndex + 1 >= room.questions.length ? "Final results" : "See leaderboard"}
+          nextLabel={room.currentQ?._warmup ? "Next" : room.qIndex + 1 >= room.questions.length ? "Final results" : room.currentQ?.type === "song_words" ? "Next verse" : "See leaderboard"}
           onReplay={replayQuestion}
           warmup={!!room.currentQ?._warmup}
           onSkipWarmup={skipWarmup} />
