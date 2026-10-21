@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { SAIcon, SABlob, SAStreakMeter, SARollingNumber, SARoomChip } from "./ui.jsx";
 import { StudentLeaderboard } from "./Leaderboard.jsx";
 import { StudentAnswer } from "./StudentAnswer.jsx";
-import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder } from "../lib/utils.js";
+import { TEAMS, checkAnswer, getTimeLimit, getTeamScores, ordinal, stressBreakdown, correctedSentence, rearrangeAnswer, storyInOrder, songTally } from "../lib/utils.js";
 import { db, ref, set, listenRoom, fetchRoom } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 import { StressDots } from "./ui.jsx";
@@ -81,7 +81,8 @@ export default function StudentView({ onBack, initialCode = "" }) {
   }, [step, room?.code]);
 
   const submitAnswer = (ans) => {
-    if (myAnswer !== null) return;
+    // Song Words keeps sending the growing list of tapped words; everything else answers once
+    if (myAnswer !== null && room?.currentQ?.type !== "song_words") return;
     setMyAnswer(ans);
     const entry = { v: ans, ts: Date.now() };
     if (db && room?.code) {
@@ -230,19 +231,24 @@ export default function StudentView({ onBack, initialCode = "" }) {
       {phase === "reveal" && (() => {
         const answered = myAnswer !== null;
         const streak = myData.streak || 0;
-        const win = answered && wasCorrect;
+        const isSong = q?.type === "song_words";
+        const tally = isSong ? songTally(q, myAnswer) : null;
+        const win = isSong ? tally.points > 0 : answered && wasCorrect;
         const bg = win ? "var(--leaf)" : "var(--tomato)";
         const fg = win ? "var(--on-light)" : "var(--ink)";
         const accent = win ? "var(--leaf)" : "var(--tomato)";
-        const headline = !answered ? "Time's up!" : wasCorrect ? "Correct!" : "Missed!";
-        const sub = !answered ? "No answer this round." : wasCorrect ? `+${(streak >= 2 ? 1250 : 1000).toLocaleString()} points${streak >= 2 ? " · on a streak!" : ""}` : "Streak ended.";
+        const headline = isSong ? (wasCorrect ? "Perfect!" : tally.points > 0 ? "Nice listening!" : "Keep listening!")
+          : !answered ? "Time's up!" : wasCorrect ? "Correct!" : "Missed!";
+        const sub = isSong ? `+${tally.points} points · ${tally.real} real word${tally.real === 1 ? "" : "s"}, ${tally.fake} fake`
+          : !answered ? "No answer this round." : wasCorrect ? `+${(streak >= 2 ? 1250 : 1000).toLocaleString()} points${streak >= 2 ? " · on a streak!" : ""}` : "Streak ended.";
         const ansText = q ? (
           q.type === "word_match" ? "Match all pairs correctly"
             : q.type === "error_spotter" ? correctedSentence(q)
                 : q.type === "stress_battle" ? `${q.word} — ${q.answer}`
                   : q.type === "hangman" ? q.word
                     : q.type === "rearrange" ? rearrangeAnswer(q)
-                      : q.answer
+                      : q.type === "song_words" ? (q.real || []).join(" · ")
+                        : q.answer
         ) : "";
         return (
           <div style={{ position: "fixed", inset: 0, background: bg, zIndex: 60, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1.4rem", overflowY: "auto", textAlign: "center", gap: "0.5rem" }}>

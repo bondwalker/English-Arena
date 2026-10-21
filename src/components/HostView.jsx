@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { SALogo, SAIcon, SABlob, SATimerRing, SAConfetti, SARoomChip, TeamIcon, InGameQR, PlayersFooter, StressDots, QRDisplay, WoodenTile, Waveform, TeacherBtn } from "./ui.jsx";
 import { Leaderboard } from "./Leaderboard.jsx";
 import { QUESTION_BANK } from "../data/questions.js";
-import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyInOrder, hasQuestionsFor, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
+import { TEAMS, GAME_MODES, OPT_ICONS, OPT_COLORS, ordinal, stressBreakdown, reviewPrompt, reviewAnswer, correctedSentence, rearrangeAnswer, mistakeHighlight, storyCardCount, storyInOrder, hasQuestionsFor, songTiles, songTally, typesForMode, checkAnswer, getTimeLimit, getTeamScores, defaultRoom, shuffle, themeFor, spotOptions } from "../lib/utils.js";
 import { db, ref, set, onValue } from "../lib/firebase.js";
 import { read, write, readFont, writeFont } from "../lib/storage.js";
 
@@ -82,7 +82,13 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
           </div>
         ) : (
           <>
-            {q.type !== "story_builder" && <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>}
+            {q.type !== "story_builder" && q.type !== "song_words" && <h1 className="sa-anim-pop" style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(2.2rem,5.5vw,4.5rem)", color: "var(--on-light)", lineHeight: 1.05, letterSpacing: "-0.01em" }}>"{hl.marks.length ? <MarkedSentence text={hl.sentence} marks={hl.marks} /> : ansText}"</h1>}
+            {q.type === "song_words" && (
+              <div className="sa-anim-pop" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.6rem", maxWidth: 900, margin: "0 auto" }}>
+                {(q.real || []).map(w => <span key={"r" + w} style={{ padding: "0.55rem 1.1rem", borderRadius: 12, background: "var(--leaf)", color: "var(--on-light)", fontWeight: 800, fontSize: "clamp(1.1rem,2.2vw,1.7rem)" }}>✓ {w}</span>)}
+                {(q.fake || []).map(w => <span key={"f" + w} style={{ padding: "0.55rem 1.1rem", borderRadius: 12, border: "2px solid rgba(15,18,38,0.35)", color: "rgba(15,18,38,0.55)", textDecoration: "line-through", fontWeight: 700, fontSize: "clamp(1.1rem,2.2vw,1.7rem)" }}>{w}</span>)}
+              </div>
+            )}
             {q.type === "story_builder" && (
               // the full answer: the sentences in the right order
               <div className="sa-anim-pop" style={{ background: "var(--cream)", color: "var(--ink)", borderRadius: 14, padding: "1.1rem 1.6rem", maxWidth: 860, marginLeft: "auto", marginRight: "auto", textAlign: "left", fontSize: q.fullStory ? "clamp(1rem,1.8vw,1.45rem)" : "clamp(1.15rem,2.2vw,1.8rem)", lineHeight: 1.45 }}>
@@ -116,6 +122,8 @@ function HostReveal({ q, answers, players, onNext, nextLabel, onReplay, warmup, 
 function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, teams, teamScores, paused, onPause, onRepeat, onReveal, onSkip, onSkipWarmup, bigText, onToggleFont, code, topic, qrUrl }) {
   const ansCount = Object.keys(answers).length;
   const pCount = Object.keys(players).length;
+  // Song Words: the projector shows the same words as the phones, mixed up, with no answers
+  const songGrid = useMemo(() => q.type === "song_words" ? shuffle(songTiles(q)) : [], [q.verse, (q.real || []).join("|")]);
   const shuffledRearrange = useMemo(() => q.type === "rearrange" ? shuffle((q.answer || "").replace(/[.?!]+$/, "").split(/\s+/).filter(Boolean)) : [], [q.question]);
   const typeColors = { multiple_choice: "var(--tomato)", true_false: "var(--leaf)", error_spotter: "var(--tomato)", hangman: "var(--cobalt)", rearrange: "var(--sun)", story_builder: "var(--plum)", fill_idiom: "var(--sun)", word_match: "var(--aqua)", odd_one_out: "var(--tomato)", stress_battle: "var(--cobalt)" };
   const tc = typeColors[q.type] || "var(--tomato)";
@@ -206,6 +214,16 @@ function HostQuestion({ q, timeLeft, answers, players, qIndex, total, mode, team
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {shuffledRearrange.map((w, i) => (
               <WoodenTile key={i} word={w} size="lg" block />
+            ))}
+          </div>
+        </div>
+      )}
+      {q.type === "song_words" && (
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.85rem", letterSpacing: "0.14em", color: "var(--sun)", textTransform: "uppercase", marginBottom: "0.9rem" }}>🎵 {q.verse} · listen and tap</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.7rem" }}>
+            {songGrid.map((w, i) => (
+              <span key={i} style={{ padding: "0.7rem 1.2rem", border: "2px solid var(--line)", borderRadius: 14, background: "var(--paper)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "clamp(1.1rem,2vw,1.6rem)" }}>{w}</span>
             ))}
           </div>
         </div>
@@ -467,7 +485,9 @@ export default function HostView({ onBack }) {
       ? QUESTION_BANK.stress_battle.questions
       : (gameType === "mixed" || selectedTopic === "stress_battle") ? bank : bank.filter(q => typesForMode(gameType).includes(q.type));
     if (!pool.length) { setError("No questions of that type for this topic."); return; }
-    const qs = shuffle(pool).slice(0, Math.min(qCount, pool.length));
+    // A song plays verse by verse, so keep every verse in order
+    const isSong = !!QUESTION_BANK[selectedTopic]?.song;
+    const qs = isSong ? pool : shuffle(pool).slice(0, Math.min(qCount, pool.length));
     setError("");
     const topicLabel = selectedTopic ? (QUESTION_BANK[selectedTopic]?.label ?? "Stress Battle") : "⚡ Stress Battle";
     upd(prev => ({ ...prev, questions: qs, topic: topicLabel, gameType, phase: "lobby" }));
@@ -490,7 +510,7 @@ export default function HostView({ onBack }) {
     upd(prev => {
       let qs = prev.questions;
       let warmupCount = 0;
-      if (prev.warmup && selectedTopic && QUESTION_BANK[selectedTopic]) {
+      if (prev.warmup && selectedTopic && QUESTION_BANK[selectedTopic] && !QUESTION_BANK[selectedTopic].song) {
         const bank = QUESTION_BANK[selectedTopic].questions;
         const fastPool = bank.filter(q => ["multiple_choice", "true_false"].includes(q.type));
         // Warm-up mirrors the chosen mode so it feels consistent (e.g. Hangman → Hangman),
@@ -537,9 +557,11 @@ export default function HostView({ onBack }) {
           const correct = checkAnswer(val, q);
           const bonus = correct && (players[name].streak || 0) >= 1 ? 250 : 0;
           const newStreak = correct ? (players[name].streak || 0) + 1 : 0;
+          // Song Words scores each tapped word (+100 real, -50 fake) instead of a fixed 1000
+          const points = q.type === "song_words" ? songTally(q, val).points : (correct ? 1000 + bonus : 0);
           players[name] = {
             ...players[name],
-            score: (players[name].score || 0) + (correct ? 1000 + bonus : 0),
+            score: (players[name].score || 0) + points,
             streak: newStreak, correct, lastAnswer: val,
             // cumulative stats for end-game awards
             nAnswered: (players[name].nAnswered || 0) + 1,
@@ -661,13 +683,16 @@ export default function HostView({ onBack }) {
         // Grammar-practice topics are shown in their own group, apart from the vocabulary themes.
         const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
         const grammarEntries = topicEntries.filter(([k]) => GRAMMAR_KEYS.has(k));
-        const themeEntries = topicEntries.filter(([k]) => !GRAMMAR_KEYS.has(k));
+        const songEntries = topicEntries.filter(([, t]) => t.song);
+        const themeEntries = topicEntries.filter(([k, t]) => !GRAMMAR_KEYS.has(k) && !t.song);
         const pickTopic = (key) => {
           setSelectedTopic(key);
           // Stress Battle, or a question type this topic doesn't have, falls back to Mixed
           if (gameType === "stress_battle" || !hasQuestionsFor(QUESTION_BANK[key].questions, gameType)) setGameType("mixed");
         };
         const topicBank = selectedTopic ? QUESTION_BANK[selectedTopic]?.questions : null;
+        // a song always plays every verse in order, so Rounds and Warm-up don't apply
+        const songPicked = !!QUESTION_BANK[selectedTopic]?.song;
         const subLabel = (t) => <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.66rem", letterSpacing: "0.14em", color: "var(--muted)", margin: "0 0 0.5rem" }}>{t}</div>;
         const topicBtn = ([key, { label }]) => {
           const dis = noSB.has(key);
@@ -703,7 +728,7 @@ export default function HostView({ onBack }) {
               <div style={{ border: "1.5px solid var(--line)", borderRadius: 18, padding: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem" }}>
                   <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 900, fontSize: "1.8rem" }}>Pick a game</h2>
-                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.1em", color: "var(--muted)" }}>{qCount} ROUNDS</span>
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "0.72rem", letterSpacing: "0.1em", color: "var(--muted)" }}>{songPicked ? `${topicBank.length} VERSES` : `${qCount} ROUNDS`}</span>
                 </div>
                 {/* Stress Battle — game mode */}
                 <button onClick={() => setGameType(stressMode ? "mixed" : "stress_battle")}
@@ -726,6 +751,14 @@ export default function HostView({ onBack }) {
                         {subLabel("GRAMMAR")}
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", marginBottom: "1.1rem" }}>
                           {grammarEntries.map(topicBtn)}
+                        </div>
+                      </>
+                    )}
+                    {songEntries.length > 0 && (
+                      <>
+                        {subLabel("SONGS")}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", marginBottom: "1.1rem" }}>
+                          {songEntries.map(topicBtn)}
                         </div>
                       </>
                     )}
@@ -759,14 +792,14 @@ export default function HostView({ onBack }) {
                     {GAME_MODES.filter(g => g.v !== "stress_battle").map(g => <option key={g.v} value={g.v} disabled={!!topicBank && !hasQuestionsFor(topicBank, g.v)}>{g.label} — {g.desc}</option>)}
                   </select>
                 </div>
-                <div className="flex gap-2">
+                {!songPicked && <div className="flex gap-2">
                   <div style={{ flex: 1 }}>
                     <span className="label">Rounds</span>
                     <select className="select" value={qCount} onChange={e => setQCount(+e.target.value)}>
                       {[8, 10, 12, 15].map(n => <option key={n} value={n}>{n}</option>)}
                     </select>
                   </div>
-                </div>
+                </div>}
 
                 <div style={{ display: "flex", gap: "0.6rem" }}>
                   <button className="btn" onClick={() => upd(p => ({ ...p, mode: "solo" }))} style={{ flex: 1, background: room.mode === "solo" ? "var(--paper)" : "transparent", border: `1.5px solid ${room.mode === "solo" ? "var(--ink)" : "var(--line)"}`, color: "var(--ink)" }}>👤 Solo</button>
@@ -781,14 +814,16 @@ export default function HostView({ onBack }) {
                   </div>
                 )}
 
-                <label style={{ fontSize: "0.85rem", color: "var(--ink-soft)", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                {songPicked ? (
+                  <p style={{ fontSize: "0.85rem", color: "var(--ink-soft)", lineHeight: 1.45 }}>🎵 Play the song on your device. Press <strong>Reveal answer</strong> at the end of each verse.</p>
+                ) : <label style={{ fontSize: "0.85rem", color: "var(--ink-soft)", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                   <input type="checkbox" checked={room.warmup} onChange={e => upd(p => ({ ...p, warmup: e.target.checked }))} style={{ accentColor: "var(--sun)", cursor: "pointer" }} />
                   Warm-up round (3 quick questions)
-                </label>
+                </label>}
 
                 {error && <p className="text-coral" style={{ fontSize: "0.85rem" }}>{error}</p>}
                 <button className="btn btn-coral btn-full" disabled={!canStart} onClick={startNow} style={{ fontSize: "1.1rem", padding: "1.1rem", opacity: canStart ? 1 : 0.5 }}>
-                  ▶ Start the game — {qCount} questions
+                  ▶ Start the game — {songPicked ? `${topicBank.length} verses` : `${qCount} questions`}
                 </button>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StressDots, WoodenTile, Waveform, RedInkUnderline, MatchConnector } from "./ui.jsx";
 import { readFont, writeFont } from "../lib/storage.js";
-import { OPT_COLORS, ordinal, shuffle, spotOptions, storyCardCount } from "../lib/utils.js";
+import { OPT_COLORS, ordinal, shuffle, spotOptions, storyCardCount, songTiles } from "../lib/utils.js";
 
 const OPT_LETTERS = ["A", "B", "C", "D"];
 
@@ -50,6 +50,13 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
 
   const submitRearranged = () => { if (rearranged.length) onAnswer(rearranged.join(" ")); };
   const storyCount = q.type === "story_builder" ? storyCardCount(q) : 0;
+
+  // Song Words: tiles are mixed up once per verse; every tap adds the word to the list
+  const songKey = q.type === "song_words" ? `${q.verse}|${(q.real || []).join("|")}` : "";
+  const [songGrid, setSongGrid] = useState([]);
+  useEffect(() => { if (q.type === "song_words") setSongGrid(shuffle(songTiles(q))); }, [songKey]);
+  const tapped = Array.isArray(myAnswer) ? myAnswer : [];
+  const tapSong = (w) => { if (!tapped.includes(w)) onAnswer([...tapped, w]); };
   const submitStory = () => { if (storyOrder.length === storyCount) onAnswer(storyOrder.join(",")); };
 
   const handleMatch = (type, val) => {
@@ -338,6 +345,24 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
         </div>
       )}
 
+      {q.type === "song_words" && (
+        <div>
+          <p style={{ fontSize: "0.92rem", color: "var(--muted)", marginBottom: "0.7rem", fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.04em" }}>🎵 {q.verse} — tap a word when you hear it</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(130px,1fr))", gap: "0.6rem" }}>
+            {songGrid.map(w => {
+              const on = tapped.includes(w);
+              return (
+                <button key={w} className="sa-pressable" disabled={on} onClick={() => tapSong(w)}
+                  style={{ padding: "1rem 0.6rem", borderRadius: 14, border: `2px solid ${on ? "var(--sun)" : "var(--line)"}`, background: on ? "rgba(255,206,71,0.18)" : "var(--paper)", color: "var(--ink)", fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "1.15rem", cursor: on ? "default" : "pointer" }}>
+                  {on ? "✓ " : ""}{w}
+                </button>
+              );
+            })}
+          </div>
+          <p style={{ marginTop: "0.6rem", fontSize: "0.82rem", color: "var(--muted)" }}>Tapped: {tapped.length} · real words +100, fake words −50</p>
+        </div>
+      )}
+
       {q.type === "stress_battle" && (
         <div>
           <div style={{ textAlign: "center", fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(2.2rem,10vw,3.5rem)", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--sun)", marginBottom: "1.4rem" }}>{q.word}</div>
@@ -364,7 +389,7 @@ export function StudentAnswer({ q, myAnswer, onAnswer, rearranged, setRearranged
         </div>
       )}
 
-      {answered && <p style={{ textAlign: "center", color: "var(--muted)", marginTop: "1rem", fontSize: "0.82rem", fontFamily: "'JetBrains Mono',monospace" }}>Submitted — waiting for others…</p>}
+      {answered && q.type !== "song_words" && <p style={{ textAlign: "center", color: "var(--muted)", marginTop: "1rem", fontSize: "0.82rem", fontFamily: "'JetBrains Mono',monospace" }}>Submitted — waiting for others…</p>}
     </div>
   );
 }
