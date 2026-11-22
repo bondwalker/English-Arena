@@ -699,8 +699,8 @@ export default function HostView({ onBack }) {
         // Grammar-practice topics are shown in their own group, apart from the vocabulary themes.
         const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
         const grammarEntries = topicEntries.filter(([k]) => GRAMMAR_KEYS.has(k));
-        // Writing topics (emails, reports) get their own group too.
-        const WRITING_KEYS = new Set(["emails", "reports"]);
+        // Writing topics (emails, reports, paragraphs) get their own group too.
+        const WRITING_KEYS = new Set(["emails", "reports", "paragraphs"]);
         const writingEntries = topicEntries.filter(([k]) => WRITING_KEYS.has(k));
         const songEntries = topicEntries.filter(([, t]) => t.song);
         const themeEntries = topicEntries.filter(([k, t]) => !GRAMMAR_KEYS.has(k) && !WRITING_KEYS.has(k) && !t.song);

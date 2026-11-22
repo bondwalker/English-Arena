@@ -45,6 +45,7 @@ export const TOPIC_THEME = {
   past_continuous:       { accent: "var(--cobalt)", emoji: "🌧️", label: "Simple Past & Past Continuous" },
   emails:                { accent: "var(--aqua)",   emoji: "✉️", label: "Emails" },
   reports:               { accent: "var(--plum)",   emoji: "📝", label: "Reports" },
+  paragraphs:            { accent: "var(--sun)",    emoji: "🧩", label: "Paragraphs" },
   song_waltzing_matilda: { accent: "var(--sun)",    emoji: "🎵", label: "Waltzing Matilda — Banjo Paterson" },
   song_fix_you:          { accent: "var(--cobalt)", emoji: "🎵", label: "Fix You — Coldplay" },
   song_pretty_amazing_grace: { accent: "var(--plum)", emoji: "🎵", label: "Pretty Amazing Grace — Neil Diamond" },
