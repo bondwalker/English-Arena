@@ -153,7 +153,7 @@ export default function SoloView({ onBack }) {
             // Grammar-practice topics get their own labelled group, above the vocabulary themes.
             const GRAMMAR_KEYS = new Set(["verb_tenses", "present_perfect", "past_continuous"]);
             const entries = Object.entries(QUESTION_BANK).filter(([k, t]) => k !== "stress_battle" && !t.song && (topicFilter==="all" || faves.includes(k))).sort((a,b) => cleanLabel(a[1].label).localeCompare(cleanLabel(b[1].label)));
-            const WRITING_KEYS = new Set(["emails", "reports", "paragraphs", "paraphrasing"]);
+            const WRITING_KEYS = new Set(["emails", "reports", "paragraphs", "paraphrasing", "topic_sentences"]);
             const gram = entries.filter(([k]) => GRAMMAR_KEYS.has(k));
             const writing = entries.filter(([k]) => WRITING_KEYS.has(k));
             const rest = entries.filter(([k]) => !GRAMMAR_KEYS.has(k) && !WRITING_KEYS.has(k));
