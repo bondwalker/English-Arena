@@ -47,6 +47,7 @@ export const TOPIC_THEME = {
   reports:               { accent: "var(--plum)",   emoji: "📝", label: "Reports" },
   paragraphs:            { accent: "var(--sun)",    emoji: "🧩", label: "Paragraphs" },
   paraphrasing:          { accent: "var(--cobalt)", emoji: "🔄", label: "Paraphrasing" },
+  topic_sentences:       { accent: "var(--aqua)",   emoji: "🔑", label: "Topic Sentences" },
   song_waltzing_matilda: { accent: "var(--sun)",    emoji: "🎵", label: "Waltzing Matilda — Banjo Paterson" },
   song_fix_you:          { accent: "var(--cobalt)", emoji: "🎵", label: "Fix You — Coldplay" },
   song_pretty_amazing_grace: { accent: "var(--plum)", emoji: "🎵", label: "Pretty Amazing Grace — Neil Diamond" },
